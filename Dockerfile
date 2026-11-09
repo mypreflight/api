@@ -24,11 +24,15 @@ RUN npm prune --omit=dev
 USER node
 
 FROM alpine-node-base AS production
+WORKDIR /app
+ADD --chown=node:node --checksum=sha256:90a6f1a7978a1b1b096dca6c57511ca48d3b8cf052f8e704baf358f34ea2f21b https://truststore.pki.rds.amazonaws.com/global/global-bundle.pem ./certs/rds-global-bundle.pem
+ENV NODE_EXTRA_CA_CERTS=/app/certs/rds-global-bundle.pem
 COPY --chown=node:node docker/prod ./docker/prod
 COPY --chown=node:node prisma ./prisma
 COPY --chown=node:node prisma.config.ts ./
 COPY --chown=node:node package.json ./
 COPY --chown=node:node --from=build /app/node_modules ./node_modules
 COPY --chown=node:node --from=build /app/dist ./dist
+USER node
 EXPOSE 3000
 ENTRYPOINT ["./docker/prod/entrypoint"]
