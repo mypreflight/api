@@ -1,4 +1,8 @@
 locals {
+  github_subjects = {
+    for name, id in var.repositories : name => "repo:${var.github_organization}@${var.github_organization_id}/${name}@${id}"
+  }
+
   account_id = data.aws_caller_identity.current.account_id
   iam_path   = "/bootstrap/"
 

@@ -13,7 +13,7 @@ resource "aws_iam_role" "deploy" {
       Condition = {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          "token.actions.githubusercontent.com:sub" = "repo:${var.github_organization}/${each.key}:environment:production"
+          "token.actions.githubusercontent.com:sub" = "${local.github_subjects[each.key]}:environment:production"
         }
       }
     }]
@@ -115,7 +115,7 @@ resource "aws_iam_role" "plan" {
       Condition = {
         StringEquals = {
           "token.actions.githubusercontent.com:aud" = "sts.amazonaws.com"
-          "token.actions.githubusercontent.com:sub" = "repo:${var.github_organization}/${each.key}:pull_request"
+          "token.actions.githubusercontent.com:sub" = "${local.github_subjects[each.key]}:pull_request"
         }
       }
     }]
