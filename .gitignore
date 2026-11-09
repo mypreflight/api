@@ -13,3 +13,10 @@
 /prisma/client
 /node_modules
 /test-data
+
+# Infrastructure
+.terraform/
+*.tfstate
+*.tfstate.*
+*_override.tf
+tfplan

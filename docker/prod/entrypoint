@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
-npx prisma generate
-npm run database:migrate
-npm run start:prod
+./node_modules/.bin/prisma migrate deploy
+exec node dist/src/main
