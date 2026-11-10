@@ -6,7 +6,7 @@ import {
   PostcardRejectedError,
 } from '../error/postcard.error';
 
-const BASE_URL = 'https://faas.example/postcard-generator/postcard';
+const BASE_URL = 'https://faas.example';
 
 const ART_BASE_URL = 'https://files.example';
 
@@ -75,7 +75,7 @@ describe('PostcardClient', () => {
     expect(url).toBe(
       `${BASE_URL}/city?city=Munich&country=Germany&continent=Europe&uuid=${UUID}`,
     );
-    expect(init.headers['X-Require-Whisk-Auth']).toBe(SECRET);
+    expect(init.headers.Authorization).toBe(`Bearer ${SECRET}`);
   });
 
   it('reports art it did not wait for as not drawn yet', async () => {
@@ -85,7 +85,7 @@ describe('PostcardClient', () => {
         size: '1152x1536',
         key: `postcards/${UUID}.jpg`,
         url: `${ART_BASE_URL}/postcards/${UUID}.jpg`,
-        handoff: { mode: 'activation' },
+        handoff: { mode: 'invocation' },
       }),
     );
 
@@ -104,7 +104,11 @@ describe('PostcardClient', () => {
     fetchMock = jest.spyOn(global, 'fetch').mockResolvedValue(
       jsonResponse(200, {
         ...generated,
-        handoff: { mode: 'inline', reason: 'no public endpoint configured' },
+        handoff: {
+          mode: 'inline',
+          reason:
+            'https://lambda.eu-central-1.amazonaws.com/2015-03-31/functions/postcard-generator/invocations answered 429 TooManyRequestsException',
+        },
       }),
     );
 

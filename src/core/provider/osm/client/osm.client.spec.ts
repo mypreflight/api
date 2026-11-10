@@ -6,7 +6,7 @@ import {
   OsmProviderUnavailableError,
 } from '../error/osm.error';
 
-const BASE_URL = 'https://faas.example/osm-provider/airport';
+const BASE_URL = 'https://faas.example';
 
 const PULL_URL = `${BASE_URL}/pull`;
 
@@ -48,7 +48,7 @@ describe('OsmClient', () => {
 
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe(`${PULL_URL}?icao=EDDW`);
-    expect(init.headers['X-Require-Whisk-Auth']).toBe(SECRET);
+    expect(init.headers.Authorization).toBe(`Bearer ${SECRET}`);
   });
 
   it('upper cases the ICAO code', async () => {

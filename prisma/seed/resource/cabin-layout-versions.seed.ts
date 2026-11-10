@@ -113,7 +113,7 @@ export async function loadCabinLayoutVersions(
 
 function readSeatMap(slug: string): AerolopaSeatMap {
   const response = mock.routes
-    .filter((route) => route.endpoint.endsWith('/aerolopa/seatmap'))
+    .filter((route) => route.endpoint === 'seatmap')
     .flatMap((route) => route.responses)
     .find((candidate) =>
       candidate.rules.some(

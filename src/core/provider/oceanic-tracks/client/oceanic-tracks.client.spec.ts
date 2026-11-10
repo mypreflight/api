@@ -2,7 +2,7 @@ import { OceanicTracksClient } from './oceanic-tracks.client';
 import { OceanicTracksSet } from '../type/oceanic-tracks.types';
 import { OceanicTracksUnavailableError } from '../error/oceanic-tracks.error';
 
-const BASE_URL = 'https://faas.example/oceanic-tracks-provider/oceanic-tracks';
+const BASE_URL = 'https://faas.example';
 
 const SECRET = 'shared-secret';
 
@@ -54,7 +54,7 @@ describe('OceanicTracksClient', () => {
 
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe(`${BASE_URL}/tracks`);
-    expect(init.headers['X-Require-Whisk-Auth']).toBe(SECRET);
+    expect(init.headers.Authorization).toBe(`Bearer ${SECRET}`);
   });
 
   it.each(['NMS_UNAVAILABLE', 'FIX_DIRECTORY_UNAVAILABLE'])(

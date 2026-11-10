@@ -13,14 +13,14 @@
       "type": "http",
       "documentation": "",
       "method": "get",
-      "endpoint": "aerolopa-provider/aerolopa/seatmap",
+      "endpoint": "seatmap",
       "responses": [
         {
           "uuid": "0d80de1b-8e6f-4fc6-ac3f-e348fe0fff55",
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=lo-7m8-1, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=lo-7m8-1, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -48,8 +48,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -66,7 +66,7 @@
           "body": "{\"error\":{\"code\":\"SEAT_MAP_NOT_FOUND\",\"message\":\"Seat map for configuration zz-999 does not exist.\",\"status\":404}}",
           "latency": 0,
           "statusCode": 404,
-          "label": "op=seatmap, slug=zz-999, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=zz-999, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -94,8 +94,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -112,7 +112,7 @@
           "body": "{\"error\":{\"code\":\"AEROLOPA_UNAVAILABLE\",\"message\":\"AeroLOPA is unavailable.\",\"status\":502}}",
           "latency": 0,
           "statusCode": 502,
-          "label": "op=seatmap, slug=boom, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=boom, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -140,8 +140,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -158,7 +158,7 @@
           "body": "{\"airlineIata\":\"LH\",\"aircraftIata\":\"32N\",\"candidateCount\":1,\"ambiguous\":false,\"candidates\":[\"lh-32n\"],\"seatMaps\":[]}",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=resolve, airline=LH, aircraft=32N, includeSeatMaps=false, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=resolve, airline=LH, aircraft=32N, includeSeatMaps=false, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -200,8 +200,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -218,7 +218,7 @@
           "body": "{\"airlineIata\":\"LO\",\"aircraftIata\":\"7M8\",\"candidateCount\":3,\"ambiguous\":true,\"candidates\":[\"lo-7m8-1\",\"lo-7m8-2\",\"lo-7m8-3\"],\"seatMaps\":[]}",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=resolve, airline=LO, aircraft=7M8, includeSeatMaps=false, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=resolve, airline=LO, aircraft=7M8, includeSeatMaps=false, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -260,8 +260,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -278,7 +278,7 @@
           "body": "{\"airlineIata\":\"BA\",\"aircraftIata\":\"744\",\"candidateCount\":0,\"ambiguous\":false,\"candidates\":[],\"seatMaps\":[]}",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=resolve, airline=BA, aircraft=744, includeSeatMaps=false, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=resolve, airline=BA, aircraft=744, includeSeatMaps=false, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -320,8 +320,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -338,7 +338,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=resolve, airline=LO, aircraft=7M8, includeSeatMaps=true, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=resolve, airline=LO, aircraft=7M8, includeSeatMaps=true, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -380,8 +380,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -398,7 +398,7 @@
           "body": "{\"error\":{\"code\":\"SEAT_MAP_UNREADABLE\",\"message\":\"Seat map payload for configuration unreadable could not be read.\",\"status\":502}}",
           "latency": 0,
           "statusCode": 502,
-          "label": "op=seatmap, slug=unreadable, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=unreadable, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -426,8 +426,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -444,7 +444,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=configurations, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=configurations, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -465,8 +465,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -483,7 +483,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=lh-32n, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=lh-32n, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -511,8 +511,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -529,7 +529,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=aa-77w, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=aa-77w, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -557,8 +557,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -575,7 +575,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=de-321, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=de-321, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -603,8 +603,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -621,7 +621,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=kl-738, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=kl-738, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -649,8 +649,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -667,7 +667,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=kl-77w, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=kl-77w, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -695,8 +695,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -713,7 +713,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=fi-752-1, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=fi-752-1, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -741,8 +741,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -759,7 +759,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=lh-74h-m, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=lh-74h-m, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -787,8 +787,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -805,7 +805,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "op=seatmap, slug=lh-74h-u, X-Require-Whisk-Auth: very-secret-token",
+          "label": "op=seatmap, slug=lh-74h-u, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -833,8 +833,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -880,14 +880,14 @@
       "type": "http",
       "documentation": "",
       "method": "get",
-      "endpoint": "aerolopa-provider/aerolopa/layouts",
+      "endpoint": "layouts",
       "responses": [
         {
           "uuid": "844a0274-3e65-41cf-ba19-c66521893efa",
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "X-Require-Whisk-Auth: very-secret-token",
+          "label": "Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -901,8 +901,8 @@
           "rules": [
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
