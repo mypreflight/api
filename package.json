@@ -1,6 +1,6 @@
 {
   "name": "flight-tracker-api",
-  "version": "3.80.3",
+  "version": "3.80.4",
   "private": true,
   "homepage": "https://mypreflight.io",
   "author": "mypreflight",
@@ -104,6 +104,7 @@
     "fast-uri": "^3.1.9",
     "@hono/node-server": "^1.19.13",
     "deepmerge-ts": "^8.0.1",
+    "glob@>=9.0.0 <14.0.2": "^14.0.4",
     "@angular-devkit/core": {
       "ajv": "^8.18.0"
     },
