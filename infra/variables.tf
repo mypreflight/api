@@ -74,7 +74,7 @@ variable "db_password_version" {
 
 variable "app_secrets_version" {
   type    = number
-  default = 2
+  default = 3
 }
 
 variable "jwt_private_key" {
