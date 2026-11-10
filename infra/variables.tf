@@ -9,9 +9,9 @@ variable "log_retention_days" {
 }
 
 variable "desired_count" {
-  description = "Running API tasks; 0 until the cutover"
+  description = "Running API tasks"
   type        = number
-  default     = 0
+  default     = 1
 
   validation {
     condition     = contains([0, 1], var.desired_count)
@@ -74,7 +74,7 @@ variable "db_password_version" {
 
 variable "app_secrets_version" {
   type    = number
-  default = 1
+  default = 2
 }
 
 variable "jwt_private_key" {
