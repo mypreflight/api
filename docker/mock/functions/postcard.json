@@ -373,14 +373,14 @@
       "type": "http",
       "documentation": "",
       "method": "get",
-      "endpoint": "postcard-generator/postcard/city",
+      "endpoint": "city",
       "responses": [
         {
           "uuid": "538900af-625b-4516-8859-80ac96b3291c",
           "body": "{\"error\":{\"code\":\"BAD_REQUEST\",\"message\":\"Parameter city may only contain Latin letters, digits, spaces, apostrophes and dots.\",\"status\":400}}",
           "latency": 0,
           "statusCode": 400,
-          "label": "city=北京, X-Require-Whisk-Auth: very-secret-token",
+          "label": "city=北京, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -401,8 +401,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -419,7 +419,7 @@
           "body": "{\"code\":\"9dc953214622ec06d8db424c91245cee\",\"error\":\"Response not yet ready.\"}",
           "latency": 0,
           "statusCode": 202,
-          "label": "uuid=0b5f2f18-9c3a-4b7e-8d21-6a4f0c9e7b53, X-Require-Whisk-Auth: very-secret-token",
+          "label": "uuid=0b5f2f18-9c3a-4b7e-8d21-6a4f0c9e7b53, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -440,8 +440,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -458,7 +458,7 @@
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "X-Require-Whisk-Auth: very-secret-token",
+          "label": "Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -472,8 +472,8 @@
           "rules": [
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }

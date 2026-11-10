@@ -10,6 +10,7 @@ export type CommentSeverity = 'minor' | 'moderate' | 'major';
 
 export type AerolopaErrorCode =
   | 'BAD_REQUEST'
+  | 'UNAUTHORIZED'
   | 'SEAT_MAP_NOT_FOUND'
   | 'AEROLOPA_UNAVAILABLE'
   | 'SEAT_MAP_UNREADABLE'

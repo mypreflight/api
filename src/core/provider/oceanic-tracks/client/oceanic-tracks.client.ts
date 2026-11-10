@@ -28,7 +28,7 @@ export class OceanicTracksClient {
         {
           headers: {
             Accept: 'application/json',
-            'X-Require-Whisk-Auth': this.functionSecret,
+            Authorization: `Bearer ${this.functionSecret}`,
           },
         },
         FETCH_OPTIONS,

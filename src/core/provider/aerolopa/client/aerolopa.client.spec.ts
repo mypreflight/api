@@ -6,7 +6,7 @@ import {
   SeatMapUnreadableError,
 } from '../error/aerolopa.error';
 
-const BASE_URL = 'https://faas.example/aerolopa-provider/aerolopa';
+const BASE_URL = 'https://faas.example';
 
 const SEATMAP_URL = `${BASE_URL}/seatmap`;
 
@@ -43,7 +43,7 @@ describe('AerolopaClient', () => {
 
     const [url, init] = fetchMock.mock.calls[0];
     expect(url).toBe(`${SEATMAP_URL}?op=seatmap&slug=lh-32n`);
-    expect(init.headers['X-Require-Whisk-Auth']).toBe(SECRET);
+    expect(init.headers.Authorization).toBe(`Bearer ${SECRET}`);
   });
 
   it('upper cases the codes when resolving', async () => {

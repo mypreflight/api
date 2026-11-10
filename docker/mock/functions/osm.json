@@ -13,14 +13,14 @@
       "type": "http",
       "documentation": "",
       "method": "get",
-      "endpoint": "osm-provider/airport/pull",
+      "endpoint": "pull",
       "responses": [
         {
           "uuid": "9fa38780-0f03-45db-9751-52dbbf3d78fb",
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "icao=EDDW, X-Require-Whisk-Auth: very-secret-token",
+          "label": "icao=EDDW, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -41,8 +41,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -59,7 +59,7 @@
           "body": "{\"error\":{\"code\":\"AERODROME_NOT_FOUND\",\"message\":\"OpenStreetMap has no aerodrome tagged with the ICAO code CYYT.\",\"status\":404}}",
           "latency": 0,
           "statusCode": 404,
-          "label": "icao=CYYT, X-Require-Whisk-Auth: very-secret-token",
+          "label": "icao=CYYT, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -80,8 +80,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }
@@ -98,7 +98,7 @@
           "body": "{\"error\":{\"code\":\"OVERPASS_UNAVAILABLE\",\"message\":\"Every Overpass mirror is unavailable.\",\"status\":502}}",
           "latency": 0,
           "statusCode": 502,
-          "label": "icao=EDDF, X-Require-Whisk-Auth: very-secret-token",
+          "label": "icao=EDDF, Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -119,8 +119,8 @@
             },
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }

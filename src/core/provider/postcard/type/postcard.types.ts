@@ -9,7 +9,7 @@ export type PostcardRequest = {
   uuid: string;
 };
 
-export type PostcardHandoffMode = 'activation' | 'web' | 'inline';
+export type PostcardHandoffMode = 'invocation' | 'inline';
 
 export type PostcardHandoff = {
   mode: PostcardHandoffMode;
@@ -47,7 +47,7 @@ export type PostcardGeneratedBody = {
   handoff?: PostcardHandoff;
 };
 
-export type PostcardErrorCode = 'BAD_REQUEST';
+export type PostcardErrorCode = 'BAD_REQUEST' | 'UNAUTHORIZED';
 
 export type PostcardErrorBody = {
   error: {

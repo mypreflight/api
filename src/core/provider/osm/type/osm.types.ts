@@ -1,5 +1,6 @@
 export type OsmErrorCode =
   | 'BAD_REQUEST'
+  | 'UNAUTHORIZED'
   | 'METHOD_NOT_ALLOWED'
   | 'AERODROME_NOT_FOUND'
   | 'OVERPASS_UNAVAILABLE'

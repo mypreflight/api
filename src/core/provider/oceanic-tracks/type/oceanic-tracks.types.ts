@@ -1,4 +1,5 @@
 export type OceanicTracksErrorCode =
+  | 'UNAUTHORIZED'
   | 'NMS_UNAVAILABLE'
   | 'FIX_DIRECTORY_UNAVAILABLE'
   | 'NMS_NOT_CONFIGURED'

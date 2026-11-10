@@ -2,14 +2,14 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Postcard generator",
-    "version": "1.0.0",
+    "version": "2.0.0",
     "description": "Draws a collectible postcard for a city and stores it in object storage. The caller names the object, so the stored location is known before the response arrives. A render outlives any request, so the generator answers 202 and draws in the background; the caller polls the stored location."
   },
   "paths": {
     "/city": {
       "get": {
         "summary": "Draw a postcard for a city and store it",
-        "description": "These four parameters are the whole surface: the size, the quality, the format and the prompt are the generator's own configuration, so nothing this client sends decides what is drawn or what it costs. The generator validates the request, hands the render to a background activation and answers 202 at once, so 202 is the normal answer and 200 only arrives when the hand-off failed and the render happened inline. Either answer names the stored location, which the caller can also derive from the uuid it sent. A 202 carrying a code and no key comes from the platform rather than the generator and means the same thing. Neither answer means the art exists yet, so the caller confirms the object separately.",
+        "description": "These four parameters are the whole surface: the size, the quality, the format and the prompt are the generator's own configuration, so nothing this client sends decides what is drawn or what it costs. The generator validates the request, hands the render to an asynchronous invocation of itself and answers 202 at once, so 202 is the normal answer and 200 only arrives when the hand-off failed and the render happened inline. Either answer names the stored location, which the caller can also derive from the uuid it sent. Neither answer means the art exists yet, so the caller confirms the object separately.",
         "parameters": [
           {
             "name": "city",
@@ -53,7 +53,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Drawn and stored inline, because every hand-off route refused the render. `handoff.reason` says why, and is the only account of it: the generator's own logs are not retrievable.",
+            "description": "Drawn and stored inline, because the hand-off was refused. `handoff.reason` says why, and is the only account of it: the generator's own logs are not retrievable.",
             "content": {
               "application/json": {
                 "schema": { "$ref": "#/components/schemas/PostcardGenerated" }
@@ -61,15 +61,10 @@
             }
           },
           "202": {
-            "description": "Accepted; the render is running in the background and the art does not exist yet. The normal answer. `handoff.mode` names the route it went out on. A body carrying a code and no key is the platform saying the same thing.",
+            "description": "Accepted; the render is running in the background and the art does not exist yet. The normal answer. `handoff.mode` names the route it went out on.",
             "content": {
               "application/json": {
-                "schema": {
-                  "oneOf": [
-                    { "$ref": "#/components/schemas/PostcardAccepted" },
-                    { "$ref": "#/components/schemas/PlatformError" }
-                  ]
-                }
+                "schema": { "$ref": "#/components/schemas/PostcardAccepted" }
               }
             }
           },
@@ -82,10 +77,10 @@
             }
           },
           "401": {
-            "description": "The shared secret was rejected by the platform before the function ran.",
+            "description": "Missing or wrong bearer token.",
             "content": {
               "application/json": {
-                "schema": { "$ref": "#/components/schemas/PlatformError" }
+                "schema": { "$ref": "#/components/schemas/FunctionError" }
               }
             }
           }
@@ -95,10 +90,10 @@
   },
   "components": {
     "securitySchemes": {
-      "whiskAuth": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-Require-Whisk-Auth"
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "The function secret, published at the SSM parameter /mypreflight/postcard-generator/secret."
       }
     },
     "schemas": {
@@ -143,7 +138,7 @@
         "type": "object",
         "required": ["mode"],
         "properties": {
-          "mode": { "type": "string", "enum": ["activation", "web", "inline"] },
+          "mode": { "type": "string", "enum": ["invocation", "inline"] },
           "reason": { "type": "string" }
         }
       },
@@ -186,18 +181,14 @@
             "type": "object",
             "required": ["code", "message", "status"],
             "properties": {
-              "code": { "type": "string", "enum": ["BAD_REQUEST"] },
+              "code": {
+                "type": "string",
+                "enum": ["BAD_REQUEST", "UNAUTHORIZED"]
+              },
               "message": { "type": "string" },
               "status": { "type": "integer" }
             }
           }
-        }
-      },
-      "PlatformError": {
-        "type": "object",
-        "properties": {
-          "code": { "type": "string" },
-          "error": { "type": "string" }
         }
       }
     }

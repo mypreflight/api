@@ -13,14 +13,14 @@
       "type": "http",
       "documentation": "",
       "method": "get",
-      "endpoint": "oceanic-tracks-provider/oceanic-tracks/tracks",
+      "endpoint": "tracks",
       "responses": [
         {
           "uuid": "32143c9c-3902-4470-8706-808de73dc8e1",
           "body": "",
           "latency": 0,
           "statusCode": 200,
-          "label": "X-Require-Whisk-Auth: very-secret-token",
+          "label": "Authorization: Bearer very-secret-token",
           "headers": [
             {
               "key": "Content-Type",
@@ -34,8 +34,8 @@
           "rules": [
             {
               "target": "header",
-              "modifier": "X-Require-Whisk-Auth",
-              "value": "very-secret-token",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
               "invert": false,
               "operator": "equals"
             }

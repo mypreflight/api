@@ -111,7 +111,7 @@ openssl ec -in private.key -pubout -out public.key
 This project uses [semantic versioning](https://semver.org/spec/v2.0.0.html).
 
 This project has configured continuous integration and continuous deployment pipelines. It uses GitHub Actions to
-automatically build, test and deploy the app to the DigitalOcean. You can find the configuration in `.github/workflows`
+automatically build, test and deploy the app to AWS. You can find the configuration in `.github/workflows`
 directory.
 
 ## Contact
