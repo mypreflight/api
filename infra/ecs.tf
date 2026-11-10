@@ -38,8 +38,12 @@ resource "aws_ecs_task_definition" "app" {
 
       readonlyRootFilesystem = true
       linuxParameters = {
-        capabilities = { drop = ["ALL"] }
+        capabilities = { add = [], drop = ["ALL"] }
       }
+
+      portMappings   = []
+      volumesFrom    = []
+      systemControls = []
 
       mountPoints = [{
         sourceVolume  = "tmp"
@@ -89,8 +93,14 @@ resource "aws_ecs_task_definition" "app" {
 
       readonlyRootFilesystem = true
       linuxParameters = {
-        capabilities = { drop = ["ALL"] }
+        capabilities = { add = [], drop = ["ALL"] }
       }
+
+      portMappings   = []
+      mountPoints    = []
+      volumesFrom    = []
+      systemControls = []
+      environment    = []
 
       dependsOn = [{
         containerName = local.app_name
