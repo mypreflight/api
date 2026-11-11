@@ -92,9 +92,9 @@ to survive into the briefing or the briefing lies.
   that is sixteen tracks under two separate messages — TMI 236 westbound, already expired at
   the moment the plan was generated, and TMI 237 eastbound.
 - **Report the flight's routing against the track structure as three states, not a flag.** A
-  flight is *on* a track when the plan routes along it and files it as a track; routed along
-  *track geometry* when the plan follows the track's waypoints but files them individually;
-  and on a *random* route when no track is involved. The reference plan is the middle case —
+  flight is _on_ a track when the plan routes along it and files it as a track; routed along
+  _track geometry_ when the plan follows the track's waypoints but files them individually;
+  and on a _random_ route when no track is involved. The reference plan is the middle case —
   planned along Track W, filed as individual waypoints, because the aircraft reaches 30 W at
   23:27 Z and Track W is not active until 01:00 Z. Reporting that flight as "on Track W" would
   be wrong about its clearance.
@@ -106,8 +106,8 @@ to survive into the briefing or the briefing lies.
   enough geometry in it to draw the whole picture on a map. A flight planned without ETOPS
   reports the route and tracks it has and no ETOPS section; a flight not
   imported from SimBrief reports that no briefing exists.
-No existing endpoint changes shape. `GET /flight/:id/ofp` keeps serving the rendered plan
-unchanged, because a crew that wants the original document should still get it.
+  No existing endpoint changes shape. `GET /flight/:id/ofp` keeps serving the rendered plan
+  unchanged, because a crew that wants the original document should still get it.
 
 ## Capabilities
 

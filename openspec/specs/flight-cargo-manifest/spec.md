@@ -9,7 +9,9 @@ invariant against that loadsheet, the shipments and their air waybill numbers, t
 devices and loose bulk lots carrying them, the hold positions and compartments they are placed
 in, the aircraft whose type has no curated hold data, and the endpoint the manifest is read
 through.
+
 ## Requirements
+
 ### Requirement: Releasing a flight generates a cargo manifest
 
 The system SHALL generate a cargo manifest when a flight's preliminary loadsheet is written, and
@@ -326,4 +328,3 @@ weight.
 - **GIVEN** a flight whose baggage is carried in containers
 - **WHEN** its cargo manifest is read
 - **THEN** the reported baggage weight includes those containers' tare weights
-

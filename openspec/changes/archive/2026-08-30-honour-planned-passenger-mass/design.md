@@ -49,7 +49,7 @@ the same reason.
 Storing the mass rather than a total passenger allowance in tons means the floor keeps working
 when the passenger count is edited afterwards, which is the whole point of a floor.
 
-*Alternative considered:* store nothing and lower the constant to a permissive floor (~60 kg). It
+_Alternative considered:_ store nothing and lower the constant to a permissive floor (~60 kg). It
 fixes the symptom without a schema change, but the floor stops being a consistency check and
 becomes a guess that happens to be low enough.
 
@@ -64,7 +64,7 @@ makes the imported sheet satisfy its own floor by construction.
 Zero passengers derives no mass — the division has no meaning, and the floor correctly degenerates
 to `payload ≥ cargo`.
 
-*Alternative considered:* capping the derived mass at 84 kg so the floor can never get stricter
+_Alternative considered:_ capping the derived mass at 84 kg so the floor can never get stricter
 than today. Rejected: a plan built at 86 kg per passenger genuinely has that much payload
 committed, and capping would let a later hand edit spend it twice.
 

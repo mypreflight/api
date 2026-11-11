@@ -7,7 +7,9 @@ rules for entering it through the loadsheet write flows. Fuel figures reach a fl
 populated from the SimBrief OFP when a flight is created, and entered manually by operations on
 the preliminary loadsheet and by cabin crew on the final loadsheet. The `blockFuel` summary must
 reconcile with the breakdown.
+
 ## Requirements
+
 ### Requirement: Fuel breakdown is enterable in the preliminary loadsheet
 
 The system SHALL allow a user with the `operations` role to include the structured `fuel` breakdown when updating a flight's preliminary loadsheet via `PATCH /api/v1/flight/{flightId}/loadsheet/preliminary`, while the flight is in `created` status. The breakdown MUST be persisted on the preliminary revision the update creates and returned verbatim on the flight's loadsheet read, including the optional extended figures (`etops`, `minTakeoff`, `planTakeoff`, `planLanding`, `averageFuelFlow`, `maxTanks`) when supplied. The `fuel` breakdown remains optional; omitting it stores a preliminary loadsheet with no breakdown.
@@ -279,4 +281,3 @@ the payload floor without any weight being altered.
 - **WHEN** boarding is finished with the weights the plan supplied
 - **THEN** the request is accepted
 - **AND** the flight is closed for boarding
-

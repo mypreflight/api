@@ -72,7 +72,7 @@ where it exists and the latest preliminary otherwise. With one table that is one
 differ (who may write, in which flight status, how many) are enforced by the commands and by
 the unique index, not by table identity.
 
-*Alternative rejected:* separate tables, which would enforce "one final" with a plain unique on
+_Alternative rejected:_ separate tables, which would enforce "one final" with a plain unique on
 `flightId` and need no discriminator — at the cost of duplicating thirty columns and every
 mapper.
 
@@ -96,7 +96,7 @@ index, and that violation is caught and reported as a conflict rather than surfa
 Both updates target a flight in `created` status through the operations endpoint, so a genuine
 race is a double-submit, and refusing the second is the right answer.
 
-*Alternative rejected:* computing the revision inside the insert statement with raw SQL. It
+_Alternative rejected:_ computing the revision inside the insert statement with raw SQL. It
 removes the race, and `src/` contains no raw SQL and no `$transaction` anywhere today; adding
 the first instance of both to close a double-submit window is not a trade worth making.
 
@@ -107,7 +107,7 @@ Eighteen nullable columns on the loadsheet row, prefixed `fuel*`. A breakdown is
 exists — it is the figure the `blockFuel` summary must reconcile with — while the eleven other
 required figures can legitimately be zero and the six extended ones are optional.
 
-*Alternatives rejected:* keeping `fuel` as a JSONB column, which is the nastiness this change
+_Alternatives rejected:_ keeping `fuel` as a JSONB column, which is the nastiness this change
 exists to remove; and a 1:1 `flight_loadsheet_fuel` table, where row presence would be an
 unambiguous flag — but the breakdown is never read apart from its loadsheet and never queried
 on its own, so it would be a table and a join for one boolean's worth of clarity.
@@ -123,7 +123,7 @@ value. So the breakdown is four nullable integer columns on the loadsheet row:
 Null means the cabin was not part of the breakdown; zero means it was, carrying nobody. All four
 null means the loadsheet has no breakdown, which is the state the domain expresses as `null`.
 
-*Alternative rejected:* a `flight_loadsheet_cabin_load` child table keyed by cabin name. It
+_Alternative rejected:_ a `flight_loadsheet_cabin_load` child table keyed by cabin name. It
 survives a fifth cabin class without a migration — but a fifth cabin class is a `CabinClass`
 change, and therefore a code change, either way. It costs a table, a join on every read and a
 nested write on every issue, to buy flexibility the domain does not have.
@@ -333,7 +333,6 @@ migrates whole or not at all on the same terms as the fuel breakdown — a break
 non-numeric count migrates none of its cabins, because migrating the rest would leave counts
 that no longer sum to the loadsheet's passengers. A cabin the system does not know is reported
 by `test.sql` section D and simply has nowhere to land.
-
 
 `data.sql` then drops the three helper functions and commits. `flight.loadsheets` is not
 touched.

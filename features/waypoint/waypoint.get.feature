@@ -1,5 +1,4 @@
 Feature: Read a catalogued waypoint
-
   Waypoints are accumulated from the flight plans the system imports. Nothing is catalogued
   until a plan publishes it.
 

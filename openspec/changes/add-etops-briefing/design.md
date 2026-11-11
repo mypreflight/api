@@ -197,7 +197,7 @@ document — where the aircraft can go, how far, and when those airports are usa
 frozen observation from before pushback answers none of that.
 
 Dropping it removes a real design tension rather than deferring one. `AirportWeather` is
-`@@unique([airportId, source, informationType])`, one *current* report per airport per source,
+`@@unique([airportId, source, informationType])`, one _current_ report per airport per source,
 so a captured report either fights that constraint or needs a parallel table with a different
 lifetime. With no capture there is one weather path and no ambiguity: `airport-weather` serves
 current conditions for every airport including the ETOPS ones, and the briefing points at
@@ -218,7 +218,7 @@ rows are written with `skipDuplicates: true` and departure and destination liste
 first-listed role wins a collision.
 
 This matters because ETOPS airports collide routinely. On the reference plan EINN is the exit
-threshold airport *and* its own diversion target, and CYQX is both a diversion target and a
+threshold airport _and_ its own diversion target, and CYQX is both a diversion target and a
 published suitable airport. In the mock fixture CYYR is both the enroute alternate and a
 suitable airport.
 
@@ -248,7 +248,7 @@ the adequate airport at each threshold — so no stored row changes interpretati
 migration of existing data is needed. The suitable airports are additional rows.
 
 An airport routinely holds two roles at once: on the reference plan EINN is the adequate
-airport at the exit point, the suitable airport at the exit point, *and* a suitable airport in
+airport at the exit point, the suitable airport at the exit point, _and_ a suitable airport in
 `etops.suitable_airport`. The existing alternate-airport table already tolerates one airport in
 several roles, and `airport-notams` already has a scenario for exactly this, so nothing new is
 required to handle it.
@@ -271,7 +271,7 @@ equal_time_point 52.095984771429     −33.466876671682     12186    19344    14
 
 with one field the ETP lacks: `fix_type: "ETP"`, naming which point it is.
 
-So on this plan the critical point *is* the ETP, and storing it as a separate row would put two
+So on this plan the critical point _is_ the ETP, and storing it as a separate row would put two
 markers at the same coordinates and list the ETP twice in the briefing. But the naive fix —
 treating it purely as a flag — silently loses the point entirely if `fix_type` ever names
 something that is not among the stored points. `fix_type` is a discriminator, which means the
@@ -347,7 +347,7 @@ reconcile two answers instead of trusting one.
 This also removes the derived ETOPS fuel penalty an earlier draft specified. The plan reports
 `fuel.etops` and the briefing does not reinterpret it.
 
-What survives is what the flight computer does *not* give: where the ETOPS points are, when
+What survives is what the flight computer does _not_ give: where the ETOPS points are, when
 they are reached, which airports each turns toward, when those airports are usable, and how the
 whole thing sits on a map.
 
@@ -382,10 +382,10 @@ The `map_data` field is not data — it is a URL to a companion JavaScript file 
 generates for its own route viewer, and that file carries exactly the missing numbers:
 
 ```js
-var etopsrule      = 370;
-var etopsruledist  = 2694.8333333333;   // nm — the rule radius
-var etopsthreshold = 60;                // minutes
-var natsdir        = "E";               // which track set applies to this flight
+var etopsrule = 370;
+var etopsruledist = 2694.8333333333; // nm — the rule radius
+var etopsthreshold = 60; // minutes
+var natsdir = 'E'; // which track set applies to this flight
 ```
 
 The arithmetic closes: `2694.8333 ÷ (370 ÷ 60) = 437.0 kt`, and the threshold ring is that same
@@ -431,12 +431,12 @@ TOC     ltlg  reg={}   freq={}       −24.169537 / −47.085553   ← not a way
 
 Accumulating them turns a per-flight import into a growing navigation dataset the system owns.
 That matters beyond this change: the FAA's authoritative NAT track feed publishes tracks as raw
-message text whose gateway fixes are *named* — `SUNOT`, `JANJO`, `PIKIL` — with no coordinates.
+message text whose gateway fixes are _named_ — `SUNOT`, `JANJO`, `PIKIL` — with no coordinates.
 Resolving those needs exactly this catalogue. Building it now from SimBrief is what makes an
 authoritative track source usable later.
 
 **What is excluded, and why.** `ltlg` points carry no region and are computed per flight: a top
-of climb is wherever *this* aircraft levelled off, and `51N050W` is derivable from its own name.
+of climb is wherever _this_ aircraft levelled off, and `51N050W` is derivable from its own name.
 Neither helps a later flight. Airports are already airports. So the rule is: catalogue `wpt` and
 `vor`, skip `ltlg` and `apt`.
 
@@ -462,8 +462,8 @@ navlog.fix[] ............ 26 fixes with pos_lat/pos_long — NOT STORED
 
 So today a briefing could place an equal-time point at 52.1 N 33.5 W and have nothing to draw
 it against. The ETOPS points, the diversion legs and the tracks are all spatial, and the route
-is the one line that makes them legible — an ETP is only meaningful as a position *along a
-route* between two airports.
+is the one line that makes them legible — an ETP is only meaningful as a position _along a
+route_ between two airports.
 
 The planned route is therefore stored as ordered fixes with their positions. This is the
 minimum of `navlog` needed for the briefing to be drawable: ident, position, altitude, elapsed
