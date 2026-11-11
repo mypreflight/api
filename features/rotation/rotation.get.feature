@@ -251,8 +251,8 @@ Feature: Read rotations
                 "icaoCode": "KBOS",
                 "name": "Boston Logan Intl"
               },
-              "offBlockTime": "2026-01-01T14:13:00.000Z",
-              "onBlockTime": "2026-01-01T15:43:00.000Z",
+              "offBlockTime": "2026-01-01T16:00:00.000Z",
+              "onBlockTime": "2026-01-01T17:30:00.000Z",
               "blockTime": 90,
               "flight": null
             }

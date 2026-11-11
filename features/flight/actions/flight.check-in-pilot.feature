@@ -304,7 +304,7 @@ Feature: Check in pilot for flight
             "name": "Philadelphia Intl",
             "iataCode": "PHL"
           },
-          "distance": 243,
+          "distance": 230,
           "flightId": "23952e79-6b38-49ed-a1db-bd4d9b3cedab",
           "createdAt": "@date('within 1 minute from now')",
           "updatedAt": null
@@ -371,7 +371,7 @@ Feature: Check in pilot for flight
             "name": "Philadelphia Intl",
             "iataCode": "PHL"
           },
-          "distance": 243,
+          "distance": 230,
           "flightId": "23952e79-6b38-49ed-a1db-bd4d9b3cedab",
           "createdAt": "@date('within 1 minute from now')",
           "updatedAt": null
@@ -662,9 +662,9 @@ Feature: Check in pilot for flight
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "Aircraft: **N78881** (Boeing 777-300ER)"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "out: 13:00z"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "off: 13:15z"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "on:  15:50z"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "in:  16:08z"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "block: 3h 08m"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "on:  14:03z"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "in:  14:21z"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "block: 1h 21m"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "ATIS for BOS:"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "Logan airport, information Delta."
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "METAR KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000"
