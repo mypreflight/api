@@ -91,6 +91,8 @@ export class CreateFlightRequest extends OmitType(Flight, [
     type: ScheduledTimesheet,
   })
   @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => ScheduledTimesheet)
   timesheet!: ScheduledTimesheet;
 
   @ApiPropertyOptional({

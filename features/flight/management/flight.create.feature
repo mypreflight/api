@@ -1118,3 +1118,39 @@ Feature: Create a flight
         "statusCode": 401
       }
       """
+
+  Scenario: As operations I cannot create a flight with a scheduled time that is not a date
+    Given I am signed in as "operations"
+    When I send a "POST" request to "/api/v1/flight/" with body:
+      """json
+      {
+        "flightNumber": "DLH990",
+        "callsign": "DLH990",
+        "isEtops": true,
+        "aircraftId": "a10c21e3-3ac1-4265-9d12-da9baefa2d98",
+        "departureAirportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
+        "destinationAirportId": "3c721cc6-c653-4fad-be43-dc9d6a149383",
+        "operatorId": "1f630d38-ad24-47cc-950b-3783e71bbd10",
+        "timesheet": {
+          "scheduled": {
+            "offBlockTime": "tomorrow morning",
+            "takeoffTime": "2025-01-01 12:15",
+            "arrivalTime": "2025-01-01 21:00",
+            "onBlockTime": "2025-01-01 21:10"
+          }
+        },
+        "loadsheet": null
+      }
+      """
+    Then the response status should be 400
+    And the response body should contain:
+      """json
+      {
+        "message": "Request validation failed.",
+        "error": "Bad Request",
+        "statusCode": 400,
+        "violations": {
+          "timesheet.scheduled.offBlockTime": ["offBlockTime must be a Date instance"]
+        }
+      }
+      """

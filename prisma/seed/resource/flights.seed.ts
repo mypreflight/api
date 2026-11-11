@@ -21,6 +21,7 @@ import {
   EmergencyUrgency,
   SquawkCode,
 } from '../../../src/modules/flights/model/emergency.model';
+import { toTimesheetData } from '../../../src/modules/flights/model/timesheet.mapper';
 /**
  * DLH450 | 3c8ba7a7-1085-423c-8cc3-d51f5ab0cd05
  * Frankfurt Rhein/Main (EDDF) -> New York JFK (KJFK)
@@ -40,14 +41,14 @@ async function loadDLH450(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.Created,
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa
     aircraftId: '9f5da1a4-f09e-4961-8299-82d688337d1f', // A339
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 12:00'),
         takeoffTime: new Date('2025-01-01 12:15'),
         arrivalTime: new Date('2025-01-01 21:00'),
         onBlockTime: new Date('2025-01-01 21:10'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: null,
       final: null,
@@ -177,7 +178,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
     captainId: 'fcf6f4bc-290d-43a9-843c-409cd47e143d',
     aircraftId: '6c48d613-6582-49de-afbb-89fdc7cac0b7', // N718AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -196,7 +197,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:00'),
         onBlockTime: new Date('2025-01-01 16:18'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -511,14 +512,14 @@ async function loadAAL4906(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'a10c21e3-3ac1-4265-9d12-da9baefa2d98', // B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
         arrivalTime: new Date('2025-01-01 16:00'),
         onBlockTime: new Date('2025-01-01 16:18'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -647,14 +648,14 @@ async function loadAAL4907(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'ed247c36-58f0-43ff-81fd-ffae548a73e2', // N719AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
         arrivalTime: new Date('2025-01-01 16:00'),
         onBlockTime: new Date('2025-01-01 16:18'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -777,7 +778,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'e7c6c5e3-84ff-4c5b-a40c-79f178c5b379', // N720AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -790,7 +791,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 15:50'),
         onBlockTime: new Date('2025-01-01 16:08'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -960,7 +961,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'a2f425e0-2db0-4d8f-8c4c-b3a95d51eb24', // N721AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -973,7 +974,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 15:50'),
         onBlockTime: new Date('2025-01-01 16:08'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -1147,7 +1148,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'ffe14007-9147-40a1-a228-573c9c87a2e7', // N722AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -1160,7 +1161,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 15:50'),
         onBlockTime: new Date('2025-01-01 16:08'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -1368,7 +1369,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: '0fad1757-d650-4a52-b047-f29e9ea5c067', // N723AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -1387,7 +1388,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: null,
         onBlockTime: null,
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -1578,7 +1579,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: '8694eb6d-83e4-4f24-8a72-b67523b4d6bf', // N724AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -1601,7 +1602,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 15:55'),
         onBlockTime: new Date('2025-01-01 16:12'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -1872,7 +1873,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'a10c21e3-3ac1-4265-9d12-da9baefa2d98', // B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -1891,7 +1892,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: null,
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -2171,7 +2172,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: '3c3f3402-cdb1-4716-9e02-1fe3df12e0e4', // N725AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -2190,7 +2191,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: new Date('2025-01-01 16:28'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -2479,7 +2480,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: '8f27ca75-01e0-4a3f-bcf2-f838e02b9af9', // N726AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -2498,7 +2499,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: new Date('2025-01-01 16:28'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -2796,7 +2797,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: '69811511-fa34-4837-ab5d-dd480aeab8b6', // N727AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -2815,7 +2816,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: new Date('2025-01-01 16:28'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -3124,7 +3125,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
     serviceType: FlightServiceType.Cargo,
     aircraftId: '30a0d850-5440-436d-95a2-fa8fdc79f715', // N728AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -3143,7 +3144,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: new Date('2025-01-01 16:28'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -3460,7 +3461,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: '7e059d96-260c-44e3-a08c-a216cb76398b', // N729AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -3479,7 +3480,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: new Date('2025-01-01 16:28'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -3731,7 +3732,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'b0ea1829-61ea-4b50-8bf6-bfccfb4fe5c7', // N730AN B77W
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -3750,7 +3751,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 16:10'),
         onBlockTime: new Date('2025-01-01 16:28'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -4003,7 +4004,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.Closed,
     aircraftId: 'b84e4c67-7565-4846-84c4-ab8215308fbd', // D-AIMD A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 17:40'),
         takeoffTime: new Date('2025-01-01 18:00'),
@@ -4022,7 +4023,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-02 02:30'),
         onBlockTime: new Date('2025-01-02 02:45'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -4241,14 +4242,14 @@ async function loadDLH41(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.Created,
     aircraftId: 'becc1596-dfa0-452b-81ec-3f1f2fa0dce2', // D-AIME A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-02 04:00'),
         takeoffTime: new Date('2025-01-02 04:20'),
         arrivalTime: new Date('2025-01-02 11:30'),
         onBlockTime: new Date('2025-01-02 11:45'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -4366,14 +4367,14 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.Ready,
     aircraftId: '9f5da1a4-f09e-4961-8299-82d688337d1f', // A330
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-02 17:40'),
         takeoffTime: new Date('2025-01-02 18:00'),
         arrivalTime: new Date('2025-01-03 02:00'),
         onBlockTime: new Date('2025-01-03 02:15'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -4535,7 +4536,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.OffboardingFinished,
     aircraftId: 'a9b9205d-53b1-4eec-bb24-548a12159997', // D-AIMF A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-03 04:00'),
         takeoffTime: new Date('2025-01-03 04:20'),
@@ -4554,7 +4555,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-03 11:30'),
         onBlockTime: new Date('2025-01-03 11:45'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -4795,7 +4796,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.InCruise,
     aircraftId: 'ed7ed4bb-95ff-4e79-9331-11212ef727ec', // D-AIMG A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -4814,7 +4815,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: null,
         onBlockTime: null,
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -5140,14 +5141,14 @@ async function loadDLH81(tx: Prisma.TransactionClient): Promise<void> {
     aircraftId: '785bdfda-291a-4c11-a5d9-b57b5c0b8e5e', // D-AIMK A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     source: FlightSource.Simbrief,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
-        arrivalTime: '2025-01-05T17:10:00.000Z',
-        onBlockTime: '2025-01-05T17:25:00.000Z',
-        takeoffTime: '2025-01-05T09:20:00.000Z',
-        offBlockTime: '2025-01-05T09:00:00.000Z',
+        arrivalTime: new Date('2025-01-05T17:10:00.000Z'),
+        onBlockTime: new Date('2025-01-05T17:25:00.000Z'),
+        takeoffTime: new Date('2025-01-05T09:20:00.000Z'),
+        offBlockTime: new Date('2025-01-05T09:00:00.000Z'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       final: null,
       preliminary: {
@@ -5236,14 +5237,14 @@ async function loadDLH82(tx: Prisma.TransactionClient): Promise<void> {
     aircraftId: '785bdfda-291a-4c11-a5d9-b57b5c0b8e5e', // D-AIMK A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     source: FlightSource.Simbrief,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
-        arrivalTime: '2025-01-06T17:10:00.000Z',
-        onBlockTime: '2025-01-06T17:25:00.000Z',
-        takeoffTime: '2025-01-06T09:20:00.000Z',
-        offBlockTime: '2025-01-06T09:00:00.000Z',
+        arrivalTime: new Date('2025-01-06T17:10:00.000Z'),
+        onBlockTime: new Date('2025-01-06T17:25:00.000Z'),
+        takeoffTime: new Date('2025-01-06T09:20:00.000Z'),
+        offBlockTime: new Date('2025-01-06T09:00:00.000Z'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       final: null,
       preliminary: [
@@ -5335,20 +5336,20 @@ async function loadDLH83(tx: Prisma.TransactionClient): Promise<void> {
     aircraftId: '785bdfda-291a-4c11-a5d9-b57b5c0b8e5e', // D-AIMK A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     source: FlightSource.Simbrief,
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
-        arrivalTime: '2025-01-07T17:10:00.000Z',
-        onBlockTime: '2025-01-07T17:25:00.000Z',
-        takeoffTime: '2025-01-07T09:20:00.000Z',
-        offBlockTime: '2025-01-07T09:00:00.000Z',
+        arrivalTime: new Date('2025-01-07T17:10:00.000Z'),
+        onBlockTime: new Date('2025-01-07T17:25:00.000Z'),
+        takeoffTime: new Date('2025-01-07T09:20:00.000Z'),
+        offBlockTime: new Date('2025-01-07T09:00:00.000Z'),
       },
       estimated: {
-        arrivalTime: '2025-01-07T17:10:00.000Z',
-        onBlockTime: '2025-01-07T17:25:00.000Z',
-        takeoffTime: '2025-01-07T09:20:00.000Z',
-        offBlockTime: '2025-01-07T09:00:00.000Z',
+        arrivalTime: new Date('2025-01-07T17:10:00.000Z'),
+        onBlockTime: new Date('2025-01-07T17:25:00.000Z'),
+        takeoffTime: new Date('2025-01-07T09:20:00.000Z'),
+        offBlockTime: new Date('2025-01-07T09:00:00.000Z'),
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       final: null,
       preliminary: {
@@ -5439,7 +5440,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
     tracking: FlightTracking.Public,
     aircraftId: 'cfedcfae-6e80-4801-8a89-12b2430c908b', // D-AIML A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 09:30'),
         takeoffTime: new Date('2025-01-01 09:50'),
@@ -5458,7 +5459,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: null,
         onBlockTime: null,
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -5665,7 +5666,7 @@ async function loadDLH103(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.TaxiingIn,
     aircraftId: '5637d186-d9e4-45e4-9940-ae6f6552c9ae', // D-AIMH A339
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -5684,7 +5685,7 @@ async function loadDLH103(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 15:40'),
         onBlockTime: null,
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -5818,7 +5819,7 @@ async function loadDLH500(tx: Prisma.TransactionClient): Promise<void> {
     status: FlightStatus.TaxiingIn,
     aircraftId: '5637d186-d9e4-45e4-9940-ae6f6552c9ae',
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d',
-    timesheet: {
+    ...toTimesheetData({
       scheduled: {
         offBlockTime: new Date('2025-01-01 13:00'),
         takeoffTime: new Date('2025-01-01 13:15'),
@@ -5837,7 +5838,7 @@ async function loadDLH500(tx: Prisma.TransactionClient): Promise<void> {
         arrivalTime: new Date('2025-01-01 14:02'),
         onBlockTime: null,
       },
-    } as Prisma.InputJsonValue,
+    }),
     loadsheets: seedLoadsheets({
       preliminary: {
         flightCrew: {
@@ -6004,14 +6005,14 @@ async function loadRecentCarrierFlights(
         createdAt: entry.createdAt,
         greatCircleDistance: entry.greatCircleDistance,
         totalFuelBurned: entry.totalFuelBurned,
-        timesheet: {
+        ...toTimesheetData({
           scheduled: {
             offBlockTime: entry.offBlockTime,
             takeoffTime: entry.takeoffTime,
             arrivalTime: entry.arrivalTime,
             onBlockTime: entry.onBlockTime,
           },
-        } as Prisma.InputJsonValue,
+        }),
         loadsheets: seedLoadsheets({
           preliminary: entry.passengers
             ? {

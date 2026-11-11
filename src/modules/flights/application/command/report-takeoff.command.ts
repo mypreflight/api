@@ -9,7 +9,6 @@ import { FlightsRepository } from '../../infra/database/repository/flights.repos
 import { TakeoffWasReportedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
-import { Schedule } from '../../model/timesheet.model';
 
 export class ReportTakeoffCommand {
   constructor(
@@ -42,11 +41,10 @@ export class ReportTakeoffHandler implements ICommandHandler<ReportTakeoffComman
       throw new InvalidStatusToReportTakenOffError();
     }
 
-    const timesheet = flight.timesheet as { actual: Schedule };
-    timesheet.actual.takeoffTime = takeoffTime;
-
     await this.flightsRepository.updateStatus(flightId, FlightStatus.InCruise);
-    await this.flightsRepository.updateTimesheet(flightId, timesheet);
+    await this.flightsRepository.updateSchedule(flightId, 'actual', {
+      takeoffTime,
+    });
 
     await this.domainEvents.emitAsync(
       new TakeoffWasReportedEvent({

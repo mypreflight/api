@@ -8,7 +8,6 @@ import { QueryHandler, Query, IQueryHandler, QueryBus } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { GetPilotQuery } from '../../../users/application/query/get-pilot.query';
 import { FlightPilotDto } from '../../../users/infra/http/request/get-user.dto';
-import { FullTimesheet } from '../../model/timesheet.model';
 import {
   AirportType,
   AirportWithType,
@@ -60,7 +59,6 @@ export class ListAllFlightsHandler implements IQueryHandler<ListAllFlightsQuery>
         ({ captainId, actualFuelBurned, ...flight }): GetFlightResponse => ({
           ...flight,
           status: flight.status as FlightStatus,
-          timesheet: flight.timesheet as FullTimesheet,
           actualFuelBurned:
             actualFuelBurned === null ? null : actualFuelBurned.toNumber(),
           airports: flight.airports.map(

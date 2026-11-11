@@ -55,30 +55,24 @@ function seededRandom(seed: string): () => number {
   };
 }
 
-function flightHoursOf(timesheet: unknown): number {
-  const scheduled = (
-    timesheet as {
-      scheduled?: { takeoffTime?: string; arrivalTime?: string };
-    }
-  )?.scheduled;
+function flightHoursOf(flight: {
+  scheduledTakeoffTime: Date | null;
+  scheduledArrivalTime: Date | null;
+}): number {
+  const { scheduledTakeoffTime, scheduledArrivalTime } = flight;
 
-  if (!scheduled?.takeoffTime || !scheduled?.arrivalTime) {
+  if (!scheduledTakeoffTime || !scheduledArrivalTime) {
     return DEFAULT_FLIGHT_HOURS;
   }
 
   const hours =
-    (new Date(scheduled.arrivalTime).getTime() -
-      new Date(scheduled.takeoffTime).getTime()) /
-    3600000;
+    (scheduledArrivalTime.getTime() - scheduledTakeoffTime.getTime()) / 3600000;
 
   return hours > 0 ? hours : DEFAULT_FLIGHT_HOURS;
 }
 
-function departureAtOf(timesheet: unknown): Date {
-  const offBlock = (timesheet as { scheduled?: { offBlockTime?: string } })
-    ?.scheduled?.offBlockTime;
-
-  return offBlock ? new Date(offBlock) : new Date('2025-01-01');
+function departureAtOf(flight: { scheduledOffBlockTime: Date | null }): Date {
+  return flight.scheduledOffBlockTime ?? new Date('2025-01-01');
 }
 
 export async function loadGeneratedManifests(
@@ -199,7 +193,7 @@ export async function loadGeneratedManifests(
       data: {
         flightId: flight.id,
         stage: NotocStage.preliminary,
-        issuedAt: departureAtOf(flight.timesheet),
+        issuedAt: departureAtOf(flight),
         document: composeNotoc(
           composeFlightCargoManifest(flight.id, rows, variant),
           arrival.iataCode,
@@ -219,7 +213,9 @@ export async function loadGeneratedManifests(
 type SeededFlight = {
   id: string;
   flightNumber: string;
-  timesheet: Prisma.JsonValue;
+  scheduledOffBlockTime: Date | null;
+  scheduledTakeoffTime: Date | null;
+  scheduledArrivalTime: Date | null;
   greatCircleDistance: number;
   aircraft: { id: string; type: string; holdVariant: string | null };
   operator: { id: string; iataCode: string };
@@ -240,7 +236,7 @@ async function plannedUnitsFor(
 ) {
   const { departure, arrival } = endpoints;
   const random = seededRandom(flight.id);
-  const flightHours = flightHoursOf(flight.timesheet);
+  const flightHours = flightHoursOf(flight);
 
   const weather = await tx.airportWeather.findFirst({
     where: {
@@ -262,7 +258,7 @@ async function plannedUnitsFor(
         iataCode: departure.iataCode,
         country: departure.country,
         continent: departure.continent as Continent,
-        month: departureAtOf(flight.timesheet).getUTCMonth() + 1,
+        month: departureAtOf(flight).getUTCMonth() + 1,
       }),
       loadsheet.passengers,
     ),

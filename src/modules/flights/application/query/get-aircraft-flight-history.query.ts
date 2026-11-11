@@ -1,7 +1,6 @@
 import { Query, QueryHandler, IQueryHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { FlightStatus } from '../../model/flight.model';
-import { FullTimesheet } from '../../model/timesheet.model';
 import { AirportType } from '../../../airports/model/airport.model';
 import {
   FlightHistoryAirport,
@@ -44,7 +43,7 @@ export class GetAircraftFlightHistoryHandler implements IQueryHandler<GetAircraf
           status: flight.status as FlightStatus,
           departureAirport: findAirport(AirportType.Departure),
           arrivalAirport: findAirport(AirportType.Destination),
-          actualTimesheet: (flight.timesheet as FullTimesheet).actual ?? null,
+          actualTimesheet: flight.timesheet.actual ?? null,
         };
       }),
       totalCount,

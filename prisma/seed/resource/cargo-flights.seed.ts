@@ -8,6 +8,7 @@ import { seedLoadsheets } from './loadsheet.seed';
 import { AirportType } from '../../../src/modules/airports/model/airport.model';
 import { AircraftState } from '../../../src/modules/aircraft/model/aircraft.model';
 import { Loadsheet } from '../../../src/modules/flights/model/loadsheet.model';
+import { toTimesheetData } from '../../../src/modules/flights/model/timesheet.mapper';
 
 const AMERICAN = '1f630d38-ad24-47cc-950b-3783e71bbd10';
 const AIR_FRANCE = '3a1354c5-d9fb-428b-9f87-0e887e491f0d';
@@ -334,7 +335,7 @@ export async function loadCargoFlights(
         greatCircleDistance: 6200,
         totalFuelBurned: 21400,
         createdAt: new Date('2025-01-01 00:00'),
-        timesheet: timesheetFor(spec.status) as Prisma.InputJsonValue,
+        ...toTimesheetData(timesheetFor(spec.status)),
         loadsheets: seedLoadsheets({ preliminary: loadsheetFor(spec) }),
       },
     });

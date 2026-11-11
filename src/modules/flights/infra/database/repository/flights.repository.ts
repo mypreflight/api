@@ -11,10 +11,6 @@ import {
   FlightStatus,
   FlightTracking,
 } from '../../../model/flight.model';
-import {
-  compareFlightsByTimesheet,
-  TimesheetSort,
-} from '../../../model/flight-list-order';
 import { PrismaService } from '../../../../../core/provider/prisma/prisma.service';
 import { AircraftCabinLayout } from '../../../../aircraft/model/cabin-layout.model';
 import { toAircraftCabinLayout } from '../../../../aircraft/model/cabin-layout-assignment';
@@ -22,7 +18,15 @@ import {
   CreateFlightRequest,
   FlightListFilters,
 } from '../../http/request/flight.dto';
-import { FilledTimesheet, FullTimesheet } from '../../../model/timesheet.model';
+import { FullTimesheet, SchedulePatch } from '../../../model/timesheet.model';
+import {
+  TIMESHEET_COLUMN_NAMES,
+  TimesheetColumn,
+  TimesheetScheduleName,
+  toTimesheetColumns,
+  toTimesheetData,
+  withTimesheet,
+} from '../../../model/timesheet.mapper';
 import {
   AdsbFlightTrack,
   AdsbPositionReportApiInput,
@@ -64,6 +68,10 @@ import {
   TrackDirection as Direction,
 } from '../../../model/oceanic.model';
 
+const timesheetFields = Object.fromEntries(
+  TIMESHEET_COLUMN_NAMES.map((column) => [column, true]),
+) as Record<TimesheetColumn, true>;
+
 export const flightWithAircraftAndAirportsFields = {
   id: true,
   flightNumber: true,
@@ -71,7 +79,7 @@ export const flightWithAircraftAndAirportsFields = {
   atcCallsign: true,
   isEtops: true,
   status: true,
-  timesheet: true,
+  ...timesheetFields,
   captainId: true,
   source: true,
   tracking: true,
@@ -156,7 +164,7 @@ const flightHistoryFields = {
   id: true,
   flightNumber: true,
   status: true,
-  timesheet: true,
+  ...timesheetFields,
   airports: {
     select: {
       airportType: true,
@@ -165,9 +173,10 @@ const flightHistoryFields = {
   },
 } as const satisfies Prisma.FlightSelect;
 
-export type FlightHistoryRow = Prisma.FlightGetPayload<{
-  select: typeof flightHistoryFields;
-}>;
+export type FlightHistoryRow = Omit<
+  Prisma.FlightGetPayload<{ select: typeof flightHistoryFields }>,
+  TimesheetColumn
+> & { timesheet: FullTimesheet };
 
 const flightOfp = {
   ofpContent: true,
@@ -196,7 +205,6 @@ const flightCompletionStatsFields = {
   completedAt: true,
   greatCircleDistance: true,
   totalFuelBurned: true,
-  timesheet: true,
 } as const satisfies Prisma.FlightSelect;
 
 type RepositionAirport = {
@@ -218,7 +226,6 @@ export type FlightCompletionStats = {
   completedAt: Date | null;
   greatCircleDistance: number;
   totalFuelBurned: number;
-  timesheet: FilledTimesheet;
 };
 
 export type CaptainFlightFact = {
@@ -275,9 +282,10 @@ export type DerivedFlightStatus = {
 
 export type FlightResponse = Omit<
   FlightWithAircraftAndAirports,
-  'isDiversionDeclared' | 'isPathAvailable' | 'delayRequest'
-> &
-  DerivedFlightStatus;
+  'isDiversionDeclared' | 'isPathAvailable' | 'delayRequest' | TimesheetColumn
+> & { timesheet: FullTimesheet } & DerivedFlightStatus;
+
+type TimesheetSort = Exclude<FlightListSort, FlightListSort.CreatedAt>;
 
 function expandAircraftAirframe(aircraft: RawAircraft): AircraftWithAirframe {
   const airframe = findAirframeByType(aircraft.type);
@@ -308,12 +316,27 @@ function toFlightResponse({
   ...rest
 }: FlightWithRawAircraft): FlightResponse {
   return {
-    ...rest,
+    ...withTimesheet(rest),
     aircraft: expandAircraftAirframe(rest.aircraft),
     isFlightDiverted: isDiversionDeclared,
     hasFlightPath: isPathAvailable,
     isOffBlockDelayed: delayRequest !== null,
   };
+}
+
+function timesheetOrder(
+  sort: TimesheetSort,
+  direction: Prisma.SortOrder,
+): Prisma.FlightOrderByWithRelationInput[] {
+  const time = { sort: direction, nulls: 'last' } as const;
+
+  return [
+    sort === FlightListSort.ScheduledOffBlockTime
+      ? { scheduledOffBlockTime: time }
+      : { actualOnBlockTime: time },
+    { createdAt: 'desc' },
+    { id: 'asc' },
+  ];
 }
 
 type FlightsWithCount = {
@@ -359,7 +382,7 @@ export class FlightsRepository {
         tracking: flightData.tracking,
         serviceType: flightData.serviceType,
         status: FlightStatus.Created,
-        timesheet: JSON.parse(JSON.stringify(flightData.timesheet)),
+        ...toTimesheetData(flightData.timesheet),
       },
     });
 
@@ -398,19 +421,7 @@ export class FlightsRepository {
       select: flightWithAircraftAndAirportsFields,
     });
 
-    if (!flight) {
-      return null;
-    }
-
-    const { isDiversionDeclared, isPathAvailable, delayRequest, ...rest } =
-      flight;
-    return {
-      ...rest,
-      aircraft: expandAircraftAirframe(flight.aircraft),
-      isFlightDiverted: isDiversionDeclared,
-      hasFlightPath: isPathAvailable,
-      isOffBlockDelayed: delayRequest !== null,
-    };
+    return flight ? toFlightResponse(flight) : null;
   }
 
   async getFlightTracking(id: string): Promise<FlightTracking | undefined> {
@@ -538,9 +549,8 @@ export class FlightsRepository {
       where.tracking = FlightTracking.Public;
     }
 
-    if (filters && filters.sort !== FlightListSort.CreatedAt) {
-      return this.findAllOrderedByTimesheet(where, filters, filters.sort);
-    }
+    const direction =
+      filters?.order === FlightListOrder.Ascending ? 'asc' : 'desc';
 
     const [flights, totalCount] = await Promise.all([
       this.prisma.flight.findMany({
@@ -548,47 +558,15 @@ export class FlightsRepository {
         select: flightWithAircraftAndAirportsFields,
         skip: filters ? (filters.page - 1) * filters.limit : undefined,
         take: filters ? filters.limit : undefined,
-        orderBy: {
-          createdAt:
-            filters?.order === FlightListOrder.Ascending ? 'asc' : 'desc',
-        },
+        orderBy:
+          filters && filters.sort !== FlightListSort.CreatedAt
+            ? timesheetOrder(filters.sort, direction)
+            : { createdAt: direction },
       }),
       this.prisma.flight.count({ where }),
     ]);
 
     return { flights: flights.map(toFlightResponse), totalCount };
-  }
-
-  private async findAllOrderedByTimesheet(
-    where: Prisma.FlightWhereInput,
-    filters: FlightListFilters,
-    sort: TimesheetSort,
-  ): Promise<FlightsWithCount> {
-    const candidates = await this.prisma.flight.findMany({
-      where,
-      select: { id: true, createdAt: true, timesheet: true },
-    });
-
-    const start = (filters.page - 1) * filters.limit;
-    const pageIds = candidates
-      .sort(compareFlightsByTimesheet(sort, filters.order))
-      .slice(start, start + filters.limit)
-      .map(({ id }) => id);
-
-    const flights = await this.prisma.flight.findMany({
-      where: { id: { in: pageIds } },
-      select: flightWithAircraftAndAirportsFields,
-    });
-    const flightsById = new Map(flights.map((flight) => [flight.id, flight]));
-
-    return {
-      flights: pageIds.flatMap((id) => {
-        const flight = flightsById.get(id);
-
-        return flight ? [toFlightResponse(flight)] : [];
-      }),
-      totalCount: candidates.length,
-    };
   }
 
   async findHistoryByAircraftId(
@@ -611,7 +589,10 @@ export class FlightsRepository {
       this.prisma.flight.count({ where }),
     ]);
 
-    return { flights, totalCount };
+    return {
+      flights: flights.map((flight) => withTimesheet(flight)),
+      totalCount,
+    };
   }
 
   async remove(id: string): Promise<void> {
@@ -679,12 +660,14 @@ export class FlightsRepository {
     });
   }
 
-  async updateTimesheet(id: string, timesheet: FullTimesheet): Promise<void> {
+  async updateSchedule(
+    id: string,
+    schedule: TimesheetScheduleName,
+    times: SchedulePatch,
+  ): Promise<void> {
     await this.prisma.flight.update({
       where: { id },
-      data: {
-        timesheet: JSON.parse(JSON.stringify(timesheet)),
-      },
+      data: toTimesheetColumns(schedule, times),
     });
   }
 
@@ -1195,7 +1178,6 @@ export class FlightsRepository {
       completedAt: flight.completedAt,
       greatCircleDistance: flight.greatCircleDistance,
       totalFuelBurned: flight.totalFuelBurned,
-      timesheet: flight.timesheet as FilledTimesheet,
     };
   }
 

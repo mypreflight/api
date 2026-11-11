@@ -1,5 +1,5 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
-import { IsDate, IsNotEmpty } from 'class-validator';
+import { IsDate, IsNotEmpty, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class Schedule {
@@ -56,6 +56,8 @@ export class ScheduledTimesheet {
     type: Schedule,
   })
   @IsNotEmpty()
+  @ValidateNested()
+  @Type(() => Schedule)
   scheduled!: Schedule;
 }
 
@@ -83,36 +85,8 @@ export class FullTimesheet extends PartialType(EstimatedTimesheet) {
   predicted?: Partial<Schedule>;
 }
 
-export type FilledTimesheet = {
-  [K in keyof FullTimesheet]: NonNullable<FullTimesheet[K]>;
-};
-
 export type SchedulePatch = {
   [K in keyof Schedule]?: Date | null;
-};
-
-const scheduleKeys: ReadonlyArray<keyof Schedule> = [
-  'offBlockTime',
-  'takeoffTime',
-  'arrivalTime',
-  'onBlockTime',
-];
-
-export const mergeSchedulePatch = (
-  current: Partial<Schedule> | undefined,
-  patch: SchedulePatch,
-): Partial<Schedule> => {
-  const result: Partial<Schedule> = { ...current };
-  for (const key of scheduleKeys) {
-    const value = patch[key];
-    if (value === undefined) continue;
-    if (value === null) {
-      delete result[key];
-    } else {
-      result[key] = value;
-    }
-  }
-  return result;
 };
 
 export const DEFAULT_FLIGHT_HOURS = 8;

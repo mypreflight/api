@@ -41,19 +41,16 @@ export class ReportOffBlockHandler implements ICommandHandler<ReportOffBlockComm
       throw new InvalidStatusToReportOffBlockError();
     }
 
-    const timesheet = flight.timesheet;
-    timesheet.actual = {
-      offBlockTime,
-      takeoffTime: null,
-      arrivalTime: null,
-      onBlockTime: null,
-    };
-
     await this.flightsRepository.updateStatus(
       flightId,
       FlightStatus.TaxiingOut,
     );
-    await this.flightsRepository.updateTimesheet(flightId, timesheet);
+    await this.flightsRepository.updateSchedule(flightId, 'actual', {
+      offBlockTime,
+      takeoffTime: null,
+      arrivalTime: null,
+      onBlockTime: null,
+    });
 
     this.domainEvents.emit(
       new OffBlockWasReportedEvent({

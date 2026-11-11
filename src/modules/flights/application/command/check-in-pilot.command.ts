@@ -56,16 +56,17 @@ export class CheckInPilotForFlightHandler implements ICommandHandler<CheckInPilo
     );
     await this.commandBus.execute(acknowledgeNotoc);
 
-    const timesheet = flight.timesheet;
-    timesheet.estimated = estimatedSchedule;
-
     await Promise.all([
       await this.flightsRepository.checkInCaptain(flightId, initiatorId),
       await this.flightsRepository.updateStatus(
         flightId,
         FlightStatus.CheckedIn,
       ),
-      await this.flightsRepository.updateTimesheet(flightId, timesheet),
+      await this.flightsRepository.updateSchedule(
+        flightId,
+        'estimated',
+        estimatedSchedule,
+      ),
     ]);
 
     await this.domainEvents.emitAsync(

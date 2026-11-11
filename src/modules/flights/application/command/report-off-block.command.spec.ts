@@ -32,7 +32,7 @@ describe('ReportOffBlockHandler', () => {
   let queryBus: { execute: jest.Mock };
   let flightsRepository: {
     updateStatus: jest.Mock;
-    updateTimesheet: jest.Mock;
+    updateSchedule: jest.Mock;
   };
   let domainEvents: { emit: jest.Mock };
   let handler: ReportOffBlockHandler;
@@ -43,7 +43,7 @@ describe('ReportOffBlockHandler', () => {
     };
     flightsRepository = {
       updateStatus: jest.fn(),
-      updateTimesheet: jest.fn(),
+      updateSchedule: jest.fn(),
     };
     domainEvents = { emit: jest.fn() };
     handler = new ReportOffBlockHandler(
@@ -82,8 +82,16 @@ describe('ReportOffBlockHandler', () => {
 
     await handler.execute(command);
 
-    const timesheet = flightsRepository.updateTimesheet.mock.calls[0][1];
-    expect(timesheet.actual.offBlockTime).toEqual(offBlockTime);
+    expect(flightsRepository.updateSchedule).toHaveBeenCalledWith(
+      FLIGHT_ID,
+      'actual',
+      {
+        offBlockTime,
+        takeoffTime: null,
+        arrivalTime: null,
+        onBlockTime: null,
+      },
+    );
 
     const event = domainEvents.emit.mock
       .calls[0][0] as OffBlockWasReportedEvent;
