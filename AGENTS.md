@@ -13,7 +13,7 @@ If this file or the code contradicts the knowledge base, the knowledge base take
 Anything about the product or business belongs in the knowledge base; this file keeps the engineering detail specific to this repo.
 
 - Run locally: `cp .env.dist .env`, then `docker compose up -d --build`. Packages, database schema and seed data are set up automatically. API docs are at <http://localhost/api>.
-- Test: `docker compose exec app npm run format`, then `npm run lint` and `npm run test:functional` (cucumber-js, `features/`) the same way. These are the steps CI runs.
+- Test: `docker compose exec app npm run format` (a Prettier check; `format:fix` writes), then `npm run lint`, `npm test` (Jest) and `npm run test:functional` (cucumber-js, `features/`) the same way. These are the steps CI runs.
 - Deploy: bump `package.json` `version` in every PR. Merging to `main` tags the version, pushes the image to GitHub Container Registry and deploys it to ECS on AWS through the OpenTofu stack in `infra/`. ECS starts the new task before it stops the old one, so for a minute or two both releases run against the same database. Every migration must work with the release before it: add a column or table in one release, and stop using it and drop it in a later one. Every `@Cron` job runs through `ScheduledJobs.runExclusively` (`src/core/scheduling/`), so only one copy runs each tick.
 - Links in Discord messages and emails are `FRONTEND_BASE_URL` plus a path from the web app's route table (`app/routes.ts` in `mypreflight/app`). In production the variable is set in the task definition (`infra/locals.tf`), and nothing here fails when the app renames a route, so check both when a link 404s.
 
