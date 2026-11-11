@@ -5,14 +5,8 @@ import {
   QueryBus,
 } from '@nestjs/cqrs';
 import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToFinishBoardingError,
-} from '../../model/error/flight.error';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { FlightLoadsheetsRepository } from '../../infra/database/repository/flight-loadsheets.repository';
-import { BoardingWasFinishedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { Loadsheet, LoadsheetKind } from '../../model/loadsheet.model';
@@ -51,16 +45,12 @@ export class FinishBoardingHandler implements ICommandHandler<FinishBoardingComm
 
   async execute(command: FinishBoardingCommand): Promise<void> {
     const { flightId, initiatorId, finalLoadsheet } = command;
+    const flight = await this.flightsRepository.load(flightId);
+
+    flight.finishBoarding({ id: initiatorId, scope: FlightEventScope.User });
+
     const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
-
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.BoardingStarted) {
-      throw new InvalidStatusToFinishBoardingError();
-    }
+    const details = await this.queryBus.execute(query);
 
     const currentQuery = new GetCurrentLoadsheetQuery(
       flightId,
@@ -84,18 +74,18 @@ export class FinishBoardingHandler implements ICommandHandler<FinishBoardingComm
     );
     await this.commandBus.execute(reconcileManifest);
 
-    const departure = flight.airports.find(
+    const departure = details.airports.find(
       (airport) => airport.type === AirportType.Departure,
     );
-    const arrival = flight.airports.find(
+    const arrival = details.airports.find(
       (airport) => airport.type === AirportType.Destination,
     );
 
     if (departure && arrival) {
       const reconcileCargoManifest = new ReconcileFlightCargoManifestCommand(
         flightId,
-        flight.aircraft.id,
-        flight.operator.iataCode,
+        details.aircraft.id,
+        details.operator.iataCode,
         planned.cargo,
         planned.passengers,
         {
@@ -108,10 +98,10 @@ export class FinishBoardingHandler implements ICommandHandler<FinishBoardingComm
           country: arrival.country.code,
           continent: arrival.continent,
         },
-        flight.timesheet.scheduled?.offBlockTime
-          ? new Date(flight.timesheet.scheduled.offBlockTime)
+        details.timesheet.scheduled?.offBlockTime
+          ? new Date(details.timesheet.scheduled.offBlockTime)
           : new Date(),
-        scheduledFlightHours(flight.timesheet.scheduled),
+        scheduledFlightHours(details.timesheet.scheduled),
       );
       await this.commandBus.execute(reconcileCargoManifest);
 
@@ -134,17 +124,7 @@ export class FinishBoardingHandler implements ICommandHandler<FinishBoardingComm
     }
 
     await this.loadsheetsRepository.issueFinal(flightId, planned, initiatorId);
-    await this.flightsRepository.updateStatus(
-      flightId,
-      FlightStatus.BoardingFinished,
-    );
-
-    this.domainEvents.emit(
-      new BoardingWasFinishedEvent({
-        flightId: flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-      }),
-    );
+    await this.flightsRepository.save(flight);
+    this.domainEvents.emitRecorded(flight);
   }
 }

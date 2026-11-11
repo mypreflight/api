@@ -1,6 +1,7 @@
 import { DetectTakeoffListener } from './detect-takeoff.listener';
 import { ReportTakeoffCommand } from '../../command/report-takeoff.command';
 import { FlightStatus } from '../../../model/flight.model';
+import { flightIn } from '../../../model/flight.fixture';
 import { AirportType } from '../../../../airports/model/airport.model';
 import {
   FlightEventScope,
@@ -40,7 +41,6 @@ const secondOutsidePoint = {
 function flight(overrides: Record<string, unknown> = {}) {
   return {
     id: FLIGHT_ID,
-    status: FlightStatus.TaxiingOut,
     airports: [
       { type: AirportType.Departure, shape: PERIMETER },
       { type: AirportType.Destination, shape: PERIMETER },
@@ -52,13 +52,16 @@ function flight(overrides: Record<string, unknown> = {}) {
 describe('DetectTakeoffListener', () => {
   let queryBus: { execute: jest.Mock };
   let commandBus: { execute: jest.Mock };
-  let flightsRepository: { getFlightPath: jest.Mock };
+  let flightsRepository: { getFlightPath: jest.Mock; load: jest.Mock };
   let listener: DetectTakeoffListener;
 
   beforeEach(() => {
     queryBus = { execute: jest.fn() };
     commandBus = { execute: jest.fn() };
-    flightsRepository = { getFlightPath: jest.fn() };
+    flightsRepository = {
+      getFlightPath: jest.fn(),
+      load: jest.fn().mockResolvedValue(flightIn(FlightStatus.TaxiingOut)),
+    };
     listener = new DetectTakeoffListener(
       queryBus as never,
       commandBus as never,
@@ -93,12 +96,11 @@ describe('DetectTakeoffListener', () => {
   });
 
   it('does nothing when the flight is not taxiing out', async () => {
-    queryBus.execute.mockResolvedValue(
-      flight({ status: FlightStatus.InCruise }),
-    );
+    flightsRepository.load.mockResolvedValue(flightIn(FlightStatus.InCruise));
 
     await listener.onFlightPathWasUpdated(event);
 
+    expect(queryBus.execute).not.toHaveBeenCalled();
     expect(flightsRepository.getFlightPath).not.toHaveBeenCalled();
     expect(commandBus.execute).not.toHaveBeenCalled();
   });

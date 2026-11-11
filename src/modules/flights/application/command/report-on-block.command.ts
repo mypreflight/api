@@ -1,17 +1,8 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToReportOnBlockError,
-} from '../../model/error/flight.error';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { DiversionRepository } from '../../infra/database/repository/diversion.repository';
-import { OnBlockWasReportedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
-import { AirportType } from '../../../airports/model/airport.model';
-import { minutesBetween } from '../../infra/helper/dates';
 
 export class ReportOnBlockCommand {
   constructor(
@@ -23,7 +14,6 @@ export class ReportOnBlockCommand {
 @CommandHandler(ReportOnBlockCommand)
 export class ReportOnBlockHandler implements ICommandHandler<ReportOnBlockCommand> {
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly flightsRepository: FlightsRepository,
     private readonly diversionRepository: DiversionRepository,
     private readonly domainEvents: DomainEventEmitter,
@@ -31,51 +21,19 @@ export class ReportOnBlockHandler implements ICommandHandler<ReportOnBlockComman
 
   async execute(command: ReportOnBlockCommand): Promise<void> {
     const { flightId, initiatorId } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.TaxiingIn) {
-      throw new InvalidStatusToReportOnBlockError();
-    }
-
-    const actual = { ...flight.timesheet.actual, onBlockTime: new Date() };
-
-    await this.flightsRepository.updateStatus(flightId, FlightStatus.OnBlock);
-    await this.flightsRepository.updateSchedule(flightId, 'actual', {
-      onBlockTime: actual.onBlockTime,
-    });
-
-    await this.flightsRepository.updateCompletionFacts(flightId, {
-      actualAirborneMinutes: minutesBetween(
-        actual.takeoffTime,
-        actual.arrivalTime,
-      ),
-      actualBlockMinutes: minutesBetween(
-        actual.offBlockTime,
-        actual.onBlockTime,
-      ),
-      completedAt: actual.onBlockTime,
-    });
-
-    const landingAirportId = flight.isFlightDiverted
+    const diversionAirportId = flight.isDiverted
       ? (await this.diversionRepository.get(flightId)).airport.id
-      : flight.airports.find(
-          (airport) => airport.type === AirportType.Destination,
-        )!.id;
+      : null;
 
-    await this.domainEvents.emitAsync(
-      new OnBlockWasReportedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-        aircraftId: flight.aircraft.id,
-        landingAirportId,
-        airportIds: flight.airports.map((airport) => airport.id),
-      }),
+    flight.reportOnBlock(
+      { id: initiatorId, scope: FlightEventScope.User },
+      new Date(),
+      diversionAirportId,
     );
+
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "flight-tracker-api",
-  "version": "3.82.1",
+  "version": "3.83.0",
   "private": true,
   "homepage": "https://mypreflight.io",
   "author": "mypreflight",
@@ -12,7 +12,7 @@
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/src/main",
-    "format": "prettier .",
+    "format": "prettier --check .",
     "format:fix": "prettier --write .",
     "typecheck": "tsc --noEmit",
     "lint": "eslint '{src,features,prisma,test}/**/*.ts'",

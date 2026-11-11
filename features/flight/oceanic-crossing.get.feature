@@ -16,15 +16,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "NICSO 48N050W 50N040W 53N030W 54N020W DOGAL BEXET",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -71,15 +63,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "PORTI 47N050W 49N040W 52N030W 53N020W MALOT GISTI",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -126,15 +110,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "SUPRY 46N050W 48N040W 51N030W 52N020W LIMRI XETBO",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -181,15 +157,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "RAFIN 45N050W 47N040W 50N030W 51N020W DINIM ELSOX",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -236,15 +204,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "SOORY 43N050W 46N040W 49N030W 50N020W SOMAX ATSUR",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -291,15 +251,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "SUNOT 58N020W 57N030W 5530N04000W 54N050W NEEKO",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -341,15 +293,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "PIKIL 57N020W 5630N03000W 55N040W 5330N05000W PELTU",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -391,15 +335,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "RESNO 56N020W 56N030W 5430N04000W 53N050W RIKAL",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -441,15 +377,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "DOGAL 55N020W 55N030W 54N040W 5230N05000W SAXAN",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -491,15 +419,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "MALOT 54N020W 5430N03000W 5330N04000W 52N050W TUDEP",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -541,15 +461,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "LIMRI 53N020W 54N030W 53N040W 5130N05000W UMESI",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -591,15 +503,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "DINIM 52N020W 5330N03000W 5230N04000W 51N050W ALLRY",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -656,15 +560,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "NICSO 48N050W 50N040W 53N030W 54N020W DOGAL BEXET",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -711,15 +607,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "PORTI 47N050W 49N040W 52N030W 53N020W MALOT GISTI",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -766,15 +654,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "SUPRY 46N050W 48N040W 51N030W 52N020W LIMRI XETBO",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -821,15 +701,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "RAFIN 45N050W 47N040W 50N030W 51N020W DINIM ELSOX",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -876,15 +748,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "247",
             "issuingOca": "CZQX",
             "route": "SOORY 43N050W 46N040W 49N030W 50N020W SOMAX ATSUR",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-04T01:00:00.000Z",
             "validTo": "2026-09-04T08:00:00.000Z",
             "fixes": [
@@ -931,15 +795,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "SUNOT 58N020W 57N030W 5530N04000W 54N050W NEEKO",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -981,15 +837,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "PIKIL 57N020W 5630N03000W 55N040W 5330N05000W PELTU",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -1031,15 +879,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "RESNO 56N020W 56N030W 5430N04000W 53N050W RIKAL",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -1081,15 +921,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "DOGAL 55N020W 55N030W 54N040W 5230N05000W SAXAN",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -1131,15 +963,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "MALOT 54N020W 5430N03000W 5330N04000W 52N050W TUDEP",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -1181,15 +1005,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "LIMRI 53N020W 54N030W 53N040W 5130N05000W UMESI",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [
@@ -1231,15 +1047,7 @@ Feature: Read the oceanic crossing a flight was planned against
             "tmi": "246",
             "issuingOca": "EGGX",
             "route": "DINIM 52N020W 5330N03000W 5230N04000W 51N050W ALLRY",
-            "levels": [
-              340,
-              350,
-              360,
-              370,
-              380,
-              390,
-              400
-            ],
+            "levels": [340, 350, 360, 370, 380, 390, 400],
             "validFrom": "2026-09-03T11:30:00.000Z",
             "validTo": "2026-09-03T19:00:00.000Z",
             "fixes": [

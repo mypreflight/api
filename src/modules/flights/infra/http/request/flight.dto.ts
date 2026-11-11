@@ -1,4 +1,7 @@
-import { ScheduledTimesheet } from '../../../model/timesheet.model';
+import {
+  FullTimesheet,
+  ScheduledTimesheet,
+} from '../../../model/timesheet.model';
 import {
   ApiProperty,
   ApiPropertyOptional,
@@ -8,6 +11,7 @@ import {
 } from '@nestjs/swagger';
 import {
   IsArray,
+  IsBoolean,
   IsDate,
   IsEnum,
   IsInt,
@@ -24,13 +28,228 @@ import {
 import { Loadsheet } from '../../../model/loadsheet.model';
 import { Type } from 'class-transformer';
 import {
-  Flight,
   FlightListOrder,
   FlightListSort,
   FlightPhase,
+  FlightServiceType,
+  FlightSource,
+  FlightStatus,
+  FlightTracking,
 } from '../../../model/flight.model';
-import { AirportType } from '../../../../airports/model/airport.model';
+import {
+  AirportType,
+  AirportWithType,
+} from '../../../../airports/model/airport.model';
+import { Operator } from '../../../../operators/model/operator.model';
+import { LegacyCreateAircraftResponse } from '../../../../aircraft/infra/http/request/aircraft.request';
+import { ShortOperatorResponse } from './operator.request';
 import { FlightPilotDto } from '../../../../users/infra/http/request/get-user.dto';
+
+export class FlightDto {
+  @ApiProperty({
+    description: 'Flight unique system identifier',
+    example: 'bd8f2d64-a647-42da-be63-c6589915e6c9',
+  })
+  id!: string;
+
+  @ApiProperty({
+    description: 'Flight number used by ticketing systems',
+    example: 'LH450',
+  })
+  @IsNotEmpty()
+  @IsString()
+  flightNumber!: string;
+
+  @ApiProperty({
+    description: 'Callsign used by airline internal systems',
+    example: 'DLH450',
+  })
+  @IsNotEmpty()
+  @IsString()
+  callsign!: string;
+
+  @ApiProperty({
+    description: 'Callsign used by air traffic services',
+    example: 'DLH5PJ',
+    required: false,
+    nullable: true,
+    default: null,
+    type: String,
+  })
+  @IsOptional()
+  @IsNotEmpty()
+  @IsString()
+  atcCallsign?: string | null = null;
+
+  @ApiProperty({
+    description: 'Flag whether flight covered by ETOPS procedures',
+    example: false,
+    required: false,
+    default: false,
+  })
+  @IsBoolean()
+  isEtops: boolean = false;
+
+  @ApiProperty({
+    description: 'Flight status',
+    example: FlightStatus.Created,
+    enum: FlightStatus,
+  })
+  status!: FlightStatus;
+
+  @ApiProperty({
+    description: 'Aircraft system unique identifier',
+    example: 'fe75ec7d-afbe-4514-a935-40c54f475278',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID(4)
+  aircraftId!: string;
+
+  @ApiProperty({
+    description: 'Aircraft reported for flight',
+  })
+  aircraft!: LegacyCreateAircraftResponse;
+
+  @ApiProperty({
+    description: 'Airports related to the flight',
+  })
+  airports!: AirportWithType[];
+
+  @ApiProperty({
+    description: 'Timesheet',
+  })
+  timesheet!: FullTimesheet;
+
+  @ApiProperty({
+    description: 'Operator system unique identifier',
+    example: 'fe75ec7d-afbe-4514-a935-40c54f475278',
+  })
+  @IsString()
+  @IsNotEmpty()
+  @IsUUID(4)
+  operatorId!: string;
+
+  @ApiProperty({
+    description: 'Flight operator',
+    type: Operator,
+  })
+  operator!: ShortOperatorResponse;
+
+  @ApiProperty({
+    description: 'Source how flight was created',
+    type: 'string',
+    enum: FlightSource,
+  })
+  source!: FlightSource;
+
+  @ApiProperty({
+    description:
+      'Flight tracking settings <br />' +
+      '**public**: flight can be tracked by anyone and will be listed. <br>' +
+      '**private**: flight can be tracked by people having a dedicated link, flight will not be listed.<br>' +
+      '**disabled**: flight cannot be tracked online.',
+    enum: FlightTracking,
+    example: FlightTracking.Private,
+  })
+  @IsEnum(FlightTracking)
+  @IsString()
+  tracking: FlightTracking = FlightTracking.Private;
+
+  @ApiProperty({
+    description:
+      'Kind of service the flight operates <br />' +
+      '**passenger**: flight carries passengers.<br />' +
+      '**cargo**: flight carries freight only.',
+    enum: FlightServiceType,
+    example: FlightServiceType.Passenger,
+    default: FlightServiceType.Passenger,
+  })
+  @IsEnum(FlightServiceType)
+  @IsString()
+  serviceType: FlightServiceType = FlightServiceType.Passenger;
+
+  @ApiProperty({
+    description: 'Departure parking position unique identifier',
+    example: 'ad5a6ebd-dad8-4400-8bb4-b7cee3b00fa9',
+    required: false,
+    nullable: true,
+    default: null,
+    type: String,
+  })
+  departureParkingPositionId!: string | null;
+
+  @ApiProperty({
+    description: 'Departure runway unique identifier',
+    example: '32121288-2550-4b81-a558-9a7193ef6c97',
+    required: false,
+    nullable: true,
+    default: null,
+    type: String,
+  })
+  departureRunwayId!: string | null;
+
+  @ApiProperty({
+    description: 'Arrival parking position unique identifier',
+    example: 'ad5a6ebd-dad8-4400-8bb4-b7cee3b00fa9',
+    required: false,
+    nullable: true,
+    default: null,
+    type: String,
+  })
+  arrivalParkingPositionId!: string | null;
+
+  @ApiProperty({
+    description: 'Arrival runway unique identifier',
+    example: '32121288-2550-4b81-a558-9a7193ef6c97',
+    required: false,
+    nullable: true,
+    default: null,
+    type: String,
+  })
+  arrivalRunwayId!: string | null;
+
+  @ApiProperty({
+    description: 'Flag if flight was diverted',
+    example: false,
+  })
+  isFlightDiverted!: boolean;
+
+  @ApiProperty({
+    description:
+      'Flag if any emergency was declared on this flight during its lifecycle',
+    example: false,
+  })
+  isEmergencyDeclared!: boolean;
+
+  @ApiProperty({
+    description:
+      'Flag if a flight path has been recorded for this flight and can be retrieved from the flight path endpoint',
+    example: false,
+  })
+  hasFlightPath!: boolean;
+
+  @ApiProperty({
+    description:
+      'Flag if an off-block delay has been recorded for this flight and can be retrieved from the flight delay endpoint',
+    example: false,
+  })
+  isOffBlockDelayed!: boolean;
+
+  @ApiProperty({
+    description:
+      'Flag if a notification to captain has been issued for this flight and can be retrieved from the flight notoc endpoint',
+    example: false,
+  })
+  hasNotoc!: boolean;
+
+  @ApiProperty({
+    description: 'Timestamp when the flight record was created',
+    example: '2025-01-01T00:00:00.000Z',
+    type: 'string',
+  })
+  createdAt!: Date;
+}
 
 export class AlternateAirportRequest {
   @ApiProperty({
@@ -49,7 +268,7 @@ export class AlternateAirportRequest {
   type!: AirportType;
 }
 
-export class CreateFlightRequest extends OmitType(Flight, [
+export class CreateFlightRequest extends OmitType(FlightDto, [
   'id',
   'status',
   'aircraft',
@@ -120,7 +339,7 @@ export class CreateFlightRequest extends OmitType(Flight, [
   alternateAirports?: AlternateAirportRequest[];
 }
 
-export class GetFlightResponse extends OmitType(Flight, [
+export class GetFlightResponse extends OmitType(FlightDto, [
   'aircraftId',
   'operatorId',
 ]) {
@@ -184,12 +403,12 @@ export class FlightListFilters {
   order: FlightListOrder = FlightListOrder.Descending;
 }
 
-export class UpdateFlightVisibilityRequest extends PickType(Flight, [
+export class UpdateFlightVisibilityRequest extends PickType(FlightDto, [
   'tracking',
 ]) {}
 
 export class UpdateFlightRequest extends PartialType(
-  PickType(Flight, ['serviceType']),
+  PickType(FlightDto, ['serviceType']),
 ) {}
 
 export class UpdateAtcCallsignRequest {

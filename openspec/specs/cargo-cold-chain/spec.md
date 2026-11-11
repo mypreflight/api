@@ -7,7 +7,9 @@ there, then compute the exposure it faces across the whole journey — build-up,
 connection and onward flight — against that solution's endurance. Covers the risk level and the
 plain-language reasoning reported with it, the ambient temperature at an exposed airport, and
 the fact that the assessment is advice and never a constraint.
+
 ## Requirements
+
 ### Requirement: A temperature-controlled shipment declares its regime and its solution
 
 The system SHALL record for every temperature-controlled shipment the temperature range it must
@@ -143,4 +145,3 @@ regime SHALL neither be blocked nor block anything.
 - **GIVEN** a flight whose hold already carries a frozen consignment in a passive container
 - **WHEN** boarding finishes with a higher cargo tonnage and freight is added
 - **THEN** no compartment ends up carrying two different temperature regimes outside self-refrigerated containers
-

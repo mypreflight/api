@@ -1,11 +1,4 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  InvalidStatusToMarkAsReadyError,
-  PreliminaryLoadsheetMissingError,
-} from '../../model/error/flight.error';
-import { FlightWasReleasedEvent } from '../../../../core/domain/events/dto/flight.events';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightEventScope } from '../../model/event.model';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { FlightLoadsheetsRepository } from '../../infra/database/repository/flight-loadsheets.repository';
@@ -22,7 +15,6 @@ export class MarkAsReadyCommand {
 @CommandHandler(MarkAsReadyCommand)
 export class MarkFlightAsReadyHandler implements ICommandHandler<MarkAsReadyCommand> {
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly flightsRepository: FlightsRepository,
     private readonly loadsheetsRepository: FlightLoadsheetsRepository,
     private readonly domainEvents: DomainEventEmitter,
@@ -30,30 +22,19 @@ export class MarkFlightAsReadyHandler implements ICommandHandler<MarkAsReadyComm
 
   async execute(command: MarkAsReadyCommand): Promise<void> {
     const { flightId, initiatorId } = command;
+    const flight = await this.flightsRepository.load(flightId);
 
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
-
-    if (flight.status !== FlightStatus.Created) {
-      throw new InvalidStatusToMarkAsReadyError();
-    }
-
-    const hasPreliminary = await this.loadsheetsRepository.hasAny(
+    const hasPreliminaryLoadsheet = await this.loadsheetsRepository.hasAny(
       flightId,
       LoadsheetKind.Preliminary,
     );
 
-    if (!hasPreliminary) {
-      throw new PreliminaryLoadsheetMissingError();
-    }
-
-    await this.flightsRepository.updateStatus(flightId, FlightStatus.Ready);
-    await this.domainEvents.emitAsync(
-      new FlightWasReleasedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-      }),
+    flight.markAsReady(
+      { id: initiatorId, scope: FlightEventScope.User },
+      hasPreliminaryLoadsheet,
     );
+
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

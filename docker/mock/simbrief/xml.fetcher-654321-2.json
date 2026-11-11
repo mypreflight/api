@@ -97,12 +97,7 @@
     "fo": "ALBERTO HOLCOMB",
     "dx": "STEVE HOLCOMB",
     "pu": "KATRINA LIVINGSTON",
-    "fa": [
-      "VIRGIL RIVERS",
-      "LELA VAUGHN",
-      "CLARA REEVES",
-      "GREGG SIMON"
-    ]
+    "fa": ["VIRGIL RIVERS", "LELA VAUGHN", "CLARA REEVES", "GREGG SIMON"]
   },
   "files": {
     "directory": "https://www.simbrief.com/ofp/flightplans/",

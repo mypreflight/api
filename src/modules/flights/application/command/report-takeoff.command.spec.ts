@@ -8,58 +8,58 @@ import {
   FlightEventScope,
   TakeoffWasReportedEvent,
 } from '../../../../core/domain/events/dto/flight.events';
+import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
+import { Flight } from '../../model/flight';
+import {
+  FIXTURE_FLIGHT_ID,
+  flightIn,
+  flightSnapshot,
+} from '../../model/flight.fixture';
 
-const FLIGHT_ID = '7105891a-8008-4b47-b473-c81c97615ad7';
+const OFF_BLOCK_TIME = new Date('2025-01-01T13:10:00.000Z');
 
-function taxiingOutFlight() {
-  return {
-    id: FLIGHT_ID,
-    status: FlightStatus.TaxiingOut,
+function taxiingOutFlight(): Flight {
+  return flightIn(FlightStatus.TaxiingOut, {
     timesheet: {
+      ...flightSnapshot().timesheet,
       actual: {
-        offBlockTime: new Date('2025-01-01T13:10:00.000Z'),
+        offBlockTime: OFF_BLOCK_TIME,
         takeoffTime: null,
         arrivalTime: null,
         onBlockTime: null,
       },
     },
-  };
+  });
 }
 
 describe('ReportTakeoffHandler', () => {
-  let queryBus: { execute: jest.Mock };
-  let flightsRepository: {
-    updateStatus: jest.Mock;
-    updateSchedule: jest.Mock;
-  };
-  let domainEvents: { emitAsync: jest.Mock };
+  let flightsRepository: { load: jest.Mock; save: jest.Mock };
+  let emitter: { emitAsync: jest.Mock };
   let handler: ReportTakeoffHandler;
 
+  const saved = (): Flight => flightsRepository.save.mock.calls[0][0];
+  const emitted = () =>
+    emitter.emitAsync.mock.calls[0][1] as TakeoffWasReportedEvent;
+
   beforeEach(() => {
-    queryBus = { execute: jest.fn().mockResolvedValue(taxiingOutFlight()) };
     flightsRepository = {
-      updateStatus: jest.fn(),
-      updateSchedule: jest.fn(),
+      load: jest.fn().mockResolvedValue(taxiingOutFlight()),
+      save: jest.fn(),
     };
-    domainEvents = { emitAsync: jest.fn() };
+    emitter = { emitAsync: jest.fn() };
     handler = new ReportTakeoffHandler(
-      queryBus as never,
       flightsRepository as never,
-      domainEvents as never,
+      new DomainEventEmitter(emitter as never),
     );
   });
 
   it('reports a manual takeoff as a user-scoped event flagged not automatic', async () => {
-    const command = new ReportTakeoffCommand(FLIGHT_ID, 'actor-1');
-
-    await handler.execute(command);
-
-    expect(flightsRepository.updateStatus).toHaveBeenCalledWith(
-      FLIGHT_ID,
-      FlightStatus.InCruise,
+    await handler.execute(
+      new ReportTakeoffCommand(FIXTURE_FLIGHT_ID, 'actor-1'),
     );
-    const event = domainEvents.emitAsync.mock
-      .calls[0][0] as TakeoffWasReportedEvent;
+
+    expect(saved().status).toBe(FlightStatus.InCruise);
+    const event = emitted();
     expect(event).toBeInstanceOf(TakeoffWasReportedEvent);
     expect(event.payload.scope).toBe(FlightEventScope.User);
     expect(event.payload.actorId).toBe('actor-1');
@@ -69,7 +69,7 @@ describe('ReportTakeoffHandler', () => {
   it('reports an automatic takeoff as a user-scoped event with no actor and the backdated time', async () => {
     const takeoffTime = new Date('2025-01-01T13:14:00.000Z');
     const command = new ReportTakeoffCommand(
-      FLIGHT_ID,
+      FIXTURE_FLIGHT_ID,
       null,
       takeoffTime,
       true,
@@ -77,28 +77,25 @@ describe('ReportTakeoffHandler', () => {
 
     await handler.execute(command);
 
-    expect(flightsRepository.updateSchedule).toHaveBeenCalledWith(
-      FLIGHT_ID,
-      'actual',
-      { takeoffTime },
-    );
-
-    const event = domainEvents.emitAsync.mock
-      .calls[0][0] as TakeoffWasReportedEvent;
+    expect(saved().snapshot().timesheet.actual).toEqual({
+      offBlockTime: OFF_BLOCK_TIME,
+      takeoffTime,
+      arrivalTime: null,
+      onBlockTime: null,
+    });
+    const event = emitted();
     expect(event.payload.scope).toBe(FlightEventScope.User);
     expect(event.payload.actorId).toBeNull();
     expect(event.payload.payload).toEqual({ automaticallyDetected: true });
   });
 
   it('rejects takeoff when the flight is not taxiing out', async () => {
-    queryBus.execute.mockResolvedValue({
-      ...taxiingOutFlight(),
-      status: FlightStatus.InCruise,
-    });
+    flightsRepository.load.mockResolvedValue(flightIn(FlightStatus.InCruise));
 
     await expect(
-      handler.execute(new ReportTakeoffCommand(FLIGHT_ID, 'actor-1')),
+      handler.execute(new ReportTakeoffCommand(FIXTURE_FLIGHT_ID, 'actor-1')),
     ).rejects.toBeInstanceOf(InvalidStatusToReportTakenOffError);
-    expect(domainEvents.emitAsync).not.toHaveBeenCalled();
+    expect(flightsRepository.save).not.toHaveBeenCalled();
+    expect(emitter.emitAsync).not.toHaveBeenCalled();
   });
 });

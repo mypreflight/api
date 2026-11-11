@@ -107,3 +107,16 @@ export const scheduledFlightHours = (
     ? Math.round((minutes / 60) * 10) / 10
     : DEFAULT_FLIGHT_HOURS;
 };
+
+export function minutesBetween(
+  from: Date | null | undefined,
+  to: Date | null | undefined,
+): number | null {
+  if (!from || !to) {
+    return null;
+  }
+
+  const minutes = (new Date(to).getTime() - new Date(from).getTime()) / 60000;
+
+  return Math.round(minutes);
+}

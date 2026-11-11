@@ -1,12 +1,5 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToReportOffBlockError,
-} from '../../model/error/flight.error';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import { OffBlockWasReportedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 
@@ -22,7 +15,6 @@ export class ReportOffBlockCommand {
 @CommandHandler(ReportOffBlockCommand)
 export class ReportOffBlockHandler implements ICommandHandler<ReportOffBlockCommand> {
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly flightsRepository: FlightsRepository,
     private readonly domainEvents: DomainEventEmitter,
   ) {}
@@ -30,36 +22,15 @@ export class ReportOffBlockHandler implements ICommandHandler<ReportOffBlockComm
   async execute(command: ReportOffBlockCommand): Promise<void> {
     const { flightId, initiatorId, offBlockTime, automaticallyDetected } =
       command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.BoardingFinished) {
-      throw new InvalidStatusToReportOffBlockError();
-    }
-
-    await this.flightsRepository.updateStatus(
-      flightId,
-      FlightStatus.TaxiingOut,
-    );
-    await this.flightsRepository.updateSchedule(flightId, 'actual', {
+    flight.reportOffBlock(
+      { id: initiatorId, scope: FlightEventScope.User },
       offBlockTime,
-      takeoffTime: null,
-      arrivalTime: null,
-      onBlockTime: null,
-    });
-
-    this.domainEvents.emit(
-      new OffBlockWasReportedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-        aircraftId: flight.aircraft.id,
-        payload: { automaticallyDetected },
-      }),
+      automaticallyDetected,
     );
+
+    await this.flightsRepository.save(flight);
+    this.domainEvents.emitRecorded(flight);
   }
 }

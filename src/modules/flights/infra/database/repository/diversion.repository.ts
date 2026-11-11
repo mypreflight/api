@@ -13,18 +13,12 @@ import {
   DiversionReporterRole,
   DiversionSeverity,
 } from '../../../model/diversion.model';
-import { FlightStatus } from '../../../model/flight.model';
 import {
   Continent,
   Coordinates,
   DataQuality,
 } from '../../../../airports/model/airport.model';
-import { FlightDoesNotExistError } from '../../../model/error/flight.error';
-import {
-  ActiveDiversionAlreadyExistsError,
-  DiversionNotFoundError,
-  InvalidStatusToReportDiversionError,
-} from '../../../model/error/diversion.error';
+import { DiversionNotFoundError } from '../../../model/error/diversion.error';
 import { toCountryRef } from '../../../../countries/model/country.model';
 
 const diversionWithPayloadQuery = {
@@ -67,25 +61,6 @@ export class DiversionRepository {
     currentUser: JwtUser,
     data: ReportDiversionRequest,
   ): Promise<void> {
-    if (await this.existsActiveDiversion(flightId)) {
-      throw new ActiveDiversionAlreadyExistsError();
-    }
-
-    const flight = await this.prisma.flight.findUnique({
-      where: { id: flightId },
-    });
-
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (
-      flight.status !== FlightStatus.InCruise &&
-      flight.status !== FlightStatus.TaxiingOut
-    ) {
-      throw new InvalidStatusToReportDiversionError();
-    }
-
     const reporterRole: DiversionReporterRole =
       currentUser.role === UserRole.CabinCrew
         ? DiversionReporterRole.Crew

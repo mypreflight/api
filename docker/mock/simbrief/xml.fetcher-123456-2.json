@@ -326,12 +326,7 @@
     "fo": "ALBERTO HOLCOMB",
     "dx": "STEVE HOLCOMB",
     "pu": "KATRINA LIVINGSTON",
-    "fa": [
-      "VIRGIL RIVERS",
-      "LELA VAUGHN",
-      "CLARA REEVES",
-      "GREGG SIMON"
-    ]
+    "fa": ["VIRGIL RIVERS", "LELA VAUGHN", "CLARA REEVES", "GREGG SIMON"]
   },
   "files": {
     "directory": "https://www.simbrief.com/ofp/flightplans/",
@@ -2083,9 +2078,6 @@
   "atc": {
     "callsign": "DLH5PJ",
     "route": "N0480F350 TOBAK1C TOBAK UZ29 SPI UL607 LAMSO/N0478F360 UN57 DIGBY UN546 LAPEX/N0476F370 NATA JANJO DCT HOIST DCT YYT DCT KANNI DCT BOSOX DCT CCC ROBER1",
-    "fir_etops": [
-      "EGGX",
-      "CZQX"
-    ]
+    "fir_etops": ["EGGX", "CZQX"]
   }
 }

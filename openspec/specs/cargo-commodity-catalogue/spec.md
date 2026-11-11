@@ -7,7 +7,9 @@ handling codes, density, piece ranges, offload priority, seasonality and the air
 countries or continents it comes from. Covers the rules for selecting which of them a flight
 is offered, resolving its departure airport against the source tiers and its departure date
 against the season, and the density that decides how a commodity fills a container.
+
 ## Requirements
+
 ### Requirement: The system carries a catalogue of one hundred commodities
 
 The system SHALL hold curated reference data describing one hundred distinct commodities that
@@ -175,4 +177,3 @@ catalogue offers such freight.
 
 - **WHEN** cargo manifests are generated across the seeded fleet
 - **THEN** the majority report no dangerous goods
-

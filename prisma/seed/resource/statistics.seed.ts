@@ -1,7 +1,7 @@
 import { v4 } from 'uuid';
 import { Prisma } from '../../client/client';
 import { computeProjections } from '../../../src/modules/statistics/model/compute-projections';
-import { minutesBetween } from '../../../src/modules/flights/infra/helper/dates';
+import { minutesBetween } from '../../../src/modules/flights/model/timesheet.model';
 import type { CaptainFlightFact } from '../../../src/modules/flights/infra/database/repository/flights.repository';
 
 /**

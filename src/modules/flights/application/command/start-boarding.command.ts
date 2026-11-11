@@ -1,12 +1,5 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToStartBoardingError,
-} from '../../model/error/flight.error';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import { BoardingWasStartedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { GetUserGsxSettingsQuery } from '../../../users/application/query/get-user-gsx-settings.query';
@@ -30,16 +23,7 @@ export class StartBoardingHandler implements ICommandHandler<StartBoardingComman
 
   async execute(command: StartBoardingCommand): Promise<void> {
     const { flightId, initiatorId, requestedByGsx } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
-
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.CheckedIn) {
-      throw new InvalidStatusToStartBoardingError();
-    }
+    const flight = await this.flightsRepository.load(flightId);
 
     const settingsQuery = new GetUserGsxSettingsQuery(initiatorId);
     const settings = await this.queryBus.execute(settingsQuery);
@@ -48,17 +32,12 @@ export class StartBoardingHandler implements ICommandHandler<StartBoardingComman
       settings.integrationEnabled && settings.autoBoardingEnabled,
     );
 
-    await this.flightsRepository.updateStatus(
-      flightId,
-      FlightStatus.BoardingStarted,
+    flight.startBoarding(
+      { id: initiatorId, scope: FlightEventScope.User },
+      source,
     );
-    this.domainEvents.emit(
-      new BoardingWasStartedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-        payload: { source },
-      }),
-    );
+
+    await this.flightsRepository.save(flight);
+    this.domainEvents.emitRecorded(flight);
   }
 }

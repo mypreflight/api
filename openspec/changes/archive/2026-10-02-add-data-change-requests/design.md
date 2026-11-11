@@ -67,10 +67,10 @@ survives the deletion. `withdrawn` is a status rather than a hard delete for the
 ```ts
 interface ChangeRequestTarget<P> {
   resource: ChangeRequestResource;
-  fields: readonly string[];                                   // whitelist; also the order fields are reported in
-  validate(targetId: string, changes: P): Promise<void>;       // existence checks via QueryBus, run at submission
-  read(targetId: string): Promise<Record<keyof P, unknown>>;   // via QueryBus; throws ChangeRequestTargetNotFoundError
-  apply(targetId: string, payload: P): Promise<void>;          // via CommandBus to the owning module
+  fields: readonly string[]; // whitelist; also the order fields are reported in
+  validate(targetId: string, changes: P): Promise<void>; // existence checks via QueryBus, run at submission
+  read(targetId: string): Promise<Record<keyof P, unknown>>; // via QueryBus; throws ChangeRequestTargetNotFoundError
+  apply(targetId: string, payload: P): Promise<void>; // via CommandBus to the owning module
 }
 ```
 
@@ -119,7 +119,7 @@ airport adapter's `apply` does two things:
 - It dispatches `UpdateAirportCommand` with the scalar fields, without `city`, so the
   find-or-create and rename logic never runs.
 - When `cityId` is present, it also dispatches a new `ReassignAirportCityCommand(airportId,
-  cityId)`. That command only sets the foreign key. It emits no city event, because no city is
+cityId)`. That command only sets the foreign key. It emits no city event, because no city is
   created or renamed.
 
 This is the only change inside `src/modules/airports/`, and the existing `PATCH` endpoint is
@@ -140,15 +140,15 @@ a colocated Jest `change-request.diff.spec.ts`.
 
 **8. Endpoints and roles.**
 
-| Method & path                            | Roles            | Notes                                                                        |
-| ---------------------------------------- | ---------------- | ---------------------------------------------------------------------------- |
-| `POST airport/:airportId/request-data-change` | CabinCrew        | 201 + request with live `fields`                                             |
-| `GET user-data-change-request?status&resource`     | Operations, Admin | oldest first; `resource` is enum-validated (400 lists supported kinds)      |
-| `GET user-data-change-request/:id`                 | Operations, Admin | request + live `fields`                                                     |
-| `POST user-data-change-request/:id/accept`         | Operations, Admin | 200 + request with live `fields`                                            |
-| `POST user-data-change-request/:id/reject`         | Operations, Admin | body `{ rejectionReason }` `@IsNotEmpty`; 200 + request with live `fields`  |
-| `GET user/me/data-change-request?status`      | CabinCrew        | own only, newest first; `status` enum-validated                              |
-| `DELETE user-data-change-request/:id`              | CabinCrew        | own pending only; 403 for others, 409 when not pending; 204                  |
+| Method & path                                  | Roles             | Notes                                                                      |
+| ---------------------------------------------- | ----------------- | -------------------------------------------------------------------------- |
+| `POST airport/:airportId/request-data-change`  | CabinCrew         | 201 + request with live `fields`                                           |
+| `GET user-data-change-request?status&resource` | Operations, Admin | oldest first; `resource` is enum-validated (400 lists supported kinds)     |
+| `GET user-data-change-request/:id`             | Operations, Admin | request + live `fields`                                                    |
+| `POST user-data-change-request/:id/accept`     | Operations, Admin | 200 + request with live `fields`                                           |
+| `POST user-data-change-request/:id/reject`     | Operations, Admin | body `{ rejectionReason }` `@IsNotEmpty`; 200 + request with live `fields` |
+| `GET user/me/data-change-request?status`       | CabinCrew         | own only, newest first; `status` enum-validated                            |
+| `DELETE user-data-change-request/:id`          | CabinCrew         | own pending only; 403 for others, 409 when not pending; 204                |
 
 Each action is one controller class under `infra/http/action/<group>/`, and dispatches through a
 `const command = new …` variable. Every handler and action is registered in
