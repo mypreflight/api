@@ -4,52 +4,33 @@ import {
   toFlightChanges,
   toFlightSnapshot,
 } from './flight-aggregate.mapper';
-import { flightSnapshot } from '../../../model/flight.fixture';
+import { flightAggregateRow } from './flight-aggregate.fixture';
+import {
+  FIXTURE_DEPARTURE_ID,
+  FIXTURE_DESTINATION_ID,
+  flightSnapshot,
+} from '../../../model/flight.fixture';
 import { FlightStatus } from '../../../model/flight.model';
 import { AirportType } from '../../../../airports/model/airport.model';
 
 const AT = new Date('2025-01-01T13:00:00.000Z');
 
 function row(overrides: Partial<FlightAggregateRow> = {}): FlightAggregateRow {
-  return {
-    id: 'flight-1',
+  return flightAggregateRow({
     status: 'in_cruise',
-    aircraftId: 'aircraft-1',
     captainId: 'captain-1',
     tracking: 'public',
     serviceType: 'cargo',
     atcCallsign: 'DLH5PJ',
     departureParkingPositionId: 'stand-1',
     departureRunwayId: 'runway-1',
-    arrivalParkingPositionId: null,
-    arrivalRunwayId: null,
     isDiversionDeclared: true,
     actualFuelBurned: new Prisma.Decimal('12.345'),
-    actualAirborneMinutes: null,
-    actualBlockMinutes: null,
-    completedAt: null,
     scheduledOffBlockTime: AT,
-    scheduledTakeoffTime: null,
-    scheduledArrivalTime: null,
-    scheduledOnBlockTime: null,
-    estimatedOffBlockTime: null,
-    estimatedTakeoffTime: null,
-    estimatedArrivalTime: null,
-    estimatedOnBlockTime: null,
-    actualOffBlockTime: null,
     actualTakeoffTime: AT,
-    actualArrivalTime: null,
-    actualOnBlockTime: null,
-    predictedOffBlockTime: null,
-    predictedTakeoffTime: null,
-    predictedArrivalTime: null,
     predictedOnBlockTime: AT,
-    airports: [
-      { airportId: 'airport-1', airportType: 'departure' },
-      { airportId: 'airport-2', airportType: 'destination' },
-    ],
     ...overrides,
-  };
+  });
 }
 
 describe('toFlightSnapshot', () => {
@@ -59,8 +40,8 @@ describe('toFlightSnapshot', () => {
     expect(snapshot.status).toBe(FlightStatus.InCruise);
     expect(snapshot.actualFuelBurned).toBe(12.345);
     expect(snapshot.airports).toEqual([
-      { id: 'airport-1', type: AirportType.Departure },
-      { id: 'airport-2', type: AirportType.Destination },
+      { id: FIXTURE_DEPARTURE_ID, type: AirportType.Departure },
+      { id: FIXTURE_DESTINATION_ID, type: AirportType.Destination },
     ]);
     expect(snapshot.timesheet.scheduled.offBlockTime).toBe(AT);
     expect(snapshot.timesheet.actual.takeoffTime).toBe(AT);

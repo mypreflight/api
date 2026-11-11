@@ -1,4 +1,7 @@
-import { InvalidStatusToReportOffBlockError } from '../../model/error/flight.error';
+import {
+  FlightChangedConcurrentlyError,
+  InvalidStatusToReportOffBlockError,
+} from '../../model/error/flight.error';
 import {
   ReportOffBlockCommand,
   ReportOffBlockHandler,
@@ -76,12 +79,14 @@ describe('ReportOffBlockHandler', () => {
     expect(event.payload.payload).toEqual({ automaticallyDetected: true });
   });
 
-  it('emits only after the flight is saved', async () => {
-    flightsRepository.save.mockRejectedValue(new Error('conflict'));
+  it('emits nothing when another request changed the flight first', async () => {
+    flightsRepository.save.mockRejectedValue(
+      new FlightChangedConcurrentlyError(),
+    );
 
     await expect(
       handler.execute(new ReportOffBlockCommand(FIXTURE_FLIGHT_ID, 'actor-1')),
-    ).rejects.toThrow('conflict');
+    ).rejects.toBeInstanceOf(FlightChangedConcurrentlyError);
     expect(emitter.emit).not.toHaveBeenCalled();
   });
 
