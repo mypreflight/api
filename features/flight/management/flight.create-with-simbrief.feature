@@ -28,10 +28,10 @@ Feature: Create a flight with Simbrief
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "offBlockTime": "2025-01-05T09:00:00.000Z",
-            "takeoffTime": "2025-01-05T09:20:00.000Z",
-            "arrivalTime": "2025-01-05T17:10:00.000Z",
-            "onBlockTime": "2025-01-05T17:25:00.000Z"
+            "offBlockTime": "2026-01-05T09:00:00.000Z",
+            "takeoffTime": "2026-01-05T09:20:00.000Z",
+            "arrivalTime": "2026-01-05T17:10:00.000Z",
+            "onBlockTime": "2026-01-05T17:25:00.000Z"
           }
         },
         "aircraft": {
@@ -342,10 +342,10 @@ Feature: Create a flight with Simbrief
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "offBlockTime": "2025-01-05T09:00:00.000Z",
-            "takeoffTime": "2025-01-05T09:20:00.000Z",
-            "arrivalTime": "2025-01-05T17:10:00.000Z",
-            "onBlockTime": "2025-01-05T17:25:00.000Z"
+            "offBlockTime": "2026-01-05T09:00:00.000Z",
+            "takeoffTime": "2026-01-05T09:20:00.000Z",
+            "arrivalTime": "2026-01-05T17:10:00.000Z",
+            "onBlockTime": "2026-01-05T17:25:00.000Z"
           }
         },
         "aircraft": {
@@ -558,10 +558,10 @@ Feature: Create a flight with Simbrief
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "offBlockTime": "2025-01-05T09:00:00.000Z",
-            "takeoffTime": "2025-01-05T09:20:00.000Z",
-            "arrivalTime": "2025-01-05T17:10:00.000Z",
-            "onBlockTime": "2025-01-05T17:25:00.000Z"
+            "offBlockTime": "2026-01-05T09:00:00.000Z",
+            "takeoffTime": "2026-01-05T09:20:00.000Z",
+            "arrivalTime": "2026-01-05T17:10:00.000Z",
+            "onBlockTime": "2026-01-05T17:25:00.000Z"
           }
         },
         "aircraft": {

@@ -19,7 +19,7 @@ Feature: Get my stamps for one country
             "airportName": "Frankfurt Rhein/Main",
             "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
             "flightId": "d4a25ef2-39cf-484c-af00-a548999e8699",
-            "visitedAt": "2025-01-03T11:45:00.000Z"
+            "visitedAt": "2026-01-03T11:45:00.000Z"
           }
         ]
       }

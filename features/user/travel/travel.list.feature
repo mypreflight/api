@@ -24,7 +24,7 @@ Feature: List user travel history
           },
           "distance": 3342,
           "flightId": "006f0754-1ed7-4ae1-9f91-fae2d446a6e7",
-          "createdAt": "2025-01-03T09:00:00.000Z",
+          "createdAt": "2026-01-03T09:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -44,8 +44,8 @@ Feature: List user travel history
           },
           "distance": 243,
           "flightId": "006f0754-1ed7-4ae1-9f91-fae2d446a6e7",
-          "createdAt": "2025-01-02T12:00:00.000Z",
-          "updatedAt": "2025-01-02T18:00:00.000Z"
+          "createdAt": "2026-01-02T12:00:00.000Z",
+          "updatedAt": "2026-01-02T18:00:00.000Z"
         },
         {
           "id": "bd05cae0-dd40-4456-a4cd-9e5f0a95f868",
@@ -64,7 +64,7 @@ Feature: List user travel history
           },
           "distance": 162,
           "flightId": null,
-          "createdAt": "2025-01-02T11:00:00.000Z",
+          "createdAt": "2026-01-02T11:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -84,7 +84,7 @@ Feature: List user travel history
           },
           "distance": 3342,
           "flightId": null,
-          "createdAt": "2025-01-02T10:00:00.000Z",
+          "createdAt": "2026-01-02T10:00:00.000Z",
           "updatedAt": null
         }
       ]
@@ -114,7 +114,7 @@ Feature: List user travel history
           },
           "distance": 3342,
           "flightId": "006f0754-1ed7-4ae1-9f91-fae2d446a6e7",
-          "createdAt": "2025-01-03T09:00:00.000Z",
+          "createdAt": "2026-01-03T09:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -134,8 +134,8 @@ Feature: List user travel history
           },
           "distance": 243,
           "flightId": "006f0754-1ed7-4ae1-9f91-fae2d446a6e7",
-          "createdAt": "2025-01-02T12:00:00.000Z",
-          "updatedAt": "2025-01-02T18:00:00.000Z"
+          "createdAt": "2026-01-02T12:00:00.000Z",
+          "updatedAt": "2026-01-02T18:00:00.000Z"
         },
         {
           "id": "bd05cae0-dd40-4456-a4cd-9e5f0a95f868",
@@ -154,7 +154,7 @@ Feature: List user travel history
           },
           "distance": 162,
           "flightId": null,
-          "createdAt": "2025-01-02T11:00:00.000Z",
+          "createdAt": "2026-01-02T11:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -174,7 +174,7 @@ Feature: List user travel history
           },
           "distance": 3342,
           "flightId": null,
-          "createdAt": "2025-01-02T10:00:00.000Z",
+          "createdAt": "2026-01-02T10:00:00.000Z",
           "updatedAt": null
         }
       ]
@@ -204,7 +204,7 @@ Feature: List user travel history
           },
           "distance": 3342,
           "flightId": "006f0754-1ed7-4ae1-9f91-fae2d446a6e7",
-          "createdAt": "2025-01-03T09:00:00.000Z",
+          "createdAt": "2026-01-03T09:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -224,8 +224,8 @@ Feature: List user travel history
           },
           "distance": 243,
           "flightId": "006f0754-1ed7-4ae1-9f91-fae2d446a6e7",
-          "createdAt": "2025-01-02T12:00:00.000Z",
-          "updatedAt": "2025-01-02T18:00:00.000Z"
+          "createdAt": "2026-01-02T12:00:00.000Z",
+          "updatedAt": "2026-01-02T18:00:00.000Z"
         },
         {
           "id": "bd05cae0-dd40-4456-a4cd-9e5f0a95f868",
@@ -244,7 +244,7 @@ Feature: List user travel history
           },
           "distance": 162,
           "flightId": null,
-          "createdAt": "2025-01-02T11:00:00.000Z",
+          "createdAt": "2026-01-02T11:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -264,7 +264,7 @@ Feature: List user travel history
           },
           "distance": 3342,
           "flightId": null,
-          "createdAt": "2025-01-02T10:00:00.000Z",
+          "createdAt": "2026-01-02T10:00:00.000Z",
           "updatedAt": null
         }
       ]

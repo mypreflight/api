@@ -16,7 +16,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T14:13:00Z"
       }
       """
     Then the response status should be 403
@@ -48,7 +48,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T14:13:00Z"
       }
       """
     Then the response status should be 204
@@ -67,24 +67,24 @@ Feature: Report a flight diversion
           "actual": {
             "arrivalTime": null,
             "onBlockTime": null,
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "predicted": {
-            "arrivalTime": "2025-01-01T15:55:00.000Z",
-            "onBlockTime": "2025-01-01T16:12:00.000Z",
+            "arrivalTime": "2026-01-01T14:08:00.000Z",
+            "onBlockTime": "2026-01-01T14:25:00.000Z",
             "takeoffTime": null,
             "offBlockTime": null
           }
@@ -211,15 +211,15 @@ Feature: Report a flight diversion
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -261,7 +261,7 @@ Feature: Report a flight diversion
           }
         },
         "decisionTime": "@date('within 1 minute from now')",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00.000Z"
+        "estimatedTimeAtDestination": "2026-01-01T14:13:00.000Z"
       }
       """
     When I send a "GET" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/events"
@@ -275,7 +275,7 @@ Feature: Report a flight diversion
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "9822a1b2-9715-40a5-94cb-d8b616637457",
@@ -283,7 +283,7 @@ Feature: Report a flight diversion
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "88651e15-57d0-468f-9231-bd2e1edcff66",
@@ -291,7 +291,7 @@ Feature: Report a flight diversion
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "3d802611-728b-41cd-a4d1-f9fc91aaca18",
@@ -299,7 +299,7 @@ Feature: Report a flight diversion
           "type": "flight.pilot-checked-in",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "d2794a43-60e2-4abe-9803-ce75dfa2a37b",
@@ -307,7 +307,7 @@ Feature: Report a flight diversion
           "type": "flight.boarding-started",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "2dba1cb5-d25c-4ade-9d46-e30eb8ecb24a",
@@ -315,7 +315,7 @@ Feature: Report a flight diversion
           "type": "flight.boarding-finished",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "d03bb44f-88d8-42cd-aa29-342eda6ebbf3",
@@ -323,7 +323,7 @@ Feature: Report a flight diversion
           "type": "flight.off-block-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "ef447dda-84c1-45e9-9ebe-fa7efe646308",
@@ -331,7 +331,7 @@ Feature: Report a flight diversion
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T13:11:00.000Z"
+          "createdAt": "2026-01-01T13:11:00.000Z"
         },
         {
           "id": "0108b08b-9c45-49ba-a3cb-a3ae172ce92c",
@@ -339,7 +339,7 @@ Feature: Report a flight diversion
           "type": "flight.takeoff-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:25:00.000Z"
+          "createdAt": "2026-01-01T13:25:00.000Z"
         },
         {
           "id": "@uuid",
@@ -373,7 +373,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T14:13:00Z"
       }
       """
     Then the response status should be 204
@@ -392,24 +392,24 @@ Feature: Report a flight diversion
           "actual": {
             "arrivalTime": null,
             "onBlockTime": null,
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "predicted": {
-            "arrivalTime": "2025-01-01T15:55:00.000Z",
-            "onBlockTime": "2025-01-01T16:12:00.000Z",
+            "arrivalTime": "2026-01-01T14:08:00.000Z",
+            "onBlockTime": "2026-01-01T14:25:00.000Z",
             "takeoffTime": null,
             "offBlockTime": null
           }
@@ -536,15 +536,15 @@ Feature: Report a flight diversion
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -586,7 +586,7 @@ Feature: Report a flight diversion
           }
         },
         "decisionTime": "@date('within 1 minute from now')",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00.000Z"
+        "estimatedTimeAtDestination": "2026-01-01T14:13:00.000Z"
       }
       """
     And I should receive a live flight event of type "flight.diversion-reported" within 2000ms
@@ -608,7 +608,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00Z"
       }
       """
     Then the response status should be 400
@@ -637,7 +637,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00Z"
       }
       """
     Then the response status should be 409
@@ -666,7 +666,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00Z"
       }
       """
     Then the response status should be 404
@@ -694,7 +694,7 @@ Feature: Report a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T14:13:00Z"
       }
       """
     Then the response status should be 401

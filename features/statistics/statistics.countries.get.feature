@@ -15,8 +15,8 @@ Feature: Get my visited countries
             },
             "flag": "🇺🇸",
             "visits": 8,
-            "firstVisitAt": "2025-01-01T16:18:00.000Z",
-            "lastVisitAt": "2025-01-02T02:45:00.000Z"
+            "firstVisitAt": "2026-01-01T14:31:00.000Z",
+            "lastVisitAt": "2026-01-02T02:45:00.000Z"
           },
           {
             "country": {
@@ -25,8 +25,8 @@ Feature: Get my visited countries
             },
             "flag": "🇩🇪",
             "visits": 1,
-            "firstVisitAt": "2025-01-03T11:45:00.000Z",
-            "lastVisitAt": "2025-01-03T11:45:00.000Z"
+            "firstVisitAt": "2026-01-03T11:45:00.000Z",
+            "lastVisitAt": "2026-01-03T11:45:00.000Z"
           }
         ]
       }

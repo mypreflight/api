@@ -22,7 +22,7 @@ Feature: Get the postcards I have collected
             "width": 1152,
             "height": 1536,
             "status": "ready",
-            "awardedAt": "2025-01-01T16:18:00.000Z",
+            "awardedAt": "2026-01-01T14:31:00.000Z",
             "seenAt": null
           },
           {
@@ -39,7 +39,7 @@ Feature: Get the postcards I have collected
             "width": 1152,
             "height": 1536,
             "status": "ready",
-            "awardedAt": "2025-01-02T02:45:00.000Z",
+            "awardedAt": "2026-01-02T02:45:00.000Z",
             "seenAt": null
           },
           {
@@ -56,7 +56,7 @@ Feature: Get the postcards I have collected
             "width": 1152,
             "height": 1536,
             "status": "ready",
-            "awardedAt": "2025-01-03T11:45:00.000Z",
+            "awardedAt": "2026-01-03T11:45:00.000Z",
             "seenAt": null
           }
         ],

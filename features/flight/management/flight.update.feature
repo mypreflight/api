@@ -22,16 +22,16 @@ Feature: Update flight
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "offBlockTime": "2025-01-01T13:00:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z"
+            "offBlockTime": "2026-01-01T13:00:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z"
           }
         },
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "cargo",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "departureParkingPositionId": null,
         "departureRunwayId": "08a1d5f0-fbfb-4272-9cc4-6821506fe308",
         "arrivalParkingPositionId": null,
@@ -183,16 +183,16 @@ Feature: Update flight
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "offBlockTime": "2025-01-01T13:00:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z"
+            "offBlockTime": "2026-01-01T13:00:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z"
           }
         },
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "departureParkingPositionId": null,
         "departureRunwayId": "08a1d5f0-fbfb-4272-9cc4-6821506fe308",
         "arrivalParkingPositionId": null,

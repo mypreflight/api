@@ -34,14 +34,14 @@ Feature: Report actual fuel over a fix of the planned route
     And I am signed in as "cabin crew"
     When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
       """json
-      { "actualOnBoard": 7900, "reportedAt": "2025-01-01T14:05:00.000Z" }
+      { "actualOnBoard": 7900, "reportedAt": "2026-01-01T14:05:00.000Z" }
       """
     Then the response status should be 200
     And the response body property "fixes.4.fuelReport" should contain:
       """json
       {
         "actualOnBoard": 7900,
-        "reportedAt": "2025-01-01T14:05:00.000Z"
+        "reportedAt": "2026-01-01T14:05:00.000Z"
       }
       """
     When I send a "GET" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route"
@@ -50,7 +50,7 @@ Feature: Report actual fuel over a fix of the planned route
       """json
       {
         "actualOnBoard": 7900,
-        "reportedAt": "2025-01-01T14:05:00.000Z"
+        "reportedAt": "2026-01-01T14:05:00.000Z"
       }
       """
 
@@ -59,7 +59,7 @@ Feature: Report actual fuel over a fix of the planned route
     And I am signed in as "cabin crew"
     When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
       """json
-      { "actualOnBoard": 7900, "reportedAt": "2025-01-01T13:24:00.000Z" }
+      { "actualOnBoard": 7900, "reportedAt": "2026-01-01T13:24:00.000Z" }
       """
     Then the response status should be 422
     And the response body should contain:
@@ -122,19 +122,19 @@ Feature: Report actual fuel over a fix of the planned route
     And I am signed in as "cabin crew"
     When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
       """json
-      { "actualOnBoard": 7900, "reportedAt": "2025-01-01T14:05:00.000Z" }
+      { "actualOnBoard": 7900, "reportedAt": "2026-01-01T14:05:00.000Z" }
       """
     Then the response status should be 200
     When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
       """json
-      { "actualOnBoard": 7850, "reportedAt": "2025-01-01T14:10:00.000Z" }
+      { "actualOnBoard": 7850, "reportedAt": "2026-01-01T14:10:00.000Z" }
       """
     Then the response status should be 200
     And the response body property "fixes.4.fuelReport" should contain:
       """json
       {
         "actualOnBoard": 7850,
-        "reportedAt": "2025-01-01T14:10:00.000Z"
+        "reportedAt": "2026-01-01T14:10:00.000Z"
       }
       """
 

@@ -19,8 +19,8 @@ Feature: Closing a flight keeps statistics consistent
       {
         "totals": {
           "distanceNm": 8310,
-          "airborneMinutes": 2095,
-          "blockMinutes": 2391,
+          "airborneMinutes": 1346,
+          "blockMinutes": 1642,
           "flights": 9,
           "cycles": 9,
           "fuelBurned": 331600
@@ -28,8 +28,8 @@ Feature: Closing a flight keeps statistics consistent
         "records": {
           "longestFlightDistanceNm": 3350,
           "longestFlightMinutes": 510,
-          "firstFlightAt": "2025-01-01T16:18:00.000Z",
-          "lastFlightAt": "2025-01-03T11:45:00.000Z"
+          "firstFlightAt": "2026-01-01T14:31:00.000Z",
+          "lastFlightAt": "2026-01-03T11:45:00.000Z"
         },
         "mostFlownAircraftType": "B77W",
         "mostFlownAirline": {

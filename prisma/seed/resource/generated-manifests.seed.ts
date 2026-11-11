@@ -72,7 +72,7 @@ function flightHoursOf(flight: {
 }
 
 function departureAtOf(flight: { scheduledOffBlockTime: Date | null }): Date {
-  return flight.scheduledOffBlockTime ?? new Date('2025-01-01');
+  return flight.scheduledOffBlockTime ?? new Date('2026-01-01');
 }
 
 export async function loadGeneratedManifests(

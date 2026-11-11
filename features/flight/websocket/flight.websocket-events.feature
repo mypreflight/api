@@ -13,7 +13,7 @@ Feature: Subscribe to flight events over WebSocket
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "e70f19df-81b4-4712-b4a5-16be22c85ebe",
@@ -21,7 +21,7 @@ Feature: Subscribe to flight events over WebSocket
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "9db99c92-dd95-4089-b11b-abe3ac1d262b",
@@ -29,7 +29,7 @@ Feature: Subscribe to flight events over WebSocket
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         }
       ]
       """

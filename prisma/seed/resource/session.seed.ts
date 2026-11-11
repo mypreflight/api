@@ -27,8 +27,8 @@ export async function loadSessions(
       // bcrypt hash of the long-lived ES256 refresh token hardcoded in
       // features/user/user.me.change-password.feature, signed with JWT_PRIVATE_KEY
       token: '$2b$12$/n372CwB6/priXihn8lqa.jljdzqwyIawLQdHNSc6KB8L2wsBZ/0K',
-      createdAt: new Date('2025-01-01T00:00:00.000Z'),
-      lastUsedAt: new Date('2025-01-01T00:00:00.000Z'),
+      createdAt: new Date('2026-01-01T00:00:00.000Z'),
+      lastUsedAt: new Date('2026-01-01T00:00:00.000Z'),
       expiresAt: new Date('2036-01-01T00:00:00.000Z'),
     },
   });
@@ -40,8 +40,8 @@ export async function loadSessions(
       // bcrypt hash of the long-lived ES256 refresh token hardcoded in
       // features/user/user.unlink-google-account.feature, signed with JWT_PRIVATE_KEY
       token: '$2b$12$zrvjvaxLqpjfoWfL2Nf/EOAQpGvkMOnEQ6v8tWvZ34TRGgWSeTmu2',
-      createdAt: new Date('2025-01-01T00:00:00.000Z'),
-      lastUsedAt: new Date('2025-01-01T00:00:00.000Z'),
+      createdAt: new Date('2026-01-01T00:00:00.000Z'),
+      lastUsedAt: new Date('2026-01-01T00:00:00.000Z'),
       expiresAt: new Date('2036-01-01T00:00:00.000Z'),
     },
   });
@@ -53,8 +53,8 @@ export async function loadSessions(
       // bcrypt hash of the long-lived ES256 refresh token hardcoded in
       // features/user/user.set-password.feature, signed with JWT_PRIVATE_KEY
       token: '$2b$12$62wbUjoFdkTYPhi3eujUOO23rlQECTku55AuIjRDsjMpBwFtVFaj6',
-      createdAt: new Date('2025-01-01T00:00:00.000Z'),
-      lastUsedAt: new Date('2025-01-01T00:00:00.000Z'),
+      createdAt: new Date('2026-01-01T00:00:00.000Z'),
+      lastUsedAt: new Date('2026-01-01T00:00:00.000Z'),
       expiresAt: new Date('2036-01-01T00:00:00.000Z'),
     },
   });
@@ -92,9 +92,9 @@ export async function loadSessions(
       token: '$2b$12$3oChYw3oo5S8sD.FJtSpTuJIJ7eVHeUzR0frJy3WzPFSriSb63916',
       client: 'web',
       deviceName: null,
-      createdAt: new Date('2025-01-01T00:00:00.000Z'),
-      lastUsedAt: new Date('2025-01-05T00:00:00.000Z'),
-      expiresAt: new Date('2025-01-08T00:00:00.000Z'),
+      createdAt: new Date('2026-01-01T00:00:00.000Z'),
+      lastUsedAt: new Date('2026-01-05T00:00:00.000Z'),
+      expiresAt: new Date('2026-01-08T00:00:00.000Z'),
     },
   });
 }

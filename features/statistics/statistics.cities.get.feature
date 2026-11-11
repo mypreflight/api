@@ -18,8 +18,8 @@ Feature: Get my visited cities
               "name": "United States of America"
             },
             "visits": 7,
-            "firstVisitAt": "2025-01-01T16:18:00.000Z",
-            "lastVisitAt": "2025-01-01T16:28:00.000Z"
+            "firstVisitAt": "2026-01-01T14:31:00.000Z",
+            "lastVisitAt": "2026-01-01T14:41:00.000Z"
           },
           {
             "city": {
@@ -31,8 +31,8 @@ Feature: Get my visited cities
               "name": "United States of America"
             },
             "visits": 1,
-            "firstVisitAt": "2025-01-02T02:45:00.000Z",
-            "lastVisitAt": "2025-01-02T02:45:00.000Z"
+            "firstVisitAt": "2026-01-02T02:45:00.000Z",
+            "lastVisitAt": "2026-01-02T02:45:00.000Z"
           },
           {
             "city": {
@@ -44,8 +44,8 @@ Feature: Get my visited cities
               "name": "Germany"
             },
             "visits": 1,
-            "firstVisitAt": "2025-01-03T11:45:00.000Z",
-            "lastVisitAt": "2025-01-03T11:45:00.000Z"
+            "firstVisitAt": "2026-01-03T11:45:00.000Z",
+            "lastVisitAt": "2026-01-03T11:45:00.000Z"
           }
         ]
       }

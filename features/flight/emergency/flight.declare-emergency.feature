@@ -103,7 +103,7 @@ Feature: Declare a flight emergency
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "9822a1b2-9715-40a5-94cb-d8b616637457",
@@ -111,7 +111,7 @@ Feature: Declare a flight emergency
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "88651e15-57d0-468f-9231-bd2e1edcff66",
@@ -119,7 +119,7 @@ Feature: Declare a flight emergency
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "3d802611-728b-41cd-a4d1-f9fc91aaca18",
@@ -127,7 +127,7 @@ Feature: Declare a flight emergency
           "type": "flight.pilot-checked-in",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "d2794a43-60e2-4abe-9803-ce75dfa2a37b",
@@ -135,7 +135,7 @@ Feature: Declare a flight emergency
           "type": "flight.boarding-started",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "2dba1cb5-d25c-4ade-9d46-e30eb8ecb24a",
@@ -143,7 +143,7 @@ Feature: Declare a flight emergency
           "type": "flight.boarding-finished",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "d03bb44f-88d8-42cd-aa29-342eda6ebbf3",
@@ -151,7 +151,7 @@ Feature: Declare a flight emergency
           "type": "flight.off-block-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "ef447dda-84c1-45e9-9ebe-fa7efe646308",
@@ -159,7 +159,7 @@ Feature: Declare a flight emergency
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T13:11:00.000Z"
+          "createdAt": "2026-01-01T13:11:00.000Z"
         },
         {
           "id": "0108b08b-9c45-49ba-a3cb-a3ae172ce92c",
@@ -167,7 +167,7 @@ Feature: Declare a flight emergency
           "type": "flight.takeoff-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:25:00.000Z"
+          "createdAt": "2026-01-01T13:25:00.000Z"
         },
         {
           "id": "@uuid",

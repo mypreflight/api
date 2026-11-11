@@ -31,8 +31,8 @@ Feature: Get a flight diversion
         "notifySecurityOnGround": false,
         "notifyMedicalOnGround": true,
         "notifyFirefightersOnGround": false,
-        "decisionTime": "2025-01-01T14:25:00.000Z",
-        "estimatedTimeAtDestination": "2025-01-01T15:25:00.000Z",
+        "decisionTime": "2026-01-01T14:25:00.000Z",
+        "estimatedTimeAtDestination": "2026-01-01T15:25:00.000Z",
         "airport": {
           "id": "3c721cc6-c653-4fad-be43-dc9d6a149383",
           "icaoCode": "KJFK",
@@ -75,8 +75,8 @@ Feature: Get a flight diversion
         "notifySecurityOnGround": false,
         "notifyMedicalOnGround": true,
         "notifyFirefightersOnGround": false,
-        "decisionTime": "2025-01-01T14:25:00.000Z",
-        "estimatedTimeAtDestination": "2025-01-01T15:25:00.000Z",
+        "decisionTime": "2026-01-01T14:25:00.000Z",
+        "estimatedTimeAtDestination": "2026-01-01T15:25:00.000Z",
         "airport": {
           "id": "3c721cc6-c653-4fad-be43-dc9d6a149383",
           "icaoCode": "KJFK",

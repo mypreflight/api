@@ -169,10 +169,10 @@ Feature: Update flight scheduled timesheet
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": null
       }
       """
@@ -190,7 +190,7 @@ Feature: Update flight scheduled timesheet
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "@uuid",

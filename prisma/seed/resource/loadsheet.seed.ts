@@ -9,7 +9,7 @@ import {
   toFlightLoadsheet,
 } from '../../../src/modules/flights/model/loadsheet.mapper';
 
-export const SEEDED_LOADSHEET_ISSUED_AT = new Date('2025-01-01 00:00');
+export const SEEDED_LOADSHEET_ISSUED_AT = new Date('2026-01-01 00:00');
 
 type SeededLoadsheets = {
   preliminary?: Loadsheet | Loadsheet[] | null;

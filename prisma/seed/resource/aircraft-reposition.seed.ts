@@ -30,7 +30,7 @@ export async function loadAircraftReposition(
         destinationAirportId: KPHL,
         distance: 243,
         flightId: AAL4913,
-        createdAt: new Date('2025-01-01 09:00'),
+        createdAt: new Date('2026-01-01 09:00'),
         updatedAt: null,
       },
       {
@@ -42,7 +42,7 @@ export async function loadAircraftReposition(
         destinationAirportId: KBOS,
         distance: 3000,
         flightId: null,
-        createdAt: new Date('2025-01-01 10:00'),
+        createdAt: new Date('2026-01-01 10:00'),
         updatedAt: null,
       },
       {
@@ -54,7 +54,7 @@ export async function loadAircraftReposition(
         destinationAirportId: KPHL,
         distance: 243,
         flightId: null,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
         updatedAt: null,
       },
       {
@@ -66,8 +66,8 @@ export async function loadAircraftReposition(
         destinationAirportId: KJFK,
         distance: 80,
         flightId: null,
-        createdAt: new Date('2025-01-02 12:00'),
-        updatedAt: new Date('2025-01-02 14:00'),
+        createdAt: new Date('2026-01-02 12:00'),
+        updatedAt: new Date('2026-01-02 14:00'),
       },
       {
         // pending leg D-AIDA is performing (KJFK -> EDDF);
@@ -80,7 +80,7 @@ export async function loadAircraftReposition(
         destinationAirportId: EDDF,
         distance: 3342,
         flightId: null,
-        createdAt: new Date('2025-01-02 15:00'),
+        createdAt: new Date('2026-01-02 15:00'),
         updatedAt: null,
       },
     ],
@@ -91,9 +91,9 @@ export async function loadAircraftReposition(
   // the aircraft base to the flight departure (only when they differ), followed
   // by the performing_flight leg (pending until the flight reports on-block).
   const CDG = '79b8f884-f67d-4585-b540-36b0be7f551e';
-  const ci = new Date('2025-01-01 12:00');
-  const ob18 = new Date('2025-01-01 16:18');
-  const ob28 = new Date('2025-01-01 16:28');
+  const ci = new Date('2026-01-01 12:00');
+  const ob18 = new Date('2026-01-01 14:31');
+  const ob28 = new Date('2026-01-01 14:41');
 
   type Leg = {
     aircraftId: string;
@@ -282,8 +282,8 @@ export async function loadAircraftReposition(
         to: KJFK,
         distance: 3342,
         finished: true,
-        createdAt: new Date('2025-01-01 17:45'),
-        updatedAt: new Date('2025-01-02 02:45'),
+        createdAt: new Date('2026-01-01 17:45'),
+        updatedAt: new Date('2026-01-02 02:45'),
       },
     }, // DLH40 Closed
     {
@@ -320,7 +320,7 @@ export async function loadAircraftReposition(
         to: KJFK,
         distance: 3342,
         finished: false,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
         updatedAt: null,
       },
     }, // DLH103 TaxiingIn
@@ -332,7 +332,7 @@ export async function loadAircraftReposition(
         to: CDG,
         distance: 243,
         finished: false,
-        createdAt: new Date('2025-01-01 08:30'),
+        createdAt: new Date('2026-01-01 08:30'),
         updatedAt: null,
       },
     }, // DLH880 InCruise

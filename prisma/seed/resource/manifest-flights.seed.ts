@@ -153,7 +153,7 @@ export async function loadManifestFlights(
         isEtops: false,
         greatCircleDistance: 6200,
         totalFuelBurned: 21400,
-        createdAt: new Date('2025-01-01 00:00'),
+        createdAt: new Date('2026-01-01 00:00'),
         ...toTimesheetData(timesheetFor(spec.status)),
         loadsheets: seedLoadsheets({ preliminary: loadsheetFor(spec) }),
       },
@@ -196,10 +196,10 @@ function loadsheetFor(spec: ManifestFlightSpec): Loadsheet {
 
 function timesheetFor(status: FlightStatus) {
   const scheduled = {
-    offBlockTime: new Date('2025-01-02 09:00'),
-    takeoffTime: new Date('2025-01-02 09:20'),
-    arrivalTime: new Date('2025-01-02 17:40'),
-    onBlockTime: new Date('2025-01-02 17:50'),
+    offBlockTime: new Date('2026-01-02 09:00'),
+    takeoffTime: new Date('2026-01-02 09:20'),
+    arrivalTime: new Date('2026-01-02 17:40'),
+    onBlockTime: new Date('2026-01-02 17:50'),
   };
 
   if (status === FlightStatus.Created) {
@@ -209,10 +209,10 @@ function timesheetFor(status: FlightStatus) {
   return {
     scheduled,
     estimated: {
-      offBlockTime: new Date('2025-01-02 09:05'),
-      takeoffTime: new Date('2025-01-02 09:25'),
-      arrivalTime: new Date('2025-01-02 17:35'),
-      onBlockTime: new Date('2025-01-02 17:45'),
+      offBlockTime: new Date('2026-01-02 09:05'),
+      takeoffTime: new Date('2026-01-02 09:25'),
+      arrivalTime: new Date('2026-01-02 17:35'),
+      onBlockTime: new Date('2026-01-02 17:45'),
     },
   };
 }

@@ -9,7 +9,7 @@ Feature: List rotations assigned to the current user
       [
         {
           "id": "962ca6ae-a765-46f1-9505-d1d870698959",
-          "name": "FRA-JFK-FRA 2025-02-01",
+          "name": "FRA-JFK-FRA 2026-02-01",
           "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
           "pilotId": "629be07f-5e65-429a-9d69-d34b99185f50",
           "status": "in_progress",
@@ -17,7 +17,7 @@ Feature: List rotations assigned to the current user
           "updatedBy": null,
           "canceledBy": null,
           "cancellationReason": null,
-          "createdAt": "2025-02-01T00:00:00.000Z",
+          "createdAt": "2026-02-01T00:00:00.000Z",
           "updatedAt": null,
           "canceledAt": null,
           "legs": [
@@ -36,8 +36,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KJFK",
                 "name": "New York JFK"
               },
-              "offBlockTime": "2025-02-01T12:00:00.000Z",
-              "onBlockTime": "2025-02-01T20:00:00.000Z",
+              "offBlockTime": "2026-02-01T12:00:00.000Z",
+              "onBlockTime": "2026-02-01T20:00:00.000Z",
               "blockTime": 480,
               "flight": null
             },
@@ -56,8 +56,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "EDDF",
                 "name": "Frankfurt Rhein/Main"
               },
-              "offBlockTime": "2025-02-01T22:00:00.000Z",
-              "onBlockTime": "2025-02-02T06:00:00.000Z",
+              "offBlockTime": "2026-02-01T22:00:00.000Z",
+              "onBlockTime": "2026-02-02T06:00:00.000Z",
               "blockTime": 480,
               "flight": null
             }
@@ -65,7 +65,7 @@ Feature: List rotations assigned to the current user
         },
         {
           "id": "9ab79d41-3db0-4068-98d6-5ec08641e899",
-          "name": "FRA-JFK-FRA 2025-02-02",
+          "name": "FRA-JFK-FRA 2026-02-02",
           "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
           "pilotId": "629be07f-5e65-429a-9d69-d34b99185f50",
           "status": "finished",
@@ -73,7 +73,7 @@ Feature: List rotations assigned to the current user
           "updatedBy": null,
           "canceledBy": null,
           "cancellationReason": null,
-          "createdAt": "2025-02-02T00:00:00.000Z",
+          "createdAt": "2026-02-02T00:00:00.000Z",
           "updatedAt": null,
           "canceledAt": null,
           "legs": [
@@ -92,8 +92,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KJFK",
                 "name": "New York JFK"
               },
-              "offBlockTime": "2025-02-02T12:00:00.000Z",
-              "onBlockTime": "2025-02-02T20:00:00.000Z",
+              "offBlockTime": "2026-02-02T12:00:00.000Z",
+              "onBlockTime": "2026-02-02T20:00:00.000Z",
               "blockTime": 480,
               "flight": null
             },
@@ -112,8 +112,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "EDDF",
                 "name": "Frankfurt Rhein/Main"
               },
-              "offBlockTime": "2025-02-02T22:00:00.000Z",
-              "onBlockTime": "2025-02-03T06:00:00.000Z",
+              "offBlockTime": "2026-02-02T22:00:00.000Z",
+              "onBlockTime": "2026-02-03T06:00:00.000Z",
               "blockTime": 480,
               "flight": null
             }
@@ -121,7 +121,7 @@ Feature: List rotations assigned to the current user
         },
         {
           "id": "2f4ac9bd-14ac-4af0-96a9-ec7666a3c808",
-          "name": "FRA-JFK-FRA 2025-02-03",
+          "name": "FRA-JFK-FRA 2026-02-03",
           "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
           "pilotId": "629be07f-5e65-429a-9d69-d34b99185f50",
           "status": "ready",
@@ -129,7 +129,7 @@ Feature: List rotations assigned to the current user
           "updatedBy": null,
           "canceledBy": null,
           "cancellationReason": null,
-          "createdAt": "2025-02-03T00:00:00.000Z",
+          "createdAt": "2026-02-03T00:00:00.000Z",
           "updatedAt": null,
           "canceledAt": null,
           "legs": [
@@ -148,8 +148,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KJFK",
                 "name": "New York JFK"
               },
-              "offBlockTime": "2025-02-03T12:00:00.000Z",
-              "onBlockTime": "2025-02-03T20:00:00.000Z",
+              "offBlockTime": "2026-02-03T12:00:00.000Z",
+              "onBlockTime": "2026-02-03T20:00:00.000Z",
               "blockTime": 480,
               "flight": { "id": "11087d20-ead0-4b7e-97ee-f1ef0ea29e4f", "flightNumber": "LH81", "status": "ready" }
             },
@@ -168,8 +168,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "EDDF",
                 "name": "Frankfurt Rhein/Main"
               },
-              "offBlockTime": "2025-02-03T22:00:00.000Z",
-              "onBlockTime": "2025-02-04T06:00:00.000Z",
+              "offBlockTime": "2026-02-03T22:00:00.000Z",
+              "onBlockTime": "2026-02-04T06:00:00.000Z",
               "blockTime": 480,
               "flight": null
             }
@@ -187,7 +187,7 @@ Feature: List rotations assigned to the current user
       [
         {
           "id": "d182d0f0-5b7d-4092-b6d9-0c3c11775a85",
-          "name": "BOS-PHL-BOS 2025-01-01",
+          "name": "BOS-PHL-BOS 2026-01-01",
           "operatorId": "1f630d38-ad24-47cc-950b-3783e71bbd10",
           "pilotId": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "status": "in_progress",
@@ -195,7 +195,7 @@ Feature: List rotations assigned to the current user
           "updatedBy": null,
           "canceledBy": null,
           "cancellationReason": null,
-          "createdAt": "2025-01-01T00:00:00.000Z",
+          "createdAt": "2026-01-01T00:00:00.000Z",
           "updatedAt": null,
           "canceledAt": null,
           "legs": [
@@ -214,8 +214,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KPHL",
                 "name": "Philadelphia Intl"
               },
-              "offBlockTime": "2025-01-01T13:00:00.000Z",
-              "onBlockTime": "2025-01-01T14:30:00.000Z",
+              "offBlockTime": "2026-01-01T13:00:00.000Z",
+              "onBlockTime": "2026-01-01T14:30:00.000Z",
               "blockTime": 90,
               "flight": {
                 "id": "b3899775-278e-4496-add1-21385a13d93e",
@@ -238,8 +238,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KBOS",
                 "name": "Boston Logan Intl"
               },
-              "offBlockTime": "2025-01-01T16:00:00.000Z",
-              "onBlockTime": "2025-01-01T17:30:00.000Z",
+              "offBlockTime": "2026-01-01T16:00:00.000Z",
+              "onBlockTime": "2026-01-01T17:30:00.000Z",
               "blockTime": 90,
               "flight": null
             }
@@ -255,7 +255,7 @@ Feature: List rotations assigned to the current user
           "updatedBy": null,
           "canceledBy": null,
           "cancellationReason": null,
-          "createdAt": "2025-01-02T00:00:00.000Z",
+          "createdAt": "2026-01-02T00:00:00.000Z",
           "updatedAt": null,
           "canceledAt": null,
           "legs": [
@@ -274,8 +274,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KPHL",
                 "name": "Philadelphia Intl"
               },
-              "offBlockTime": "2025-01-01T08:00:00.000Z",
-              "onBlockTime": "2025-01-01T09:30:00.000Z",
+              "offBlockTime": "2026-01-01T08:00:00.000Z",
+              "onBlockTime": "2026-01-01T09:30:00.000Z",
               "blockTime": 90,
               "flight": { "id": "23da8bc9-a21b-4678-b2e9-1151d3bd15ab", "flightNumber": "AA4905", "status": "closed" }
             },
@@ -294,8 +294,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KBOS",
                 "name": "Boston Logan Intl"
               },
-              "offBlockTime": "2025-01-01T11:00:00.000Z",
-              "onBlockTime": "2025-01-01T12:30:00.000Z",
+              "offBlockTime": "2026-01-01T11:00:00.000Z",
+              "onBlockTime": "2026-01-01T12:30:00.000Z",
               "blockTime": 90,
               "flight": { "id": "d085c107-308d-48e6-9c93-beca6552a8a3", "flightNumber": "AA4917", "status": "closed" }
             }
@@ -333,7 +333,7 @@ Feature: List rotations assigned to the current user
       [
         {
           "id": "962ca6ae-a765-46f1-9505-d1d870698959",
-          "name": "FRA-JFK-FRA 2025-02-01",
+          "name": "FRA-JFK-FRA 2026-02-01",
           "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
           "pilotId": "629be07f-5e65-429a-9d69-d34b99185f50",
           "status": "in_progress",
@@ -341,7 +341,7 @@ Feature: List rotations assigned to the current user
           "updatedBy": null,
           "canceledBy": null,
           "cancellationReason": null,
-          "createdAt": "2025-02-01T00:00:00.000Z",
+          "createdAt": "2026-02-01T00:00:00.000Z",
           "updatedAt": null,
           "canceledAt": null,
           "legs": [
@@ -360,8 +360,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "KJFK",
                 "name": "New York JFK"
               },
-              "offBlockTime": "2025-02-01T12:00:00.000Z",
-              "onBlockTime": "2025-02-01T20:00:00.000Z",
+              "offBlockTime": "2026-02-01T12:00:00.000Z",
+              "onBlockTime": "2026-02-01T20:00:00.000Z",
               "blockTime": 480,
               "flight": null
             },
@@ -380,8 +380,8 @@ Feature: List rotations assigned to the current user
                 "icaoCode": "EDDF",
                 "name": "Frankfurt Rhein/Main"
               },
-              "offBlockTime": "2025-02-01T22:00:00.000Z",
-              "onBlockTime": "2025-02-02T06:00:00.000Z",
+              "offBlockTime": "2026-02-01T22:00:00.000Z",
+              "onBlockTime": "2026-02-02T06:00:00.000Z",
               "blockTime": 480,
               "flight": null
             }

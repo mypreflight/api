@@ -38,10 +38,10 @@ Feature: Update flight departure parking position
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T21:00:00.000Z",
-            "onBlockTime": "2025-01-01T21:10:00.000Z",
-            "takeoffTime": "2025-01-01T12:15:00.000Z",
-            "offBlockTime": "2025-01-01T12:00:00.000Z"
+            "arrivalTime": "2026-01-01T21:00:00.000Z",
+            "onBlockTime": "2026-01-01T21:10:00.000Z",
+            "takeoffTime": "2026-01-01T12:15:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z"
           }
         },
         "aircraft": {
@@ -189,10 +189,10 @@ Feature: Update flight departure parking position
         "hasNotoc": false,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "private",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": null
       }
       """
@@ -207,7 +207,7 @@ Feature: Update flight departure parking position
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "e70f19df-81b4-4712-b4a5-16be22c85ebe",
@@ -215,7 +215,7 @@ Feature: Update flight departure parking position
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "9db99c92-dd95-4089-b11b-abe3ac1d262b",
@@ -223,7 +223,7 @@ Feature: Update flight departure parking position
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "@uuid",
@@ -259,7 +259,7 @@ Feature: Update flight departure parking position
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "e70f19df-81b4-4712-b4a5-16be22c85ebe",
@@ -267,7 +267,7 @@ Feature: Update flight departure parking position
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "9db99c92-dd95-4089-b11b-abe3ac1d262b",
@@ -275,7 +275,7 @@ Feature: Update flight departure parking position
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "@uuid",

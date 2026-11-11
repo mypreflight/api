@@ -37,7 +37,7 @@ Feature: Update a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00Z"
       }
       """
     Then the response status should be 204
@@ -57,8 +57,8 @@ Feature: Update a flight diversion
         "notifySecurityOnGround": true,
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
-        "decisionTime": "2025-01-01T14:25:00.000Z",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00.000Z",
+        "decisionTime": "2026-01-01T14:25:00.000Z",
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00.000Z",
         "airport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
           "icaoCode": "EDDF",
@@ -93,7 +93,7 @@ Feature: Update a flight diversion
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "107a860c-31a5-4cdb-ad1d-851ed14617a2",
@@ -101,7 +101,7 @@ Feature: Update a flight diversion
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "e0014752-86ce-449c-8c98-27b7c8bf9fc3",
@@ -109,7 +109,7 @@ Feature: Update a flight diversion
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "5d9a0c3e-f4fe-4fa8-94fe-7575aa15da39",
@@ -117,7 +117,7 @@ Feature: Update a flight diversion
           "type": "flight.pilot-checked-in",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "d1b7d1b2-6e4c-43a0-9dd0-986489d5a13a",
@@ -125,7 +125,7 @@ Feature: Update a flight diversion
           "type": "flight.boarding-started",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "5927dc9d-64d6-4fd3-8f7e-5820945bbcb3",
@@ -133,7 +133,7 @@ Feature: Update a flight diversion
           "type": "flight.boarding-finished",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "2524ad4e-2335-4d22-bed4-42b795f37d02",
@@ -141,7 +141,7 @@ Feature: Update a flight diversion
           "type": "flight.off-block-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "b8e8a0cb-16cc-4c37-adb8-46ab55e179d0",
@@ -149,7 +149,7 @@ Feature: Update a flight diversion
           "type": "flight.takeoff-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T13:25:00.000Z"
+          "createdAt": "2026-01-01T13:25:00.000Z"
         },
         {
           "id": "b718767f-4fdc-40d8-b1f4-1e5686f6b71f",
@@ -157,7 +157,7 @@ Feature: Update a flight diversion
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T13:26:00.000Z"
+          "createdAt": "2026-01-01T13:26:00.000Z"
         },
         {
           "id": "c11c0944-e7c3-44de-8713-96210871d421",
@@ -165,7 +165,7 @@ Feature: Update a flight diversion
           "type": "flight.diversion-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T14:25:00.000Z"
+          "createdAt": "2026-01-01T14:25:00.000Z"
         },
         {
           "id": "@uuid",
@@ -199,7 +199,7 @@ Feature: Update a flight diversion
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
         "airportId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00Z"
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00Z"
       }
       """
     Then the response status should be 204
@@ -219,8 +219,8 @@ Feature: Update a flight diversion
         "notifySecurityOnGround": true,
         "notifyMedicalOnGround": false,
         "notifyFirefightersOnGround": true,
-        "decisionTime": "2025-01-01T14:25:00.000Z",
-        "estimatedTimeAtDestination": "2025-01-01T16:00:00.000Z",
+        "decisionTime": "2026-01-01T14:25:00.000Z",
+        "estimatedTimeAtDestination": "2026-01-01T16:00:00.000Z",
         "airport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
           "icaoCode": "EDDF",
@@ -275,8 +275,8 @@ Feature: Update a flight diversion
         "notifySecurityOnGround": false,
         "notifyMedicalOnGround": true,
         "notifyFirefightersOnGround": false,
-        "decisionTime": "2025-01-01T14:25:00.000Z",
-        "estimatedTimeAtDestination": "2025-01-01T15:25:00.000Z",
+        "decisionTime": "2026-01-01T14:25:00.000Z",
+        "estimatedTimeAtDestination": "2026-01-01T15:25:00.000Z",
         "airport": {
           "id": "3c721cc6-c653-4fad-be43-dc9d6a149383",
           "icaoCode": "KJFK",

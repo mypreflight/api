@@ -75,16 +75,16 @@ Feature: Finish flight boarding
         "status": "boarding_finished",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           }
         },
         "aircraft": {
@@ -209,15 +209,15 @@ Feature: Finish flight boarding
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -235,7 +235,7 @@ Feature: Finish flight boarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "08f2640d-a382-491a-9226-c6ed5cdbfd60",
@@ -246,7 +246,7 @@ Feature: Finish flight boarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "8297db05-76e4-416e-9f6f-fed2716296ea",
@@ -257,7 +257,7 @@ Feature: Finish flight boarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "9d2f1728-0882-4c65-b912-6d193f87a643",
@@ -268,7 +268,7 @@ Feature: Finish flight boarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "9762e7f2-5cb6-48a1-bee2-077c6ed4452c",
@@ -279,7 +279,7 @@ Feature: Finish flight boarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "63268531-1365-4322-bf99-e7509f53db1d",
@@ -287,7 +287,7 @@ Feature: Finish flight boarding
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T12:55:00.000Z"
+          "createdAt": "2026-01-01T12:55:00.000Z"
         },
         {
           "id": "@uuid",

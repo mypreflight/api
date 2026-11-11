@@ -32,7 +32,7 @@ Feature: List flight emergency declarations
           "fuelEnduranceMinutes": 45,
           "dangerousGoodsOnBoard": ["class-9-miscellaneous"],
           "freeText": "Generator #1 offline, running on APU and remaining bus. Requesting priority handling, divert intended.",
-          "declarationTime": "2025-01-01T10:15:00.000Z",
+          "declarationTime": "2026-01-01T10:15:00.000Z",
           "reportedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
           "resolvedAt": null,
           "resolvedBy": null
@@ -59,7 +59,7 @@ Feature: List flight emergency declarations
           "fuelEnduranceMinutes": 45,
           "dangerousGoodsOnBoard": ["class-9-miscellaneous"],
           "freeText": "Generator #1 offline, running on APU and remaining bus. Requesting priority handling, divert intended.",
-          "declarationTime": "2025-01-01T10:15:00.000Z",
+          "declarationTime": "2026-01-01T10:15:00.000Z",
           "reportedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
           "resolvedAt": null,
           "resolvedBy": null

@@ -112,10 +112,10 @@ Feature: Read the cargo manifest of a flight
     When I send a "POST" request to "/api/v1/flight/3d8b6e1c-4f90-4a73-9c25-7e0a1b3d4f86/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-06-02T17:35:00.000Z",
-        "onBlockTime": "2025-06-02T17:45:00.000Z",
-        "takeoffTime": "2025-06-02T09:25:00.000Z",
-        "offBlockTime": "2025-06-02T09:05:00.000Z"
+        "arrivalTime": "2026-06-02T17:35:00.000Z",
+        "onBlockTime": "2026-06-02T17:45:00.000Z",
+        "takeoffTime": "2026-06-02T09:25:00.000Z",
+        "offBlockTime": "2026-06-02T09:05:00.000Z"
       }
       """
     Then the response status should be 204

@@ -11,7 +11,7 @@ export async function loadCrew(tx: Prisma.TransactionClient): Promise<void> {
         // LOT operator
         operatorId: '1d85d597-c3a1-43cf-b888-10d674ea7a46',
         role: CrewRole.fo,
-        createdAt: new Date('2025-01-01T00:00:00.000Z'),
+        createdAt: new Date('2026-01-01T00:00:00.000Z'),
       },
       {
         id: '99d37979-dd64-47e2-9517-ebffe3984124',
@@ -20,7 +20,7 @@ export async function loadCrew(tx: Prisma.TransactionClient): Promise<void> {
         // LOT operator
         operatorId: '1d85d597-c3a1-43cf-b888-10d674ea7a46',
         role: CrewRole.pu,
-        createdAt: new Date('2025-01-01T00:00:00.000Z'),
+        createdAt: new Date('2026-01-01T00:00:00.000Z'),
       },
       {
         id: 'f96c4581-a3a5-48c5-a3d0-f628ba05fc22',
@@ -29,7 +29,7 @@ export async function loadCrew(tx: Prisma.TransactionClient): Promise<void> {
         // LOT operator
         operatorId: '1d85d597-c3a1-43cf-b888-10d674ea7a46',
         role: CrewRole.fa,
-        createdAt: new Date('2025-01-01T00:00:00.000Z'),
+        createdAt: new Date('2026-01-01T00:00:00.000Z'),
       },
       {
         id: '447c5e6d-0e88-4362-ab12-285677d5bbd3',
@@ -38,7 +38,7 @@ export async function loadCrew(tx: Prisma.TransactionClient): Promise<void> {
         // American Airlines operator
         operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10',
         role: CrewRole.fo,
-        createdAt: new Date('2025-01-01T00:00:00.000Z'),
+        createdAt: new Date('2026-01-01T00:00:00.000Z'),
       },
       {
         id: 'f4fde12f-64c6-40a4-9e89-ccca6d652101',
@@ -47,7 +47,7 @@ export async function loadCrew(tx: Prisma.TransactionClient): Promise<void> {
         // American Airlines operator
         operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10',
         role: CrewRole.pu,
-        createdAt: new Date('2025-01-01T00:00:00.000Z'),
+        createdAt: new Date('2026-01-01T00:00:00.000Z'),
       },
       {
         id: '6a0ecac2-4771-422b-8de2-5936c2546341',
@@ -56,7 +56,7 @@ export async function loadCrew(tx: Prisma.TransactionClient): Promise<void> {
         // American Airlines operator
         operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10',
         role: CrewRole.fa,
-        createdAt: new Date('2025-01-01T00:00:00.000Z'),
+        createdAt: new Date('2026-01-01T00:00:00.000Z'),
       },
     ],
   });

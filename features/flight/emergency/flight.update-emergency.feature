@@ -59,7 +59,7 @@ Feature: Update an active flight emergency
           "fuelEnduranceMinutes": 25,
           "dangerousGoodsOnBoard": ["class-9-miscellaneous"],
           "freeText": "Second generator failed, switching to battery — request immediate landing.",
-          "declarationTime": "2025-01-01T10:15:00.000Z",
+          "declarationTime": "2026-01-01T10:15:00.000Z",
           "reportedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
           "resolvedAt": null,
           "resolvedBy": null
@@ -77,7 +77,7 @@ Feature: Update an active flight emergency
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T06:00:00.000Z"
+          "createdAt": "2026-01-01T06:00:00.000Z"
         },
         {
           "id": "5a3e7811-2c4f-4a82-9c11-7b9e2d8c4f50",
@@ -85,7 +85,7 @@ Feature: Update an active flight emergency
           "type": "flight.preliminary-loadsheet-updated",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T06:10:00.000Z"
+          "createdAt": "2026-01-01T06:10:00.000Z"
         },
         {
           "id": "7e1f9b22-3d5a-4b81-9e2d-1c4f8a3e6b71",
@@ -93,7 +93,7 @@ Feature: Update an active flight emergency
           "type": "flight.released",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T06:20:00.000Z"
+          "createdAt": "2026-01-01T06:20:00.000Z"
         },
         {
           "id": "9c2a4d33-5e6b-4f72-9a3c-2d5e7b8c1f43",
@@ -101,7 +101,7 @@ Feature: Update an active flight emergency
           "type": "flight.pilot-checked-in",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T08:30:00.000Z"
+          "createdAt": "2026-01-01T08:30:00.000Z"
         },
         {
           "id": "0d3b5e44-6f7c-4083-9b4d-3e6f8c9d2a54",
@@ -109,7 +109,7 @@ Feature: Update an active flight emergency
           "type": "flight.boarding-started",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T09:00:00.000Z"
+          "createdAt": "2026-01-01T09:00:00.000Z"
         },
         {
           "id": "1e4c6f55-708d-4194-9c5e-4f709d0e3b65",
@@ -117,7 +117,7 @@ Feature: Update an active flight emergency
           "type": "flight.boarding-finished",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T09:25:00.000Z"
+          "createdAt": "2026-01-01T09:25:00.000Z"
         },
         {
           "id": "2f5d7066-819e-42a5-8d6f-50819e1f4c76",
@@ -125,7 +125,7 @@ Feature: Update an active flight emergency
           "type": "flight.off-block-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T09:35:00.000Z"
+          "createdAt": "2026-01-01T09:35:00.000Z"
         },
         {
           "id": "3a6e8177-92af-43b6-8e70-619a2f0d5d87",
@@ -133,7 +133,7 @@ Feature: Update an active flight emergency
           "type": "flight.takeoff-reported",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T09:55:00.000Z"
+          "createdAt": "2026-01-01T09:55:00.000Z"
         },
         {
           "id": "4b7f9288-a3b0-44c7-8f81-72ab3a1e6e98",
@@ -141,7 +141,7 @@ Feature: Update an active flight emergency
           "type": "flight.emergency-declared",
           "payload": {},
           "actor": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
-          "createdAt": "2025-01-01T10:15:00.000Z"
+          "createdAt": "2026-01-01T10:15:00.000Z"
         },
         {
           "id": "@uuid",

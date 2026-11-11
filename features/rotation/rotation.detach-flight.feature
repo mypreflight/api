@@ -21,7 +21,7 @@ Feature: Detach a flight from a rotation leg
       """json
       {
         "id": "de76f066-23a6-4a49-aa5e-e9d524f4efb8",
-        "name": "FRA-JFK-FRA 2025-01-03",
+        "name": "FRA-JFK-FRA 2026-01-03",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "ready",
@@ -29,7 +29,7 @@ Feature: Detach a flight from a rotation leg
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -48,8 +48,8 @@ Feature: Detach a flight from a rotation leg
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -68,8 +68,8 @@ Feature: Detach a flight from a rotation leg
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }
@@ -86,7 +86,7 @@ Feature: Detach a flight from a rotation leg
       """json
       {
         "id": "2f4ac9bd-14ac-4af0-96a9-ec7666a3c808",
-        "name": "FRA-JFK-FRA 2025-02-03",
+        "name": "FRA-JFK-FRA 2026-02-03",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "629be07f-5e65-429a-9d69-d34b99185f50",
         "status": "ready",
@@ -94,7 +94,7 @@ Feature: Detach a flight from a rotation leg
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-02-03T00:00:00.000Z",
+        "createdAt": "2026-02-03T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -113,8 +113,8 @@ Feature: Detach a flight from a rotation leg
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-02-03T12:00:00.000Z",
-            "onBlockTime": "2025-02-03T20:00:00.000Z",
+            "offBlockTime": "2026-02-03T12:00:00.000Z",
+            "onBlockTime": "2026-02-03T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -133,8 +133,8 @@ Feature: Detach a flight from a rotation leg
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-02-03T22:00:00.000Z",
-            "onBlockTime": "2025-02-04T06:00:00.000Z",
+            "offBlockTime": "2026-02-03T22:00:00.000Z",
+            "onBlockTime": "2026-02-04T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }

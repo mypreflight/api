@@ -98,7 +98,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-02T02:45:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-02T02:45:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": {
             "id": "e74b3184-4bdd-4055-b8ce-62d7d95df0fb",
@@ -152,7 +152,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-01T08:00:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-01T08:00:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": {
             "id": "ad5a6ebd-dad8-4400-8bb4-b7cee3b00fa9",
@@ -214,7 +214,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-01T16:28:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-01T14:41:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": null
         },
@@ -272,7 +272,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-01T12:00:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-01T12:00:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": null
         },
@@ -330,7 +330,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-01T08:00:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-01T08:00:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": null
         },
@@ -388,7 +388,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-01T08:00:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-01T08:00:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": null
         },
@@ -446,7 +446,7 @@ Feature: List aircraft
             },
             "location": "@coordinates"
           },
-          "lastAirportUpdatedAt": "2025-01-01T08:00:00.000Z",
+          "lastAirportUpdatedAt": "2026-01-01T08:00:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": null
         }

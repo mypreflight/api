@@ -2,20 +2,20 @@ import { Prisma } from '../../client/client';
 
 const DLH82 = '6d1a7c4b-95e2-4f38-b7a0-c3e8f1d24a56';
 
-const DLH82_ROUTE =
+export const DLH82_ROUTE =
   'OBOK3W OBOKA Z29 TORNU DCT VELED DCT BREDA DCT GALSO Q63 ICTAM L179 SAWPE DCT OZZIL DCT ARPAK DCT FELCA DCT OFSOX DCT SLANY DCT MALOT DCT 54N020W 5430N03000W 5330N04000W 52N050W DCT TUDEP N526A TOPPS DCT ENE PARCH4';
 
-const DLH82_ATC_ROUTE =
+export const DLH82_ATC_ROUTE =
   'N0477F360 OBOK3W OBOKA Z29 TORNU DCT VELED DCT BREDA DCT GALSO Q63 ICTAM L179 SAWPE DCT OZZIL DCT ARPAK DCT FELCA DCT OFSOX DCT SLANY DCT MALOT/M082F370 DCT 54N020W 5430N03000W 5330N04000W 52N050W DCT TUDEP/N0464F400 N526A TOPPS DCT ENE PARCH4';
 
-type SeededWindLevel = {
+export type SeededWindLevel = {
   altitude: number;
   direction: number;
   speed: number;
   oat: number;
 };
 
-type SeededRouteFix = {
+export type SeededRouteFix = {
   ident: string;
   posLat: number;
   posLong: number;
@@ -41,7 +41,7 @@ type SeededRouteFix = {
   windLevels: SeededWindLevel[];
 };
 
-const DLH82_FIXES: SeededRouteFix[] = [
+export const DLH82_FIXES: SeededRouteFix[] = [
   {
     ident: 'EDDF',
     posLat: 50.033306,
@@ -2206,7 +2206,7 @@ const AAL4912_UNFORECAST_FIX = {
   windLevels: [],
 };
 
-const AAL4912_FIXES: SeededRouteFix[] = [
+export const AAL4912_FIXES: SeededRouteFix[] = [
   {
     ...AAL4912_UNFORECAST_FIX,
     ident: 'KBOS',

@@ -11,7 +11,7 @@ Feature: Read the loadsheets of a flight
           "kind": "preliminary",
           "revision": 1,
           "issuedById": null,
-          "issuedAt": "2025-01-01T00:00:00.000Z",
+          "issuedAt": "2026-01-01T00:00:00.000Z",
           "flightCrew": {
             "pilots": 2,
             "reliefPilots": 0,
@@ -44,7 +44,7 @@ Feature: Read the loadsheets of a flight
           "kind": "final",
           "revision": 1,
           "issuedById": null,
-          "issuedAt": "2025-01-01T00:00:00.000Z",
+          "issuedAt": "2026-01-01T00:00:00.000Z",
           "flightCrew": {
             "pilots": 2,
             "reliefPilots": 0,
@@ -72,7 +72,7 @@ Feature: Read the loadsheets of a flight
         "kind": "preliminary",
         "revision": 1,
         "issuedById": null,
-        "issuedAt": "2025-01-01T00:00:00.000Z",
+        "issuedAt": "2026-01-01T00:00:00.000Z",
         "flightCrew": {
           "pilots": 2,
           "reliefPilots": 1,
@@ -108,7 +108,7 @@ Feature: Read the loadsheets of a flight
         "kind": "preliminary",
         "revision": 2,
         "issuedById": null,
-        "issuedAt": "2025-01-01T00:00:00.000Z",
+        "issuedAt": "2026-01-01T00:00:00.000Z",
         "flightCrew": {
           "pilots": 2,
           "reliefPilots": 1,
@@ -149,7 +149,7 @@ Feature: Read the loadsheets of a flight
           "kind": "final",
           "revision": 1,
           "issuedById": null,
-          "issuedAt": "2025-01-01T00:00:00.000Z",
+          "issuedAt": "2026-01-01T00:00:00.000Z",
           "flightCrew": {
             "pilots": 2,
             "reliefPilots": 0,
@@ -194,7 +194,7 @@ Feature: Read the loadsheets of a flight
         "kind": "final",
         "revision": 1,
         "issuedById": null,
-        "issuedAt": "2025-01-01T00:00:00.000Z",
+        "issuedAt": "2026-01-01T00:00:00.000Z",
         "flightCrew": {
           "pilots": 2,
           "reliefPilots": 0,

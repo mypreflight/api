@@ -46,22 +46,22 @@ Feature: Report takeoff
         "status": "in_cruise",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
             "arrivalTime": null,
             "onBlockTime": null,
             "takeoffTime": "@date('within 1 minute from now')",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           }
         },
         "aircraft": {
@@ -186,15 +186,15 @@ Feature: Report takeoff
         "hasNotoc": true,
         "isOffBlockDelayed": true,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -213,7 +213,7 @@ Feature: Report takeoff
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "23f793e8-6f1a-4348-9ac1-5721788f89ce",
@@ -224,7 +224,7 @@ Feature: Report takeoff
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "612637bf-dffe-4a8c-a86b-785011e028df",
@@ -235,7 +235,7 @@ Feature: Report takeoff
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "e688c31b-1be9-4b08-a3a0-02628c5a5bfd",
@@ -246,7 +246,7 @@ Feature: Report takeoff
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "d834bd10-0fd1-4fb2-b77c-c04445bd32ca",
@@ -257,7 +257,7 @@ Feature: Report takeoff
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "a3c38a7e-f0fe-498d-bee2-7697dc0d0650",
@@ -268,7 +268,7 @@ Feature: Report takeoff
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "00cf79f0-5dee-4505-bc10-bc7178c57354",
@@ -279,7 +279,7 @@ Feature: Report takeoff
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "@uuid",

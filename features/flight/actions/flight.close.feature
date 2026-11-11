@@ -51,22 +51,22 @@ Feature: Close flight
         "status": "closed",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
-            "arrivalTime": "2025-01-01T16:10:00.000Z",
-            "onBlockTime": "2025-01-01T16:28:00.000Z",
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "arrivalTime": "2026-01-01T14:23:00.000Z",
+            "onBlockTime": "2026-01-01T14:41:00.000Z",
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           }
         },
         "aircraft": {
@@ -191,15 +191,15 @@ Feature: Close flight
         "hasNotoc": true,
         "isOffBlockDelayed": true,
         "actualFuelBurned": 10.2,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -217,7 +217,7 @@ Feature: Close flight
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "b5242b30-ac97-4014-9000-05773ed394a4",
@@ -228,7 +228,7 @@ Feature: Close flight
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "083304c4-85be-4ebf-9c2d-757b714a23f7",
@@ -239,7 +239,7 @@ Feature: Close flight
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "346e6985-299c-49b3-9c76-6ee5ee679e43",
@@ -250,7 +250,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "cc6fdbb4-0533-40d2-a313-8b0e5145a605",
@@ -258,7 +258,7 @@ Feature: Close flight
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T12:01:00.000Z"
+          "createdAt": "2026-01-01T12:01:00.000Z"
         },
         {
           "id": "975140bc-8cac-4587-bddd-0a7acfb7a15f",
@@ -269,7 +269,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "69b9a8a4-781c-44e9-8430-3fdd434def23",
@@ -280,7 +280,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "be8c9559-0273-4f04-b480-062628bb670d",
@@ -291,7 +291,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "e9f6ea80-395a-4859-a7c3-2bd93fc16066",
@@ -302,7 +302,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:25:00.000Z"
+          "createdAt": "2026-01-01T13:25:00.000Z"
         },
         {
           "id": "e342f02c-b0b5-4921-8ae3-51a28ee2bdd8",
@@ -313,7 +313,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T16:10:00.000Z"
+          "createdAt": "2026-01-01T14:23:00.000Z"
         },
         {
           "id": "beb79715-d10d-49b3-acab-e96d9e0f37a8",
@@ -324,7 +324,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T16:28:00.000Z"
+          "createdAt": "2026-01-01T14:41:00.000Z"
         },
         {
           "id": "a9e2c75c-c22a-41ab-bc00-8602f7f373ed",
@@ -335,7 +335,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T16:30:00.000Z"
+          "createdAt": "2026-01-01T14:43:00.000Z"
         },
         {
           "id": "fbe0b258-8e73-419d-abde-1194ca15944d",
@@ -346,7 +346,7 @@ Feature: Close flight
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T16:50:00.000Z"
+          "createdAt": "2026-01-01T15:03:00.000Z"
         },
         {
           "id": "@uuid",
@@ -436,7 +436,7 @@ Feature: Close flight
           },
           "location": "@coordinates"
         },
-        "lastAirportUpdatedAt": "2025-01-01T16:28:00.000Z",
+        "lastAirportUpdatedAt": "2026-01-01T14:41:00.000Z",
         "holdVariant": null,
         "lastParkingPosition": null
       }
@@ -547,22 +547,22 @@ Feature: Close flight
         "status": "closed",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
-            "arrivalTime": "2025-01-01T16:10:00.000Z",
-            "onBlockTime": "2025-01-01T16:28:00.000Z",
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "arrivalTime": "2026-01-01T14:23:00.000Z",
+            "onBlockTime": "2026-01-01T14:41:00.000Z",
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           }
         },
         "aircraft": {
@@ -674,19 +674,19 @@ Feature: Close flight
         "arrivalRunwayId": null,
         "isFlightDiverted": false,
         "isEmergencyDeclared": false,
-        "hasFlightPath": false,
+        "hasFlightPath": true,
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -707,7 +707,7 @@ Feature: Close flight
           "fuelEnduranceMinutes": 95,
           "dangerousGoodsOnBoard": [],
           "freeText": "Passenger in seat 24B suffering suspected cardiac arrest. CPR in progress, requesting priority handling and medical team at gate.",
-          "declarationTime": "2025-01-01T14:35:00.000Z",
+          "declarationTime": "2026-01-01T13:42:00.000Z",
           "reportedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
           "resolvedAt": "@date('within 1 minute from now')",
           "resolvedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" }
@@ -737,22 +737,22 @@ Feature: Close flight
         "status": "closed",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
-            "arrivalTime": "2025-01-01T16:10:00.000Z",
-            "onBlockTime": "2025-01-01T16:28:00.000Z",
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "arrivalTime": "2026-01-01T14:23:00.000Z",
+            "onBlockTime": "2026-01-01T14:41:00.000Z",
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           }
         },
         "aircraft": {
@@ -864,19 +864,19 @@ Feature: Close flight
         "arrivalRunwayId": null,
         "isFlightDiverted": false,
         "isEmergencyDeclared": false,
-        "hasFlightPath": false,
+        "hasFlightPath": true,
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -906,8 +906,8 @@ Feature: Close flight
             "status": "accepted",
             "reportedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
             "decidedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-            "decidedAt": "2025-01-01T13:20:00.000Z",
-            "createdAt": "2025-01-01T13:16:00.000Z"
+            "decidedAt": "2026-01-01T13:20:00.000Z",
+            "createdAt": "2026-01-01T13:16:00.000Z"
           },
           {
             "id": "800243c5-0c77-4ace-b4cb-5b2ff499a1c1",
@@ -918,11 +918,11 @@ Feature: Close flight
             "status": "accepted",
             "reportedBy": { "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d", "name": "Rick Doe" },
             "decidedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-            "decidedAt": "2025-01-01T13:21:00.000Z",
-            "createdAt": "2025-01-01T13:17:00.000Z"
+            "decidedAt": "2026-01-01T13:21:00.000Z",
+            "createdAt": "2026-01-01T13:17:00.000Z"
           }
         ],
-        "createdAt": "2025-01-01T13:15:00.000Z"
+        "createdAt": "2026-01-01T13:15:00.000Z"
       }
       """
     When I send a "POST" request to "/api/v1/flight/38644393-deee-434d-bfd1-7242abdbc4e1/close"

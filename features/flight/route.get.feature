@@ -9474,7 +9474,7 @@ Feature: Read the planned route of a flight
       """
 
   Scenario: As anyone a flight created without a plan reports no planned route
-    When I send a "GET" request to "/api/v1/flight/3c8ba7a7-1085-423c-8cc3-d51f5ab0cd05/route"
+    When I send a "GET" request to "/api/v1/flight/23da8bc9-a21b-4678-b2e9-1151d3bd15ab/route"
     Then the response status should be 200
     And the response body should contain:
       """json

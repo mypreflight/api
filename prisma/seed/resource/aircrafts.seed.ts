@@ -33,7 +33,7 @@ export async function loadAircraft(
     etopsThresholdMinutes: null,
     baseAirportId: 'f35c094a-bec5-4803-be32-bd80a14b441a', // EDDF
     lastAirportId: '3c721cc6-c653-4fad-be43-dc9d6a149383', // KJFK
-    lastAirportUpdatedAt: new Date('2025-01-02 18:00'),
+    lastAirportUpdatedAt: new Date('2026-01-02 18:00'),
     lastParkingPositionId: null,
   };
 
@@ -67,7 +67,7 @@ export async function loadAircraft(
     etopsThresholdMinutes: 180,
     baseAirportId: '3c721cc6-c653-4fad-be43-dc9d6a149383', // KJFK
     lastAirportId: '3c721cc6-c653-4fad-be43-dc9d6a149383', // KJFK
-    lastAirportUpdatedAt: new Date('2025-01-01 08:00'),
+    lastAirportUpdatedAt: new Date('2026-01-01 08:00'),
     lastParkingPositionId: null,
   };
 
@@ -82,11 +82,11 @@ export async function loadAircraft(
   const KBOS = 'c03a79fb-c5ae-46c3-95fe-f3b5dc7b85f3';
   const KPHL = 'e764251b-bb25-4e8b-8cc7-11b0397b4554';
   const EDDF = 'f35c094a-bec5-4803-be32-bd80a14b441a';
-  const atBase = new Date('2025-01-01 08:00');
-  const atCheckIn = new Date('2025-01-01 12:00');
-  const aalOnBlock = new Date('2025-01-01 16:18');
-  const onBlock = new Date('2025-01-01 16:28');
-  const dlh40OnBlock = new Date('2025-01-02 02:45');
+  const atBase = new Date('2026-01-01 08:00');
+  const atCheckIn = new Date('2026-01-01 12:00');
+  const aalOnBlock = new Date('2026-01-01 14:31');
+  const onBlock = new Date('2026-01-01 14:41');
+  const dlh40OnBlock = new Date('2026-01-02 02:45');
 
   const mk = (
     id: string,
