@@ -1,7 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, Max, Min } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsDate, IsInt, IsOptional, Max, MaxDate, Min } from 'class-validator';
 
 const MAX_REPORTED_FUEL_KG = 999_999;
+const CLOCK_DRIFT_ALLOWANCE_MS = 60_000;
+
+const latestAcceptedReportTime = (): Date =>
+  new Date(Date.now() + CLOCK_DRIFT_ALLOWANCE_MS);
 
 export class ReportFixFuelRequest {
   @ApiProperty({
@@ -14,6 +19,22 @@ export class ReportFixFuelRequest {
   @Min(0)
   @Max(MAX_REPORTED_FUEL_KG)
   actualOnBoard!: number;
+
+  @ApiProperty({
+    description:
+      'Time the pilot read the fuel over the fix. ' +
+      'Must not be in the future or before the actual takeoff. Omit to use the current time.',
+    example: '2026-11-02T14:05:00.000Z',
+    type: Date,
+    required: false,
+  })
+  @IsOptional()
+  @Type(() => Date)
+  @IsDate()
+  @MaxDate(latestAcceptedReportTime, {
+    message: '$property must not be in the future',
+  })
+  reportedAt?: Date;
 }
 
 export class PlannedRouteFuelReportResponse {
@@ -24,7 +45,7 @@ export class PlannedRouteFuelReportResponse {
   actualOnBoard!: number;
 
   @ApiProperty({
-    description: 'Time of the latest report for the fix',
+    description: 'Time the pilot read the fuel over the fix',
     example: '2026-11-02T14:05:00.000Z',
   })
   reportedAt!: Date;

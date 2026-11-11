@@ -29,6 +29,72 @@ Feature: Report actual fuel over a fix of the planned route
       }
       """
 
+  Scenario: As cabin crew I can report the time I read the fuel over a fix
+    Given I set database to initial state
+    And I am signed in as "cabin crew"
+    When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
+      """json
+      { "actualOnBoard": 7900, "reportedAt": "2025-01-01T14:05:00.000Z" }
+      """
+    Then the response status should be 200
+    And the response body property "fixes.4.fuelReport" should contain:
+      """json
+      {
+        "actualOnBoard": 7900,
+        "reportedAt": "2025-01-01T14:05:00.000Z"
+      }
+      """
+    When I send a "GET" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route"
+    Then the response status should be 200
+    And the response body property "fixes.4.fuelReport" should contain:
+      """json
+      {
+        "actualOnBoard": 7900,
+        "reportedAt": "2025-01-01T14:05:00.000Z"
+      }
+      """
+
+  Scenario: As cabin crew I cannot report fuel over a fix before the takeoff time
+    Given I set database to initial state
+    And I am signed in as "cabin crew"
+    When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
+      """json
+      { "actualOnBoard": 7900, "reportedAt": "2025-01-01T13:24:00.000Z" }
+      """
+    Then the response status should be 422
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 422,
+        "error": "Unprocessable Content",
+        "message": "Cannot report fuel over a fix before the takeoff time."
+      }
+      """
+
+  Scenario Outline: As cabin crew I cannot report a time that is not in the past
+    Given I am signed in as "cabin crew"
+    When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
+      """json
+      { "actualOnBoard": 7900, "reportedAt": <value> }
+      """
+    Then the response status should be 400
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 400,
+        "message": "Request validation failed.",
+        "error": "Bad Request",
+        "violations": {
+          "reportedAt": [<violations>]
+        }
+      }
+      """
+
+    Examples:
+      | value                      | violations                                                                   |
+      | "2999-01-01T00:00:00.000Z" | "reportedAt must not be in the future"                                       |
+      | "soon"                     | "reportedAt must not be in the future", "reportedAt must be a Date instance" |
+
   Scenario: As cabin crew I can report fuel over a climb or descent fix while in cruise
     Given I set database to initial state
     And I am signed in as "cabin crew"
@@ -51,22 +117,25 @@ Feature: Report actual fuel over a fix of the planned route
       6400
       """
 
-  Scenario: As cabin crew reporting a fix again replaces the earlier figure
+  Scenario: As cabin crew reporting a fix again replaces the earlier figure and time
     Given I set database to initial state
     And I am signed in as "cabin crew"
     When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
       """json
-      { "actualOnBoard": 7900 }
+      { "actualOnBoard": 7900, "reportedAt": "2025-01-01T14:05:00.000Z" }
       """
     Then the response status should be 200
     When I send a "PUT" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/route/fix/4/fuel-report" with body:
       """json
-      { "actualOnBoard": 7850 }
+      { "actualOnBoard": 7850, "reportedAt": "2025-01-01T14:10:00.000Z" }
       """
     Then the response status should be 200
-    And the response body property "fixes.4.fuelReport.actualOnBoard" should contain:
+    And the response body property "fixes.4.fuelReport" should contain:
       """json
-      7850
+      {
+        "actualOnBoard": 7850,
+        "reportedAt": "2025-01-01T14:10:00.000Z"
+      }
       """
 
   Scenario: As anyone I can read a reported figure in the briefing
