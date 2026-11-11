@@ -129,11 +129,13 @@ import { ReportDelayAction } from './infra/http/action/delay/report-delay.action
 import { RemoveDelayReportAction } from './infra/http/action/delay/remove-delay-report.action';
 import { AcceptDelayReportAction } from './infra/http/action/delay/accept-delay-report.action';
 import { RejectDelayReportAction } from './infra/http/action/delay/reject-delay-report.action';
+import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module';
 
 @Module({
   imports: [
     WaypointsModule,
     PrismaModule,
+    ScheduledJobsModule,
     DiscordModule,
     AdsbModule,
     SimbriefModule,
