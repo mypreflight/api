@@ -1,13 +1,8 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Inject } from '@nestjs/common';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import type { Cache } from 'cache-manager';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightServiceType, FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToChangeServiceTypeError,
-} from '../../model/error/flight.error';
+import { FlightServiceType } from '../../model/flight.model';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { flightBodyCacheKeys } from '../../../../core/cache/cache.key';
 
@@ -21,30 +16,21 @@ export class UpdateFlightCommand {
 @CommandHandler(UpdateFlightCommand)
 export class UpdateFlightHandler implements ICommandHandler<UpdateFlightCommand> {
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly flightsRepository: FlightsRepository,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {}
 
   async execute(command: UpdateFlightCommand): Promise<void> {
     const { flightId, serviceType } = command;
-
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
-
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
+    const flight = await this.flightsRepository.load(flightId);
 
     if (serviceType === undefined) {
       return;
     }
 
-    if (flight.status !== FlightStatus.Created) {
-      throw new InvalidStatusToChangeServiceTypeError();
-    }
+    flight.changeServiceType(serviceType);
 
-    await this.flightsRepository.updateServiceType(flightId, serviceType);
+    await this.flightsRepository.save(flight);
 
     await Promise.all(
       flightBodyCacheKeys(flightId).map((key) => this.cacheManager.del(key)),

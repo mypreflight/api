@@ -1,12 +1,6 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import {
-  FixFuelReportedBeforeTakeoffError,
-  FlightDoesNotExistError,
-  InvalidStatusToReportFixFuelError,
-  RouteFixDoesNotExistError,
-} from '../../model/error/flight.error';
-import { FlightStatus } from '../../model/flight.model';
+import { RouteFixDoesNotExistError } from '../../model/error/flight.error';
 
 export class ReportFixFuelCommand {
   constructor(
@@ -24,19 +18,9 @@ export class ReportFixFuelHandler implements ICommandHandler<ReportFixFuelComman
   async execute(command: ReportFixFuelCommand): Promise<void> {
     const { flightId, ordinal, actualOnBoard, reportedAt } = command;
 
-    const flight = await this.repository.findOneBy({ id: flightId });
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
+    const flight = await this.repository.load(flightId);
 
-    if (flight.status !== FlightStatus.InCruise) {
-      throw new InvalidStatusToReportFixFuelError();
-    }
-
-    const takeoffTime = flight.timesheet.actual?.takeoffTime;
-    if (takeoffTime && reportedAt < takeoffTime) {
-      throw new FixFuelReportedBeforeTakeoffError();
-    }
+    flight.assertCanReportFixFuel(reportedAt);
 
     const route = await this.repository.findPlannedRoute(flightId);
     if (!route?.fixes.some((fix) => fix.ordinal === ordinal)) {

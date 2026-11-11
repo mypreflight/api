@@ -6,7 +6,6 @@ import {
   FlightPathWasUpdatedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { GetFlightQuery } from '../../query/get-flight.query';
-import { FlightStatus } from '../../../model/flight.model';
 import { AirportType } from '../../../../airports/model/airport.model';
 import { ReportTakeoffCommand } from '../../command/report-takeoff.command';
 import { FlightsRepository } from '../../../infra/database/repository/flights.repository';
@@ -28,13 +27,14 @@ export class DetectTakeoffListener {
   ): Promise<void> {
     const { flightId } = event.payload;
 
-    const flight = await this.queryBus.execute(new GetFlightQuery(flightId));
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (flight.status !== FlightStatus.TaxiingOut) {
+    if (!flight.canReportTakeoff()) {
       return;
     }
 
-    const departure = flight.airports.find(
+    const details = await this.queryBus.execute(new GetFlightQuery(flightId));
+    const departure = details.airports.find(
       (airport) => airport.type === AirportType.Departure,
     );
 

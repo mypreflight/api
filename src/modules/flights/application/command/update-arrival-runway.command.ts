@@ -1,13 +1,7 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToUpdateArrivalRunwayError,
-} from '../../model/error/flight.error';
-import { FlightStatus } from '../../model/flight.model';
-import { ArrivalRunwayWasChangedEvent } from '../../../../core/domain/events/dto/flight.events';
-import { scopeForActor } from '../../model/event.model';
+import { flightActorFor } from '../../model/event.model';
 import { JwtUser } from '../../../auth/infra/http/request/jwt-user.dto';
 
 export class UpdateArrivalRunwayCommand {
@@ -27,33 +21,11 @@ export class UpdateArrivalRunwayHandler implements ICommandHandler<UpdateArrival
 
   async execute(command: UpdateArrivalRunwayCommand): Promise<void> {
     const { flightId, actor, arrivalRunwayId } = command;
+    const flight = await this.flightsRepository.load(flightId);
 
-    const flight = await this.flightsRepository.findOneBy({ id: flightId });
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
+    flight.changeArrivalRunway(flightActorFor(actor), arrivalRunwayId);
 
-    const preTaxiInStatuses: string[] = [
-      FlightStatus.Created,
-      FlightStatus.Ready,
-      FlightStatus.CheckedIn,
-      FlightStatus.BoardingStarted,
-      FlightStatus.BoardingFinished,
-      FlightStatus.TaxiingOut,
-      FlightStatus.InCruise,
-    ];
-    if (!preTaxiInStatuses.includes(flight.status)) {
-      throw new InvalidStatusToUpdateArrivalRunwayError();
-    }
-
-    await this.flightsRepository.updateArrivalRunway(flightId, arrivalRunwayId);
-
-    await this.domainEvents.emitAsync(
-      new ArrivalRunwayWasChangedEvent({
-        flightId,
-        scope: scopeForActor(actor),
-        actorId: actor.sub,
-      }),
-    );
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

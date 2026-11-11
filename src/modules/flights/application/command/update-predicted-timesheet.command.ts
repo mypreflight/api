@@ -1,71 +1,9 @@
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToPredictArrivalError,
-  InvalidStatusToPredictOffBlockError,
-  InvalidStatusToPredictOnBlockError,
-  InvalidStatusToPredictTakeoffError,
-} from '../../model/error/flight.error';
-import { FlightStatus } from '../../model/flight.model';
-import { Schedule } from '../../model/timesheet.model';
-import { PredictedTimesheetWasUpdatedEvent } from '../../../../core/domain/events/dto/flight.events';
-import { scopeForActor } from '../../model/event.model';
+import { flightActorFor } from '../../model/event.model';
 import { JwtUser } from '../../../auth/infra/http/request/jwt-user.dto';
 import { UpdatePredictedTimesheetRequest } from '../../infra/http/request/flight.dto';
-
-type PredictableField = keyof Pick<
-  Schedule,
-  'offBlockTime' | 'takeoffTime' | 'arrivalTime' | 'onBlockTime'
->;
-
-const fieldGuards: ReadonlyArray<{
-  field: PredictableField;
-  forbiddenFrom: FlightStatus;
-  error: new () => Error;
-}> = [
-  {
-    field: 'offBlockTime',
-    forbiddenFrom: FlightStatus.TaxiingOut,
-    error: InvalidStatusToPredictOffBlockError,
-  },
-  {
-    field: 'takeoffTime',
-    forbiddenFrom: FlightStatus.InCruise,
-    error: InvalidStatusToPredictTakeoffError,
-  },
-  {
-    field: 'arrivalTime',
-    forbiddenFrom: FlightStatus.TaxiingIn,
-    error: InvalidStatusToPredictArrivalError,
-  },
-  {
-    field: 'onBlockTime',
-    forbiddenFrom: FlightStatus.OnBlock,
-    error: InvalidStatusToPredictOnBlockError,
-  },
-];
-
-// Status order along the flight lifecycle; index comparison drives the
-// per-field gating ("forbidden once status reaches X").
-const statusOrder: FlightStatus[] = [
-  FlightStatus.Created,
-  FlightStatus.Ready,
-  FlightStatus.CheckedIn,
-  FlightStatus.BoardingStarted,
-  FlightStatus.BoardingFinished,
-  FlightStatus.TaxiingOut,
-  FlightStatus.InCruise,
-  FlightStatus.TaxiingIn,
-  FlightStatus.OnBlock,
-  FlightStatus.OffboardingStarted,
-  FlightStatus.OffboardingFinished,
-  FlightStatus.Closed,
-];
-
-const statusReached = (current: FlightStatus, target: FlightStatus): boolean =>
-  statusOrder.indexOf(current) >= statusOrder.indexOf(target);
 
 export class UpdatePredictedTimesheetCommand {
   constructor(
@@ -84,28 +22,11 @@ export class UpdatePredictedTimesheetHandler implements ICommandHandler<UpdatePr
 
   async execute(command: UpdatePredictedTimesheetCommand): Promise<void> {
     const { flightId, actor, patch } = command;
+    const flight = await this.flightsRepository.load(flightId);
 
-    const flight = await this.flightsRepository.findOneBy({ id: flightId });
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
+    flight.predict(flightActorFor(actor), patch);
 
-    const status = flight.status as FlightStatus;
-    for (const guard of fieldGuards) {
-      if (patch[guard.field] === undefined) continue;
-      if (statusReached(status, guard.forbiddenFrom)) {
-        throw new guard.error();
-      }
-    }
-
-    await this.flightsRepository.updateSchedule(flightId, 'predicted', patch);
-
-    await this.domainEvents.emitAsync(
-      new PredictedTimesheetWasUpdatedEvent({
-        flightId,
-        scope: scopeForActor(actor),
-        actorId: actor.sub,
-      }),
-    );
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

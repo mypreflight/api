@@ -309,3 +309,9 @@ export class InvalidStatusToFinishOffboardingError extends UnprocessableError {
     );
   }
 }
+
+export class FlightChangedConcurrentlyError extends ConflictError {
+  constructor() {
+    super('Flight was changed by another request. Reload it and try again.');
+  }
+}

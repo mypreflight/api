@@ -1,13 +1,8 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import { InvalidStatusToCloseFlightError } from '../../model/error/flight.error';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import { FlightWasClosedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { IsFlightDelayClearedQuery } from '../query/delay/is-flight-delay-cleared.query';
-import { FlightHasUnacceptedDelayError } from '../../model/error/delay.error';
 
 export class CloseFlightCommand {
   constructor(
@@ -27,31 +22,20 @@ export class CloseFlightHandler implements ICommandHandler<CloseFlightCommand> {
 
   async execute(command: CloseFlightCommand): Promise<void> {
     const { flightId, initiatorId, actualFuelBurned } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (flight.status !== FlightStatus.OffboardingFinished) {
-      throw new InvalidStatusToCloseFlightError();
-    }
-
-    await this.flightsRepository.assertNoUnresolvedEmergency(flightId);
-
-    const delayCleared = await this.queryBus.execute(
+    const hasUnresolvedEmergency =
+      await this.flightsRepository.hasUnresolvedEmergency(flightId);
+    const isDelayCleared = await this.queryBus.execute(
       new IsFlightDelayClearedQuery(flightId),
     );
-    if (!delayCleared) {
-      throw new FlightHasUnacceptedDelayError();
-    }
 
-    await this.flightsRepository.close(flightId, actualFuelBurned);
-
-    await this.domainEvents.emitAsync(
-      new FlightWasClosedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-        aircraftId: flight.aircraft.id,
-      }),
+    flight.close(
+      { id: initiatorId, scope: FlightEventScope.User },
+      { actualFuelBurned, hasUnresolvedEmergency, isDelayCleared },
     );
+
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

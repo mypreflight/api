@@ -1,10 +1,5 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToUpdateLoadsheetError,
-} from '../../model/error/flight.error';
+import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import { FlightLoadsheetsRepository } from '../../infra/database/repository/flight-loadsheets.repository';
 import { Loadsheet, LoadsheetKind } from '../../model/loadsheet.model';
 import { PreliminaryLoadsheetWasUpdatedEvent } from '../../../../core/domain/events/dto/flight.events';
@@ -34,22 +29,16 @@ export class UpdatePreliminaryLoadsheetCommand {
 export class UpdatePreliminaryLoadsheetHandler implements ICommandHandler<UpdatePreliminaryLoadsheetCommand> {
   constructor(
     private readonly queryBus: QueryBus,
+    private readonly flightsRepository: FlightsRepository,
     private readonly loadsheetsRepository: FlightLoadsheetsRepository,
     private readonly domainEvents: DomainEventEmitter,
   ) {}
 
   async execute(command: UpdatePreliminaryLoadsheetCommand): Promise<void> {
     const { flightId, initiatorId, loadsheet } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.Created) {
-      throw new InvalidStatusToUpdateLoadsheetError();
-    }
+    flight.assertCanUpdatePreliminaryLoadsheet();
 
     const currentQuery = new GetCurrentLoadsheetQuery(
       flightId,
@@ -63,7 +52,7 @@ export class UpdatePreliminaryLoadsheetHandler implements ICommandHandler<Update
     assertPassengerBreakdownConsistent(planned);
     assertPayloadAccountsForLoad(planned);
 
-    const capacityQuery = new GetSeatCapacityQuery(flight.aircraft.id);
+    const capacityQuery = new GetSeatCapacityQuery(flight.aircraftId);
     const capacity: CabinCapacity | null =
       await this.queryBus.execute(capacityQuery);
 
