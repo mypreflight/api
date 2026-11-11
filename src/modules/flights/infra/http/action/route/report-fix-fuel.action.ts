@@ -38,9 +38,10 @@ export class ReportFixFuelAction {
   @ApiOperation({
     summary: 'Report actual fuel over a fix of the planned route',
     description:
-      'Saves the fuel on board the pilot read over a fix and answers the route with it. ' +
-      'Reporting the same fix again replaces the earlier figure. <br />' +
+      'Saves the fuel on board the pilot read over a fix, and the time they read it, and answers the route with it. ' +
+      'Reporting the same fix again replaces the earlier figure and time. <br />' +
       '**NOTE:** This action is only allowed while the flight is in cruise. <br />' +
+      '**NOTE:** The time must not be before the actual takeoff. <br />' +
       '**NOTE:** This endpoint is only available for users with `cabin crew` role.',
   })
   @ApiBearerAuth('jwt')
@@ -56,7 +57,8 @@ export class ReportFixFuelAction {
   @ApiForbiddenResponse({ type: ForbiddenResponse })
   @ApiNotFoundResponse({ type: GenericNotFoundResponse })
   @ApiUnprocessableEntityResponse({
-    description: 'The flight is not in cruise',
+    description:
+      'The flight is not in cruise, or the time is before the actual takeoff',
   })
   @Put('/:id/route/fix/:ordinal/fuel-report')
   @Role(UserRole.CabinCrew)
@@ -66,7 +68,12 @@ export class ReportFixFuelAction {
     @Body() body: ReportFixFuelRequest,
   ): Promise<PlannedRouteResponse> {
     await this.commandBus.execute(
-      new ReportFixFuelCommand(id, ordinal, body.actualOnBoard),
+      new ReportFixFuelCommand(
+        id,
+        ordinal,
+        body.actualOnBoard,
+        body.reportedAt ?? new Date(),
+      ),
     );
 
     return this.queryBus.execute(new GetPlannedRouteQuery(id));

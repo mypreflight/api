@@ -266,6 +266,12 @@ export class InvalidStatusToReportFixFuelError extends UnprocessableError {
   }
 }
 
+export class FixFuelReportedBeforeTakeoffError extends UnprocessableError {
+  constructor() {
+    super('Cannot report fuel over a fix before the takeoff time.');
+  }
+}
+
 export class RouteFixDoesNotExistError extends NotFoundError {
   constructor() {
     super('Fix with given ordinal does not exist on the planned route.');

@@ -844,10 +844,11 @@ export class FlightsRepository {
     flightId: string,
     ordinal: number,
     actualOnBoard: number,
+    reportedAt: Date,
   ): Promise<void> {
     await this.prisma.flightRouteFix.update({
       where: { flightId_ordinal: { flightId, ordinal } },
-      data: { fuelActualOnBoard: actualOnBoard, fuelReportedAt: new Date() },
+      data: { fuelActualOnBoard: actualOnBoard, fuelReportedAt: reportedAt },
     });
   }
 
