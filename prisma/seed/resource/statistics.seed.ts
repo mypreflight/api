@@ -4,13 +4,6 @@ import { computeProjections } from '../../../src/modules/statistics/model/comput
 import { minutesBetween } from '../../../src/modules/flights/infra/helper/dates';
 import type { CaptainFlightFact } from '../../../src/modules/flights/infra/database/repository/flights.repository';
 
-type ActualTimesheet = {
-  offBlockTime?: string | null;
-  takeoffTime?: string | null;
-  arrivalTime?: string | null;
-  onBlockTime?: string | null;
-};
-
 /**
  * Backfills the flight completion columns from each completed flight's actual
  * timesheet, then derives the per-user statistics projections from those facts
@@ -28,7 +21,10 @@ export async function loadStatistics(
       greatCircleDistance: true,
       totalFuelBurned: true,
       operatorId: true,
-      timesheet: true,
+      actualOffBlockTime: true,
+      actualTakeoffTime: true,
+      actualArrivalTime: true,
+      actualOnBlockTime: true,
       isDiversionDeclared: true,
       aircraft: { select: { type: true } },
       airports: {
@@ -85,22 +81,16 @@ export async function loadStatistics(
   const factsByCaptain = new Map<string, CaptainFlightFact[]>();
 
   for (const flight of flights) {
-    const actual = (flight.timesheet as { actual?: ActualTimesheet } | null)
-      ?.actual;
-
-    if (!actual?.onBlockTime) {
+    if (!flight.actualOnBlockTime) {
       continue;
     }
 
-    const completedAt = new Date(actual.onBlockTime);
+    const completedAt = flight.actualOnBlockTime;
     const airborneMinutes = minutesBetween(
-      actual.takeoffTime ? new Date(actual.takeoffTime) : null,
-      actual.arrivalTime ? new Date(actual.arrivalTime) : null,
+      flight.actualTakeoffTime,
+      flight.actualArrivalTime,
     );
-    const blockMinutes = minutesBetween(
-      actual.offBlockTime ? new Date(actual.offBlockTime) : null,
-      completedAt,
-    );
+    const blockMinutes = minutesBetween(flight.actualOffBlockTime, completedAt);
 
     await tx.flight.update({
       where: { id: flight.id },

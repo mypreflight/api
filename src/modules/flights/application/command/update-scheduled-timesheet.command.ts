@@ -9,7 +9,7 @@ import { FlightsRepository } from '../../infra/database/repository/flights.repos
 import { ScheduledTimesheetWasUpdatedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
-import { FullTimesheet, Schedule } from '../../model/timesheet.model';
+import { Schedule } from '../../model/timesheet.model';
 
 export class UpdateScheduledTimesheetCommand {
   constructor(
@@ -40,8 +40,11 @@ export class UpdateScheduledTimesheetHandler implements ICommandHandler<UpdateSc
       throw new InvalidStatusToChangeScheduleError();
     }
 
-    const timesheet: FullTimesheet = { scheduled: schedule };
-    await this.flightsRepository.updateTimesheet(flightId, timesheet);
+    await this.flightsRepository.updateSchedule(
+      flightId,
+      'scheduled',
+      schedule,
+    );
     await this.domainEvents.emitAsync(
       new ScheduledTimesheetWasUpdatedEvent({
         flightId,

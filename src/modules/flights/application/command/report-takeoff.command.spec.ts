@@ -30,7 +30,7 @@ describe('ReportTakeoffHandler', () => {
   let queryBus: { execute: jest.Mock };
   let flightsRepository: {
     updateStatus: jest.Mock;
-    updateTimesheet: jest.Mock;
+    updateSchedule: jest.Mock;
   };
   let domainEvents: { emitAsync: jest.Mock };
   let handler: ReportTakeoffHandler;
@@ -39,7 +39,7 @@ describe('ReportTakeoffHandler', () => {
     queryBus = { execute: jest.fn().mockResolvedValue(taxiingOutFlight()) };
     flightsRepository = {
       updateStatus: jest.fn(),
-      updateTimesheet: jest.fn(),
+      updateSchedule: jest.fn(),
     };
     domainEvents = { emitAsync: jest.fn() };
     handler = new ReportTakeoffHandler(
@@ -77,8 +77,11 @@ describe('ReportTakeoffHandler', () => {
 
     await handler.execute(command);
 
-    const timesheet = flightsRepository.updateTimesheet.mock.calls[0][1];
-    expect(timesheet.actual.takeoffTime).toEqual(takeoffTime);
+    expect(flightsRepository.updateSchedule).toHaveBeenCalledWith(
+      FLIGHT_ID,
+      'actual',
+      { takeoffTime },
+    );
 
     const event = domainEvents.emitAsync.mock
       .calls[0][0] as TakeoffWasReportedEvent;

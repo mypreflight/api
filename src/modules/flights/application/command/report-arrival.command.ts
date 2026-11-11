@@ -9,7 +9,6 @@ import { FlightsRepository } from '../../infra/database/repository/flights.repos
 import { ArrivalWasReportedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
-import { Schedule } from '../../model/timesheet.model';
 
 export class ReportArrivalCommand {
   constructor(
@@ -42,11 +41,10 @@ export class ReportArrivalHandler implements ICommandHandler<ReportArrivalComman
       throw new InvalidStatusToReportArrivedError();
     }
 
-    const timesheet = flight.timesheet as { actual: Schedule };
-    timesheet.actual.arrivalTime = arrivalTime;
-
     await this.flightsRepository.updateStatus(flightId, FlightStatus.TaxiingIn);
-    await this.flightsRepository.updateTimesheet(flightId, timesheet);
+    await this.flightsRepository.updateSchedule(flightId, 'actual', {
+      arrivalTime,
+    });
 
     await this.domainEvents.emitAsync(
       new ArrivalWasReportedEvent({

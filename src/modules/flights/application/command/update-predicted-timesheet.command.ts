@@ -9,11 +9,7 @@ import {
   InvalidStatusToPredictTakeoffError,
 } from '../../model/error/flight.error';
 import { FlightStatus } from '../../model/flight.model';
-import {
-  FullTimesheet,
-  Schedule,
-  mergeSchedulePatch,
-} from '../../model/timesheet.model';
+import { Schedule } from '../../model/timesheet.model';
 import { PredictedTimesheetWasUpdatedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { scopeForActor } from '../../model/event.model';
 import { JwtUser } from '../../../auth/infra/http/request/jwt-user.dto';
@@ -102,12 +98,7 @@ export class UpdatePredictedTimesheetHandler implements ICommandHandler<UpdatePr
       }
     }
 
-    const currentTimesheet = (flight.timesheet ?? {}) as FullTimesheet;
-    const nextTimesheet: FullTimesheet = {
-      ...currentTimesheet,
-      predicted: mergeSchedulePatch(currentTimesheet.predicted, patch),
-    };
-    await this.flightsRepository.updateTimesheet(flightId, nextTimesheet);
+    await this.flightsRepository.updateSchedule(flightId, 'predicted', patch);
 
     await this.domainEvents.emitAsync(
       new PredictedTimesheetWasUpdatedEvent({

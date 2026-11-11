@@ -7,7 +7,6 @@ import {
   RouteFixDoesNotExistError,
 } from '../../model/error/flight.error';
 import { FlightStatus } from '../../model/flight.model';
-import { FullTimesheet } from '../../model/timesheet.model';
 
 export class ReportFixFuelCommand {
   constructor(
@@ -34,8 +33,8 @@ export class ReportFixFuelHandler implements ICommandHandler<ReportFixFuelComman
       throw new InvalidStatusToReportFixFuelError();
     }
 
-    const takeoffTime = (flight.timesheet as FullTimesheet).actual?.takeoffTime;
-    if (takeoffTime && reportedAt < new Date(takeoffTime)) {
+    const takeoffTime = flight.timesheet.actual?.takeoffTime;
+    if (takeoffTime && reportedAt < takeoffTime) {
       throw new FixFuelReportedBeforeTakeoffError();
     }
 

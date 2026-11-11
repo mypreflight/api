@@ -30,7 +30,7 @@ describe('ReportArrivalHandler', () => {
   let queryBus: { execute: jest.Mock };
   let flightsRepository: {
     updateStatus: jest.Mock;
-    updateTimesheet: jest.Mock;
+    updateSchedule: jest.Mock;
   };
   let domainEvents: { emitAsync: jest.Mock };
   let handler: ReportArrivalHandler;
@@ -41,7 +41,7 @@ describe('ReportArrivalHandler', () => {
     };
     flightsRepository = {
       updateStatus: jest.fn(),
-      updateTimesheet: jest.fn(),
+      updateSchedule: jest.fn(),
     };
     domainEvents = { emitAsync: jest.fn() };
     handler = new ReportArrivalHandler(
@@ -61,10 +61,9 @@ describe('ReportArrivalHandler', () => {
       FLIGHT_ID,
       FlightStatus.TaxiingIn,
     );
-    const timesheet = flightsRepository.updateTimesheet.mock.calls[0][1];
-    expect(timesheet.actual.arrivalTime.getTime()).toBeGreaterThanOrEqual(
-      before,
-    );
+    const [, schedule, times] = flightsRepository.updateSchedule.mock.calls[0];
+    expect(schedule).toBe('actual');
+    expect(times.arrivalTime.getTime()).toBeGreaterThanOrEqual(before);
 
     const event = domainEvents.emitAsync.mock
       .calls[0][0] as ArrivalWasReportedEvent;
@@ -85,8 +84,11 @@ describe('ReportArrivalHandler', () => {
 
     await handler.execute(command);
 
-    const timesheet = flightsRepository.updateTimesheet.mock.calls[0][1];
-    expect(timesheet.actual.arrivalTime).toEqual(arrivalTime);
+    expect(flightsRepository.updateSchedule).toHaveBeenCalledWith(
+      FLIGHT_ID,
+      'actual',
+      { arrivalTime },
+    );
 
     const event = domainEvents.emitAsync.mock
       .calls[0][0] as ArrivalWasReportedEvent;

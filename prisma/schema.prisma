@@ -248,7 +248,22 @@ model Flight {
   atcCallsign                String?
   status                     String
   aircraftId                 String            @db.Uuid
-  timesheet                  Json
+  scheduledOffBlockTime      DateTime?
+  scheduledTakeoffTime       DateTime?
+  scheduledArrivalTime       DateTime?
+  scheduledOnBlockTime       DateTime?
+  estimatedOffBlockTime      DateTime?
+  estimatedTakeoffTime       DateTime?
+  estimatedArrivalTime       DateTime?
+  estimatedOnBlockTime       DateTime?
+  actualOffBlockTime         DateTime?
+  actualTakeoffTime          DateTime?
+  actualArrivalTime          DateTime?
+  actualOnBlockTime          DateTime?
+  predictedOffBlockTime      DateTime?
+  predictedTakeoffTime       DateTime?
+  predictedArrivalTime       DateTime?
+  predictedOnBlockTime       DateTime?
   operatorId                 String            @db.Uuid
   captainId                  String?           @db.Uuid
   createdById                String?           @db.Uuid
@@ -323,6 +338,8 @@ model Flight {
   @@index([captainId, createdAt])
   @@index([createdById, createdAt])
   @@index([cabinLayout, cabinLayoutRevision])
+  @@index([scheduledOffBlockTime])
+  @@index([actualOnBlockTime])
   @@map("flight")
 }
 

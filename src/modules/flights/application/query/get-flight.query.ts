@@ -9,7 +9,6 @@ import { FlightsRepository } from '../../infra/database/repository/flights.repos
 import { FlightDoesNotExistError } from '../../model/error/flight.error';
 import { GetPilotQuery } from '../../../users/application/query/get-pilot.query';
 import { FlightPilotDto } from '../../../users/infra/http/request/get-user.dto';
-import { FullTimesheet, Schedule } from '../../model/timesheet.model';
 import {
   AirportType,
   AirportWithType,
@@ -48,7 +47,6 @@ export class GetFlightHandler implements IQueryHandler<GetFlightQuery> {
     return {
       ...rest,
       status: flight.status as FlightStatus,
-      timesheet: this.convertTimesheetDates(flight.timesheet as FullTimesheet),
       actualFuelBurned:
         actualFuelBurned === null ? null : actualFuelBurned.toNumber(),
       airports: flight.airports.map(
@@ -92,46 +90,5 @@ export class GetFlightHandler implements IQueryHandler<GetFlightQuery> {
 
     const pilotQuery = new GetPilotQuery(captainId);
     return this.queryBus.execute(pilotQuery);
-  }
-
-  private convertSchedule = (
-    schedule: Schedule | Partial<Schedule> | undefined,
-  ): Schedule | Partial<Schedule> | undefined => {
-    if (!schedule) return undefined;
-
-    return {
-      offBlockTime: schedule.offBlockTime
-        ? new Date(schedule.offBlockTime)
-        : null,
-      takeoffTime: schedule.takeoffTime ? new Date(schedule.takeoffTime) : null,
-      arrivalTime: schedule.arrivalTime ? new Date(schedule.arrivalTime) : null,
-      onBlockTime: schedule.onBlockTime ? new Date(schedule.onBlockTime) : null,
-    };
-  };
-
-  private convertTimesheetDates(timesheet: FullTimesheet): FullTimesheet {
-    const result: FullTimesheet = {};
-
-    if (timesheet.scheduled) {
-      result.scheduled = this.convertSchedule(timesheet.scheduled) as Schedule;
-    }
-
-    if (timesheet.estimated) {
-      result.estimated = this.convertSchedule(timesheet.estimated) as Schedule;
-    }
-
-    if (timesheet.actual) {
-      result.actual = this.convertSchedule(
-        timesheet.actual,
-      ) as Partial<Schedule>;
-    }
-
-    if (timesheet.predicted) {
-      result.predicted = this.convertSchedule(
-        timesheet.predicted,
-      ) as Partial<Schedule>;
-    }
-
-    return result;
   }
 }

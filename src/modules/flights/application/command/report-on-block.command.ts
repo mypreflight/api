@@ -10,7 +10,6 @@ import { DiversionRepository } from '../../infra/database/repository/diversion.r
 import { OnBlockWasReportedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
-import { Schedule } from '../../model/timesheet.model';
 import { AirportType } from '../../../airports/model/airport.model';
 import { minutesBetween } from '../../infra/helper/dates';
 
@@ -43,13 +42,13 @@ export class ReportOnBlockHandler implements ICommandHandler<ReportOnBlockComman
       throw new InvalidStatusToReportOnBlockError();
     }
 
-    const timesheet = flight.timesheet as { actual: Schedule };
-    timesheet.actual.onBlockTime = new Date();
+    const actual = { ...flight.timesheet.actual, onBlockTime: new Date() };
 
     await this.flightsRepository.updateStatus(flightId, FlightStatus.OnBlock);
-    await this.flightsRepository.updateTimesheet(flightId, timesheet);
+    await this.flightsRepository.updateSchedule(flightId, 'actual', {
+      onBlockTime: actual.onBlockTime,
+    });
 
-    const actual = timesheet.actual;
     await this.flightsRepository.updateCompletionFacts(flightId, {
       actualAirborneMinutes: minutesBetween(
         actual.takeoffTime,
