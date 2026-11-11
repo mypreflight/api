@@ -6,7 +6,6 @@ import {
   FlightPathWasUpdatedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { GetFlightQuery } from '../../query/get-flight.query';
-import { FlightStatus } from '../../../model/flight.model';
 import { AirportType } from '../../../../airports/model/airport.model';
 import { ReportArrivalCommand } from '../../command/report-arrival.command';
 import { FlightsRepository } from '../../../infra/database/repository/flights.repository';
@@ -30,13 +29,14 @@ export class DetectArrivalListener {
   ): Promise<void> {
     const { flightId } = event.payload;
 
-    const flight = await this.queryBus.execute(new GetFlightQuery(flightId));
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (flight.status !== FlightStatus.InCruise) {
+    if (!flight.canReportArrival()) {
       return;
     }
 
-    const destination = flight.airports.find(
+    const details = await this.queryBus.execute(new GetFlightQuery(flightId));
+    const destination = details.airports.find(
       (airport) => airport.type === AirportType.Destination,
     );
 

@@ -3,6 +3,7 @@ import {
   UpdatePreliminaryLoadsheetHandler,
 } from './update-preliminary-loadsheet.command';
 import { FlightStatus } from '../../model/flight.model';
+import { flightIn } from '../../model/flight.fixture';
 import { Loadsheet } from '../../model/loadsheet.model';
 import { PayloadBelowLoadError } from '../../model/error/flight.error';
 
@@ -26,29 +27,27 @@ function submitted(overrides: Partial<Loadsheet> = {}): Loadsheet {
 
 describe('UpdatePreliminaryLoadsheetHandler planned passenger mass', () => {
   let queryBus: { execute: jest.Mock };
+  let flightsRepository: { load: jest.Mock };
   let loadsheetsRepository: { issuePreliminary: jest.Mock };
   let domainEvents: { emitAsync: jest.Mock };
   let handler: UpdatePreliminaryLoadsheetHandler;
-
-  const flight = {
-    id: FLIGHT_ID,
-    status: FlightStatus.Created,
-    aircraft: { id: 'aircraft-1' },
-  };
 
   function handlerFor(passengerMass: number | null) {
     queryBus = {
       execute: jest
         .fn()
-        .mockResolvedValueOnce(flight)
         .mockResolvedValueOnce(importedLoadsheet(passengerMass))
         .mockResolvedValue(null),
+    };
+    flightsRepository = {
+      load: jest.fn().mockResolvedValue(flightIn(FlightStatus.Created)),
     };
     loadsheetsRepository = { issuePreliminary: jest.fn() };
     domainEvents = { emitAsync: jest.fn() };
 
     return new UpdatePreliminaryLoadsheetHandler(
       queryBus as never,
+      flightsRepository as never,
       loadsheetsRepository as never,
       domainEvents as never,
     );
@@ -113,11 +112,7 @@ describe('UpdatePreliminaryLoadsheetHandler planned passenger mass', () => {
 
   it('records no planned mass for a flight that has no preliminary loadsheet yet', async () => {
     handler = handlerFor(null);
-    queryBus.execute = jest
-      .fn()
-      .mockResolvedValueOnce(flight)
-      .mockResolvedValueOnce(null)
-      .mockResolvedValue(null);
+    queryBus.execute = jest.fn().mockResolvedValue(null);
     const command = new UpdatePreliminaryLoadsheetCommand(
       FLIGHT_ID,
       'actor-1',

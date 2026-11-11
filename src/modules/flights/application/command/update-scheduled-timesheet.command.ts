@@ -1,12 +1,5 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToChangeScheduleError,
-} from '../../model/error/flight.error';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import { ScheduledTimesheetWasUpdatedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { Schedule } from '../../model/timesheet.model';
@@ -22,35 +15,20 @@ export class UpdateScheduledTimesheetCommand {
 @CommandHandler(UpdateScheduledTimesheetCommand)
 export class UpdateScheduledTimesheetHandler implements ICommandHandler<UpdateScheduledTimesheetCommand> {
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly flightsRepository: FlightsRepository,
     private readonly domainEvents: DomainEventEmitter,
   ) {}
 
   async execute(command: UpdateScheduledTimesheetCommand): Promise<void> {
     const { flightId, initiatorId, schedule } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.Created) {
-      throw new InvalidStatusToChangeScheduleError();
-    }
-
-    await this.flightsRepository.updateSchedule(
-      flightId,
-      'scheduled',
+    flight.reschedule(
+      { id: initiatorId, scope: FlightEventScope.Operations },
       schedule,
     );
-    await this.domainEvents.emitAsync(
-      new ScheduledTimesheetWasUpdatedEvent({
-        flightId,
-        scope: FlightEventScope.Operations,
-        actorId: initiatorId,
-      }),
-    );
+
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

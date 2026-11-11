@@ -1,29 +1,32 @@
 import { Injectable } from '@nestjs/common';
 import {
-  Flight,
   FlightListOrder,
   FlightListSort,
   FlightOfpDetails,
   FlightPathElement,
   FlightPhase,
-  FlightServiceType,
   FlightSource,
   FlightStatus,
   FlightTracking,
 } from '../../../model/flight.model';
+import { Flight, FlightSnapshot } from '../../../model/flight';
+import {
+  flightAggregateFields,
+  toFlightChanges,
+  toFlightSnapshot,
+} from './flight-aggregate.mapper';
 import { PrismaService } from '../../../../../core/provider/prisma/prisma.service';
 import { AircraftCabinLayout } from '../../../../aircraft/model/cabin-layout.model';
 import { toAircraftCabinLayout } from '../../../../aircraft/model/cabin-layout-assignment';
 import {
   CreateFlightRequest,
+  FlightDto,
   FlightListFilters,
 } from '../../http/request/flight.dto';
-import { FullTimesheet, SchedulePatch } from '../../../model/timesheet.model';
+import { FullTimesheet } from '../../../model/timesheet.model';
 import {
   TIMESHEET_COLUMN_NAMES,
   TimesheetColumn,
-  TimesheetScheduleName,
-  toTimesheetColumns,
   toTimesheetData,
   withTimesheet,
 } from '../../../model/timesheet.mapper';
@@ -37,10 +40,10 @@ import {
   AlternateAirportNotFoundError,
   DepartureAirportNotFoundError,
   DestinationAirportNotFoundError,
+  FlightChangedConcurrentlyError,
   FlightDoesNotExistError,
   FlightOfpNotFoundError,
 } from '../../../model/error/flight.error';
-import { UnresolvedEmergencyCannotCloseFlightError } from '../../../model/error/emergency.error';
 import {
   Continent,
   OceanicRouting,
@@ -346,7 +349,51 @@ type FlightsWithCount = {
 
 @Injectable()
 export class FlightsRepository {
+  private readonly loaded = new WeakMap<Flight, FlightSnapshot>();
+
   constructor(private readonly prisma: PrismaService) {}
+
+  async load(id: string): Promise<Flight> {
+    const row = await this.prisma.flight.findUnique({
+      where: { id },
+      select: flightAggregateFields,
+    });
+
+    if (!row) {
+      throw new FlightDoesNotExistError();
+    }
+
+    const flight = Flight.restore(toFlightSnapshot(row));
+    this.loaded.set(flight, flight.snapshot());
+
+    return flight;
+  }
+
+  async save(flight: Flight): Promise<void> {
+    const loaded = this.loaded.get(flight);
+
+    if (!loaded) {
+      throw new Error(`Flight ${flight.id} was not loaded by this repository.`);
+    }
+
+    const current = flight.snapshot();
+    const changes = toFlightChanges(loaded, current);
+
+    if (Object.keys(changes).length === 0) {
+      return;
+    }
+
+    const { count } = await this.prisma.flight.updateMany({
+      where: { id: flight.id, status: loaded.status },
+      data: changes,
+    });
+
+    if (count === 0) {
+      throw new FlightChangedConcurrentlyError();
+    }
+
+    this.loaded.set(flight, current);
+  }
 
   async create(
     flightId: string,
@@ -414,7 +461,7 @@ export class FlightsRepository {
   }
 
   async findOneBy(
-    criteria: Partial<Record<keyof Flight, any>>,
+    criteria: Partial<Record<keyof FlightDto, any>>,
   ): Promise<FlightResponse | null> {
     const flight = await this.prisma.flight.findFirst({
       where: criteria,
@@ -614,20 +661,6 @@ export class FlightsRepository {
     return flight.captainId;
   }
 
-  async checkInCaptain(flightId: string, captainId: string): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id: flightId },
-      data: { captainId },
-    });
-  }
-
-  async updateStatus(id: string, status: FlightStatus): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id },
-      data: { status },
-    });
-  }
-
   async pinCabinLayout(
     id: string,
     cabinLayout: string,
@@ -650,38 +683,6 @@ export class FlightsRepository {
         captainId: true,
         greatCircleDistance: true,
       },
-    });
-  }
-
-  async close(id: string, actualFuelBurned: number | null): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id },
-      data: { status: FlightStatus.Closed, actualFuelBurned },
-    });
-  }
-
-  async updateSchedule(
-    id: string,
-    schedule: TimesheetScheduleName,
-    times: SchedulePatch,
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id },
-      data: toTimesheetColumns(schedule, times),
-    });
-  }
-
-  async updateCompletionFacts(
-    id: string,
-    facts: {
-      actualAirborneMinutes: number | null;
-      actualBlockMinutes: number | null;
-      completedAt: Date | null;
-    },
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id },
-      data: facts,
     });
   }
 
@@ -1004,26 +1005,6 @@ export class FlightsRepository {
     });
   }
 
-  async updateVisibility(
-    id: string,
-    visibility: FlightTracking,
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id },
-      data: { tracking: visibility },
-    });
-  }
-
-  async updateServiceType(
-    id: string,
-    serviceType: FlightServiceType,
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id },
-      data: { serviceType },
-    });
-  }
-
   async updateFlightPath(
     id: string,
     track: AdsbFlightTrack,
@@ -1051,38 +1032,17 @@ export class FlightsRepository {
     return count === 1;
   }
 
-  public async assertNoUnresolvedEmergency(flightId: string): Promise<void> {
+  async hasUnresolvedEmergency(flightId: string): Promise<boolean> {
     const count = await this.prisma.emergencyDeclaration.count({
       where: { flightId, resolvedAt: null },
     });
-    if (count > 0) {
-      throw new UnresolvedEmergencyCannotCloseFlightError();
-    }
+
+    return count > 0;
   }
 
   public async exists(flightId: string): Promise<boolean> {
     const count = await this.prisma.flight.count({ where: { id: flightId } });
     return count > 0;
-  }
-
-  async updateDepartureParkingPosition(
-    flightId: string,
-    departureParkingPositionId: string,
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id: flightId },
-      data: { departureParkingPositionId },
-    });
-  }
-
-  async updateAtcCallsign(
-    flightId: string,
-    atcCallsign: string | null,
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id: flightId },
-      data: { atcCallsign },
-    });
   }
 
   async updateDepartureRunway(
@@ -1092,16 +1052,6 @@ export class FlightsRepository {
     await this.prisma.flight.update({
       where: { id: flightId },
       data: { departureRunwayId },
-    });
-  }
-
-  async updateArrivalParkingPosition(
-    flightId: string,
-    arrivalParkingPositionId: string,
-  ): Promise<void> {
-    await this.prisma.flight.update({
-      where: { id: flightId },
-      data: { arrivalParkingPositionId },
     });
   }
 

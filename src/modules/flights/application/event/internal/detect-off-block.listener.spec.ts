@@ -1,6 +1,7 @@
 import { DetectOffBlockListener } from './detect-off-block.listener';
 import { ReportOffBlockCommand } from '../../command/report-off-block.command';
 import { FlightStatus } from '../../../model/flight.model';
+import { flightIn } from '../../../model/flight.fixture';
 import {
   FlightEventScope,
   FlightPathWasUpdatedEvent,
@@ -25,26 +26,20 @@ const secondMovingPoint = {
   groundSpeed: 25,
 };
 
-function flight(overrides: Record<string, unknown> = {}) {
-  return {
-    id: FLIGHT_ID,
-    status: FlightStatus.BoardingFinished,
-    ...overrides,
-  };
-}
-
 describe('DetectOffBlockListener', () => {
-  let queryBus: { execute: jest.Mock };
   let commandBus: { execute: jest.Mock };
-  let flightsRepository: { getFlightPath: jest.Mock };
+  let flightsRepository: { getFlightPath: jest.Mock; load: jest.Mock };
   let listener: DetectOffBlockListener;
 
   beforeEach(() => {
-    queryBus = { execute: jest.fn() };
     commandBus = { execute: jest.fn() };
-    flightsRepository = { getFlightPath: jest.fn() };
+    flightsRepository = {
+      getFlightPath: jest.fn(),
+      load: jest
+        .fn()
+        .mockResolvedValue(flightIn(FlightStatus.BoardingFinished)),
+    };
     listener = new DetectOffBlockListener(
-      queryBus as never,
       commandBus as never,
       flightsRepository as never,
     );
@@ -57,7 +52,6 @@ describe('DetectOffBlockListener', () => {
   });
 
   it('reports off-block with the first moving position timestamp when the aircraft starts rolling', async () => {
-    queryBus.execute.mockResolvedValue(flight());
     flightsRepository.getFlightPath.mockResolvedValue([
       stationaryPoint,
       secondStationaryPoint,
@@ -78,9 +72,7 @@ describe('DetectOffBlockListener', () => {
   });
 
   it('does nothing when the flight has not finished boarding', async () => {
-    queryBus.execute.mockResolvedValue(
-      flight({ status: FlightStatus.TaxiingOut }),
-    );
+    flightsRepository.load.mockResolvedValue(flightIn(FlightStatus.TaxiingOut));
 
     await listener.onFlightPathWasUpdated(event);
 
@@ -89,7 +81,6 @@ describe('DetectOffBlockListener', () => {
   });
 
   it('does nothing when every stored position is at or below the threshold', async () => {
-    queryBus.execute.mockResolvedValue(flight());
     flightsRepository.getFlightPath.mockResolvedValue([
       stationaryPoint,
       secondStationaryPoint,

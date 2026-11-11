@@ -6,6 +6,7 @@ import {
 import { InputJsonValue } from '../../../../prisma/client/internal/prismaNamespace';
 import { UserRole } from '../../users/model/user-role';
 import { JwtUser } from '../../auth/infra/http/request/jwt-user.dto';
+import { FlightActor } from './flight';
 
 export { FlightEventScope };
 
@@ -13,6 +14,11 @@ export const scopeForActor = (actor: JwtUser): FlightEventScope =>
   actor.role === UserRole.Operations.toLowerCase()
     ? FlightEventScope.Operations
     : FlightEventScope.User;
+
+export const flightActorFor = (actor: JwtUser): FlightActor => ({
+  id: actor.sub,
+  scope: scopeForActor(actor),
+});
 
 export class EventActor {
   @ApiProperty({

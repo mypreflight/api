@@ -1,12 +1,10 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { OnEvent } from '@nestjs/event-emitter';
-import { CommandBus, QueryBus } from '@nestjs/cqrs';
+import { CommandBus } from '@nestjs/cqrs';
 import {
   FlightEventType,
   FlightPathWasUpdatedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
-import { GetFlightQuery } from '../../query/get-flight.query';
-import { FlightStatus } from '../../../model/flight.model';
 import { ReportOffBlockCommand } from '../../command/report-off-block.command';
 import { FlightsRepository } from '../../../infra/database/repository/flights.repository';
 import { firstMovingPosition } from '../../../../../core/utils/ground-speed';
@@ -18,7 +16,6 @@ export class DetectOffBlockListener {
   private readonly logger = new Logger(DetectOffBlockListener.name);
 
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly commandBus: CommandBus,
     private readonly flightsRepository: FlightsRepository,
   ) {}
@@ -29,9 +26,9 @@ export class DetectOffBlockListener {
   ): Promise<void> {
     const { flightId } = event.payload;
 
-    const flight = await this.queryBus.execute(new GetFlightQuery(flightId));
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (flight.status !== FlightStatus.BoardingFinished) {
+    if (!flight.canReportOffBlock()) {
       return;
     }
 

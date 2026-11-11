@@ -1,4 +1,7 @@
-import { InvalidStatusToReportOffBlockError } from '../../model/error/flight.error';
+import {
+  FlightChangedConcurrentlyError,
+  InvalidStatusToReportOffBlockError,
+} from '../../model/error/flight.error';
 import {
   ReportOffBlockCommand,
   ReportOffBlockHandler,
@@ -8,73 +11,55 @@ import {
   FlightEventScope,
   OffBlockWasReportedEvent,
 } from '../../../../core/domain/events/dto/flight.events';
-
-const FLIGHT_ID = '7105891a-8008-4b47-b473-c81c97615ad7';
-const AIRCRAFT_ID = 'ffe14007-9147-40a1-a228-573c9c87a2e7';
-
-function boardingFinishedFlight() {
-  return {
-    id: FLIGHT_ID,
-    status: FlightStatus.BoardingFinished,
-    aircraft: { id: AIRCRAFT_ID },
-    timesheet: {
-      actual: {
-        offBlockTime: null,
-        takeoffTime: null,
-        arrivalTime: null,
-        onBlockTime: null,
-      },
-    },
-  };
-}
+import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
+import { Flight } from '../../model/flight';
+import {
+  FIXTURE_AIRCRAFT_ID,
+  FIXTURE_FLIGHT_ID,
+  flightIn,
+} from '../../model/flight.fixture';
 
 describe('ReportOffBlockHandler', () => {
-  let queryBus: { execute: jest.Mock };
-  let flightsRepository: {
-    updateStatus: jest.Mock;
-    updateSchedule: jest.Mock;
-  };
-  let domainEvents: { emit: jest.Mock };
+  let flightsRepository: { load: jest.Mock; save: jest.Mock };
+  let emitter: { emit: jest.Mock };
   let handler: ReportOffBlockHandler;
 
+  const saved = (): Flight => flightsRepository.save.mock.calls[0][0];
+  const emitted = () =>
+    emitter.emit.mock.calls[0][1] as OffBlockWasReportedEvent;
+
   beforeEach(() => {
-    queryBus = {
-      execute: jest.fn().mockResolvedValue(boardingFinishedFlight()),
-    };
     flightsRepository = {
-      updateStatus: jest.fn(),
-      updateSchedule: jest.fn(),
+      load: jest
+        .fn()
+        .mockResolvedValue(flightIn(FlightStatus.BoardingFinished)),
+      save: jest.fn(),
     };
-    domainEvents = { emit: jest.fn() };
+    emitter = { emit: jest.fn() };
     handler = new ReportOffBlockHandler(
-      queryBus as never,
       flightsRepository as never,
-      domainEvents as never,
+      new DomainEventEmitter(emitter as never),
     );
   });
 
   it('reports a manual off-block as a user-scoped event flagged not automatic', async () => {
-    const command = new ReportOffBlockCommand(FLIGHT_ID, 'actor-1');
-
-    await handler.execute(command);
-
-    expect(flightsRepository.updateStatus).toHaveBeenCalledWith(
-      FLIGHT_ID,
-      FlightStatus.TaxiingOut,
+    await handler.execute(
+      new ReportOffBlockCommand(FIXTURE_FLIGHT_ID, 'actor-1'),
     );
-    const event = domainEvents.emit.mock
-      .calls[0][0] as OffBlockWasReportedEvent;
+
+    expect(saved().status).toBe(FlightStatus.TaxiingOut);
+    const event = emitted();
     expect(event).toBeInstanceOf(OffBlockWasReportedEvent);
     expect(event.payload.scope).toBe(FlightEventScope.User);
     expect(event.payload.actorId).toBe('actor-1');
-    expect(event.payload.aircraftId).toBe(AIRCRAFT_ID);
+    expect(event.payload.aircraftId).toBe(FIXTURE_AIRCRAFT_ID);
     expect(event.payload.payload).toEqual({ automaticallyDetected: false });
   });
 
   it('reports an automatic off-block as a user-scoped event with no actor and the backdated time', async () => {
     const offBlockTime = new Date('2025-01-01T13:02:00.000Z');
     const command = new ReportOffBlockCommand(
-      FLIGHT_ID,
+      FIXTURE_FLIGHT_ID,
       null,
       offBlockTime,
       true,
@@ -82,33 +67,38 @@ describe('ReportOffBlockHandler', () => {
 
     await handler.execute(command);
 
-    expect(flightsRepository.updateSchedule).toHaveBeenCalledWith(
-      FLIGHT_ID,
-      'actual',
-      {
-        offBlockTime,
-        takeoffTime: null,
-        arrivalTime: null,
-        onBlockTime: null,
-      },
-    );
-
-    const event = domainEvents.emit.mock
-      .calls[0][0] as OffBlockWasReportedEvent;
+    expect(saved().snapshot().timesheet.actual).toEqual({
+      offBlockTime,
+      takeoffTime: null,
+      arrivalTime: null,
+      onBlockTime: null,
+    });
+    const event = emitted();
     expect(event.payload.scope).toBe(FlightEventScope.User);
     expect(event.payload.actorId).toBeNull();
     expect(event.payload.payload).toEqual({ automaticallyDetected: true });
   });
 
-  it('rejects off-block when the flight has not finished boarding', async () => {
-    queryBus.execute.mockResolvedValue({
-      ...boardingFinishedFlight(),
-      status: FlightStatus.BoardingStarted,
-    });
+  it('emits nothing when another request changed the flight first', async () => {
+    flightsRepository.save.mockRejectedValue(
+      new FlightChangedConcurrentlyError(),
+    );
 
     await expect(
-      handler.execute(new ReportOffBlockCommand(FLIGHT_ID, 'actor-1')),
+      handler.execute(new ReportOffBlockCommand(FIXTURE_FLIGHT_ID, 'actor-1')),
+    ).rejects.toBeInstanceOf(FlightChangedConcurrentlyError);
+    expect(emitter.emit).not.toHaveBeenCalled();
+  });
+
+  it('rejects off-block when the flight has not finished boarding', async () => {
+    flightsRepository.load.mockResolvedValue(
+      flightIn(FlightStatus.BoardingStarted),
+    );
+
+    await expect(
+      handler.execute(new ReportOffBlockCommand(FIXTURE_FLIGHT_ID, 'actor-1')),
     ).rejects.toBeInstanceOf(InvalidStatusToReportOffBlockError);
-    expect(domainEvents.emit).not.toHaveBeenCalled();
+    expect(flightsRepository.save).not.toHaveBeenCalled();
+    expect(emitter.emit).not.toHaveBeenCalled();
   });
 });

@@ -1,10 +1,4 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  ScheduledFlightCannotBeRemovedError,
-} from '../../model/error/flight.error';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 
 export class RemoveFlightCommand {
@@ -13,23 +7,13 @@ export class RemoveFlightCommand {
 
 @CommandHandler(RemoveFlightCommand)
 export class RemoveFlightHandler implements ICommandHandler<RemoveFlightCommand> {
-  constructor(
-    private readonly queryBus: QueryBus,
-    private readonly flightsRepository: FlightsRepository,
-  ) {}
+  constructor(private readonly flightsRepository: FlightsRepository) {}
 
   async execute(command: RemoveFlightCommand): Promise<void> {
     const { flightId } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.Created) {
-      throw new ScheduledFlightCannotBeRemovedError();
-    }
+    flight.assertCanBeRemoved();
 
     await this.flightsRepository.remove(flightId);
   }

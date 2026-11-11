@@ -34,6 +34,8 @@ jobs:
         run: docker compose exec app npm run format
       - name: 'Run static code analysis'
         run: docker compose exec app npm run lint
+      - name: 'Run unit tests'
+        run: docker compose exec app npm test
       - name: 'Run functional tests'
         run: docker compose exec app npm run test:functional
   infra:

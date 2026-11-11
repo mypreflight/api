@@ -79,7 +79,7 @@ flight's cargo figure change between planning and departure".
   `POST /flight/{flightId}/finish-boarding` is unchanged — the crew still send the final
   loadsheet in full, which is what a client that pre-fills it from the last preliminary revision
   sends anyway. `PATCH
-  /flight/{flightId}/loadsheet/preliminary` keeps its contract unchanged — what the caller
+/flight/{flightId}/loadsheet/preliminary` keeps its contract unchanged — what the caller
   sends still means "this is the preliminary loadsheet now"; that it now appends a revision is
   the system's business, not the caller's.
 - **Schema**: one table, `flight_loadsheet` (kind, revision, the crew and weight figures, the

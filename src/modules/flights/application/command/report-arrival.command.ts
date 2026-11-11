@@ -1,12 +1,5 @@
-import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToReportArrivedError,
-} from '../../model/error/flight.error';
+import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import { ArrivalWasReportedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 
@@ -22,7 +15,6 @@ export class ReportArrivalCommand {
 @CommandHandler(ReportArrivalCommand)
 export class ReportArrivalHandler implements ICommandHandler<ReportArrivalCommand> {
   constructor(
-    private readonly queryBus: QueryBus,
     private readonly flightsRepository: FlightsRepository,
     private readonly domainEvents: DomainEventEmitter,
   ) {}
@@ -30,29 +22,15 @@ export class ReportArrivalHandler implements ICommandHandler<ReportArrivalComman
   async execute(command: ReportArrivalCommand): Promise<void> {
     const { flightId, initiatorId, arrivalTime, automaticallyDetected } =
       command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
+    const flight = await this.flightsRepository.load(flightId);
 
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.InCruise) {
-      throw new InvalidStatusToReportArrivedError();
-    }
-
-    await this.flightsRepository.updateStatus(flightId, FlightStatus.TaxiingIn);
-    await this.flightsRepository.updateSchedule(flightId, 'actual', {
+    flight.reportArrival(
+      { id: initiatorId, scope: FlightEventScope.User },
       arrivalTime,
-    });
-
-    await this.domainEvents.emitAsync(
-      new ArrivalWasReportedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-        payload: { automaticallyDetected },
-      }),
+      automaticallyDetected,
     );
+
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }

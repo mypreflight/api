@@ -3,9 +3,7 @@
   "aircraftIata": "7M8",
   "candidateCount": 1,
   "ambiguous": false,
-  "candidates": [
-    "lo-7m8-1"
-  ],
+  "candidates": ["lo-7m8-1"],
   "seatMaps": [
     {
       "slug": "lo-7m8-1",

@@ -1,12 +1,5 @@
 import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
-import { GetFlightQuery } from '../query/get-flight.query';
-import { FlightStatus } from '../../model/flight.model';
-import {
-  FlightDoesNotExistError,
-  InvalidStatusToStartOffboardingError,
-} from '../../model/error/flight.error';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
-import { OffboardingWasStartedEvent } from '../../../../core/domain/events/dto/flight.events';
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { GetUserGsxSettingsQuery } from '../../../users/application/query/get-user-gsx-settings.query';
@@ -30,16 +23,7 @@ export class StartOffboardingHandler implements ICommandHandler<StartOffboarding
 
   async execute(command: StartOffboardingCommand): Promise<void> {
     const { flightId, initiatorId, requestedByGsx } = command;
-    const query = new GetFlightQuery(flightId);
-    const flight = await this.queryBus.execute(query);
-
-    if (!flight) {
-      throw new FlightDoesNotExistError();
-    }
-
-    if (flight.status !== FlightStatus.OnBlock) {
-      throw new InvalidStatusToStartOffboardingError();
-    }
+    const flight = await this.flightsRepository.load(flightId);
 
     const settingsQuery = new GetUserGsxSettingsQuery(initiatorId);
     const settings = await this.queryBus.execute(settingsQuery);
@@ -48,18 +32,12 @@ export class StartOffboardingHandler implements ICommandHandler<StartOffboarding
       settings.integrationEnabled && settings.autoDeboardingEnabled,
     );
 
-    await this.flightsRepository.updateStatus(
-      flightId,
-      FlightStatus.OffboardingStarted,
+    flight.startOffboarding(
+      { id: initiatorId, scope: FlightEventScope.User },
+      source,
     );
 
-    await this.domainEvents.emitAsync(
-      new OffboardingWasStartedEvent({
-        flightId,
-        scope: FlightEventScope.User,
-        actorId: initiatorId,
-        payload: { source },
-      }),
-    );
+    await this.flightsRepository.save(flight);
+    await this.domainEvents.emitRecordedAsync(flight);
   }
 }
