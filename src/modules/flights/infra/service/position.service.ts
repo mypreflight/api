@@ -15,6 +15,11 @@ import { AdsbClient } from '../../../../core/provider/adsb/client/adsb.client';
 import { FlightEventScope } from '../../model/event.model';
 import { Cron, CronExpression } from '@nestjs/schedule';
 import { trimCallsign } from '../../model/flight.model';
+import {
+  EVERY_5_MINUTES_SECONDS,
+  EVERY_MINUTE_SECONDS,
+  ScheduledJobs,
+} from '../../../../core/scheduling/scheduled-jobs.service';
 
 @Injectable()
 export class PositionService {
@@ -24,33 +29,53 @@ export class PositionService {
     private readonly adsbClient: AdsbClient,
     private readonly flightsRepository: FlightsRepository,
     private readonly domainEvents: DomainEventEmitter,
+    private readonly scheduledJobs: ScheduledJobs,
   ) {}
 
   @Cron(CronExpression.EVERY_MINUTE)
   async detectFirstLivePosition(): Promise<void> {
-    const flights = await this.flightsRepository.findAwaitingFirstPosition();
+    await this.scheduledJobs.runExclusively(
+      'position.detect-first-live-position',
+      EVERY_MINUTE_SECONDS,
+      async () => {
+        const flights =
+          await this.flightsRepository.findAwaitingFirstPosition();
 
-    for (const flight of flights) {
-      await this.trackFirstPosition(flight);
-    }
+        for (const flight of flights) {
+          await this.trackFirstPosition(flight);
+        }
+      },
+    );
   }
 
   @Cron(CronExpression.EVERY_5_MINUTES)
   async periodicallyBackupFlightPath(): Promise<void> {
-    const flights = await this.flightsRepository.findAllTrackable();
+    await this.scheduledJobs.runExclusively(
+      'position.backup-flight-path',
+      EVERY_5_MINUTES_SECONDS,
+      async () => {
+        const flights = await this.flightsRepository.findAllTrackable();
 
-    for (const flight of flights) {
-      await this.trackFirstPosition(flight);
-    }
+        for (const flight of flights) {
+          await this.trackFirstPosition(flight);
+        }
+      },
+    );
   }
 
   @Cron(CronExpression.EVERY_MINUTE)
   async trackFlightsAwaitingOffBlock(): Promise<void> {
-    const flights = await this.flightsRepository.findAwaitingOffBlock();
+    await this.scheduledJobs.runExclusively(
+      'position.track-awaiting-off-block',
+      EVERY_MINUTE_SECONDS,
+      async () => {
+        const flights = await this.flightsRepository.findAwaitingOffBlock();
 
-    for (const flight of flights) {
-      await this.trackFirstPosition(flight);
-    }
+        for (const flight of flights) {
+          await this.trackFirstPosition(flight);
+        }
+      },
+    );
   }
 
   @OnEvent(FlightEventType.OnBlockWasReported)

@@ -99,10 +99,12 @@ import { PullOsmDataAction } from './infra/http/action/enrich/pull-osm-data.acti
 import { PushOsmDataAction } from './infra/http/action/enrich/push-osm-data.action';
 import { PullAirportOsmDataHandler } from './application/query/osm/pull-airport-osm-data.query';
 import { PushAirportOsmDataHandler } from './application/command/osm/push-airport-osm-data.command';
+import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module';
 
 @Module({
   imports: [
     PrismaModule,
+    ScheduledJobsModule,
     SkyLinkModule,
     WeatherModule,
     SayIntentionsModule,

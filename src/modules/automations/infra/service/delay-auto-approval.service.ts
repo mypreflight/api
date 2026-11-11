@@ -11,6 +11,10 @@ import {
   AUTO_APPROVAL_MAX_AGE_MINUTES,
   autoApprovalDeadlineMinutes,
 } from '../../model/delay-auto-approval.constants';
+import {
+  EVERY_5_MINUTES_SECONDS,
+  ScheduledJobs,
+} from '../../../../core/scheduling/scheduled-jobs.service';
 
 @Injectable()
 export class DelayAutoApprovalService {
@@ -20,6 +24,7 @@ export class DelayAutoApprovalService {
   constructor(
     private readonly queryBus: QueryBus,
     private readonly commandBus: CommandBus,
+    private readonly scheduledJobs: ScheduledJobs,
     config: ConfigService,
   ) {
     this.operatorId = config.get<string>('AUTO_APPROVE_OPERATOR_ID') as string;
@@ -27,6 +32,14 @@ export class DelayAutoApprovalService {
 
   @Cron(CronExpression.EVERY_5_MINUTES)
   async autoApproveStaleDelays(): Promise<void> {
+    await this.scheduledJobs.runExclusively(
+      'delay-auto-approval',
+      EVERY_5_MINUTES_SECONDS,
+      () => this.approveStaleDelays(),
+    );
+  }
+
+  private async approveStaleDelays(): Promise<void> {
     const query = new ListDelayRequestsQuery(DelayRequestStatus.Pending);
     const requests: GetDelayRequestResponse[] =
       await this.queryBus.execute(query);

@@ -1510,3 +1510,10 @@ model FlightNotoc {
   @@index([flightId])
   @@map("flight_notoc")
 }
+
+model ScheduledJobLease {
+  job       String   @id
+  heldUntil DateTime @db.Timestamptz(3)
+
+  @@map("scheduled_job_lease")
+}

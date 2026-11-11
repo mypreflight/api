@@ -22,9 +22,10 @@ import { AcknowledgePostcardAction } from './infra/http/action/postcard/acknowle
 import { GetPostcardCatalogueAction } from './infra/http/action/postcard/get-postcard-catalogue.action';
 import { RedrawPostcardAction } from './infra/http/action/postcard/redraw-postcard.action';
 import { DrawMissingPostcardsAction } from './infra/http/action/postcard/draw-missing-postcards.action';
+import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module';
 
 @Module({
-  imports: [PrismaModule, PostcardModule],
+  imports: [PrismaModule, PostcardModule, ScheduledJobsModule],
   controllers: [
     GetMyPostcardsAction,
     GetMyPostcardAction,
