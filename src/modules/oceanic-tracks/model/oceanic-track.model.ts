@@ -3,6 +3,7 @@ import { TrackDirection } from '../../flights/model/oceanic.model';
 
 export enum OceanicTrackSystem {
   Pacots = 'pacots',
+  Nat = 'nat',
 }
 
 export type CurrentOceanicTrackFix = {
@@ -35,7 +36,7 @@ export type CurrentOceanicTracks = {
 export class CurrentOceanicTrackFixResponse {
   @ApiProperty({
     description:
-      'The fix as written in the route: a name, or a point such as 52N140W',
+      'The fix as written in the route: a name, or a point such as 52N140W or 5430/20',
     example: 'PUPPI',
   })
   ident!: string;
@@ -57,7 +58,7 @@ export class CurrentOceanicTrackResponse {
 
   @ApiProperty({
     description:
-      "The track's published name: a letter for Oakland's westbound tracks, a number for Fukuoka's eastbound ones",
+      "The track's published name: a letter for Oakland's westbound tracks, a number for Fukuoka's eastbound ones, a letter for the North Atlantic tracks",
     example: 'A',
   })
   identifier!: string;
@@ -77,7 +78,7 @@ export class CurrentOceanicTrackResponse {
 
   @ApiProperty({
     description:
-      'NOTAM carrying the track. A Fukuoka message carries several tracks, so they share it.',
+      'NOTAM carrying the track. A Fukuoka message and a North Atlantic message carry several tracks, so they share it.',
     example: 'A5313/26',
   })
   notamNumber!: string;
@@ -105,7 +106,7 @@ export class CurrentOceanicTrackResponse {
 
   @ApiProperty({
     description:
-      'Flight levels the track is published for. Pacific tracks publish none, so the list is empty.',
+      'Flight levels the track is published for in its direction, such as 340 for FL340. Pacific tracks publish none, so the list is empty.',
     example: [],
     type: [Number],
   })
@@ -126,7 +127,8 @@ export class CurrentOceanicTrackResponse {
   unresolvedFixes!: string[];
 
   @ApiProperty({
-    description: "The track's remarks, one per line",
+    description:
+      "The track's remarks, one per line. A North Atlantic message's remarks, its TMI among them, apply to every track in it.",
     example: 'TRK B NOT AVAILABLE',
     nullable: true,
     type: String,

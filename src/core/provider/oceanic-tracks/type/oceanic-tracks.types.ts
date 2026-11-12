@@ -5,7 +5,7 @@ export type OceanicTracksErrorCode =
   | 'NMS_NOT_CONFIGURED'
   | 'INTERNAL_ERROR';
 
-export type OceanicTracksSystem = 'pacots';
+export type OceanicTracksSystem = 'pacots' | 'nat';
 
 export type OceanicTracksDirection = 'east' | 'west';
 
