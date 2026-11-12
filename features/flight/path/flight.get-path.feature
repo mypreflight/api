@@ -5559,8 +5559,25 @@ Feature: Get flight path
       ]
       """
 
-  Scenario: As an unauthorized user I cannot get private flight path
+  Scenario: As an unauthorized user I can get private flight path
     When I send a "GET" request to "/api/v1/flight/3c8ba7a7-1085-423c-8cc3-d51f5ab0cd05/path"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      []
+      """
+
+  Scenario: As an unauthorized user I cannot get flight path when tracking is disabled
+    Given I am signed in as "operations"
+    When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/tracking" with body:
+      """json
+      {
+        "tracking": "disabled"
+      }
+      """
+    Then the response status should be 204
+    Given I am signed out
+    When I send a "GET" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/path"
     Then the response status should be 404
     And the response body should contain:
       """json

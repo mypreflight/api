@@ -47,7 +47,7 @@ export class GetPathAction {
       throw new FlightDoesNotExistError();
     }
 
-    if (!request.user && tracking !== FlightTracking.Public) {
+    if (!request.user && tracking === FlightTracking.Disabled) {
       throw new FlightDoesNotExistError();
     }
 
