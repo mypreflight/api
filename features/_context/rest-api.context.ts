@@ -154,6 +154,10 @@ Given('I am signed in as {string}', async (user: ApiUserType) => {
   bearerToken = await accessTokenFor(user);
 });
 
+Given('I am signed out', () => {
+  bearerToken = null;
+});
+
 Given(
   'I am signed in with Google using ID token {string}',
   async (idToken: string) => {
