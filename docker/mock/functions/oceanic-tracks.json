@@ -41,7 +41,7 @@
             }
           ],
           "rulesOperator": "AND",
-          "disableTemplating": true,
+          "disableTemplating": false,
           "fallbackTo404": false,
           "default": false,
           "crudKey": "id",

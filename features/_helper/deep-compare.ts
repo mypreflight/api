@@ -56,6 +56,16 @@ export const deepCompare = (actual: any, expected: any) => {
     return;
   }
 
+  if (expected === "@date('in the past')") {
+    expect(new Date(actual).getTime()).toBeLessThan(Date.now());
+    return;
+  }
+
+  if (expected === "@date('in the future')") {
+    expect(new Date(actual).getTime()).toBeGreaterThan(Date.now());
+    return;
+  }
+
   if (actual === expected) return;
 
   if (typeof actual !== 'object' || actual === null || expected === null) {

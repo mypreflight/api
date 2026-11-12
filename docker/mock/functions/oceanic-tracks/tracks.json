@@ -1,5 +1,5 @@
 {
-  "fetchedAt": "2026-11-03T22:02:47.722Z",
+  "fetchedAt": "{{now}}",
   "tracks": [
     {
       "system": "pacots",
@@ -7,8 +7,8 @@
       "direction": "west",
       "issuingAuthority": "KZAK",
       "notamNumber": "A5313/26",
-      "validFrom": "2026-11-03T19:00:00.000Z",
-      "validTo": "2026-11-04T08:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-3}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=10}}",
       "route": "PUPPI CRESP 23N170W 25N180E 27N170E 28N160E 31N150E TONIK",
       "levels": [],
       "fixes": [
@@ -31,8 +31,8 @@
       "direction": "west",
       "issuingAuthority": "KZAK",
       "notamNumber": "A5314/26",
-      "validFrom": "2026-11-03T19:00:00.000Z",
-      "validTo": "2026-11-04T08:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-3}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=10}}",
       "route": "KATCH HMPTN GRIZZ CJAYY 58N160W 58N170W ECOMI NATES NIKLL NYMPH NUZAN NRKEY NIPPI",
       "levels": [],
       "fixes": [
@@ -60,8 +60,8 @@
       "direction": "west",
       "issuingAuthority": "KZAK",
       "notamNumber": "A5310/26",
-      "validFrom": "2026-11-03T19:00:00.000Z",
-      "validTo": "2026-11-04T08:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-3}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=10}}",
       "route": "BOXER FULMR FASEL 52N140W 55N150W 56N160W 56N170W ALDOZ AMOND SYA AAMYY ASPIN AKISU AGEDI ADGOR",
       "levels": [],
       "fixes": [
@@ -91,8 +91,8 @@
       "direction": "west",
       "issuingAuthority": "KZAK",
       "notamNumber": "A5311/26",
-      "validFrom": "2026-11-03T19:00:00.000Z",
-      "validTo": "2026-11-04T08:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-3}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=10}}",
       "route": "ALCOA ALLBE ADTIL 35N140W 33N150W 31N160W 30N170W 30N180E 30N170E 31N160E 33N150E MORAY",
       "levels": [],
       "fixes": [
@@ -119,8 +119,8 @@
       "direction": "west",
       "issuingAuthority": "KZAK",
       "notamNumber": "A5312/26",
-      "validFrom": "2026-11-03T19:00:00.000Z",
-      "validTo": "2026-11-04T08:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-3}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=10}}",
       "route": "BAART BARAZ BILLO 30N150W 29N160W 28N170W 27N180E 26N170E 25N160E 24N150E 23N140E TUNTO",
       "levels": [],
       "fixes": [
@@ -147,8 +147,8 @@
       "direction": "west",
       "issuingAuthority": "KZAK",
       "notamNumber": "A5318/26",
-      "validFrom": "2026-11-04T05:00:00.000Z",
-      "validTo": "2026-11-04T21:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-5}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=11}}",
       "route": "REDWD VESPA 43N130W 51N140W 55N150W 57N160W OGGOE NULUK NANDY NATES NIKLL NYMPH NUZAN NIPPI",
       "levels": [],
       "fixes": [
@@ -177,8 +177,8 @@
       "direction": "east",
       "issuingAuthority": "RJJJ",
       "notamNumber": "Q2634/26",
-      "validFrom": "2026-11-04T07:00:00.000Z",
-      "validTo": "2026-11-04T21:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-2}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=12}}",
       "route": "ADGOR AGEDI AKISU ASPIN LYYLE 50N180E 51N170W 51N160W 50N150W 49N140W ROUKE",
       "levels": [],
       "fixes": [
@@ -204,8 +204,8 @@
       "direction": "east",
       "issuingAuthority": "RJJJ",
       "notamNumber": "Q2634/26",
-      "validFrom": "2026-11-04T07:00:00.000Z",
-      "validTo": "2026-11-04T21:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-2}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=12}}",
       "route": "KALNA 41N160E 43N170E 45N180E 46N170W 46N160W 45N150W 43N140W 41N130W TRYSH",
       "levels": [],
       "fixes": [
@@ -230,8 +230,8 @@
       "direction": "east",
       "issuingAuthority": "RJJJ",
       "notamNumber": "Q2634/26",
-      "validFrom": "2026-11-04T07:00:00.000Z",
-      "validTo": "2026-11-04T21:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-2}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=12}}",
       "route": "EMRON 40N160E 42N170E 44N180E 45N170W 45N160W 44N150W 42N140W 39N130W DACEM",
       "levels": [],
       "fixes": [
@@ -256,8 +256,8 @@
       "direction": "east",
       "issuingAuthority": "RJJJ",
       "notamNumber": "Q2635/26",
-      "validFrom": "2026-11-04T10:00:00.000Z",
-      "validTo": "2026-11-04T21:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-1}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=12}}",
       "route": "LEPKI 38N160E 38N170E 36N180E 32N170W THOMA",
       "levels": [],
       "fixes": [
@@ -278,8 +278,8 @@
       "direction": "east",
       "issuingAuthority": "RJJJ",
       "notamNumber": "Q2636/26",
-      "validFrom": "2026-11-04T07:00:00.000Z",
-      "validTo": "2026-11-04T21:00:00.000Z",
+      "validFrom": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=-2}}",
+      "validTo": "{{dateTimeShift date=(now 'yyyy-MM-dd HH:00') hours=12}}",
       "route": "EMRON 39N160E 41N170E 43N180E 44N170W 44N160W 43N150W 41N140W 38N130W ALLBE",
       "levels": [],
       "fixes": [
