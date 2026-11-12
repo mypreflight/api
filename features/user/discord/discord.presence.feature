@@ -16,8 +16,8 @@ Feature: Read own Discord rich presence
       {
         "state": "Checked in, takeoff at 13:15 UTC",
         "details": "Boston (BOS) -> Philadelphia (PHL)",
-        "startTimestamp": "2025-01-01T13:00:00.000Z",
-        "endTimestamp": "2025-01-01T15:50:00.000Z",
+        "startTimestamp": "2026-01-01T13:00:00.000Z",
+        "endTimestamp": "2026-01-01T14:03:00.000Z",
         "smallImageKey": "flight-tracker",
         "largeImageKey": "msfs 2024"
       }
@@ -41,8 +41,8 @@ Feature: Read own Discord rich presence
       {
         "state": "Checked in, takeoff at 13:15 UTC",
         "details": "Boston (BOS) -> Philadelphia (PHL)",
-        "startTimestamp": "2025-01-01T13:00:00.000Z",
-        "endTimestamp": "2025-01-01T15:50:00.000Z",
+        "startTimestamp": "2026-01-01T13:00:00.000Z",
+        "endTimestamp": "2026-01-01T14:03:00.000Z",
         "smallImageKey": "flight-tracker",
         "largeImageKey": "msfs 2024"
       }
@@ -65,8 +65,8 @@ Feature: Read own Discord rich presence
       {
         "state": "Ready, takeoff at 18:00 UTC",
         "details": "New York (JFK) -> Frankfurt (FRA)",
-        "startTimestamp": "2025-01-02T17:40:00.000Z",
-        "endTimestamp": "2025-01-03T02:00:00.000Z",
+        "startTimestamp": "2026-01-02T17:40:00.000Z",
+        "endTimestamp": "2026-01-03T02:00:00.000Z",
         "smallImageKey": "flight-tracker",
         "largeImageKey": "msfs 2024"
       }
@@ -89,8 +89,8 @@ Feature: Read own Discord rich presence
       {
         "state": "Offboarding complete",
         "details": "New York (JFK) -> Frankfurt (FRA)",
-        "startTimestamp": "2025-01-03T04:00:00.000Z",
-        "endTimestamp": "2025-01-03T11:30:00.000Z",
+        "startTimestamp": "2026-01-03T04:00:00.000Z",
+        "endTimestamp": "2026-01-03T11:30:00.000Z",
         "smallImageKey": "flight-tracker",
         "largeImageKey": "msfs 2024"
       }

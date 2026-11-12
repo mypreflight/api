@@ -46,26 +46,26 @@ Feature: Report arrival
         "status": "taxiing_in",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
             "arrivalTime": "@date('within 1 minute from now')",
             "onBlockTime": null,
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           },
           "predicted": {
-            "arrivalTime": "2025-01-01T15:55:00.000Z",
-            "onBlockTime": "2025-01-01T16:12:00.000Z",
+            "arrivalTime": "2026-01-01T14:08:00.000Z",
+            "onBlockTime": "2026-01-01T14:25:00.000Z",
             "takeoffTime": null,
             "offBlockTime": null
           }
@@ -192,15 +192,15 @@ Feature: Report arrival
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -218,7 +218,7 @@ Feature: Report arrival
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "9822a1b2-9715-40a5-94cb-d8b616637457",
@@ -229,7 +229,7 @@ Feature: Report arrival
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "88651e15-57d0-468f-9231-bd2e1edcff66",
@@ -240,7 +240,7 @@ Feature: Report arrival
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "3d802611-728b-41cd-a4d1-f9fc91aaca18",
@@ -251,7 +251,7 @@ Feature: Report arrival
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "d2794a43-60e2-4abe-9803-ce75dfa2a37b",
@@ -262,7 +262,7 @@ Feature: Report arrival
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "2dba1cb5-d25c-4ade-9d46-e30eb8ecb24a",
@@ -273,7 +273,7 @@ Feature: Report arrival
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "d03bb44f-88d8-42cd-aa29-342eda6ebbf3",
@@ -284,7 +284,7 @@ Feature: Report arrival
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "ef447dda-84c1-45e9-9ebe-fa7efe646308",
@@ -292,7 +292,7 @@ Feature: Report arrival
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T13:11:00.000Z"
+          "createdAt": "2026-01-01T13:11:00.000Z"
         },
         {
           "id": "0108b08b-9c45-49ba-a3cb-a3ae172ce92c",
@@ -303,7 +303,7 @@ Feature: Report arrival
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:25:00.000Z"
+          "createdAt": "2026-01-01T13:25:00.000Z"
         },
         {
           "id": "@uuid",

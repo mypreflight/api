@@ -28,7 +28,7 @@ Feature: Edit rotation
         },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -47,8 +47,8 @@ Feature: Edit rotation
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -67,8 +67,8 @@ Feature: Edit rotation
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }

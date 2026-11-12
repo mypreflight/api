@@ -66,7 +66,7 @@ Feature: Assign a cargo hold variant to an aircraft
           },
           "location": "@coordinates"
         },
-        "lastAirportUpdatedAt": "2025-01-02T18:00:00.000Z",
+        "lastAirportUpdatedAt": "2026-01-02T18:00:00.000Z",
         "lastParkingPosition": null
       }
       """

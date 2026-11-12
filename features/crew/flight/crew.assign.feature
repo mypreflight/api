@@ -32,7 +32,7 @@ Feature: Assign a crew member to a flight
           "email": "james.carter@americanairlines.com",
           "operatorId": "1f630d38-ad24-47cc-950b-3783e71bbd10",
           "role": "fo",
-          "createdAt": "2025-01-01T00:00:00.000Z"
+          "createdAt": "2026-01-01T00:00:00.000Z"
         }
       ]
       """
@@ -75,7 +75,7 @@ Feature: Assign a crew member to a flight
           "email": "james.carter@americanairlines.com",
           "operatorId": "1f630d38-ad24-47cc-950b-3783e71bbd10",
           "role": "fo",
-          "createdAt": "2025-01-01T00:00:00.000Z"
+          "createdAt": "2026-01-01T00:00:00.000Z"
         }
       ]
       """

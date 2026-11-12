@@ -47,16 +47,16 @@ Feature: Report off-block
         "status": "taxiing_out",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
             "arrivalTime": null,
@@ -187,15 +187,15 @@ Feature: Report off-block
         "hasNotoc": true,
         "isOffBlockDelayed": true,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -213,7 +213,7 @@ Feature: Report off-block
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "e72a93c0-c3ad-4863-a994-f355f10989dd",
@@ -224,7 +224,7 @@ Feature: Report off-block
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "fb3236f0-0318-40be-b581-3312ece412e7",
@@ -235,7 +235,7 @@ Feature: Report off-block
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "9ac32500-3bad-471a-b6e1-577916abde24",
@@ -246,7 +246,7 @@ Feature: Report off-block
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "1489e92f-dde6-4d16-8a0a-f38b18f6e272",
@@ -257,7 +257,7 @@ Feature: Report off-block
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "959d2d21-6f36-4620-bb9e-029c5fa155e7",
@@ -265,7 +265,7 @@ Feature: Report off-block
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T12:55:00.000Z"
+          "createdAt": "2026-01-01T12:55:00.000Z"
         },
         {
           "id": "66bcc725-7acd-42e9-b3db-1513176a537f",
@@ -276,7 +276,7 @@ Feature: Report off-block
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "@uuid",
@@ -357,7 +357,7 @@ Feature: Report off-block
           },
           "location": "@coordinates"
         },
-        "lastAirportUpdatedAt": "2025-01-01T12:00:00.000Z",
+        "lastAirportUpdatedAt": "2026-01-01T12:00:00.000Z",
         "holdVariant": null,
         "lastParkingPosition": null
       }

@@ -27,7 +27,7 @@ export async function loadUserTravel(
         destinationAirportId: KPHL,
         distance: 243,
         flightId: AAL4913,
-        createdAt: new Date('2025-01-01 09:00'),
+        createdAt: new Date('2026-01-01 09:00'),
         updatedAt: null,
       },
       {
@@ -39,7 +39,7 @@ export async function loadUserTravel(
         destinationAirportId: KJFK,
         distance: 3342,
         flightId: null,
-        createdAt: new Date('2025-01-02 10:00'),
+        createdAt: new Date('2026-01-02 10:00'),
         updatedAt: null,
       },
       {
@@ -51,7 +51,7 @@ export async function loadUserTravel(
         destinationAirportId: KBOS,
         distance: 162,
         flightId: null,
-        createdAt: new Date('2025-01-02 11:00'),
+        createdAt: new Date('2026-01-02 11:00'),
         updatedAt: null,
       },
       {
@@ -63,8 +63,8 @@ export async function loadUserTravel(
         destinationAirportId: KPHL,
         distance: 243,
         flightId: LH42,
-        createdAt: new Date('2025-01-02 12:00'),
-        updatedAt: new Date('2025-01-02 18:00'),
+        createdAt: new Date('2026-01-02 12:00'),
+        updatedAt: new Date('2026-01-02 18:00'),
       },
       {
         id: '3d3a4355-fc36-492e-be46-6183559359d1',
@@ -75,7 +75,7 @@ export async function loadUserTravel(
         destinationAirportId: EDDF,
         distance: 3342,
         flightId: LH42,
-        createdAt: new Date('2025-01-03 09:00'),
+        createdAt: new Date('2026-01-03 09:00'),
         updatedAt: null,
       },
     ],

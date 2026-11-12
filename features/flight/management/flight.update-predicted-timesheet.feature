@@ -39,7 +39,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/timesheet/predicted" with body:
       """json
-      { "takeoffTime": "2025-01-01T13:10:00.000Z" }
+      { "takeoffTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 204
     When I send a "GET" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88"
@@ -55,15 +55,15 @@ Feature: Update flight predicted timesheet
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "predicted": {
             "arrivalTime": null,
             "onBlockTime": null,
-            "takeoffTime": "2025-01-01T13:10:00.000Z",
+            "takeoffTime": "2026-01-01T13:10:00.000Z",
             "offBlockTime": null
           }
         },
@@ -181,10 +181,10 @@ Feature: Update flight predicted timesheet
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": null
       }
       """
@@ -199,7 +199,7 @@ Feature: Update flight predicted timesheet
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "@uuid",
@@ -221,12 +221,12 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/timesheet/predicted" with body:
       """json
-      { "arrivalTime": "2025-01-01T15:50:00.000Z" }
+      { "arrivalTime": "2026-01-01T14:03:00.000Z" }
       """
     Then the response status should be 204
     When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/timesheet/predicted" with body:
       """json
-      { "takeoffTime": "2025-01-01T13:10:00.000Z" }
+      { "takeoffTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 204
     When I send a "GET" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88"
@@ -242,15 +242,15 @@ Feature: Update flight predicted timesheet
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "predicted": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
             "onBlockTime": null,
-            "takeoffTime": "2025-01-01T13:10:00.000Z",
+            "takeoffTime": "2026-01-01T13:10:00.000Z",
             "offBlockTime": null
           }
         },
@@ -368,10 +368,10 @@ Feature: Update flight predicted timesheet
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": null
       }
       """
@@ -386,7 +386,7 @@ Feature: Update flight predicted timesheet
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "@uuid",
@@ -417,8 +417,8 @@ Feature: Update flight predicted timesheet
     When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/timesheet/predicted" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "takeoffTime": "2025-01-01T13:10:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "takeoffTime": "2026-01-01T13:10:00.000Z"
       }
       """
     Then the response status should be 204
@@ -440,15 +440,15 @@ Feature: Update flight predicted timesheet
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "predicted": {
             "arrivalTime": null,
             "onBlockTime": null,
-            "takeoffTime": "2025-01-01T13:10:00.000Z",
+            "takeoffTime": "2026-01-01T13:10:00.000Z",
             "offBlockTime": null
           }
         },
@@ -566,10 +566,10 @@ Feature: Update flight predicted timesheet
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": null
       }
       """
@@ -584,7 +584,7 @@ Feature: Update flight predicted timesheet
           "type": "flight.created",
           "payload": {},
           "actor": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "@uuid",
@@ -611,7 +611,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/7105891a-8008-4b47-b473-c81c97615ad7/timesheet/predicted" with body:
       """json
-      { "offBlockTime": "2025-01-01T12:55:00.000Z" }
+      { "offBlockTime": "2026-01-01T12:55:00.000Z" }
       """
     Then the response status should be 422
     And the response body should contain:
@@ -627,7 +627,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/2d1c92f6-8ed1-4921-9a70-f71b1ed2e72d/timesheet/predicted" with body:
       """json
-      { "takeoffTime": "2025-01-01T13:10:00.000Z" }
+      { "takeoffTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 422
     And the response body should contain:
@@ -643,7 +643,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/04be266c-df78-4bec-9f50-281cc02ce7f2/timesheet/predicted" with body:
       """json
-      { "arrivalTime": "2025-01-01T15:55:00.000Z" }
+      { "arrivalTime": "2026-01-01T14:08:00.000Z" }
       """
     Then the response status should be 422
     And the response body should contain:
@@ -659,7 +659,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/17d2f703-957d-4ad1-a620-3c187a70c26a/timesheet/predicted" with body:
       """json
-      { "onBlockTime": "2025-01-01T16:15:00.000Z" }
+      { "onBlockTime": "2026-01-01T14:28:00.000Z" }
       """
     Then the response status should be 422
     And the response body should contain:
@@ -678,7 +678,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/7105891a-8008-4b47-b473-c81c97615ad7/timesheet/predicted" with body:
       """json
-      { "arrivalTime": "2025-01-01T15:55:00.000Z" }
+      { "arrivalTime": "2026-01-01T14:08:00.000Z" }
       """
     Then the response status should be 204
     And I should receive a live flight event of type "flight.predicted-timesheet-updated" within 2000ms
@@ -688,7 +688,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/23da8bc9-a21b-4678-b2e9-1151d3bd15ab/timesheet/predicted" with body:
       """json
-      { "onBlockTime": "2025-01-01T16:15:00.000Z" }
+      { "onBlockTime": "2026-01-01T14:28:00.000Z" }
       """
     Then the response status should be 422
     And the response body should contain:
@@ -704,7 +704,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/732454c3-732e-4e1f-a075-d7fc61296449/timesheet/predicted" with body:
       """json
-      { "takeoffTime": "2025-01-01T13:10:00.000Z" }
+      { "takeoffTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 404
     And the response body should contain:
@@ -720,7 +720,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/incorrect-uuid/timesheet/predicted" with body:
       """json
-      { "takeoffTime": "2025-01-01T13:10:00.000Z" }
+      { "takeoffTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 400
     And the response body should contain:
@@ -755,7 +755,7 @@ Feature: Update flight predicted timesheet
     Given I am signed in as "cabin crew"
     When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/timesheet/predicted" with body:
       """json
-      { "boardingTime": "2025-01-01T13:10:00.000Z" }
+      { "boardingTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 400
     And the response body should contain:
@@ -773,7 +773,7 @@ Feature: Update flight predicted timesheet
   Scenario: As an unauthorized user I cannot predict timesheet
     When I send a "PATCH" request to "/api/v1/flight/e91e13a9-09d8-48bf-8453-283cef467b88/timesheet/predicted" with body:
       """json
-      { "takeoffTime": "2025-01-01T13:10:00.000Z" }
+      { "takeoffTime": "2026-01-01T13:10:00.000Z" }
       """
     Then the response status should be 401
     And the response body should contain:

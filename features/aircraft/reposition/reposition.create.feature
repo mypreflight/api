@@ -49,7 +49,7 @@ Feature: Reposition an aircraft
           },
           "distance": 3342,
           "flightId": null,
-          "createdAt": "2025-01-02T15:00:00.000Z",
+          "createdAt": "2026-01-02T15:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -69,8 +69,8 @@ Feature: Reposition an aircraft
           },
           "distance": 80,
           "flightId": null,
-          "createdAt": "2025-01-02T12:00:00.000Z",
-          "updatedAt": "2025-01-02T14:00:00.000Z"
+          "createdAt": "2026-01-02T12:00:00.000Z",
+          "updatedAt": "2026-01-02T14:00:00.000Z"
         },
         {
           "id": "87ba25c3-4b50-4b92-b828-9d6d799b9acd",
@@ -89,7 +89,7 @@ Feature: Reposition an aircraft
           },
           "distance": 243,
           "flightId": null,
-          "createdAt": "2025-01-01T11:00:00.000Z",
+          "createdAt": "2026-01-01T11:00:00.000Z",
           "updatedAt": null
         },
         {
@@ -109,7 +109,7 @@ Feature: Reposition an aircraft
           },
           "distance": 3000,
           "flightId": null,
-          "createdAt": "2025-01-01T10:00:00.000Z",
+          "createdAt": "2026-01-01T10:00:00.000Z",
           "updatedAt": null
         }
       ]

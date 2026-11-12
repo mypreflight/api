@@ -51,8 +51,8 @@ Feature: As a user I can see where I am signed in
           "id": "de1f7240-5a37-4e64-a77e-401177bbe5ae",
           "client": "web",
           "deviceName": null,
-          "createdAt": "2025-01-01T00:00:00.000Z",
-          "lastUsedAt": "2025-01-01T00:00:00.000Z",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "lastUsedAt": "2026-01-01T00:00:00.000Z",
           "expiresAt": "2036-01-01T00:00:00.000Z",
           "current": false
         }
@@ -71,8 +71,8 @@ Feature: As a user I can see where I am signed in
           "id": "64a5ef90-399a-4ce5-8ee3-41c6707d0e68",
           "client": "web",
           "deviceName": null,
-          "createdAt": "2025-01-01T00:00:00.000Z",
-          "lastUsedAt": "2025-01-01T00:00:00.000Z",
+          "createdAt": "2026-01-01T00:00:00.000Z",
+          "lastUsedAt": "2026-01-01T00:00:00.000Z",
           "expiresAt": "2036-01-01T00:00:00.000Z",
           "current": false
         }

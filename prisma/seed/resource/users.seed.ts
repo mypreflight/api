@@ -3,7 +3,7 @@ import { WeatherSource } from '../../../src/modules/airports/model/airport-weath
 
 // Addresses seeded as pre-existing data are confirmed, matching the backfill
 // the email-confirmation migration applies to rows that predate it.
-const CONFIRMED_AT = new Date('2025-01-01T00:00:00.000Z');
+const CONFIRMED_AT = new Date('2026-01-01T00:00:00.000Z');
 
 export const USER_IDS = {
   john: 'e181d983-3b69-4be2-864e-2a7596217ddf',

@@ -12,10 +12,10 @@ Feature: Get statistics per aircraft type
             "type": "B77W",
             "flights": 7,
             "distanceNm": 1610,
-            "airborneMinutes": 1155,
-            "blockMinutes": 1386,
-            "firstFlownAt": "2025-01-01T16:18:00.000Z",
-            "lastFlownAt": "2025-01-01T16:28:00.000Z"
+            "airborneMinutes": 406,
+            "blockMinutes": 637,
+            "firstFlownAt": "2026-01-01T14:31:00.000Z",
+            "lastFlownAt": "2026-01-01T14:41:00.000Z"
           },
           {
             "type": "A339",
@@ -23,8 +23,8 @@ Feature: Get statistics per aircraft type
             "distanceNm": 6700,
             "airborneMinutes": 940,
             "blockMinutes": 1005,
-            "firstFlownAt": "2025-01-02T02:45:00.000Z",
-            "lastFlownAt": "2025-01-03T11:45:00.000Z"
+            "firstFlownAt": "2026-01-02T02:45:00.000Z",
+            "lastFlownAt": "2026-01-03T11:45:00.000Z"
           }
         ]
       }

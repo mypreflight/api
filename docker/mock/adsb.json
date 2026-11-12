@@ -663,6 +663,102 @@
       "responseMode": null,
       "streamingMode": null,
       "streamingInterval": 0
+    },
+    {
+      "uuid": "6af06ff7-dcf9-48a3-b764-59fd1a0ea420",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/position/DLH103",
+      "responses": [
+        {
+          "uuid": "11452786-6aab-45c4-b398-1b0ebcdcdf9a",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Fallback",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            }
+          ],
+          "bodyType": "FILE",
+          "filePath": "adsb/DLH103.json",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    },
+    {
+      "uuid": "9e3fe871-3208-4756-a151-5811a30c7e25",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/v1/position/DLH880",
+      "responses": [
+        {
+          "uuid": "26a8762d-a591-434d-a5ec-a8e0719e1ccf",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Fallback",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json; charset=utf-8"
+            },
+            {
+              "key": "Access-Control-Allow-Origin",
+              "value": "*"
+            },
+            {
+              "key": "Access-Control-Allow-Methods",
+              "value": "GET, POST, OPTIONS"
+            },
+            {
+              "key": "Access-Control-Allow-Headers",
+              "value": "Content-Type, Authorization"
+            }
+          ],
+          "bodyType": "FILE",
+          "filePath": "adsb/DLH880.json",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
     }
   ],
   "rootChildren": [
@@ -721,6 +817,14 @@
     {
       "type": "route",
       "uuid": "16dd9963-6286-4c2c-8400-4107ba438794"
+    },
+    {
+      "type": "route",
+      "uuid": "6af06ff7-dcf9-48a3-b764-59fd1a0ea420"
+    },
+    {
+      "type": "route",
+      "uuid": "9e3fe871-3208-4756-a151-5811a30c7e25"
     }
   ],
   "proxyMode": false,

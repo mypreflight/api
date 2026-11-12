@@ -38,10 +38,10 @@ Feature: Update flight arrival parking position
         "status": "created",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-02T11:30:00.000Z",
-            "onBlockTime": "2025-01-02T11:45:00.000Z",
-            "takeoffTime": "2025-01-02T04:20:00.000Z",
-            "offBlockTime": "2025-01-02T04:00:00.000Z"
+            "arrivalTime": "2026-01-02T11:30:00.000Z",
+            "onBlockTime": "2026-01-02T11:45:00.000Z",
+            "takeoffTime": "2026-01-02T04:20:00.000Z",
+            "offBlockTime": "2026-01-02T04:00:00.000Z"
           }
         },
         "aircraft": {
@@ -189,10 +189,10 @@ Feature: Update flight arrival parking position
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "private",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": null
       }
       """

@@ -21452,7 +21452,7 @@ Feature: Read the ETOPS briefing of a flight
       """
 
   Scenario: As anyone a flight with no imported plan has no briefing
-    When I send a "GET" request to "/api/v1/flight/3c8ba7a7-1085-423c-8cc3-d51f5ab0cd05/etops-briefing"
+    When I send a "GET" request to "/api/v1/flight/23da8bc9-a21b-4678-b2e9-1151d3bd15ab/etops-briefing"
     Then the response status should be 404
     And the response body should contain:
       """json

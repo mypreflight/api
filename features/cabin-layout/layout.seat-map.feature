@@ -28,7 +28,7 @@ Feature: Read the seats of a cabin layout
           "business": 80,
           "premium_economy": 32
         },
-        "lastUpdated": "2025-03-31",
+        "lastUpdated": "2026-03-31",
         "fetchedAt": "@any",
         "decks": [
           {
@@ -39,7 +39,7 @@ Feature: Read the seats of a cabin layout
               "height": 5239
             },
             "seatCount": 332,
-            "lastUpdated": "2025-03-31",
+            "lastUpdated": "2026-03-31",
             "assets": {
               "svg": "https://maptool.aerolopa.com/api/v1/aircraft/lh-74h-m/svg",
               "image": "https://d9k46j35fmriq.cloudfront.net/maptool/seatmaps/lh-74h-m.webp?v=1786777526",
@@ -98,7 +98,7 @@ Feature: Read the seats of a cabin layout
               "height": 2507
             },
             "seatCount": 32,
-            "lastUpdated": "2025-03-31",
+            "lastUpdated": "2026-03-31",
             "assets": {
               "svg": "https://maptool.aerolopa.com/api/v1/aircraft/lh-74h-u/svg",
               "image": "https://d9k46j35fmriq.cloudfront.net/maptool/seatmaps/lh-74h-u.webp?v=1786777553",
@@ -147,7 +147,7 @@ Feature: Read the seats of a cabin layout
           "business": 30,
           "premium_economy": 0
         },
-        "lastUpdated": "2025-03-20",
+        "lastUpdated": "2026-03-20",
         "fetchedAt": "@date('within 1 minute from now')",
         "decks": [
           {
@@ -158,7 +158,7 @@ Feature: Read the seats of a cabin layout
               "height": 4213
             },
             "seatCount": 186,
-            "lastUpdated": "2025-03-20",
+            "lastUpdated": "2026-03-20",
             "assets": {
               "svg": "https://maptool.aerolopa.com/api/v1/aircraft/kl-738/svg",
               "image": "https://d9k46j35fmriq.cloudfront.net/maptool/seatmaps/kl-738.webp?v=1786776298",

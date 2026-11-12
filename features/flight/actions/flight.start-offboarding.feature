@@ -46,22 +46,22 @@ Feature: Start offboarding
         "status": "offboarding_started",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "actual": {
-            "arrivalTime": "2025-01-01T16:10:00.000Z",
-            "onBlockTime": "2025-01-01T16:28:00.000Z",
-            "takeoffTime": "2025-01-01T13:25:00.000Z",
-            "offBlockTime": "2025-01-01T13:10:00.000Z"
+            "arrivalTime": "2026-01-01T14:23:00.000Z",
+            "onBlockTime": "2026-01-01T14:41:00.000Z",
+            "takeoffTime": "2026-01-01T13:25:00.000Z",
+            "offBlockTime": "2026-01-01T13:10:00.000Z"
           }
         },
         "aircraft": {
@@ -186,15 +186,15 @@ Feature: Start offboarding
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -212,7 +212,7 @@ Feature: Start offboarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "355c57e9-54b4-4b3f-917f-dd33c9f9f9ef",
@@ -223,7 +223,7 @@ Feature: Start offboarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "69bf2ba1-1ac4-47e7-8732-5ade52be92be",
@@ -234,7 +234,7 @@ Feature: Start offboarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "64e4ae88-7adf-4c29-9e95-061c171a70e3",
@@ -245,7 +245,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "bc3f9bd0-420a-4d44-877d-582e9d66f440",
@@ -253,7 +253,7 @@ Feature: Start offboarding
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T12:01:00.000Z"
+          "createdAt": "2026-01-01T12:01:00.000Z"
         },
         {
           "id": "3738a2dc-59c3-4a34-9058-ff57a3cd12bc",
@@ -264,7 +264,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:40:00.000Z"
+          "createdAt": "2026-01-01T12:40:00.000Z"
         },
         {
           "id": "be16d4a7-83e0-46cb-93fc-2a654338f132",
@@ -275,7 +275,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:05:00.000Z"
+          "createdAt": "2026-01-01T13:05:00.000Z"
         },
         {
           "id": "af5b4d42-c963-488f-bdc7-aefad1bb2d49",
@@ -286,7 +286,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:10:00.000Z"
+          "createdAt": "2026-01-01T13:10:00.000Z"
         },
         {
           "id": "26373247-4b63-4c90-8091-8efae31dbee7",
@@ -297,7 +297,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T13:25:00.000Z"
+          "createdAt": "2026-01-01T13:25:00.000Z"
         },
         {
           "id": "38a79e68-aad5-4e1c-ad8e-edce069372d9",
@@ -308,7 +308,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T16:10:00.000Z"
+          "createdAt": "2026-01-01T14:23:00.000Z"
         },
         {
           "id": "d195128e-a2c8-43d9-9700-feb4481620ea",
@@ -319,7 +319,7 @@ Feature: Start offboarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T16:28:00.000Z"
+          "createdAt": "2026-01-01T14:41:00.000Z"
         },
         {
           "id": "@uuid",

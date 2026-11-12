@@ -82,10 +82,10 @@
     "reg": "D-AIMC"
   },
   "times": {
-    "sched_out": "1736067600",
-    "sched_off": "1736068800",
-    "sched_on": "1736097000",
-    "sched_in": "1736097900"
+    "sched_out": "1767603600",
+    "sched_off": "1767604800",
+    "sched_on": "1767633000",
+    "sched_in": "1767633900"
   },
   "weights": {
     "cargo": "8004",

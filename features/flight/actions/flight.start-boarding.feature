@@ -46,16 +46,16 @@ Feature: Start boarding
         "status": "boarding_started",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           }
         },
         "aircraft": {
@@ -180,15 +180,15 @@ Feature: Start boarding
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -206,7 +206,7 @@ Feature: Start boarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "4f9d78e7-b0c9-48a3-a5c8-27d6edd530a1",
@@ -217,7 +217,7 @@ Feature: Start boarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "47c8db09-e786-4287-840c-b54278d543b5",
@@ -228,7 +228,7 @@ Feature: Start boarding
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "82746826-3d70-40b0-93ac-d61d6af0ef43",
@@ -239,7 +239,7 @@ Feature: Start boarding
             "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
             "name": "Rick Doe"
           },
-          "createdAt": "2025-01-01T12:00:00.000Z"
+          "createdAt": "2026-01-01T12:00:00.000Z"
         },
         {
           "id": "7815d6eb-3c8c-4845-b01e-19020d23d9b4",
@@ -247,7 +247,7 @@ Feature: Start boarding
           "type": "flight.live-position-received",
           "payload": {},
           "actor": null,
-          "createdAt": "2025-01-01T12:55:00.000Z"
+          "createdAt": "2026-01-01T12:55:00.000Z"
         },
         {
           "id": "@uuid",
@@ -264,7 +264,7 @@ Feature: Start boarding
       """
     And I see Discord "departure" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing ":airplane_departure: :airplane_departure: :airplane_departure:"
     And I see Discord "departure" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing "Flight **AA 4908** from **Boston (BOS)** to **Philadelphia (PHL)** has started boarding!"
-    And I see Discord "departure" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing "Estimated block time: **03:08hrs**, Passengers on board: **296**"
+    And I see Discord "departure" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing "Estimated block time: **01:21hrs**, Passengers on board: **296**"
     And I see Discord "departure" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing "[MyPreflight](http://localhost:5173/map/b3899775-278e-4496-add1-21385a13d93e)"
     And I see Discord "preliminary-loadsheet" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing ":clipboard: **Flight AA 4908 preliminary loadsheet**"
     And I see Discord "preliminary-loadsheet" message for flight "b3899775-278e-4496-add1-21385a13d93e" containing "passengers:  296"

@@ -13,7 +13,7 @@ Feature: Cancel rotation
       """json
       {
         "id": "97f99ca3-6e34-4d99-8631-de754bad0b37",
-        "name": "FRA-JFK-FRA 2025-01-02",
+        "name": "FRA-JFK-FRA 2026-01-02",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "canceled",
@@ -21,7 +21,7 @@ Feature: Cancel rotation
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "cancellationReason": "Crew out of duty hours",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": "@date('within 1 minute from now')",
         "legs": [
@@ -40,8 +40,8 @@ Feature: Cancel rotation
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -60,8 +60,8 @@ Feature: Cancel rotation
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }
@@ -78,7 +78,7 @@ Feature: Cancel rotation
       """json
       {
         "id": "97f99ca3-6e34-4d99-8631-de754bad0b37",
-        "name": "FRA-JFK-FRA 2025-01-02",
+        "name": "FRA-JFK-FRA 2026-01-02",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "canceled",
@@ -86,7 +86,7 @@ Feature: Cancel rotation
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": "@date('within 1 minute from now')",
         "legs": [
@@ -105,8 +105,8 @@ Feature: Cancel rotation
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -125,8 +125,8 @@ Feature: Cancel rotation
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }

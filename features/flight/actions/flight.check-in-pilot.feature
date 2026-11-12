@@ -5,10 +5,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 403
@@ -26,10 +26,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 403
@@ -50,10 +50,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204
@@ -70,16 +70,16 @@ Feature: Check in pilot for flight
         "status": "checked_in",
         "timesheet": {
           "scheduled": {
-            "arrivalTime": "2025-01-01T16:00:00.000Z",
-            "onBlockTime": "2025-01-01T16:18:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:13:00.000Z",
+            "onBlockTime": "2026-01-01T14:31:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           },
           "estimated": {
-            "arrivalTime": "2025-01-01T15:50:00.000Z",
-            "onBlockTime": "2025-01-01T16:08:00.000Z",
-            "takeoffTime": "2025-01-01T13:15:00.000Z",
-            "offBlockTime": "2025-01-01T13:00:00.000Z"
+            "arrivalTime": "2026-01-01T14:03:00.000Z",
+            "onBlockTime": "2026-01-01T14:21:00.000Z",
+            "takeoffTime": "2026-01-01T13:15:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z"
           }
         },
         "aircraft": {
@@ -204,15 +204,15 @@ Feature: Check in pilot for flight
         "hasNotoc": true,
         "isOffBlockDelayed": false,
         "actualFuelBurned": null,
-        "source": "manual",
+        "source": "simbrief",
         "tracking": "public",
         "serviceType": "passenger",
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "pilot": {
           "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
           "name": "Rick Doe",
           "pilotLicenseId": "UK-31270",
-          "totalFlightTime": 2391
+          "totalFlightTime": 1642
         }
       }
       """
@@ -230,7 +230,7 @@ Feature: Check in pilot for flight
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:00:00.000Z"
+          "createdAt": "2026-01-01T11:00:00.000Z"
         },
         {
           "id": "f434d000-963a-4603-9e4d-92aed0195a89",
@@ -241,7 +241,7 @@ Feature: Check in pilot for flight
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:05:00.000Z"
+          "createdAt": "2026-01-01T11:05:00.000Z"
         },
         {
           "id": "85530a54-1d5a-4943-a9fb-9b5ef39f6fc5",
@@ -252,7 +252,7 @@ Feature: Check in pilot for flight
             "id": "721ab705-8608-4386-86b4-2f391a3655a7",
             "name": "Alice Doe"
           },
-          "createdAt": "2025-01-01T11:10:00.000Z"
+          "createdAt": "2026-01-01T11:10:00.000Z"
         },
         {
           "id": "@uuid",
@@ -304,7 +304,7 @@ Feature: Check in pilot for flight
             "name": "Philadelphia Intl",
             "iataCode": "PHL"
           },
-          "distance": 243,
+          "distance": 230,
           "flightId": "23952e79-6b38-49ed-a1db-bd4d9b3cedab",
           "createdAt": "@date('within 1 minute from now')",
           "updatedAt": null
@@ -346,7 +346,7 @@ Feature: Check in pilot for flight
           },
           "distance": 243,
           "flightId": "04be266c-df78-4bec-9f50-281cc02ce7f2",
-          "createdAt": "2025-01-01T09:00:00.000Z",
+          "createdAt": "2026-01-01T09:00:00.000Z",
           "updatedAt": null
         }
       ]
@@ -371,7 +371,7 @@ Feature: Check in pilot for flight
             "name": "Philadelphia Intl",
             "iataCode": "PHL"
           },
-          "distance": 243,
+          "distance": 230,
           "flightId": "23952e79-6b38-49ed-a1db-bd4d9b3cedab",
           "createdAt": "@date('within 1 minute from now')",
           "updatedAt": null
@@ -413,7 +413,7 @@ Feature: Check in pilot for flight
           },
           "distance": 243,
           "flightId": "04be266c-df78-4bec-9f50-281cc02ce7f2",
-          "createdAt": "2025-01-01T09:00:00.000Z",
+          "createdAt": "2026-01-01T09:00:00.000Z",
           "updatedAt": null
         }
       ]
@@ -650,10 +650,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204
@@ -662,9 +662,9 @@ Feature: Check in pilot for flight
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "Aircraft: **N78881** (Boeing 777-300ER)"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "out: 13:00z"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "off: 13:15z"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "on:  15:50z"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "in:  16:08z"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "block: 3h 08m"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "on:  14:03z"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "in:  14:21z"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "block: 1h 21m"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "ATIS for BOS:"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "Logan airport, information Delta."
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "METAR KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000"
@@ -679,10 +679,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/d7b3e5a2-4c81-4f69-b0d5-8e2a1c4f7b93/check-in" with body:
       """json
       {
-        "offBlockTime": "2025-06-02T09:05:00.000Z",
-        "takeoffTime": "2025-06-02T09:25:00.000Z",
-        "arrivalTime": "2025-06-02T17:35:00.000Z",
-        "onBlockTime": "2025-06-02T17:45:00.000Z"
+        "offBlockTime": "2026-06-02T09:05:00.000Z",
+        "takeoffTime": "2026-06-02T09:25:00.000Z",
+        "arrivalTime": "2026-06-02T17:35:00.000Z",
+        "onBlockTime": "2026-06-02T17:45:00.000Z"
       }
       """
     Then the response status should be 204
@@ -697,10 +697,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/2fbd8bb1-6d47-4e35-9f0a-5c2e17a4d380/check-in" with body:
       """json
       {
-        "offBlockTime": "2025-06-02T09:05:00.000Z",
-        "takeoffTime": "2025-06-02T09:25:00.000Z",
-        "arrivalTime": "2025-06-02T17:35:00.000Z",
-        "onBlockTime": "2025-06-02T17:45:00.000Z"
+        "offBlockTime": "2026-06-02T09:05:00.000Z",
+        "takeoffTime": "2026-06-02T09:25:00.000Z",
+        "arrivalTime": "2026-06-02T17:35:00.000Z",
+        "onBlockTime": "2026-06-02T17:45:00.000Z"
       }
       """
     Then the response status should be 204
@@ -721,10 +721,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/b4bad5cf-c049-488b-b979-8ef8fc85cdb4/check-in" with body:
       """json
       {
-        "offBlockTime": "2025-06-02T09:05:00.000Z",
-        "takeoffTime": "2025-06-02T09:25:00.000Z",
-        "arrivalTime": "2025-06-02T17:35:00.000Z",
-        "onBlockTime": "2025-06-02T17:45:00.000Z"
+        "offBlockTime": "2026-06-02T09:05:00.000Z",
+        "takeoffTime": "2026-06-02T09:25:00.000Z",
+        "arrivalTime": "2026-06-02T17:35:00.000Z",
+        "onBlockTime": "2026-06-02T17:45:00.000Z"
       }
       """
     Then the response status should be 204
@@ -740,10 +740,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/11087d20-ead0-4b7e-97ee-f1ef0ea29e4f/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-05T17:10:00.000Z",
-        "onBlockTime": "2025-01-05T17:25:00.000Z",
-        "takeoffTime": "2025-01-05T09:20:00.000Z",
-        "offBlockTime": "2025-01-05T09:00:00.000Z"
+        "arrivalTime": "2026-01-05T17:10:00.000Z",
+        "onBlockTime": "2026-01-05T17:25:00.000Z",
+        "takeoffTime": "2026-01-05T09:20:00.000Z",
+        "offBlockTime": "2026-01-05T09:00:00.000Z"
       }
       """
     Then the response status should be 204
@@ -763,10 +763,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204
@@ -796,10 +796,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204
@@ -811,20 +811,20 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 422
@@ -843,10 +843,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/3c8ba7a7-1085-423c-8cc3-d51f5ab0cd05/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T15:50:00.000Z",
+        "onBlockTime": "2026-01-01T16:08:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 422
@@ -864,10 +864,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/2fbd8bb1-6d47-4e35-9f0a-5c2e17a4d380/check-in" with body:
       """json
       {
-        "offBlockTime": "2025-06-02T09:05:00.000Z",
-        "takeoffTime": "2025-06-02T09:25:00.000Z",
-        "arrivalTime": "2025-06-02T17:35:00.000Z",
-        "onBlockTime": "2025-06-02T17:45:00.000Z"
+        "offBlockTime": "2026-06-02T09:05:00.000Z",
+        "takeoffTime": "2026-06-02T09:25:00.000Z",
+        "arrivalTime": "2026-06-02T17:35:00.000Z",
+        "onBlockTime": "2026-06-02T17:45:00.000Z"
       }
       """
     Then the response status should be 204
@@ -879,7 +879,7 @@ Feature: Check in pilot for flight
       {
         "flightId": "2fbd8bb1-6d47-4e35-9f0a-5c2e17a4d380",
         "stage": "preliminary",
-        "issuedAt": "2025-06-02T07:40:00.000Z",
+        "issuedAt": "2026-06-02T07:40:00.000Z",
         "acknowledgedById": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
         "acknowledgedAt": "@date('within 1 minute from now')",
         "document": {
@@ -1084,10 +1084,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/141a2f56-708d-4cc9-b967-64dc0c2b20c4/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T15:50:00.000Z",
+        "onBlockTime": "2026-01-01T16:08:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 404
@@ -1105,10 +1105,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/incorrect-uuid/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T15:50:00.000Z",
+        "onBlockTime": "2026-01-01T16:08:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 400
@@ -1125,10 +1125,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 401
@@ -1145,10 +1145,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204
@@ -1243,10 +1243,10 @@ Feature: Check in pilot for flight
     When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
       """json
       {
-        "arrivalTime": "2025-01-01T15:50:00.000Z",
-        "onBlockTime": "2025-01-01T16:08:00.000Z",
-        "takeoffTime": "2025-01-01T13:15:00.000Z",
-        "offBlockTime": "2025-01-01T13:00:00.000Z"
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
       }
       """
     Then the response status should be 204

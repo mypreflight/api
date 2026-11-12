@@ -8,8 +8,8 @@ Feature: Manage rotation legs
         "flightNumber": "LH900",
         "departureId": "c03a79fb-c5ae-46c3-95fe-f3b5dc7b85f3",
         "arrivalId": "e764251b-bb25-4e8b-8cc7-11b0397b4554",
-        "offBlockTime": "2025-01-03T10:00:00.000Z",
-        "onBlockTime": "2025-01-03T12:00:00.000Z"
+        "offBlockTime": "2026-01-03T10:00:00.000Z",
+        "onBlockTime": "2026-01-03T12:00:00.000Z"
       }
       """
     Then the response status should be 201
@@ -17,7 +17,7 @@ Feature: Manage rotation legs
       """json
       {
         "id": "3e12423f-3add-4c0a-b594-07e0b32413e0",
-        "name": "FRA-JFK-FRA 2025-01-01",
+        "name": "FRA-JFK-FRA 2026-01-01",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "draft",
@@ -25,7 +25,7 @@ Feature: Manage rotation legs
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -44,8 +44,8 @@ Feature: Manage rotation legs
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -64,8 +64,8 @@ Feature: Manage rotation legs
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -84,8 +84,8 @@ Feature: Manage rotation legs
               "icaoCode": "KPHL",
               "name": "Philadelphia Intl"
             },
-            "offBlockTime": "2025-01-03T10:00:00.000Z",
-            "onBlockTime": "2025-01-03T12:00:00.000Z",
+            "offBlockTime": "2026-01-03T10:00:00.000Z",
+            "onBlockTime": "2026-01-03T12:00:00.000Z",
             "blockTime": 120,
             "flight": null
           }
@@ -102,7 +102,7 @@ Feature: Manage rotation legs
       """json
       {
         "id": "3e12423f-3add-4c0a-b594-07e0b32413e0",
-        "name": "FRA-JFK-FRA 2025-01-01",
+        "name": "FRA-JFK-FRA 2026-01-01",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "draft",
@@ -110,7 +110,7 @@ Feature: Manage rotation legs
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -129,8 +129,8 @@ Feature: Manage rotation legs
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }
@@ -144,8 +144,8 @@ Feature: Manage rotation legs
     When I send a "PATCH" request to "/api/v1/rotation/3e12423f-3add-4c0a-b594-07e0b32413e0/leg/34d72055-0f5c-4bd3-8e02-4db80131de48" with body:
       """json
       {
-        "offBlockTime": "2025-01-01T13:00:00.000Z",
-        "onBlockTime": "2025-01-01T21:00:00.000Z"
+        "offBlockTime": "2026-01-01T13:00:00.000Z",
+        "onBlockTime": "2026-01-01T21:00:00.000Z"
       }
       """
     Then the response status should be 200
@@ -153,7 +153,7 @@ Feature: Manage rotation legs
       """json
       {
         "id": "3e12423f-3add-4c0a-b594-07e0b32413e0",
-        "name": "FRA-JFK-FRA 2025-01-01",
+        "name": "FRA-JFK-FRA 2026-01-01",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "draft",
@@ -161,7 +161,7 @@ Feature: Manage rotation legs
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -180,8 +180,8 @@ Feature: Manage rotation legs
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T13:00:00.000Z",
-            "onBlockTime": "2025-01-01T21:00:00.000Z",
+            "offBlockTime": "2026-01-01T13:00:00.000Z",
+            "onBlockTime": "2026-01-01T21:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -200,8 +200,8 @@ Feature: Manage rotation legs
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }
@@ -218,7 +218,7 @@ Feature: Manage rotation legs
       """json
       {
         "id": "3e12423f-3add-4c0a-b594-07e0b32413e0",
-        "name": "FRA-JFK-FRA 2025-01-01",
+        "name": "FRA-JFK-FRA 2026-01-01",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "ready",
@@ -226,7 +226,7 @@ Feature: Manage rotation legs
         "updatedBy": { "id": "721ab705-8608-4386-86b4-2f391a3655a7", "name": "Alice Doe" },
         "canceledBy": null,
         "cancellationReason": null,
-        "createdAt": "2025-01-01T00:00:00.000Z",
+        "createdAt": "2026-01-01T00:00:00.000Z",
         "updatedAt": "@date('within 1 minute from now')",
         "canceledAt": null,
         "legs": [
@@ -245,8 +245,8 @@ Feature: Manage rotation legs
               "icaoCode": "KJFK",
               "name": "New York JFK"
             },
-            "offBlockTime": "2025-01-01T12:00:00.000Z",
-            "onBlockTime": "2025-01-01T20:00:00.000Z",
+            "offBlockTime": "2026-01-01T12:00:00.000Z",
+            "onBlockTime": "2026-01-01T20:00:00.000Z",
             "blockTime": 480,
             "flight": null
           },
@@ -265,8 +265,8 @@ Feature: Manage rotation legs
               "icaoCode": "EDDF",
               "name": "Frankfurt Rhein/Main"
             },
-            "offBlockTime": "2025-01-01T22:00:00.000Z",
-            "onBlockTime": "2025-01-02T06:00:00.000Z",
+            "offBlockTime": "2026-01-01T22:00:00.000Z",
+            "onBlockTime": "2026-01-02T06:00:00.000Z",
             "blockTime": 480,
             "flight": null
           }
@@ -309,8 +309,8 @@ Feature: Manage rotation legs
         "flightNumber": "LH900",
         "departureId": "c03a79fb-c5ae-46c3-95fe-f3b5dc7b85f3",
         "arrivalId": "e764251b-bb25-4e8b-8cc7-11b0397b4554",
-        "offBlockTime": "2025-01-03T10:00:00.000Z",
-        "onBlockTime": "2025-01-03T12:00:00.000Z"
+        "offBlockTime": "2026-01-03T10:00:00.000Z",
+        "onBlockTime": "2026-01-03T12:00:00.000Z"
       }
       """
     Then the response status should be 409
@@ -331,8 +331,8 @@ Feature: Manage rotation legs
         "flightNumber": "LH900",
         "departureId": "f35c094a-bec5-4803-be32-bd80a14b441a",
         "arrivalId": "f35c094a-bec5-4803-be32-bd80a14b441a",
-        "offBlockTime": "2025-01-03T10:00:00.000Z",
-        "onBlockTime": "2025-01-03T12:00:00.000Z"
+        "offBlockTime": "2026-01-03T10:00:00.000Z",
+        "onBlockTime": "2026-01-03T12:00:00.000Z"
       }
       """
     Then the response status should be 422
@@ -353,8 +353,8 @@ Feature: Manage rotation legs
         "flightNumber": "LH900",
         "departureId": "c03a79fb-c5ae-46c3-95fe-f3b5dc7b85f3",
         "arrivalId": "e764251b-bb25-4e8b-8cc7-11b0397b4554",
-        "offBlockTime": "2025-01-03T10:00:00.000Z",
-        "onBlockTime": "2025-01-03T12:00:00.000Z"
+        "offBlockTime": "2026-01-03T10:00:00.000Z",
+        "onBlockTime": "2026-01-03T12:00:00.000Z"
       }
       """
     Then the response status should be 403

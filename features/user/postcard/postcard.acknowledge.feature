@@ -22,7 +22,7 @@ Feature: Mark a postcard of mine as seen
         "width": 1152,
         "height": 1536,
         "status": "ready",
-        "awardedAt": "2025-01-03T11:45:00.000Z",
+        "awardedAt": "2026-01-03T11:45:00.000Z",
         "seenAt": "@date('within 1 minute from now')"
       }
       """
@@ -52,7 +52,7 @@ Feature: Mark a postcard of mine as seen
         "width": 1152,
         "height": 1536,
         "status": "ready",
-        "awardedAt": "2025-01-03T11:45:00.000Z",
+        "awardedAt": "2026-01-03T11:45:00.000Z",
         "seenAt": "@date('within 1 minute from now')"
       }
       """

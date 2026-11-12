@@ -40,9 +40,9 @@ Feature: Get lifetime stats totals
       """json
       {
         "total": {
-          "blockTime": 2391,
+          "blockTime": 1642,
           "totalFuelBurned": 331600,
-          "totalFlightTime": 2391,
+          "totalFlightTime": 1642,
           "totalGreatCircleDistance": 8310
         }
       }

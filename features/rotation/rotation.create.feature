@@ -5,7 +5,7 @@ Feature: Create rotation
     When I send a "POST" request to "/api/v1/operator/40b1b34e-aea1-4cec-acbe-f2bf97c06d7d/rotation" with body:
       """json
       {
-        "name": "FRA-JFK-FRA 2025-01-05",
+        "name": "FRA-JFK-FRA 2026-01-05",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f"
       }
       """
@@ -14,7 +14,7 @@ Feature: Create rotation
       """json
       {
         "id": "@uuid",
-        "name": "FRA-JFK-FRA 2025-01-05",
+        "name": "FRA-JFK-FRA 2026-01-05",
         "operatorId": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
         "pilotId": "725f5df2-0c78-4fe8-89a2-52566c89cf7f",
         "status": "draft",

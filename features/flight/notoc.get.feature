@@ -9,7 +9,7 @@ Feature: Get flight notification to captain
       {
         "flightId": "2fbd8bb1-6d47-4e35-9f0a-5c2e17a4d380",
         "stage": "preliminary",
-        "issuedAt": "2025-06-02T07:40:00.000Z",
+        "issuedAt": "2026-06-02T07:40:00.000Z",
         "acknowledgedById": null,
         "acknowledgedAt": null,
         "document": {
@@ -191,7 +191,7 @@ Feature: Get flight notification to captain
       {
         "flightId": "2fbd8bb1-6d47-4e35-9f0a-5c2e17a4d380",
         "stage": "preliminary",
-        "issuedAt": "2025-06-02T07:40:00.000Z",
+        "issuedAt": "2026-06-02T07:40:00.000Z",
         "acknowledgedById": null,
         "acknowledgedAt": null,
         "document": {
@@ -373,9 +373,9 @@ Feature: Get flight notification to captain
       {
         "flightId": "d2601432-e8cb-4018-8cee-f24aaaa29ca5",
         "stage": "preliminary",
-        "issuedAt": "2025-06-02T07:30:00.000Z",
+        "issuedAt": "2026-06-02T07:30:00.000Z",
         "acknowledgedById": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
-        "acknowledgedAt": "2025-06-02T08:00:00.000Z",
+        "acknowledgedAt": "2026-06-02T08:00:00.000Z",
         "document": {
           "summary": {
             "cargoKg": 5500,
@@ -456,9 +456,9 @@ Feature: Get flight notification to captain
       {
         "flightId": "d2601432-e8cb-4018-8cee-f24aaaa29ca5",
         "stage": "preliminary",
-        "issuedAt": "2025-06-02T07:30:00.000Z",
+        "issuedAt": "2026-06-02T07:30:00.000Z",
         "acknowledgedById": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
-        "acknowledgedAt": "2025-06-02T08:00:00.000Z",
+        "acknowledgedAt": "2026-06-02T08:00:00.000Z",
         "document": {
           "summary": {
             "cargoKg": 5500,

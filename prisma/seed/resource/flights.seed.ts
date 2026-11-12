@@ -43,17 +43,17 @@ async function loadDLH450(tx: Prisma.TransactionClient): Promise<void> {
     aircraftId: '9f5da1a4-f09e-4961-8299-82d688337d1f', // A339
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 12:00'),
-        takeoffTime: new Date('2025-01-01 12:15'),
-        arrivalTime: new Date('2025-01-01 21:00'),
-        onBlockTime: new Date('2025-01-01 21:10'),
+        offBlockTime: new Date('2026-01-01 12:00'),
+        takeoffTime: new Date('2026-01-01 12:15'),
+        arrivalTime: new Date('2026-01-01 21:00'),
+        onBlockTime: new Date('2026-01-01 21:10'),
       },
     }),
     loadsheets: seedLoadsheets({
       preliminary: null,
       final: null,
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
   };
@@ -133,7 +133,7 @@ async function loadDLH450(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'e70f19df-81b4-4712-b4a5-16be22c85ebe',
@@ -142,7 +142,7 @@ async function loadDLH450(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '9db99c92-dd95-4089-b11b-abe3ac1d262b',
@@ -151,7 +151,7 @@ async function loadDLH450(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
     ],
   });
@@ -180,22 +180,22 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -252,12 +252,12 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 60.317255208578054,
         longitude: 24.958945837172326,
         altitude: 8500,
@@ -272,7 +272,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 58.68825909518984,
         longitude: 22.248460174236897,
         altitude: 8500,
@@ -287,7 +287,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 55.587475442504896,
         longitude: 17.204921862764106,
         altitude: 8500,
@@ -302,7 +302,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 54.37998045994538,
         longitude: 18.46850453127673,
         altitude: 8500,
@@ -370,7 +370,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '38684c9d-55df-43fe-bf6e-f26cccf74d5a',
@@ -379,7 +379,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '36a2aa4d-40f6-4aaf-a2cd-10312104b683',
@@ -388,7 +388,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '59d90e91-132c-4f76-b39d-394e96385dc8',
@@ -396,7 +396,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:01'),
+        createdAt: new Date('2026-01-01 12:01'),
       },
       {
         id: '9e67d36f-d941-4cbc-ab18-586f1a0b5a4c',
@@ -405,7 +405,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '27b015f7-f415-4a0a-b12d-3fdc53073488',
@@ -414,7 +414,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:30'),
+        createdAt: new Date('2026-01-01 12:30'),
       },
       {
         id: '44a54d61-3b4d-4ecd-9b56-4a59223a9b78',
@@ -423,7 +423,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:55'),
+        createdAt: new Date('2026-01-01 12:55'),
       },
       {
         id: '0940b633-777d-4ecc-bd63-ef1b30c52c4a',
@@ -432,7 +432,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:00'),
+        createdAt: new Date('2026-01-01 13:00'),
       },
       {
         id: 'b22bf5bb-da96-4511-823a-df611efb72ae',
@@ -441,7 +441,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:15'),
+        createdAt: new Date('2026-01-01 13:15'),
       },
       {
         id: '4ebbc569-932c-4a17-b631-2af2739c10e3',
@@ -450,7 +450,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:00'),
+        createdAt: new Date('2026-01-01 14:13'),
       },
       {
         id: '0cb6d1ea-df6c-43f0-a1e5-1c2dd7af6fc7',
@@ -459,7 +459,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:18'),
+        createdAt: new Date('2026-01-01 14:31'),
       },
       {
         id: '46dd5137-b31b-4e5b-919c-cd30191763b1',
@@ -468,7 +468,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:20'),
+        createdAt: new Date('2026-01-01 14:33'),
       },
       {
         id: '19ffec62-89d4-4c91-b071-b4c0331777ce',
@@ -477,7 +477,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:40'),
+        createdAt: new Date('2026-01-01 14:53'),
       },
       {
         id: 'c7142a58-0c6c-41ef-aab7-a097a4e57385',
@@ -486,7 +486,7 @@ async function loadAAL4905(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasClosed,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:50'),
+        createdAt: new Date('2026-01-01 15:03'),
       },
     ],
   });
@@ -514,10 +514,10 @@ async function loadAAL4906(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -549,7 +549,7 @@ async function loadAAL4906(tx: Prisma.TransactionClient): Promise<void> {
       },
       final: null,
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -604,7 +604,7 @@ async function loadAAL4906(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'f434d000-963a-4603-9e4d-92aed0195a89',
@@ -613,7 +613,7 @@ async function loadAAL4906(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '85530a54-1d5a-4943-a9fb-9b5ef39f6fc5',
@@ -622,7 +622,7 @@ async function loadAAL4906(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
     ],
   });
@@ -650,10 +650,10 @@ async function loadAAL4907(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -696,7 +696,7 @@ async function loadAAL4907(tx: Prisma.TransactionClient): Promise<void> {
         blockFuel: 12.5,
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -751,7 +751,7 @@ async function loadAAL4907(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
     ],
   });
@@ -780,16 +780,16 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -821,12 +821,12 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
       },
       final: null,
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'AAL4908',
-        date: '2025-01-01T12:55:00.000Z',
+        date: '2026-01-01T12:55:00.000Z',
         latitude: 42.36454,
         longitude: -71.01663,
         altitude: 0,
@@ -899,7 +899,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '4f9d78e7-b0c9-48a3-a5c8-27d6edd530a1',
@@ -908,7 +908,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '47c8db09-e786-4287-840c-b54278d543b5',
@@ -917,7 +917,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '82746826-3d70-40b0-93ac-d61d6af0ef43',
@@ -926,7 +926,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '7815d6eb-3c8c-4845-b01e-19020d23d9b4',
@@ -934,7 +934,7 @@ async function loadAAL4908(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:55'),
+        createdAt: new Date('2026-01-01 12:55'),
       },
     ],
   });
@@ -963,16 +963,16 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -1004,12 +1004,12 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
       },
       final: null,
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'AAL4909',
-        date: '2025-01-01T12:55:00.000Z',
+        date: '2026-01-01T12:55:00.000Z',
         latitude: 42.36454,
         longitude: -71.01663,
         altitude: 0,
@@ -1077,7 +1077,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '08f2640d-a382-491a-9226-c6ed5cdbfd60',
@@ -1086,7 +1086,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '8297db05-76e4-416e-9f6f-fed2716296ea',
@@ -1095,7 +1095,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '9d2f1728-0882-4c65-b912-6d193f87a643',
@@ -1104,7 +1104,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '9762e7f2-5cb6-48a1-bee2-077c6ed4452c',
@@ -1113,7 +1113,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '63268531-1365-4322-bf99-e7509f53db1d',
@@ -1121,7 +1121,7 @@ async function loadAAL4909(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:55'),
+        createdAt: new Date('2026-01-01 12:55'),
       },
     ],
   });
@@ -1150,16 +1150,16 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -1216,12 +1216,12 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'AAL4910',
-        date: '2025-01-01T12:55:00.000Z',
+        date: '2026-01-01T12:55:00.000Z',
         latitude: 42.36454,
         longitude: -71.01663,
         altitude: 0,
@@ -1289,7 +1289,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'e72a93c0-c3ad-4863-a994-f355f10989dd',
@@ -1298,7 +1298,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: 'fb3236f0-0318-40be-b581-3312ece412e7',
@@ -1307,7 +1307,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '9ac32500-3bad-471a-b6e1-577916abde24',
@@ -1316,7 +1316,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '1489e92f-dde6-4d16-8a0a-f38b18f6e272',
@@ -1325,7 +1325,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '959d2d21-6f36-4620-bb9e-029c5fa155e7',
@@ -1333,7 +1333,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:55'),
+        createdAt: new Date('2026-01-01 12:55'),
       },
       {
         id: '66bcc725-7acd-42e9-b3db-1513176a537f',
@@ -1342,7 +1342,7 @@ async function loadAAL4910(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
     ],
   });
@@ -1371,19 +1371,19 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
+        offBlockTime: new Date('2026-01-01 13:10'),
         takeoffTime: null,
         arrivalTime: null,
         onBlockTime: null,
@@ -1443,7 +1443,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -1498,7 +1498,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '23f793e8-6f1a-4348-9ac1-5721788f89ce',
@@ -1507,7 +1507,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '612637bf-dffe-4a8c-a86b-785011e028df',
@@ -1516,7 +1516,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'e688c31b-1be9-4b08-a3a0-02628c5a5bfd',
@@ -1525,7 +1525,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'd834bd10-0fd1-4fb2-b77c-c04445bd32ca',
@@ -1534,7 +1534,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: 'a3c38a7e-f0fe-498d-bee2-7697dc0d0650',
@@ -1543,7 +1543,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: '00cf79f0-5dee-4505-bc10-bc7178c57354',
@@ -1552,7 +1552,7 @@ async function loadAAL4911(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
     ],
   });
@@ -1581,26 +1581,26 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
         arrivalTime: null,
         onBlockTime: null,
       },
       predicted: {
-        arrivalTime: new Date('2025-01-01 15:55'),
-        onBlockTime: new Date('2025-01-01 16:12'),
+        arrivalTime: new Date('2026-01-01 14:08'),
+        onBlockTime: new Date('2026-01-01 14:25'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -1657,12 +1657,12 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'AAL4912',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 42.3656,
         longitude: -71.0096,
         altitude: 8500,
@@ -1677,7 +1677,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4912',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 41.7,
         longitude: -72.3,
         altitude: 24000,
@@ -1692,7 +1692,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4912',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 40.7,
         longitude: -74.0,
         altitude: 35000,
@@ -1707,7 +1707,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4912',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 39.8729,
         longitude: -75.2437,
         altitude: 12000,
@@ -1775,7 +1775,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '9822a1b2-9715-40a5-94cb-d8b616637457',
@@ -1784,7 +1784,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '88651e15-57d0-468f-9231-bd2e1edcff66',
@@ -1793,7 +1793,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '3d802611-728b-41cd-a4d1-f9fc91aaca18',
@@ -1802,7 +1802,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'd2794a43-60e2-4abe-9803-ce75dfa2a37b',
@@ -1811,7 +1811,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '2dba1cb5-d25c-4ade-9d46-e30eb8ecb24a',
@@ -1820,7 +1820,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: 'd03bb44f-88d8-42cd-aa29-342eda6ebbf3',
@@ -1829,7 +1829,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: 'ef447dda-84c1-45e9-9ebe-fa7efe646308',
@@ -1837,7 +1837,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:11'),
+        createdAt: new Date('2026-01-01 13:11'),
       },
       {
         id: '0108b08b-9c45-49ba-a3cb-a3ae172ce92c',
@@ -1846,7 +1846,7 @@ async function loadAAL4912(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
     ],
   });
@@ -1875,21 +1875,21 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
         onBlockTime: null,
       },
     }),
@@ -1947,12 +1947,12 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 42.3656,
         longitude: -71.0096,
         altitude: 8500,
@@ -1967,7 +1967,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 41.7,
         longitude: -72.3,
         altitude: 24000,
@@ -1982,7 +1982,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 40.7,
         longitude: -74.0,
         altitude: 35000,
@@ -1997,7 +1997,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4913',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 39.8729,
         longitude: -75.2437,
         altitude: 12000,
@@ -2065,7 +2065,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'dd8871ca-4d02-4b8f-910f-829fa78b9300',
@@ -2074,7 +2074,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '95d4986f-4211-4209-8479-deb63de7239f',
@@ -2083,7 +2083,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '2d5e21dd-b89d-4f40-bf8b-86317da51147',
@@ -2092,7 +2092,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '527def55-574b-4740-8876-c6af56e7c060',
@@ -2101,7 +2101,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '2a64d3fa-3615-4ced-a0ea-5d528f6e8cae',
@@ -2110,7 +2110,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: '72655033-7a10-40d7-824b-5f20784f762d',
@@ -2119,7 +2119,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: '5ce2ea2b-55b0-4a8f-bbea-9e3fc9659f00',
@@ -2127,7 +2127,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:11'),
+        createdAt: new Date('2026-01-01 13:11'),
       },
       {
         id: 'e356f0df-f0a8-4c67-a7e9-8d1bdc3c5249',
@@ -2136,7 +2136,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: 'd6880a1e-4c04-49ca-ab15-7b04d7a4aac4',
@@ -2145,7 +2145,7 @@ async function loadAAL4913(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
     ],
   });
@@ -2174,22 +2174,22 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
-        onBlockTime: new Date('2025-01-01 16:28'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
+        onBlockTime: new Date('2026-01-01 14:41'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -2250,7 +2250,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
     positionReports: [
       {
         callsign: 'AAL4914',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 60.31725520857805,
         longitude: 24.95894583717233,
         altitude: 8500,
@@ -2265,7 +2265,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4914',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 58.68825909518984,
         longitude: 22.2484601742369,
         altitude: 24000,
@@ -2280,7 +2280,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4914',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 55.5874754425049,
         longitude: 17.20492186276411,
         altitude: 35000,
@@ -2295,7 +2295,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4914',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 54.37998045994538,
         longitude: 18.46850453127673,
         altitude: 12000,
@@ -2309,7 +2309,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         spi: false,
       },
     ],
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -2364,7 +2364,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '355c57e9-54b4-4b3f-917f-dd33c9f9f9ef',
@@ -2373,7 +2373,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '69bf2ba1-1ac4-47e7-8732-5ade52be92be',
@@ -2382,7 +2382,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'bc3f9bd0-420a-4d44-877d-582e9d66f440',
@@ -2390,7 +2390,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:01'),
+        createdAt: new Date('2026-01-01 12:01'),
       },
       {
         id: '64e4ae88-7adf-4c29-9e95-061c171a70e3',
@@ -2399,7 +2399,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '3738a2dc-59c3-4a34-9058-ff57a3cd12bc',
@@ -2408,7 +2408,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: 'be16d4a7-83e0-46cb-93fc-2a654338f132',
@@ -2417,7 +2417,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: 'af5b4d42-c963-488f-bdc7-aefad1bb2d49',
@@ -2426,7 +2426,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: '26373247-4b63-4c90-8091-8efae31dbee7',
@@ -2435,7 +2435,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: '38a79e68-aad5-4e1c-ad8e-edce069372d9',
@@ -2444,7 +2444,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
       {
         id: 'd195128e-a2c8-43d9-9700-feb4481620ea',
@@ -2453,7 +2453,7 @@ async function loadAAL4914(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 14:41'),
       },
     ],
   });
@@ -2482,22 +2482,22 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
-        onBlockTime: new Date('2025-01-01 16:28'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
+        onBlockTime: new Date('2026-01-01 14:41'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -2558,7 +2558,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
     positionReports: [
       {
         callsign: 'AAL4915',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 60.317255208578054,
         longitude: 24.958945837172326,
         altitude: 8500,
@@ -2573,7 +2573,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4915',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 58.68825909518984,
         longitude: 22.248460174236897,
         altitude: 8500,
@@ -2588,7 +2588,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4915',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 55.587475442504896,
         longitude: 17.204921862764106,
         altitude: 8500,
@@ -2603,7 +2603,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4915',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 54.37998045994538,
         longitude: 18.46850453127673,
         altitude: 8500,
@@ -2617,7 +2617,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         spi: false,
       },
     ],
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -2672,7 +2672,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '4c3128ed-9c1b-4815-8e0b-8b8d67912706',
@@ -2681,7 +2681,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: 'eef98d03-6ebf-4643-9a3f-49c7a9d7dd4e',
@@ -2690,7 +2690,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'e5fa6da2-5fcd-4e76-b2fc-19a42589d630',
@@ -2698,7 +2698,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:01'),
+        createdAt: new Date('2026-01-01 12:01'),
       },
       {
         id: '98e76e75-ca05-48bc-b676-f5e3c58769a6',
@@ -2707,7 +2707,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'd8a68b2d-4b3d-4c96-97cb-ba6e34e14747',
@@ -2716,7 +2716,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '6c00677b-077f-42f3-b65f-0fdd9de92869',
@@ -2725,7 +2725,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: '51cfbf54-1c17-4fdc-b56f-385aa11311e4',
@@ -2734,7 +2734,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: '26e1178c-3696-4127-abfd-024a2a832e91',
@@ -2743,7 +2743,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: '3c75fcea-5a2d-4353-8960-b27eb6733e8b',
@@ -2752,7 +2752,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
       {
         id: '620c5ac4-8224-4dab-a37b-32ecd858b4b4',
@@ -2761,7 +2761,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 14:41'),
       },
       {
         id: 'f7848f6d-8e4e-4554-a1ed-db99779c16dd',
@@ -2770,7 +2770,7 @@ async function loadAAL4915(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:30'),
+        createdAt: new Date('2026-01-01 14:43'),
       },
     ],
   });
@@ -2799,22 +2799,22 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
-        onBlockTime: new Date('2025-01-01 16:28'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
+        onBlockTime: new Date('2026-01-01 14:41'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -2875,7 +2875,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
     positionReports: [
       {
         callsign: 'AAL4916',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 60.317255208578054,
         longitude: 24.958945837172326,
         altitude: 8500,
@@ -2890,7 +2890,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4916',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 58.68825909518984,
         longitude: 22.248460174236897,
         altitude: 8500,
@@ -2905,7 +2905,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4916',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 55.587475442504896,
         longitude: 17.204921862764106,
         altitude: 8500,
@@ -2920,7 +2920,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4916',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 54.37998045994538,
         longitude: 18.46850453127673,
         altitude: 8500,
@@ -2934,7 +2934,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         spi: false,
       },
     ],
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -2989,7 +2989,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'b5242b30-ac97-4014-9000-05773ed394a4',
@@ -2998,7 +2998,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '083304c4-85be-4ebf-9c2d-757b714a23f7',
@@ -3007,7 +3007,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'cc6fdbb4-0533-40d2-a313-8b0e5145a605',
@@ -3015,7 +3015,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:01'),
+        createdAt: new Date('2026-01-01 12:01'),
       },
       {
         id: '346e6985-299c-49b3-9c76-6ee5ee679e43',
@@ -3024,7 +3024,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '975140bc-8cac-4587-bddd-0a7acfb7a15f',
@@ -3033,7 +3033,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '69b9a8a4-781c-44e9-8430-3fdd434def23',
@@ -3042,7 +3042,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: 'be8c9559-0273-4f04-b480-062628bb670d',
@@ -3051,7 +3051,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: 'e9f6ea80-395a-4859-a7c3-2bd93fc16066',
@@ -3060,7 +3060,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: 'e342f02c-b0b5-4921-8ae3-51a28ee2bdd8',
@@ -3069,7 +3069,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
       {
         id: 'beb79715-d10d-49b3-acab-e96d9e0f37a8',
@@ -3078,7 +3078,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 14:41'),
       },
       {
         id: 'a9e2c75c-c22a-41ab-bc00-8602f7f373ed',
@@ -3087,7 +3087,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:30'),
+        createdAt: new Date('2026-01-01 14:43'),
       },
       {
         id: 'fbe0b258-8e73-419d-abde-1194ca15944d',
@@ -3096,7 +3096,7 @@ async function loadAAL4916(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:50'),
+        createdAt: new Date('2026-01-01 15:03'),
       },
     ],
   });
@@ -3127,22 +3127,22 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
-        onBlockTime: new Date('2025-01-01 16:28'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
+        onBlockTime: new Date('2026-01-01 14:41'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -3203,7 +3203,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
     positionReports: [
       {
         callsign: 'AAL4917',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 60.317255208578054,
         longitude: 24.958945837172326,
         altitude: 8500,
@@ -3218,7 +3218,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4917',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 58.68825909518984,
         longitude: 22.248460174236897,
         altitude: 8500,
@@ -3233,7 +3233,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4917',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 55.587475442504896,
         longitude: 17.204921862764106,
         altitude: 8500,
@@ -3248,7 +3248,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'AAL4917',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 54.37998045994538,
         longitude: 18.46850453127673,
         altitude: 8500,
@@ -3262,7 +3262,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         spi: false,
       },
     ],
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -3317,7 +3317,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '8d1cef04-f2a6-4544-992e-3b2bb1de4191',
@@ -3326,7 +3326,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: 'e997ff96-76db-4949-8fe7-23f6391fc1a9',
@@ -3335,7 +3335,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '1bb8224d-9900-4841-95de-ea47daef5a57',
@@ -3343,7 +3343,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:01'),
+        createdAt: new Date('2026-01-01 12:01'),
       },
       {
         id: '140b5d0e-221d-4575-86fe-44b54b805012',
@@ -3352,7 +3352,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: '973707fb-4bf8-4681-9b58-01b61a1f8252',
@@ -3361,7 +3361,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '64329e64-8179-483e-801a-ccc6d992b5e6',
@@ -3370,7 +3370,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: '9c783440-9858-4d62-81e4-470897744997',
@@ -3379,7 +3379,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: 'a2c3bab0-c2fd-42c8-adda-32b452bcd92c',
@@ -3388,7 +3388,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: '73c18a5f-a48a-4a77-b377-d4159ce21029',
@@ -3397,7 +3397,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
       {
         id: '015b921e-c314-4d0c-8c1c-5f697bc31e93',
@@ -3406,7 +3406,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 14:41'),
       },
       {
         id: '735a417f-7ad5-4cea-9b80-902d10b60486',
@@ -3415,7 +3415,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:30'),
+        createdAt: new Date('2026-01-01 14:43'),
       },
       {
         id: '05ab2215-6e04-48f4-aecd-064f3cb25f18',
@@ -3424,7 +3424,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:50'),
+        createdAt: new Date('2026-01-01 15:03'),
       },
       {
         id: 'fc6f118d-cb4a-4f11-ae09-f8520d846513',
@@ -3433,7 +3433,7 @@ async function loadAAL4917(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasClosed,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 17:00'),
+        createdAt: new Date('2026-01-01 15:13'),
       },
     ],
   });
@@ -3463,22 +3463,22 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
-        onBlockTime: new Date('2025-01-01 16:28'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
+        onBlockTime: new Date('2026-01-01 14:41'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -3535,7 +3535,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -3589,7 +3589,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'aa18002c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3597,7 +3597,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: 'aa18003c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3605,7 +3605,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'aa18004c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3613,7 +3613,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'aa18005c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3621,7 +3621,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: 'aa18006c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3629,7 +3629,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: 'aa18007c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3637,7 +3637,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: 'aa18008c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3645,7 +3645,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: 'aa18009c-1bf2-4d65-8c43-92ef10ea7311',
@@ -3653,7 +3653,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.EmergencyWasDeclared,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 14:35'),
+        createdAt: new Date('2026-01-01 13:42'),
       },
       {
         id: 'aa1800ac-1bf2-4d65-8c43-92ef10ea7311',
@@ -3661,7 +3661,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
       {
         id: 'aa1800bc-1bf2-4d65-8c43-92ef10ea7311',
@@ -3669,7 +3669,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 14:41'),
       },
       {
         id: 'aa1800cc-1bf2-4d65-8c43-92ef10ea7311',
@@ -3677,7 +3677,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:30'),
+        createdAt: new Date('2026-01-01 14:43'),
       },
       {
         id: 'aa1800dc-1bf2-4d65-8c43-92ef10ea7311',
@@ -3685,7 +3685,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:50'),
+        createdAt: new Date('2026-01-01 15:03'),
       },
     ],
   });
@@ -3706,7 +3706,7 @@ async function loadAAL4918(tx: Prisma.TransactionClient): Promise<void> {
       dangerousGoodsOnBoard: [],
       freeText:
         'Passenger in seat 24B suffering suspected cardiac arrest. CPR in progress, requesting priority handling and medical team at gate.',
-      declarationTime: new Date('2025-01-01 14:35'),
+      declarationTime: new Date('2026-01-01 13:42'),
     },
   });
 }
@@ -3734,22 +3734,22 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:13'),
+        onBlockTime: new Date('2026-01-01 14:31'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:03'),
+        onBlockTime: new Date('2026-01-01 14:21'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 16:10'),
-        onBlockTime: new Date('2025-01-01 16:28'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 14:23'),
+        onBlockTime: new Date('2026-01-01 14:41'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -3806,7 +3806,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 230,
     totalFuelBurned: 2800,
   };
@@ -3860,7 +3860,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: 'aa19002c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3868,7 +3868,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: 'aa19003c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3876,7 +3876,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'aa19004c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3884,7 +3884,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'aa19005c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3892,7 +3892,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: 'aa19006c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3900,7 +3900,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: 'aa19007c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3908,7 +3908,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: 'aa19008c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3916,7 +3916,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: 'aa19009c-2c7f-4e98-bd13-83ad7106cf42',
@@ -3924,7 +3924,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.EmergencyWasDeclared,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:32'),
+        createdAt: new Date('2026-01-01 13:32'),
       },
       {
         id: 'aa1900ac-2c7f-4e98-bd13-83ad7106cf42',
@@ -3932,7 +3932,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 14:23'),
       },
       {
         id: 'aa1900bc-2c7f-4e98-bd13-83ad7106cf42',
@@ -3940,7 +3940,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 14:41'),
       },
       {
         id: 'aa1900cc-2c7f-4e98-bd13-83ad7106cf42',
@@ -3948,7 +3948,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:30'),
+        createdAt: new Date('2026-01-01 14:43'),
       },
       {
         id: 'aa1900dc-2c7f-4e98-bd13-83ad7106cf42',
@@ -3956,7 +3956,7 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:50'),
+        createdAt: new Date('2026-01-01 15:03'),
       },
     ],
   });
@@ -3977,8 +3977,8 @@ async function loadAAL4919(tx: Prisma.TransactionClient): Promise<void> {
       dangerousGoodsOnBoard: [],
       freeText:
         'Bird strike on climb-out, multiple impacts on radome and left wing. No engine vibration, parameters nominal, continuing to destination under monitoring.',
-      declarationTime: new Date('2025-01-01 13:32'),
-      resolvedAt: new Date('2025-01-01 14:05'),
+      declarationTime: new Date('2026-01-01 13:32'),
+      resolvedAt: new Date('2026-01-01 14:05'),
       resolvedBy: 'fcf6f4bc-290d-43a9-843c-409cd47e143d', // Rick Doe, Cabin Crew
     },
   });
@@ -4006,22 +4006,22 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 17:40'),
-        takeoffTime: new Date('2025-01-01 18:00'),
-        arrivalTime: new Date('2025-01-02 02:00'),
-        onBlockTime: new Date('2025-01-02 02:15'),
+        offBlockTime: new Date('2026-01-01 17:40'),
+        takeoffTime: new Date('2026-01-01 18:00'),
+        arrivalTime: new Date('2026-01-02 02:00'),
+        onBlockTime: new Date('2026-01-02 02:15'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 17:40'),
-        takeoffTime: new Date('2025-01-01 18:00'),
-        arrivalTime: new Date('2025-01-02 02:30'),
-        onBlockTime: new Date('2025-01-02 02:45'),
+        offBlockTime: new Date('2026-01-01 17:40'),
+        takeoffTime: new Date('2026-01-01 18:00'),
+        arrivalTime: new Date('2026-01-02 02:30'),
+        onBlockTime: new Date('2026-01-02 02:45'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 17:45'),
-        takeoffTime: new Date('2025-01-01 18:00'),
-        arrivalTime: new Date('2025-01-02 02:30'),
-        onBlockTime: new Date('2025-01-02 02:45'),
+        offBlockTime: new Date('2026-01-01 17:45'),
+        takeoffTime: new Date('2026-01-01 18:00'),
+        arrivalTime: new Date('2026-01-02 02:30'),
+        onBlockTime: new Date('2026-01-02 02:45'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -4082,7 +4082,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
     positionReports: [
       {
         callsign: 'DLH40',
-        date: '2025-01-01T13:10:00.000Z',
+        date: '2026-01-01T13:10:00.000Z',
         latitude: 60.317255208578054,
         longitude: 24.958945837172326,
         altitude: 8500,
@@ -4097,7 +4097,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH40',
-        date: '2025-01-01T13:40:00.000Z',
+        date: '2026-01-01T13:40:00.000Z',
         latitude: 58.68825909518984,
         longitude: 22.248460174236897,
         altitude: 8500,
@@ -4112,7 +4112,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH40',
-        date: '2025-01-01T14:10:00.000Z',
+        date: '2026-01-01T14:10:00.000Z',
         latitude: 55.587475442504896,
         longitude: 17.204921862764106,
         altitude: 8500,
@@ -4127,7 +4127,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH40',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 54.37998045994538,
         longitude: 18.46850453127673,
         altitude: 8500,
@@ -4141,7 +4141,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
         spi: false,
       },
     ],
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     route: null,
@@ -4217,7 +4217,7 @@ async function loadDLH40(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 17:00'),
+        createdAt: new Date('2026-01-01 17:00'),
       },
     ],
   });
@@ -4244,10 +4244,10 @@ async function loadDLH41(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-02 04:00'),
-        takeoffTime: new Date('2025-01-02 04:20'),
-        arrivalTime: new Date('2025-01-02 11:30'),
-        onBlockTime: new Date('2025-01-02 11:45'),
+        offBlockTime: new Date('2026-01-02 04:00'),
+        takeoffTime: new Date('2026-01-02 04:20'),
+        arrivalTime: new Date('2026-01-02 11:30'),
+        onBlockTime: new Date('2026-01-02 11:45'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -4279,7 +4279,7 @@ async function loadDLH41(tx: Prisma.TransactionClient): Promise<void> {
       },
       final: null,
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     route: null,
@@ -4369,10 +4369,10 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-02 17:40'),
-        takeoffTime: new Date('2025-01-02 18:00'),
-        arrivalTime: new Date('2025-01-03 02:00'),
-        onBlockTime: new Date('2025-01-03 02:15'),
+        offBlockTime: new Date('2026-01-02 17:40'),
+        takeoffTime: new Date('2026-01-02 18:00'),
+        arrivalTime: new Date('2026-01-03 02:00'),
+        onBlockTime: new Date('2026-01-03 02:15'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -4403,7 +4403,7 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     route: null,
@@ -4485,7 +4485,7 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-02 11:00'),
+        createdAt: new Date('2026-01-02 11:00'),
       },
       {
         id: '9eb7eae9-af3c-4eac-bdff-e82e9b852cfe',
@@ -4494,7 +4494,7 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-02 11:05'),
+        createdAt: new Date('2026-01-02 11:05'),
       },
       {
         id: '1fce1306-6bfc-45a2-8c38-b61a61aa760a',
@@ -4503,7 +4503,7 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-02 11:10'),
+        createdAt: new Date('2026-01-02 11:10'),
       },
       {
         id: '96d9b78b-fe2c-4ce5-98f2-807ccaf74b85',
@@ -4512,7 +4512,7 @@ async function loadDLH42(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-02 12:00'),
+        createdAt: new Date('2026-01-02 12:00'),
       },
     ],
   });
@@ -4538,22 +4538,22 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-03 04:00'),
-        takeoffTime: new Date('2025-01-03 04:20'),
-        arrivalTime: new Date('2025-01-03 11:30'),
-        onBlockTime: new Date('2025-01-03 11:45'),
+        offBlockTime: new Date('2026-01-03 04:00'),
+        takeoffTime: new Date('2026-01-03 04:20'),
+        arrivalTime: new Date('2026-01-03 11:30'),
+        onBlockTime: new Date('2026-01-03 11:45'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-03 04:00'),
-        takeoffTime: new Date('2025-01-03 04:20'),
-        arrivalTime: new Date('2025-01-03 11:30'),
-        onBlockTime: new Date('2025-01-03 11:45'),
+        offBlockTime: new Date('2026-01-03 04:00'),
+        takeoffTime: new Date('2026-01-03 04:20'),
+        arrivalTime: new Date('2026-01-03 11:30'),
+        onBlockTime: new Date('2026-01-03 11:45'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-03 04:00'),
-        takeoffTime: new Date('2025-01-03 04:20'),
-        arrivalTime: new Date('2025-01-03 11:30'),
-        onBlockTime: new Date('2025-01-03 11:45'),
+        offBlockTime: new Date('2026-01-03 04:00'),
+        takeoffTime: new Date('2026-01-03 04:20'),
+        arrivalTime: new Date('2026-01-03 11:30'),
+        onBlockTime: new Date('2026-01-03 11:45'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -4585,7 +4585,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
       },
       final: null,
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isEtops: true,
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
@@ -4670,7 +4670,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '2b2cecc3-6af9-4335-9029-873c6da142c5',
@@ -4679,7 +4679,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: '8505951b-9fdd-4262-8460-248039f8e7cd',
@@ -4688,7 +4688,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: 'c8f5dd49-03f7-4656-8976-8907175c0017',
@@ -4697,7 +4697,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'eaf13533-5aef-4451-aeea-82152deda67d',
@@ -4706,7 +4706,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '7d337c5c-6a9b-4d6c-bd87-319706ea55d4',
@@ -4715,7 +4715,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: '30e6a5bb-8945-44ca-b6dc-537155c24287',
@@ -4724,7 +4724,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: '0c1703d9-af9b-49f7-9a7a-26ff6cd53e36',
@@ -4733,7 +4733,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: '8fa22b88-71db-40c9-90ed-0525d35c4af2',
@@ -4742,7 +4742,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.ArrivalWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:10'),
+        createdAt: new Date('2026-01-01 16:10'),
       },
       {
         id: '9fb04dc3-062b-4f68-a2f3-a35a5e76e272',
@@ -4751,7 +4751,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OnBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:28'),
+        createdAt: new Date('2026-01-01 16:28'),
       },
       {
         id: 'bd5ae37a-2efe-4ca9-83c9-6ed6e9218fad',
@@ -4760,7 +4760,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:30'),
+        createdAt: new Date('2026-01-01 16:30'),
       },
       {
         id: '6391d61d-988a-43c2-abd0-49a9f6aa25a5',
@@ -4769,7 +4769,7 @@ async function loadDLH43(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffboardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 16:50'),
+        createdAt: new Date('2026-01-01 16:50'),
       },
     ],
   });
@@ -4798,20 +4798,20 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa,
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 16:00'),
+        onBlockTime: new Date('2026-01-01 16:18'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 15:50'),
+        onBlockTime: new Date('2026-01-01 16:08'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
         arrivalTime: null,
         onBlockTime: null,
       },
@@ -4870,12 +4870,12 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     isPathAvailable: true,
     positionReports: [
       {
         callsign: 'DLH102',
-        date: '2025-01-01T13:25:00.000Z',
+        date: '2026-01-01T13:25:00.000Z',
         latitude: 40.6398,
         longitude: -73.7789,
         altitude: 0,
@@ -4890,7 +4890,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH102',
-        date: '2025-01-01T13:55:00.000Z',
+        date: '2026-01-01T13:55:00.000Z',
         latitude: 42.8,
         longitude: -70.1,
         altitude: 22000,
@@ -4905,7 +4905,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH102',
-        date: '2025-01-01T14:40:00.000Z',
+        date: '2026-01-01T14:40:00.000Z',
         latitude: 45.6,
         longitude: -62.5,
         altitude: 36000,
@@ -4920,7 +4920,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH102',
-        date: '2025-01-01T15:40:00.000Z',
+        date: '2026-01-01T15:40:00.000Z',
         latitude: 49.0,
         longitude: -52.0,
         altitude: 38000,
@@ -4935,7 +4935,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
       },
       {
         callsign: 'DLH102',
-        date: '2025-01-01T16:40:00.000Z',
+        date: '2026-01-01T16:40:00.000Z',
         latitude: 52.5,
         longitude: -38.0,
         altitude: 38000,
@@ -5029,8 +5029,8 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
       notifySecurityOnGround: false,
       notifyFirefightersOnGround: false,
       notifyMedicalOnGround: true,
-      decisionTime: new Date('2025-01-01 14:25'),
-      estimatedTimeAtDestination: new Date('2025-01-01 15:25'),
+      decisionTime: new Date('2026-01-01 14:25'),
+      estimatedTimeAtDestination: new Date('2026-01-01 15:25'),
     },
   });
 
@@ -5042,7 +5042,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:00'),
+        createdAt: new Date('2026-01-01 11:00'),
       },
       {
         id: '107a860c-31a5-4cdb-ad1d-851ed14617a2',
@@ -5050,7 +5050,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:05'),
+        createdAt: new Date('2026-01-01 11:05'),
       },
       {
         id: 'e0014752-86ce-449c-8c98-27b7c8bf9fc3',
@@ -5058,7 +5058,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 11:10'),
+        createdAt: new Date('2026-01-01 11:10'),
       },
       {
         id: '5d9a0c3e-f4fe-4fa8-94fe-7575aa15da39',
@@ -5066,7 +5066,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:00'),
+        createdAt: new Date('2026-01-01 12:00'),
       },
       {
         id: 'd1b7d1b2-6e4c-43a0-9dd0-986489d5a13a',
@@ -5074,7 +5074,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 12:40'),
+        createdAt: new Date('2026-01-01 12:40'),
       },
       {
         id: '5927dc9d-64d6-4fd3-8f7e-5820945bbcb3',
@@ -5082,7 +5082,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:05'),
+        createdAt: new Date('2026-01-01 13:05'),
       },
       {
         id: '2524ad4e-2335-4d22-bed4-42b795f37d02',
@@ -5090,7 +5090,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:10'),
+        createdAt: new Date('2026-01-01 13:10'),
       },
       {
         id: 'b8e8a0cb-16cc-4c37-adb8-46ab55e179d0',
@@ -5098,7 +5098,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:25'),
+        createdAt: new Date('2026-01-01 13:25'),
       },
       {
         id: 'b718767f-4fdc-40d8-b1f4-1e5686f6b71f',
@@ -5106,7 +5106,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.LivePositionReceived,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 13:26'),
+        createdAt: new Date('2026-01-01 13:26'),
       },
       {
         id: 'c11c0944-e7c3-44de-8713-96210871d421',
@@ -5114,7 +5114,7 @@ async function loadDLH102(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.DiversionWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 14:25'),
+        createdAt: new Date('2026-01-01 14:25'),
       },
     ],
   });
@@ -5143,10 +5143,10 @@ async function loadDLH81(tx: Prisma.TransactionClient): Promise<void> {
     source: FlightSource.Simbrief,
     ...toTimesheetData({
       scheduled: {
-        arrivalTime: new Date('2025-01-05T17:10:00.000Z'),
-        onBlockTime: new Date('2025-01-05T17:25:00.000Z'),
-        takeoffTime: new Date('2025-01-05T09:20:00.000Z'),
-        offBlockTime: new Date('2025-01-05T09:00:00.000Z'),
+        arrivalTime: new Date('2026-01-05T17:10:00.000Z'),
+        onBlockTime: new Date('2026-01-05T17:25:00.000Z'),
+        takeoffTime: new Date('2026-01-05T09:20:00.000Z'),
+        offBlockTime: new Date('2026-01-05T09:00:00.000Z'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -5174,7 +5174,7 @@ async function loadDLH81(tx: Prisma.TransactionClient): Promise<void> {
         zeroFuelWeight: 206.5,
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     simbriefRequestId: 162595443,
@@ -5239,10 +5239,10 @@ async function loadDLH82(tx: Prisma.TransactionClient): Promise<void> {
     source: FlightSource.Simbrief,
     ...toTimesheetData({
       scheduled: {
-        arrivalTime: new Date('2025-01-06T17:10:00.000Z'),
-        onBlockTime: new Date('2025-01-06T17:25:00.000Z'),
-        takeoffTime: new Date('2025-01-06T09:20:00.000Z'),
-        offBlockTime: new Date('2025-01-06T09:00:00.000Z'),
+        arrivalTime: new Date('2026-01-06T17:10:00.000Z'),
+        onBlockTime: new Date('2026-01-06T17:25:00.000Z'),
+        takeoffTime: new Date('2026-01-06T09:20:00.000Z'),
+        offBlockTime: new Date('2026-01-06T09:00:00.000Z'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -5296,7 +5296,7 @@ async function loadDLH82(tx: Prisma.TransactionClient): Promise<void> {
         },
       ],
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     simbriefRequestId: 162595444,
@@ -5338,16 +5338,16 @@ async function loadDLH83(tx: Prisma.TransactionClient): Promise<void> {
     source: FlightSource.Simbrief,
     ...toTimesheetData({
       scheduled: {
-        arrivalTime: new Date('2025-01-07T17:10:00.000Z'),
-        onBlockTime: new Date('2025-01-07T17:25:00.000Z'),
-        takeoffTime: new Date('2025-01-07T09:20:00.000Z'),
-        offBlockTime: new Date('2025-01-07T09:00:00.000Z'),
+        arrivalTime: new Date('2026-01-07T17:10:00.000Z'),
+        onBlockTime: new Date('2026-01-07T17:25:00.000Z'),
+        takeoffTime: new Date('2026-01-07T09:20:00.000Z'),
+        offBlockTime: new Date('2026-01-07T09:00:00.000Z'),
       },
       estimated: {
-        arrivalTime: new Date('2025-01-07T17:10:00.000Z'),
-        onBlockTime: new Date('2025-01-07T17:25:00.000Z'),
-        takeoffTime: new Date('2025-01-07T09:20:00.000Z'),
-        offBlockTime: new Date('2025-01-07T09:00:00.000Z'),
+        arrivalTime: new Date('2026-01-07T17:10:00.000Z'),
+        onBlockTime: new Date('2026-01-07T17:25:00.000Z'),
+        takeoffTime: new Date('2026-01-07T09:20:00.000Z'),
+        offBlockTime: new Date('2026-01-07T09:00:00.000Z'),
       },
     }),
     loadsheets: seedLoadsheets({
@@ -5376,7 +5376,7 @@ async function loadDLH83(tx: Prisma.TransactionClient): Promise<void> {
         zeroFuelWeight: 204.435,
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     simbriefRequestId: 162595445,
@@ -5442,20 +5442,20 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 09:30'),
-        takeoffTime: new Date('2025-01-01 09:50'),
-        arrivalTime: new Date('2025-01-01 11:05'),
-        onBlockTime: new Date('2025-01-01 11:15'),
+        offBlockTime: new Date('2026-01-01 09:30'),
+        takeoffTime: new Date('2026-01-01 09:50'),
+        arrivalTime: new Date('2026-01-01 11:05'),
+        onBlockTime: new Date('2026-01-01 11:15'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 09:30'),
-        takeoffTime: new Date('2025-01-01 09:50'),
-        arrivalTime: new Date('2025-01-01 11:00'),
-        onBlockTime: new Date('2025-01-01 11:10'),
+        offBlockTime: new Date('2026-01-01 09:30'),
+        takeoffTime: new Date('2026-01-01 09:50'),
+        arrivalTime: new Date('2026-01-01 11:00'),
+        onBlockTime: new Date('2026-01-01 11:10'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 09:35'),
-        takeoffTime: new Date('2025-01-01 09:55'),
+        offBlockTime: new Date('2026-01-01 09:35'),
+        takeoffTime: new Date('2026-01-01 09:55'),
         arrivalTime: null,
         onBlockTime: null,
       },
@@ -5515,7 +5515,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
       },
     }),
     source: FlightSource.Manual,
-    createdAt: new Date('2025-01-01 06:00'),
+    createdAt: new Date('2026-01-01 06:00'),
     greatCircleDistance: 480,
     totalFuelBurned: 5800,
     route: null,
@@ -5555,7 +5555,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasCreated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 06:00'),
+        createdAt: new Date('2026-01-01 06:00'),
       },
       {
         id: '5a3e7811-2c4f-4a82-9c11-7b9e2d8c4f50',
@@ -5563,7 +5563,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PreliminaryLoadsheetWasUpdated,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 06:10'),
+        createdAt: new Date('2026-01-01 06:10'),
       },
       {
         id: '7e1f9b22-3d5a-4b81-9e2d-1c4f8a3e6b71',
@@ -5571,7 +5571,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.FlightWasReleased,
         scope: FlightEventScope.operations,
-        createdAt: new Date('2025-01-01 06:20'),
+        createdAt: new Date('2026-01-01 06:20'),
       },
       {
         id: '9c2a4d33-5e6b-4f72-9a3c-2d5e7b8c1f43',
@@ -5579,7 +5579,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.PilotCheckedIn,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 08:30'),
+        createdAt: new Date('2026-01-01 08:30'),
       },
       {
         id: '0d3b5e44-6f7c-4083-9b4d-3e6f8c9d2a54',
@@ -5587,7 +5587,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasStarted,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 09:00'),
+        createdAt: new Date('2026-01-01 09:00'),
       },
       {
         id: '1e4c6f55-708d-4194-9c5e-4f709d0e3b65',
@@ -5595,7 +5595,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.BoardingWasFinished,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 09:25'),
+        createdAt: new Date('2026-01-01 09:25'),
       },
       {
         id: '2f5d7066-819e-42a5-8d6f-50819e1f4c76',
@@ -5603,7 +5603,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.OffBlockWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 09:35'),
+        createdAt: new Date('2026-01-01 09:35'),
       },
       {
         id: '3a6e8177-92af-43b6-8e70-619a2f0d5d87',
@@ -5611,7 +5611,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.TakeoffWasReported,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 09:55'),
+        createdAt: new Date('2026-01-01 09:55'),
       },
       {
         id: '4b7f9288-a3b0-44c7-8f81-72ab3a1e6e98',
@@ -5619,7 +5619,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
         flightId: flight.id,
         type: FlightEventType.EmergencyWasDeclared,
         scope: FlightEventScope.user,
-        createdAt: new Date('2025-01-01 10:15'),
+        createdAt: new Date('2026-01-01 10:15'),
       },
     ],
   });
@@ -5640,7 +5640,7 @@ async function loadDLH880(tx: Prisma.TransactionClient): Promise<void> {
       dangerousGoodsOnBoard: [DangerousGoodsClass.Class9Miscellaneous],
       freeText:
         'Generator #1 offline, running on APU and remaining bus. Requesting priority handling, divert intended.',
-      declarationTime: new Date('2025-01-01 10:15'),
+      declarationTime: new Date('2026-01-01 10:15'),
     },
   });
 }
@@ -5668,21 +5668,21 @@ async function loadDLH103(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 16:00'),
-        onBlockTime: new Date('2025-01-01 16:18'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 16:00'),
+        onBlockTime: new Date('2026-01-01 16:18'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 15:50'),
-        onBlockTime: new Date('2025-01-01 16:08'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 15:50'),
+        onBlockTime: new Date('2026-01-01 16:08'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:10'),
-        takeoffTime: new Date('2025-01-01 13:25'),
-        arrivalTime: new Date('2025-01-01 15:40'),
+        offBlockTime: new Date('2026-01-01 13:10'),
+        takeoffTime: new Date('2026-01-01 13:25'),
+        arrivalTime: new Date('2026-01-01 15:40'),
         onBlockTime: null,
       },
     }),
@@ -5740,7 +5740,7 @@ async function loadDLH103(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 3350,
     totalFuelBurned: 156000,
     route: null,
@@ -5797,8 +5797,8 @@ async function loadDLH103(tx: Prisma.TransactionClient): Promise<void> {
       notifySecurityOnGround: false,
       notifyFirefightersOnGround: false,
       notifyMedicalOnGround: false,
-      decisionTime: new Date('2025-01-01 14:25'),
-      estimatedTimeAtDestination: new Date('2025-01-01 15:30'),
+      decisionTime: new Date('2026-01-01 14:25'),
+      estimatedTimeAtDestination: new Date('2026-01-01 15:30'),
     },
   });
 }
@@ -5821,21 +5821,21 @@ async function loadDLH500(tx: Prisma.TransactionClient): Promise<void> {
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d',
     ...toTimesheetData({
       scheduled: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 14:00'),
-        onBlockTime: new Date('2025-01-01 14:12'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:00'),
+        onBlockTime: new Date('2026-01-01 14:12'),
       },
       estimated: {
-        offBlockTime: new Date('2025-01-01 13:00'),
-        takeoffTime: new Date('2025-01-01 13:15'),
-        arrivalTime: new Date('2025-01-01 14:00'),
-        onBlockTime: new Date('2025-01-01 14:12'),
+        offBlockTime: new Date('2026-01-01 13:00'),
+        takeoffTime: new Date('2026-01-01 13:15'),
+        arrivalTime: new Date('2026-01-01 14:00'),
+        onBlockTime: new Date('2026-01-01 14:12'),
       },
       actual: {
-        offBlockTime: new Date('2025-01-01 13:05'),
-        takeoffTime: new Date('2025-01-01 13:20'),
-        arrivalTime: new Date('2025-01-01 14:02'),
+        offBlockTime: new Date('2026-01-01 13:05'),
+        takeoffTime: new Date('2026-01-01 13:20'),
+        arrivalTime: new Date('2026-01-01 14:02'),
         onBlockTime: null,
       },
     }),
@@ -5893,7 +5893,7 @@ async function loadDLH500(tx: Prisma.TransactionClient): Promise<void> {
         },
       },
     }),
-    createdAt: new Date('2025-01-01 00:00'),
+    createdAt: new Date('2026-01-01 00:00'),
     greatCircleDistance: 480,
     totalFuelBurned: 12000,
     route: null,
@@ -5940,11 +5940,11 @@ async function loadRecentCarrierFlights(
       aircraftId: '5f8902a2-f2b2-46e9-8630-365f78ee6ff3',
       departureAirportId: 'f35c094a-bec5-4803-be32-bd80a14b441a',
       arrivalAirportId: '616cbdd7-ccfc-4687-8cf6-1e7236435046',
-      createdAt: new Date('2025-02-05 08:15'),
-      offBlockTime: new Date('2025-02-06 12:35'),
-      takeoffTime: new Date('2025-02-06 12:50'),
-      arrivalTime: new Date('2025-02-06 14:10'),
-      onBlockTime: new Date('2025-02-06 14:20'),
+      createdAt: new Date('2026-02-05 08:15'),
+      offBlockTime: new Date('2026-02-06 12:35'),
+      takeoffTime: new Date('2026-02-06 12:50'),
+      arrivalTime: new Date('2026-02-06 14:10'),
+      onBlockTime: new Date('2026-02-06 14:20'),
       greatCircleDistance: 490,
       totalFuelBurned: 11400,
       eventId: 'e76904c4-f176-4129-b239-9df6ae855a5c',
@@ -5957,11 +5957,11 @@ async function loadRecentCarrierFlights(
       aircraftId: 'fa413d0a-09f9-4864-9ee6-a5a008764765',
       departureAirportId: '523b2d2f-9b60-405a-bd5a-90eed1b58e9a',
       arrivalAirportId: 'f35c094a-bec5-4803-be32-bd80a14b441a',
-      createdAt: new Date('2025-02-04 08:15'),
-      offBlockTime: new Date('2025-02-05 09:10'),
-      takeoffTime: new Date('2025-02-05 09:28'),
-      arrivalTime: new Date('2025-02-05 12:22'),
-      onBlockTime: new Date('2025-02-05 12:35'),
+      createdAt: new Date('2026-02-04 08:15'),
+      offBlockTime: new Date('2026-02-05 09:10'),
+      takeoffTime: new Date('2026-02-05 09:28'),
+      arrivalTime: new Date('2026-02-05 12:22'),
+      onBlockTime: new Date('2026-02-05 12:35'),
       greatCircleDistance: 1450,
       totalFuelBurned: 18600,
       eventId: '6f2bee9e-a3bd-4f83-96fa-73f49835fd54',
@@ -5975,11 +5975,11 @@ async function loadRecentCarrierFlights(
       aircraftId: '54ae8e50-8712-40be-b4af-d22633b0956f',
       departureAirportId: '79b8f884-f67d-4585-b540-36b0be7f551e',
       arrivalAirportId: 'f35c094a-bec5-4803-be32-bd80a14b441a',
-      createdAt: new Date('2025-02-04 08:15'),
-      offBlockTime: new Date('2025-02-05 09:30'),
-      takeoffTime: new Date('2025-02-05 09:45'),
-      arrivalTime: new Date('2025-02-05 10:35'),
-      onBlockTime: new Date('2025-02-05 10:45'),
+      createdAt: new Date('2026-02-04 08:15'),
+      offBlockTime: new Date('2026-02-05 09:30'),
+      takeoffTime: new Date('2026-02-05 09:45'),
+      arrivalTime: new Date('2026-02-05 10:35'),
+      onBlockTime: new Date('2026-02-05 10:45'),
       greatCircleDistance: 240,
       totalFuelBurned: 6800,
       eventId: 'f9e74276-efef-4cf3-ab49-544fdbf5fc4b',

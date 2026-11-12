@@ -50,8 +50,8 @@ export async function loadDeviceAuthorizations(
         deviceName: 'SIM-PC',
         status: 'pending',
         userId: null,
-        createdAt: new Date('2025-01-01T10:00:00.000Z'),
-        expiresAt: new Date('2025-01-01T10:10:00.000Z'),
+        createdAt: new Date('2026-01-01T10:00:00.000Z'),
+        expiresAt: new Date('2026-01-01T10:10:00.000Z'),
       },
     ],
   });
