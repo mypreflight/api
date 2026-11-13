@@ -13,6 +13,7 @@ import {
 
 const SYSTEMS: Record<OceanicTracksSystem, OceanicTrackSystem> = {
   pacots: OceanicTrackSystem.Pacots,
+  nat: OceanicTrackSystem.Nat,
 };
 
 const DIRECTIONS: Record<OceanicTracksDirection, TrackDirection> = {

@@ -85,6 +85,51 @@ describe('GetCurrentOceanicTracksHandler', () => {
     });
   });
 
+  it('maps a North Atlantic track with its levels', async () => {
+    const handler = new GetCurrentOceanicTracksHandler(
+      fakeClient(
+        jest.fn().mockResolvedValue({
+          ...trackSet,
+          tracks: [
+            {
+              system: 'nat',
+              identifier: 'A',
+              direction: 'west',
+              issuingAuthority: 'EGGX',
+              notamNumber: 'EGGX1112/26',
+              validFrom: '2026-11-12T11:30:00.000Z',
+              validTo: '2026-11-12T19:00:00.000Z',
+              route: 'DOGAL 55/20 56/30',
+              levels: [340, 350, 360],
+              fixes: [
+                { ident: 'DOGAL', latitude: 54, longitude: -15 },
+                { ident: '55/20', latitude: 55, longitude: -20 },
+                { ident: '56/30', latitude: 56, longitude: -30 },
+              ],
+              unresolvedFixes: [],
+              remarks: '1. TMI IS 316.',
+              message: 'NAT-1/2 TRACKS FLS 340/400 INCLUSIVE',
+            },
+          ],
+        } satisfies OceanicTracksSet),
+      ),
+      fakeCache() as unknown as Cache,
+    );
+
+    const { tracks } = await handler.execute();
+
+    expect(tracks).toEqual([
+      expect.objectContaining({
+        system: OceanicTrackSystem.Nat,
+        identifier: 'A',
+        direction: TrackDirection.West,
+        issuingAuthority: 'EGGX',
+        levels: [340, 350, 360],
+        validFrom: new Date('2026-11-12T11:30:00.000Z'),
+      }),
+    ]);
+  });
+
   it('serves the kept tracks without asking the function again', async () => {
     const listTracks = jest.fn();
     const handler = new GetCurrentOceanicTracksHandler(
