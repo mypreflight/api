@@ -864,7 +864,7 @@ Feature: Update own profile
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
+          "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
           "publishedAt": null
         }

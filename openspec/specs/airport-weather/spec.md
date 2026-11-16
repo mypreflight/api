@@ -51,7 +51,10 @@ missing.
 ### Requirement: Weather storage semantics
 
 The system SHALL store at most one report per combination of airport, source and
-information type, holding the report content exactly as that source returned it. A refresh
+information type, holding the report content as that source returned it, less a leading
+`METAR` or `TAF` token, which only repeats the information type. A `SPECI` token, and an
+`AMD` or `COR` marker after the type, SHALL be kept, because they say something the
+information type does not. A refresh
 SHALL update the existing report in place rather than adding a second one, and SHALL record
 the time the system fetched the data as the report's last-fetched time, not any observation
 time parsed from the content. A source that states when it published or received a report
@@ -75,6 +78,16 @@ retained when an airport stops being monitored.
 
 - **WHEN** both sources publish a METAR for the same airport and the two texts differ
 - **THEN** the system stores and returns each source's text unchanged, without reformatting either to match the other
+
+#### Scenario: The report type is not repeated in the content
+
+- **WHEN** aviationweather.gov returns `METAR KBOS 161654Z 30008KT 10SM FEW050 10/M01 A3030` for a monitored airport
+- **THEN** the airport's `metar` report from that source holds `KBOS 161654Z 30008KT 10SM FEW050 10/M01 A3030`
+
+#### Scenario: An amended TAF keeps its marker
+
+- **WHEN** a source returns `TAF AMD KBOS 161456Z 1615/1718 30010KT P6SM FEW050`
+- **THEN** the stored `taf` report holds `AMD KBOS 161456Z 1615/1718 30010KT P6SM FEW050`
 
 #### Scenario: Reports survive the end of monitoring
 
