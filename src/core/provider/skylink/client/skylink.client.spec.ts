@@ -2,18 +2,19 @@ import { SkyLinkClient } from './skylink.client';
 import {
   MultipleSkylinkAirportsFoundError,
   SkylinkAirportNotFoundError,
+  SkylinkUnavailableError,
   SkylinkUnknownCountryError,
 } from './skylink.error';
 
 const BASE_URL = 'https://skylink.example';
 const API_KEY = 'shared-key';
 
-function airport(country: string) {
+function airport(country: string, city = 'London') {
   return {
     icao: 'EGLL',
     iata: 'LHR',
     name: 'London Heathrow Airport',
-    city: 'London',
+    city,
     country,
     timezone: 'Europe/London',
   };
@@ -25,6 +26,7 @@ function jsonResponse(status: number, body: unknown): Response {
     status,
     statusText: 'OK',
     json: () => Promise.resolve(body),
+    text: () => Promise.resolve(JSON.stringify(body)),
   } as Response;
 }
 
@@ -112,6 +114,38 @@ describe('SkyLinkClient', () => {
 
     await expect(client.getAirportByIcaoCode('EGLL')).rejects.toThrow(
       MultipleSkylinkAirportsFoundError,
+    );
+  });
+
+  it('keeps only the city when the provider adds its region', async () => {
+    fetchMock = jest
+      .spyOn(global, 'fetch')
+      .mockResolvedValue(
+        jsonResponse(200, [airport('GB', 'Manchester, Greater Manchester')]),
+      );
+
+    const found = await client.getAirportByIcaoCode('EGCC');
+
+    expect(found.city).toBe('Manchester');
+  });
+
+  it('reports a refused request as the provider being unavailable', async () => {
+    fetchMock = jest
+      .spyOn(global, 'fetch')
+      .mockResolvedValue(jsonResponse(400, { error: 'Invalid API Key.' }));
+
+    await expect(client.getAirportByIcaoCode('EGCC')).rejects.toThrow(
+      SkylinkUnavailableError,
+    );
+  });
+
+  it('reports an unreachable provider as unavailable', async () => {
+    fetchMock = jest
+      .spyOn(global, 'fetch')
+      .mockRejectedValue(new TypeError('fetch failed'));
+
+    await expect(client.getAirportByIcaoCode('EGCC')).rejects.toThrow(
+      SkylinkUnavailableError,
     );
   });
 });
