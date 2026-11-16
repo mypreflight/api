@@ -1,0 +1,106 @@
+{
+  "general": {
+    "version": 3,
+    "reload": 1,
+    "update": "20261116161914",
+    "update_timestamp": "2026-11-16T16:19:14.0773471Z",
+    "connected_clients": 4,
+    "unique_users": 4
+  },
+  "pilots": [],
+  "controllers": [],
+  "atis": [
+    {
+      "cid": 1000001,
+      "name": "Test Controller",
+      "callsign": "EDDF_A_ATIS",
+      "frequency": "118.030",
+      "facility": 4,
+      "rating": 3,
+      "server": "TEST",
+      "visual_range": 50,
+      "atis_code": "T",
+      "text_atis": [
+        "ARR-ATIS EDDF T METAR 161550",
+        "EXPECT DEPENDENT PARALLEL ILS Y APCH RWY 25R OR ILS APCH RWY 25L",
+        "TRL 70",
+        "22006KT 9999 SCT037 BKN047 -SHRA T10 DP05 QNH1006",
+        "TREND TEMPO SHRA BKN025CB"
+      ],
+      "last_updated": "2026-11-16T16:19:05.7342242Z",
+      "logon_time": "2026-11-16T08:00:00.0000000Z"
+    },
+    {
+      "cid": 1000002,
+      "name": "Test Controller",
+      "callsign": "EDDF_D_ATIS",
+      "frequency": "118.730",
+      "facility": 4,
+      "rating": 3,
+      "server": "TEST",
+      "visual_range": 50,
+      "atis_code": "R",
+      "text_atis": [
+        "DEP-ATIS EDDF R METAR 161550",
+        "RWY 25C 18",
+        "TRL 70",
+        "22006KT 9999 SCT037 BKN047 -SHRA T10 DP05 QNH1006"
+      ],
+      "last_updated": "2026-11-16T16:18:41.1200000Z",
+      "logon_time": "2026-11-16T08:00:00.0000000Z"
+    },
+    {
+      "cid": 1000003,
+      "name": "Test Controller",
+      "callsign": "KJFK_ATIS",
+      "frequency": "128.725",
+      "facility": 4,
+      "rating": 3,
+      "server": "TEST",
+      "visual_range": 50,
+      "atis_code": "H",
+      "text_atis": [
+        "KJFK ATIS INFO H 1551Z.",
+        "32009KT 10SM FEW038 11/01 A3039.",
+        "ILS RWY 31R APPROACH IN USE. DEPARTING RWY 31L.",
+        "ADVISE ON INITIAL CONTACT YOU HAVE INFO H."
+      ],
+      "last_updated": "2026-11-16T16:17:12.0000000Z",
+      "logon_time": "2026-11-16T08:00:00.0000000Z"
+    },
+    {
+      "cid": 1000004,
+      "name": "Test Controller",
+      "callsign": "EGKK_ATIS",
+      "frequency": "136.525",
+      "facility": 4,
+      "rating": 3,
+      "server": "TEST",
+      "visual_range": 50,
+      "atis_code": "T",
+      "text_atis": ["EGKK COM ATIS T.", "1550Z.", "RWY IN USE 26L."],
+      "last_updated": "2026-11-16T16:19:02.0040938Z",
+      "logon_time": "2026-11-16T08:00:00.0000000Z"
+    },
+    {
+      "cid": 1000005,
+      "name": "Test Controller",
+      "callsign": "EPWA_ATIS",
+      "frequency": "120.450",
+      "facility": 4,
+      "rating": 3,
+      "server": "TEST",
+      "visual_range": 50,
+      "atis_code": "A",
+      "text_atis": null,
+      "last_updated": "2026-11-16T16:10:00.0000000Z",
+      "logon_time": "2026-11-16T08:00:00.0000000Z"
+    }
+  ],
+  "servers": [],
+  "prefiles": [],
+  "facilities": [],
+  "ratings": [],
+  "pilot_ratings": [],
+  "military_ratings": []
+}

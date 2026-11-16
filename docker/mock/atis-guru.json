@@ -1,0 +1,104 @@
+{
+  "uuid": "abb7ff17-616e-47b9-8c93-d7a5a88f9526",
+  "lastMigration": 33,
+  "name": "atis.guru",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 1092,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "c9fcec0e-49b4-40d4-b88a-1c67aad3a884",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "atis/:icao",
+      "responses": [
+        {
+          "uuid": "b42480d6-5a9e-4e6b-95e3-8ad2b11d5cba",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "icao=KPHL",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=utf-8"
+            }
+          ],
+          "bodyType": "FILE",
+          "filePath": "atis-guru/KPHL.html",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "params",
+              "modifier": "icao",
+              "value": "KPHL",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "8a2857a6-80a6-4ffa-867c-cd9e53874a6a",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "No ATIS",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "text/html; charset=utf-8"
+            }
+          ],
+          "bodyType": "FILE",
+          "filePath": "atis-guru/no-atis.html",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "c9fcec0e-49b4-40d4-b88a-1c67aad3a884"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": false,
+  "headers": [],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
+}

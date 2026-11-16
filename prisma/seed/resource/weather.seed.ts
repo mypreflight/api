@@ -10,6 +10,7 @@ const BOSTON = 'c03a79fb-c5ae-46c3-95fe-f3b5dc7b85f3';
 
 const AVIATION_WEATHER_GOV_FETCHED_AT = new Date('2026-07-08T12:00:00.000Z');
 const SAY_INTENTIONS_FETCHED_AT = new Date('2026-07-08T11:30:00.000Z');
+const ATIS_FETCHED_AT = new Date('2026-07-08T12:05:00.000Z');
 
 export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
   const weather: Prisma.AirportWeatherCreateManyInput[] = [
@@ -113,6 +114,46 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       informationType: WeatherInformationType.Taf,
       content: 'TAF KBOS 100820Z 1009/1109 21010KT P6SM FEW040',
       lastFetched: SAY_INTENTIONS_FETCHED_AT,
+    },
+    {
+      id: '5d0c8d8e-2b8f-4a55-9a51-0d3c7f1e6a21',
+      airportId: BOSTON,
+      source: WeatherSource.FaaDatis,
+      informationType: WeatherInformationType.Atis,
+      content:
+        'BOS ATIS INFO E 1154Z. 21009KT 10SM FEW040 24/16 A3000 (THREE ZERO ZERO ZERO). ILS RY 4R APCH IN USE. DEPG RY 9. ...ADVS YOU HAVE INFO E.',
+      lastFetched: ATIS_FETCHED_AT,
+      publishedAt: new Date('2026-07-08T11:54:00.000Z'),
+    },
+    {
+      id: 'a7e3c1b2-6f4d-4e8a-b1c9-3d2f5e7a9b04',
+      airportId: FRANKFURT,
+      source: WeatherSource.AtisGuru,
+      informationType: WeatherInformationType.AtisArrival,
+      content:
+        'EDDF ARR ATIS K\n1150Z\nARR-ATIS EDDF K METAR 081150\nEXPECT INDEPENDENT PARALLEL ILS APCH RWY 25R OR RWY 25L\nTRL 70\nQNH1018\nEND OF ATIS K',
+      lastFetched: ATIS_FETCHED_AT,
+      publishedAt: new Date('2026-07-08T11:56:00.000Z'),
+    },
+    {
+      id: 'c4b9e2d1-8a7f-4c3e-9d6b-1f0e2a3c4d58',
+      airportId: FRANKFURT,
+      source: WeatherSource.AtisGuru,
+      informationType: WeatherInformationType.AtisDeparture,
+      content:
+        'EDDF DEP ATIS M\n1150Z -DEP-ATIS EDDF M METAR 081150\n\t-RWY 25C 18\n\t-TRL 70\n\t-QNH1018',
+      lastFetched: ATIS_FETCHED_AT,
+      publishedAt: new Date('2026-07-08T10:41:00.000Z'),
+    },
+    {
+      id: 'e8f1a2b3-c4d5-4e6f-8a9b-0c1d2e3f4a5b',
+      airportId: FRANKFURT,
+      source: WeatherSource.Vatsim,
+      informationType: WeatherInformationType.AtisArrival,
+      content:
+        'ARR-ATIS EDDF K METAR 081150\nEXPECT INDEPENDENT PARALLEL ILS APCH RWY 25R OR RWY 25L\nTRL 70\n24008KT 9999 FEW035 T22 DP12 QNH1018',
+      lastFetched: ATIS_FETCHED_AT,
+      publishedAt: new Date('2026-07-08T12:04:31.000Z'),
     },
   ];
 

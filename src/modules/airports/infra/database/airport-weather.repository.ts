@@ -12,6 +12,7 @@ const selectWeather = {
   informationType: true,
   content: true,
   lastFetched: true,
+  publishedAt: true,
 } as const satisfies Prisma.AirportWeatherSelect;
 
 export type AirportWeatherView = Prisma.AirportWeatherGetPayload<{
@@ -22,6 +23,7 @@ export type WeatherReport = {
   informationType: WeatherInformationType;
   content: string;
   lastFetched: Date;
+  publishedAt: Date | null;
 };
 
 @Injectable()
@@ -62,28 +64,55 @@ export class AirportWeatherRepository {
     }
 
     await this.prisma.$transaction(
-      reports.map((report) =>
-        this.prisma.airportWeather.upsert({
-          where: {
-            airportId_source_informationType: {
-              airportId,
-              source,
-              informationType: report.informationType,
-            },
-          },
-          create: {
-            airportId,
-            source,
-            informationType: report.informationType,
-            content: report.content,
-            lastFetched: report.lastFetched,
-          },
-          update: {
-            content: report.content,
-            lastFetched: report.lastFetched,
-          },
-        }),
-      ),
+      reports.map((report) => this.upsert(airportId, source, report)),
     );
+  }
+
+  async replaceReports(
+    airportId: string,
+    source: WeatherSource,
+    reports: WeatherReport[],
+  ): Promise<void> {
+    await this.prisma.$transaction([
+      this.prisma.airportWeather.deleteMany({
+        where: {
+          airportId,
+          source,
+          informationType: {
+            notIn: reports.map((report) => report.informationType),
+          },
+        },
+      }),
+      ...reports.map((report) => this.upsert(airportId, source, report)),
+    ]);
+  }
+
+  private upsert(
+    airportId: string,
+    source: WeatherSource,
+    report: WeatherReport,
+  ) {
+    return this.prisma.airportWeather.upsert({
+      where: {
+        airportId_source_informationType: {
+          airportId,
+          source,
+          informationType: report.informationType,
+        },
+      },
+      create: {
+        airportId,
+        source,
+        informationType: report.informationType,
+        content: report.content,
+        lastFetched: report.lastFetched,
+        publishedAt: report.publishedAt,
+      },
+      update: {
+        content: report.content,
+        lastFetched: report.lastFetched,
+        publishedAt: report.publishedAt,
+      },
+    });
   }
 }
