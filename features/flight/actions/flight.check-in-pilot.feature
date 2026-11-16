@@ -1162,35 +1162,48 @@ Feature: Check in pilot for flight
           "source": "aviation_weather_gov",
           "informationType": "metar",
           "content": "METAR KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "aviation_weather_gov",
           "informationType": "taf",
           "content": "TAF KBOS 081120Z 0812/0918 21010KT P6SM FEW040",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "atis",
           "content": "Logan airport, information Delta. 1054 Zulu. ILS runway 4 right approach in use. Departing runway 9. Wind 210 at 9. Visibility 10. Few 4000. Temperature 24, dewpoint 16. Altimeter 3000. Advise on initial contact you have information Delta.",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "metar",
           "content": "KBOS 101054Z 21009KT 10SM FEW040 24/16 A3000",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "taf",
           "content": "TAF KBOS 100820Z 1009/1109 21010KT P6SM FEW040",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
+        },
+        {
+          "id": "@uuid",
+          "source": "faa_datis",
+          "informationType": "atis",
+          "content": "BOS ATIS INFO C 1554Z. 32005KT 10SM FEW050 09/M01 A3031 (THREE ZERO THREE ONE). RNAV Z 33L, DEP 27. RY 33L ILS OTS. READBACK ALL HOLD SHORT INSTRCNS AND ASSIGNED ALTITUDES. ...ADVS YOU HAVE INFO C.",
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": "2026-11-16T15:54:00.000Z"
         }
       ]
       """
@@ -1204,35 +1217,56 @@ Feature: Check in pilot for flight
           "source": "aviation_weather_gov",
           "informationType": "metar",
           "content": "METAR KJFK 081151Z 18010KT 10SM FEW050 27/18 A2998 RMK AO2",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "aviation_weather_gov",
           "informationType": "taf",
           "content": "TAF KJFK 081120Z 0812/0918 18012KT P6SM FEW050 FM090000 21008KT P6SM SCT060",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "atis",
           "content": "Kennedy airport, information Bravo. 1051 Zulu. ILS runway 4 right approach in use. Departing runway 4 left. Wind 180 at 10. Visibility 10. Few 5000. Temperature 27, dewpoint 18. Altimeter 2998. Advise on initial contact you have information Bravo.",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "metar",
           "content": "KJFK 101051Z 18010KT 10SM FEW050 27/18 A2998 RMK AO2",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "taf",
           "content": "TAF KJFK 100820Z 1009/1109 18012KT P6SM FEW050 FM110000 21008KT P6SM SCT060",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
+        },
+        {
+          "id": "@uuid",
+          "source": "faa_datis",
+          "informationType": "atis",
+          "content": "JFK ATIS INFO H 2351Z. 32009KT 10SM FEW038 11/01 A3039 (THREE ZERO THREE NINER). APPROACH IN USE ILS RY 31R, VISUAL APCH RY 31L. DEPG RY 31L. READBACK ALL RWY ASSIGNMENTS AND HOLD SHORT INSTRUCTIONS. ...ADVS YOU HAVE INFO H.",
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": "2026-11-16T23:51:00.000Z"
+        },
+        {
+          "id": "@uuid",
+          "source": "vatsim",
+          "informationType": "atis",
+          "content": "KJFK ATIS INFO H 1551Z.\n32009KT 10SM FEW038 11/01 A3039.\nILS RWY 31R APPROACH IN USE. DEPARTING RWY 31L.\nADVISE ON INITIAL CONTACT YOU HAVE INFO H.",
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": "2026-11-16T16:17:12.000Z"
         }
       ]
       """
@@ -1260,15 +1294,75 @@ Feature: Check in pilot for flight
           "source": "say_intentions",
           "informationType": "atis",
           "content": "Philadelphia airport, information Yankee. 1054 Zulu. ILS runway 27 right approach in use. Departing runway 27 left. Wind 200 at 8. Visibility 10. Scattered 4500. Temperature 26, dewpoint 17. Altimeter 2999. Advise on initial contact you have information Yankee.",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         },
         {
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "metar",
           "content": "KPHL 101054Z 20008KT 10SM SCT045 26/17 A2999",
-          "lastFetched": "@date('within 1 minute from now')"
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": null
         }
       ]
+      """
+    And I set database to initial state
+
+  Scenario: Checking in stores the arrival and departure ATIS apart, keeping only recent atis.guru ATIS
+    Given I am signed in as "cabin crew"
+    When I send a "POST" request to "/api/v1/flight/23952e79-6b38-49ed-a1db-bd4d9b3cedab/check-in" with body:
+      """json
+      {
+        "arrivalTime": "2026-01-01T14:03:00.000Z",
+        "onBlockTime": "2026-01-01T14:21:00.000Z",
+        "takeoffTime": "2026-01-01T13:15:00.000Z",
+        "offBlockTime": "2026-01-01T13:00:00.000Z"
+      }
+      """
+    Then the response status should be 204
+    When I send a "GET" request to "/api/v1/airport/e764251b-bb25-4e8b-8cc7-11b0397b4554/weather?source=faa_datis"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      [
+        {
+          "id": "@uuid",
+          "source": "faa_datis",
+          "informationType": "atis_arrival",
+          "content": "PHL ARR INFO H 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043 (THREE ZERO FOUR THREE). ARRIVALS EXPECT RNAV APCH RWY 27R, VISUAL APPROACH RWY 35. ...ADVS YOU HAVE INFO H.",
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": "2026-11-16T15:54:00.000Z"
+        },
+        {
+          "id": "@uuid",
+          "source": "faa_datis",
+          "informationType": "atis_departure",
+          "content": "PHL DEP INFO U 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043 (THREE ZERO FOUR THREE). DEPG 27L, RWY 35. ...ADVS YOU HAVE INFO U.",
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": "2026-11-16T15:54:00.000Z"
+        }
+      ]
+      """
+    When I send a "GET" request to "/api/v1/airport/e764251b-bb25-4e8b-8cc7-11b0397b4554/weather?source=atis_guru"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      [
+        {
+          "id": "@uuid",
+          "source": "atis_guru",
+          "informationType": "atis_arrival",
+          "content": "PHL ARR ATIS H\n1554Z\nPHL ARR INFO H 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043.\nARRIVALS EXPECT RNAV APCH RWY 27R, VISUAL APPROACH RWY 35.\n...ADVS YOU HAVE INFO H.",
+          "lastFetched": "@date('within 1 minute from now')",
+          "publishedAt": "@date('in the past')"
+        }
+      ]
+      """
+    When I send a "GET" request to "/api/v1/airport/e764251b-bb25-4e8b-8cc7-11b0397b4554/weather?source=vatsim"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      []
       """
     And I set database to initial state

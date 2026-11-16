@@ -15,8 +15,9 @@ preference.
 The system SHALL expose `GET /api/v1/airport/:airportId/weather` returning the weather
 reports stored for the airport identified by its UUID as a collection, and SHALL serve it
 without authentication. Each entry SHALL carry the report's identifier, the source that
-published it, the information type it is (`atis`, `metar` or `taf`), its content, and when
-the system last fetched it. The collection SHALL be ordered deterministically by source and
+published it, the information type it is (`atis`, `atis_arrival`, `atis_departure`, `metar`
+or `taf`), its content, when the system last fetched it, and when the source says it
+published or received the report, or null where the source does not say. The collection SHALL be ordered deterministically by source and
 then by information type, so that repeated reads of unchanged data return entries in the
 same order. An airport that holds no report matching the request SHALL yield an empty
 collection rather than an error; only an airport that does not exist SHALL be reported as
@@ -25,7 +26,7 @@ missing.
 #### Scenario: Weather exists for the airport
 
 - **WHEN** an unauthenticated client requests `GET /api/v1/airport/:airportId/weather` for an airport that has stored reports
-- **THEN** the system responds `200 OK` with one entry per stored report, each carrying its identifier, source, information type, content, and last-fetched time
+- **THEN** the system responds `200 OK` with one entry per stored report, each carrying its identifier, source, information type, content, last-fetched time and published time
 
 #### Scenario: No weather record for the airport
 
@@ -53,10 +54,12 @@ The system SHALL store at most one report per combination of airport, source and
 information type, holding the report content exactly as that source returned it. A refresh
 SHALL update the existing report in place rather than adding a second one, and SHALL record
 the time the system fetched the data as the report's last-fetched time, not any observation
-time parsed from the content. The system SHALL NOT normalise or reconcile content between
-sources: where two sources describe the same airport and information type, both are stored
-as received and both are readable. Reports SHALL be retained when an airport stops being
-monitored.
+time parsed from the content. A source that states when it published or received a report
+in a field of its own SHALL have that time stored as the report's published time; for
+aviationweather.gov and SayIntentions the published time SHALL be null. The system SHALL NOT
+normalise or reconcile content between sources: where two sources describe the same airport
+and information type, both are stored as received and both are readable. Reports SHALL be
+retained when an airport stops being monitored.
 
 #### Scenario: Timestamps reflect fetch time
 
@@ -81,7 +84,8 @@ monitored.
 ### Requirement: Filter retrieved weather by source
 
 The system SHALL accept an optional `source` filter on the weather read endpoint, taking
-one of `user_default`, `all`, `aviation_weather_gov` or `say_intentions`, and SHALL default
+one of `user_default`, `all`, `aviation_weather_gov`, `say_intentions`, `faa_datis`,
+`atis_guru` or `vatsim`, and SHALL default
 to `user_default` when the filter is absent. `user_default` SHALL resolve to the requesting
 user's default weather source; because the endpoint is public, a request that carries no
 identified user SHALL resolve `user_default` to `aviation_weather_gov`. `all` SHALL return
@@ -107,7 +111,7 @@ outside the accepted set SHALL be rejected as a validation error.
 #### Scenario: Every source is requested
 
 - **WHEN** a client reads an airport's weather with `source=all`
-- **THEN** the response contains the airport's reports from both sources
+- **THEN** the response contains the airport's reports from every source
 
 #### Scenario: One named source is requested
 
@@ -129,16 +133,16 @@ outside the accepted set SHALL be rejected as a validation error.
 The system SHALL collect METAR, TAF and ATIS from SayIntentions for every monitored
 airport, storing each as its own report attributed to that source. ATIS SHALL be stored as
 the spoken text the source publishes, without extracting the information letter or any
-other field out of it. Because aviationweather.gov publishes no ATIS, an ATIS report SHALL
-only ever be attributed to SayIntentions. The frequency list SayIntentions returns
-alongside the weather SHALL NOT be stored.
+other field out of it. aviationweather.gov publishes no ATIS, so no ATIS report SHALL ever
+be attributed to it. The frequency list SayIntentions returns alongside the weather SHALL
+NOT be stored.
 
 #### Scenario: All three information types are stored for a monitored airport
 
 - **WHEN** SayIntentions returns a METAR, a TAF and an ATIS for a monitored airport
 - **THEN** the airport holds three `say_intentions` reports, one of each information type, each carrying the text as published
 
-#### Scenario: ATIS is attributed only to SayIntentions
+#### Scenario: aviationweather.gov carries no ATIS
 
 - **WHEN** an airport's weather is read with `source=aviation_weather_gov`
 - **THEN** no ATIS report appears in the response
@@ -147,6 +151,42 @@ alongside the weather SHALL NOT be stored.
 
 - **WHEN** SayIntentions returns a METAR and an ATIS but no TAF for a monitored airport
 - **THEN** the airport holds the METAR and ATIS reports and no `say_intentions` TAF report, and any previously stored TAF from that source is left as it was
+
+### Requirement: Collect ATIS from FAA D-ATIS, atis.guru and VATSIM
+
+The system SHALL collect ATIS for every monitored airport from three further sources, each
+publishing ATIS only: FAA D-ATIS (the real-world digital ATIS of US airports), atis.guru (the
+real-world digital ATIS that aircraft requested over datalink, worldwide) and VATSIM (the
+ATIS of controllers online on that network). An airport that publishes one ATIS SHALL hold it
+as `atis`; an airport that publishes one ATIS for arrivals and one for departures SHALL hold
+them as `atis_arrival` and `atis_departure`. Each ATIS SHALL be stored as the text the source
+publishes, with the time the source states as its published time: the FAA issue time, the
+time an aircraft last requested the ATIS from atis.guru, the time VATSIM last updated it.
+After a successful fetch, these sources SHALL replace the airport's ATIS from that source, so
+that an ATIS the source no longer publishes, such as one from a VATSIM controller who has
+logged off, is removed. An atis.guru ATIS received more than 6 hours before the fetch, or
+without a time the system can read, SHALL NOT be stored. The system SHALL NOT store who
+requested an atis.guru ATIS, nor the identity of a VATSIM controller.
+
+#### Scenario: Arrival and departure ATIS are kept apart
+
+- **WHEN** a source publishes an arrival ATIS and a departure ATIS for a monitored airport
+- **THEN** the airport holds one `atis_arrival` and one `atis_departure` report from that source, each with its published time
+
+#### Scenario: A withdrawn ATIS is removed
+
+- **WHEN** a refresh succeeds and the source no longer publishes an ATIS it published before for a monitored airport
+- **THEN** that ATIS is no longer stored for the airport
+
+#### Scenario: An old atis.guru ATIS is not stored
+
+- **WHEN** atis.guru holds a departure ATIS for a monitored airport that an aircraft last requested more than 6 hours ago
+- **THEN** the airport holds no `atis_guru` departure ATIS
+
+#### Scenario: A failed fetch keeps the stored ATIS
+
+- **WHEN** a refresh cannot reach one of these sources or cannot read its answer
+- **THEN** the ATIS stored from that source is left as it was
 
 ### Requirement: Monitor a flight's airports on check-in
 
@@ -197,11 +237,13 @@ Airports that are not monitored SHALL NOT be refreshed. When no airport is monit
 system SHALL make no upstream request. The system SHALL request aviationweather.gov reports
 for the monitored airports in a single batched call per information type, and SHALL request
 SayIntentions reports per airport, because that source answers for one airport at a time.
+The system SHALL request FAA D-ATIS and VATSIM ATIS once per refresh for all monitored
+airports, and atis.guru once per monitored airport, at most two at a time.
 
 #### Scenario: Monitored airports are refreshed on schedule
 
 - **WHEN** the scheduled refresh runs and one or more airports are monitored
-- **THEN** the system fetches from both sources and updates the content and last-fetched time of those airports' reports
+- **THEN** the system fetches from every source and updates the content and last-fetched time of those airports' reports
 
 #### Scenario: Unmonitored airports are left alone
 

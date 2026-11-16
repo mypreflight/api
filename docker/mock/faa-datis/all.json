@@ -1,0 +1,50 @@
+[
+  {
+    "airport": "KATL",
+    "type": "dep",
+    "code": "N",
+    "datis": "ATL DEP INFO N 1552Z. 09010KT 10SM FEW150 SCT200 SCT250 11/01 A3047 (THREE ZERO FOUR SEVEN). SIMUL DEPS, DEPG RWYS, 8R, 9L. ...ADVS YOU HAVE INFO N.",
+    "time": "1552",
+    "updatedAt": "2026-11-16T16:19:07.7082382Z"
+  },
+  {
+    "airport": "KATL",
+    "type": "arr",
+    "code": "A",
+    "datis": "ATL ARR INFO A 1552Z. 09010KT 10SM FEW150 SCT200 SCT250 11/01 A3047 (THREE ZERO FOUR SEVEN). SIMULTANEOUS APCHS IN USE VIS 8L, VIS 9R, VIS 10. ...ADVS YOU HAVE INFO A.",
+    "time": "1552",
+    "updatedAt": "2026-11-16T16:19:06.8852731Z"
+  },
+  {
+    "airport": "KBOS",
+    "type": "combined",
+    "code": "C",
+    "datis": "BOS ATIS INFO C 1554Z. 32005KT 10SM FEW050 09/M01 A3031 (THREE ZERO THREE ONE). RNAV Z 33L, DEP 27. RY 33L ILS OTS. READBACK ALL HOLD SHORT INSTRCNS AND ASSIGNED ALTITUDES. ...ADVS YOU HAVE INFO C.",
+    "time": "1554",
+    "updatedAt": "2026-11-16T16:09:32.8839128Z"
+  },
+  {
+    "airport": "KJFK",
+    "type": "combined",
+    "code": "H",
+    "datis": "JFK ATIS INFO H 2351Z. 32009KT 10SM FEW038 11/01 A3039 (THREE ZERO THREE NINER). APPROACH IN USE ILS RY 31R, VISUAL APCH RY 31L. DEPG RY 31L. READBACK ALL RWY ASSIGNMENTS AND HOLD SHORT INSTRUCTIONS. ...ADVS YOU HAVE INFO H.",
+    "time": "2351",
+    "updatedAt": "2026-11-17T00:02:34.2605975Z"
+  },
+  {
+    "airport": "KPHL",
+    "type": "arr",
+    "code": "H",
+    "datis": "PHL ARR INFO H 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043 (THREE ZERO FOUR THREE). ARRIVALS EXPECT RNAV APCH RWY 27R, VISUAL APPROACH RWY 35. ...ADVS YOU HAVE INFO H.",
+    "time": "1554",
+    "updatedAt": "2026-11-16T16:19:07.478071Z"
+  },
+  {
+    "airport": "KPHL",
+    "type": "dep",
+    "code": "U",
+    "datis": "PHL DEP INFO U 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043 (THREE ZERO FOUR THREE). DEPG 27L, RWY 35. ...ADVS YOU HAVE INFO U.",
+    "time": "1554",
+    "updatedAt": "2026-11-16T16:19:08.5608226Z"
+  }
+]

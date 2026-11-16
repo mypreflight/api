@@ -6,6 +6,9 @@ export enum WeatherSourceFilter {
   All = 'all',
   AviationWeatherGov = WeatherSource.AviationWeatherGov,
   SayIntentions = WeatherSource.SayIntentions,
+  FaaDatis = WeatherSource.FaaDatis,
+  AtisGuru = WeatherSource.AtisGuru,
+  Vatsim = WeatherSource.Vatsim,
 }
 
 export class GetWeatherFilters {

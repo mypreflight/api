@@ -100,6 +100,7 @@ model AirportWeather {
   informationType WeatherInformationType
   content         String
   lastFetched     DateTime
+  publishedAt     DateTime?
 
   airport Airport @relation(fields: [airportId], references: [id], onDelete: Cascade)
 
@@ -1080,10 +1081,15 @@ enum DataQuality {
 enum WeatherSource {
   aviation_weather_gov
   say_intentions
+  faa_datis
+  atis_guru
+  vatsim
 }
 
 enum WeatherInformationType {
   atis
+  atis_arrival
+  atis_departure
   metar
   taf
 }

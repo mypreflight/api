@@ -47,6 +47,11 @@ The system SHALL allow any authenticated user to update their own name, pilot li
 - **WHEN** an authenticated user submits `all` or any other value that is not a collected weather source as their default
 - **THEN** the request is rejected with a validation error and their default weather source is unchanged
 
+#### Scenario: An ATIS-only source cannot be the default weather source
+
+- **WHEN** an authenticated user submits `faa_datis`, `atis_guru` or `vatsim` as their default weather source
+- **THEN** the request is rejected with a validation error, because only `aviation_weather_gov` and `say_intentions` publish METAR and TAF, and their default weather source is unchanged
+
 #### Scenario: Omitted fields are preserved
 
 - **WHEN** an authenticated user submits only a new name

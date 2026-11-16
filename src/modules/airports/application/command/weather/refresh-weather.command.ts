@@ -7,6 +7,14 @@ import {
 } from '../../../infra/database/airports.repository';
 import { WeatherClient } from '../../../../../core/provider/weather/client/weather.client';
 import { SayIntentionsClient } from '../../../../../core/provider/sayintentions/client/say-intentions.client';
+import { FaaDatisClient } from '../../../../../core/provider/faa-datis/client/faa-datis.client';
+import { AtisGuruClient } from '../../../../../core/provider/atis-guru/client/atis-guru.client';
+import { VatsimClient } from '../../../../../core/provider/vatsim/client/vatsim.client';
+import {
+  AtisByIcao,
+  AtisKind,
+  PublishedAtis,
+} from '../../../../../core/provider/atis/published-atis';
 import {
   WeatherInformationType,
   WeatherSource,
@@ -15,6 +23,14 @@ import { WeatherReport } from '../../../infra/database/airport-weather.repositor
 import { getErrorMessage } from '../../../../../core/utils/error-message';
 
 const SAY_INTENTIONS_CONCURRENCY = 4;
+const ATIS_GURU_CONCURRENCY = 2;
+const ATIS_GURU_MAX_AGE_MS = 6 * 60 * 60 * 1000;
+
+const ATIS_INFORMATION_TYPES: Record<AtisKind, WeatherInformationType> = {
+  [AtisKind.Combined]: WeatherInformationType.Atis,
+  [AtisKind.Arrival]: WeatherInformationType.AtisArrival,
+  [AtisKind.Departure]: WeatherInformationType.AtisDeparture,
+};
 
 export class RefreshWeatherCommand {
   constructor(public readonly airportIds?: string[]) {}
@@ -29,6 +45,9 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
     private readonly airportsRepository: AirportsRepository,
     private readonly weatherClient: WeatherClient,
     private readonly sayIntentionsClient: SayIntentionsClient,
+    private readonly faaDatisClient: FaaDatisClient,
+    private readonly atisGuruClient: AtisGuruClient,
+    private readonly vatsimClient: VatsimClient,
   ) {}
 
   async execute(command: RefreshWeatherCommand): Promise<void> {
@@ -40,17 +59,24 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
       return;
     }
 
-    const results = await Promise.allSettled([
-      this.refreshFromAviationWeatherGov(airports),
-      this.refreshFromSayIntentions(airports),
-    ]);
+    const refreshes: [WeatherSource, Promise<void>][] = [
+      [
+        WeatherSource.AviationWeatherGov,
+        this.refreshFromAviationWeatherGov(airports),
+      ],
+      [WeatherSource.SayIntentions, this.refreshFromSayIntentions(airports)],
+      [WeatherSource.FaaDatis, this.refreshFromFaaDatis(airports)],
+      [WeatherSource.AtisGuru, this.refreshFromAtisGuru(airports)],
+      [WeatherSource.Vatsim, this.refreshFromVatsim(airports)],
+    ];
+
+    const results = await Promise.allSettled(
+      refreshes.map(([, refresh]) => refresh),
+    );
 
     results.forEach((result, index) => {
       if (result.status === 'rejected') {
-        const source =
-          index === 0
-            ? WeatherSource.AviationWeatherGov
-            : WeatherSource.SayIntentions;
+        const [source] = refreshes[index];
 
         this.logger.error(
           `Weather refresh from ${source} failed: ${getErrorMessage(result.reason)}`,
@@ -87,13 +113,9 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
   private async refreshFromSayIntentions(
     airports: WeatherAirport[],
   ): Promise<void> {
-    for (let i = 0; i < airports.length; i += SAY_INTENTIONS_CONCURRENCY) {
-      const batch = airports.slice(i, i + SAY_INTENTIONS_CONCURRENCY);
-
-      await Promise.all(
-        batch.map((airport) => this.refreshAirportFromSayIntentions(airport)),
-      );
-    }
+    await this.inBatches(airports, SAY_INTENTIONS_CONCURRENCY, (airport) =>
+      this.refreshAirportFromSayIntentions(airport),
+    );
   }
 
   private async refreshAirportFromSayIntentions({
@@ -123,6 +145,132 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
     }
   }
 
+  private async refreshFromFaaDatis(airports: WeatherAirport[]): Promise<void> {
+    const lastFetched = new Date();
+    const atis = await this.faaDatisClient.fetchAtis(
+      airports.map((airport) => airport.icaoCode),
+    );
+
+    await this.replaceAtisOfEach(
+      airports,
+      WeatherSource.FaaDatis,
+      atis,
+      lastFetched,
+    );
+  }
+
+  private async refreshFromVatsim(airports: WeatherAirport[]): Promise<void> {
+    const lastFetched = new Date();
+    const atis = await this.vatsimClient.fetchAtis(
+      airports.map((airport) => airport.icaoCode),
+    );
+
+    await this.replaceAtisOfEach(
+      airports,
+      WeatherSource.Vatsim,
+      atis,
+      lastFetched,
+    );
+  }
+
+  private async refreshFromAtisGuru(airports: WeatherAirport[]): Promise<void> {
+    await this.inBatches(airports, ATIS_GURU_CONCURRENCY, (airport) =>
+      this.refreshAirportFromAtisGuru(airport),
+    );
+  }
+
+  private async refreshAirportFromAtisGuru({
+    airportId,
+    icaoCode,
+  }: WeatherAirport): Promise<void> {
+    try {
+      const lastFetched = new Date();
+      const published = await this.atisGuruClient.fetchAtis(icaoCode);
+      const recent = published.filter(
+        ({ publishedAt }) =>
+          publishedAt !== null &&
+          lastFetched.getTime() - publishedAt.getTime() <= ATIS_GURU_MAX_AGE_MS,
+      );
+
+      await this.replaceAtis(
+        airportId,
+        icaoCode,
+        WeatherSource.AtisGuru,
+        recent,
+        lastFetched,
+      );
+    } catch (error) {
+      this.logger.error(
+        `Could not refresh ${WeatherSource.AtisGuru} ATIS for ${icaoCode}: ${getErrorMessage(error)}`,
+      );
+    }
+  }
+
+  private async replaceAtisOfEach(
+    airports: WeatherAirport[],
+    source: WeatherSource,
+    atis: AtisByIcao,
+    lastFetched: Date,
+  ): Promise<void> {
+    for (const { airportId, icaoCode } of airports) {
+      try {
+        await this.replaceAtis(
+          airportId,
+          icaoCode,
+          source,
+          atis.get(icaoCode) ?? [],
+          lastFetched,
+        );
+      } catch (error) {
+        this.logger.error(
+          `Could not store ${source} ATIS for ${icaoCode}: ${getErrorMessage(error)}`,
+        );
+      }
+    }
+  }
+
+  private async replaceAtis(
+    airportId: string,
+    icaoCode: string,
+    source: WeatherSource,
+    published: PublishedAtis[],
+    lastFetched: Date,
+  ): Promise<void> {
+    const byType = new Map<WeatherInformationType, WeatherReport>();
+
+    for (const { kind, content, publishedAt } of published) {
+      const informationType = ATIS_INFORMATION_TYPES[kind];
+
+      if (!byType.has(informationType)) {
+        byType.set(informationType, {
+          informationType,
+          content,
+          lastFetched,
+          publishedAt,
+        });
+      }
+    }
+
+    const reports = [...byType.values()];
+    await this.weatherRepository.replaceReports(airportId, source, reports);
+
+    if (reports.length > 0) {
+      this.logger.log(
+        `Refreshed ${source} ${this.describe(reports)} for ${icaoCode}`,
+      );
+    }
+  }
+
+  private async inBatches<T>(
+    items: T[],
+    size: number,
+    work: (item: T) => Promise<void>,
+  ): Promise<void> {
+    for (let i = 0; i < items.length; i += size) {
+      await Promise.all(items.slice(i, i + size).map(work));
+    }
+  }
+
   private collect(
     lastFetched: Date,
     contents: Partial<Record<WeatherInformationType, string | undefined>>,
@@ -133,6 +281,7 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
         informationType: informationType as WeatherInformationType,
         content: content as string,
         lastFetched,
+        publishedAt: null,
       }));
   }
 
@@ -148,10 +297,14 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
     }
 
     await this.weatherRepository.saveReports(airportId, source, reports);
+    this.logger.log(
+      `Refreshed ${source} ${this.describe(reports)} for ${icaoCode}`,
+    );
+  }
 
-    const stored = reports
+  private describe(reports: WeatherReport[]): string {
+    return reports
       .map((report) => report.informationType.toUpperCase())
       .join(' + ');
-    this.logger.log(`Refreshed ${source} ${stored} for ${icaoCode}`);
   }
 }

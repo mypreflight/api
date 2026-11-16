@@ -1,0 +1,72 @@
+{
+  "uuid": "9dd60d9b-0f57-40de-bb76-5b586553d3c5",
+  "lastMigration": 33,
+  "name": "VATSIM",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 1093,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "352179c4-5694-4d99-a0d7-6ba2db6f073c",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "v3/vatsim-data.json",
+      "responses": [
+        {
+          "uuid": "3f1bd702-5ccd-46fe-9930-e56ed1d2c4f5",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Data feed",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "FILE",
+          "filePath": "vatsim/vatsim-data.json",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "352179c4-5694-4d99-a0d7-6ba2db6f073c"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": false,
+  "headers": [],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
+}

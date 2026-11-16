@@ -80,6 +80,9 @@ import { AssertRunwayExistsHandler } from './application/assert/assert-runway-ex
 import { ReassignAirportCityHandler } from './application/command/reassign-airport-city.command';
 import { WeatherModule } from '../../core/provider/weather/weather.module';
 import { SayIntentionsModule } from '../../core/provider/sayintentions/say-intentions.module';
+import { FaaDatisModule } from '../../core/provider/faa-datis/faa-datis.module';
+import { AtisGuruModule } from '../../core/provider/atis-guru/atis-guru.module';
+import { VatsimModule } from '../../core/provider/vatsim/vatsim.module';
 import { AirportWeatherRepository } from './infra/database/airport-weather.repository';
 import { GetWeatherAction } from './infra/http/action/weather/get-weather.action';
 import { GetAirportWeatherHandler } from './application/query/weather/get-airport-weather.query';
@@ -108,6 +111,9 @@ import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module
     SkyLinkModule,
     WeatherModule,
     SayIntentionsModule,
+    FaaDatisModule,
+    AtisGuruModule,
+    VatsimModule,
     OsmModule,
   ],
   controllers: [

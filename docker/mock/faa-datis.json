@@ -1,0 +1,72 @@
+{
+  "uuid": "3328ee01-4c7f-4510-9232-1a890d9f5bd6",
+  "lastMigration": 33,
+  "name": "FAA D-ATIS",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 1091,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "67466455-c820-48c4-bd7a-32d2aaafd38b",
+      "type": "http",
+      "documentation": "",
+      "method": "get",
+      "endpoint": "api/all",
+      "responses": [
+        {
+          "uuid": "eb8b652e-2c27-449c-862f-1ec612e7e465",
+          "body": "",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "All D-ATIS",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "FILE",
+          "filePath": "faa-datis/all.json",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "67466455-c820-48c4-bd7a-32d2aaafd38b"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": false,
+  "headers": [],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
+}
