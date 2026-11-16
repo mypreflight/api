@@ -40,8 +40,8 @@ export class GetAirportWeatherResponse {
 
   @ApiProperty({
     description:
-      'Report exactly as the provider returned it. Coded text for METAR and TAF, spoken text for ATIS. Providers format the same report differently — SayIntentions omits the leading METAR token that aviationweather.gov includes.',
-    example: 'METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG',
+      'Report as the provider returned it, less a leading METAR or TAF token, which repeats the information type. Coded text for METAR and TAF, spoken text for ATIS. A SPECI token, and an AMD or COR marker after the type, are kept.',
+    example: 'EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG',
   })
   content!: string;
 

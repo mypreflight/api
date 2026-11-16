@@ -127,6 +127,38 @@ describe('RefreshWeatherHandler', () => {
     expect(savedFor(WeatherSource.SayIntentions, 'a2')).toHaveLength(3);
   });
 
+  it('stores METAR and TAF without the report type in front of the station', async () => {
+    weatherClient.fetchMetar.mockResolvedValue(
+      new Map([['EPWA', 'METAR EPWA 081200Z 20006KT 9999 SCT040']]),
+    );
+    weatherClient.fetchTaf.mockResolvedValue(
+      new Map([['EPWA', 'TAF EPWA 081100Z 0812/0918 20008KT 9999']]),
+    );
+    sayIntentionsClient.fetchWeather.mockResolvedValue({
+      metar: 'EPWA 101030Z 15009KT CAVOK',
+      taf: 'TAF EPWA 100830Z 1009/1109 17007KT CAVOK',
+      atis: 'information Sierra',
+    });
+
+    await handler.execute(new RefreshWeatherCommand());
+
+    const contents = (source: WeatherSource) =>
+      weatherRepository.saveReports.mock.calls
+        .filter((call) => call[0] === 'a1' && call[1] === source)
+        .flatMap((call) => call[2])
+        .map((report) => [report.informationType, report.content]);
+
+    expect(contents(WeatherSource.AviationWeatherGov)).toEqual([
+      [WeatherInformationType.Metar, 'EPWA 081200Z 20006KT 9999 SCT040'],
+      [WeatherInformationType.Taf, 'EPWA 081100Z 0812/0918 20008KT 9999'],
+    ]);
+    expect(contents(WeatherSource.SayIntentions)).toEqual([
+      [WeatherInformationType.Atis, 'information Sierra'],
+      [WeatherInformationType.Metar, 'EPWA 101030Z 15009KT CAVOK'],
+      [WeatherInformationType.Taf, 'EPWA 100830Z 1009/1109 17007KT CAVOK'],
+    ]);
+  });
+
   it('batches aviationweather.gov into one call per information type', async () => {
     await handler.execute(new RefreshWeatherCommand());
 

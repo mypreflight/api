@@ -19,7 +19,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       airportId: WARSAW,
       source: WeatherSource.AviationWeatherGov,
       informationType: WeatherInformationType.Metar,
-      content: 'METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG',
+      content: 'EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG',
       lastFetched: AVIATION_WEATHER_GOV_FETCHED_AT,
     },
     {
@@ -28,7 +28,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       source: WeatherSource.AviationWeatherGov,
       informationType: WeatherInformationType.Taf,
       content:
-        'TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT',
+        'EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT',
       lastFetched: AVIATION_WEATHER_GOV_FETCHED_AT,
     },
     {
@@ -53,8 +53,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       airportId: WARSAW,
       source: WeatherSource.SayIntentions,
       informationType: WeatherInformationType.Taf,
-      content:
-        'TAF EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT',
+      content: 'EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT',
       lastFetched: SAY_INTENTIONS_FETCHED_AT,
     },
     {
@@ -62,7 +61,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       airportId: FRANKFURT,
       source: WeatherSource.AviationWeatherGov,
       informationType: WeatherInformationType.Metar,
-      content: 'METAR EDDF 081200Z 24008KT 9999 FEW035 22/12 Q1018 NOSIG',
+      content: 'EDDF 081200Z 24008KT 9999 FEW035 22/12 Q1018 NOSIG',
       lastFetched: AVIATION_WEATHER_GOV_FETCHED_AT,
     },
     {
@@ -71,7 +70,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       source: WeatherSource.AviationWeatherGov,
       informationType: WeatherInformationType.Taf,
       content:
-        'TAF EDDF 081100Z 0812/0918 24010KT 9999 FEW035 BECMG 0815/0817 27012KT',
+        'EDDF 081100Z 0812/0918 24010KT 9999 FEW035 BECMG 0815/0817 27012KT',
       lastFetched: AVIATION_WEATHER_GOV_FETCHED_AT,
     },
     {
@@ -79,7 +78,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       airportId: BOSTON,
       source: WeatherSource.AviationWeatherGov,
       informationType: WeatherInformationType.Metar,
-      content: 'METAR KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000',
+      content: 'KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000',
       lastFetched: AVIATION_WEATHER_GOV_FETCHED_AT,
     },
     {
@@ -87,7 +86,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       airportId: BOSTON,
       source: WeatherSource.AviationWeatherGov,
       informationType: WeatherInformationType.Taf,
-      content: 'TAF KBOS 081120Z 0812/0918 21010KT P6SM FEW040',
+      content: 'KBOS 081120Z 0812/0918 21010KT P6SM FEW040',
       lastFetched: AVIATION_WEATHER_GOV_FETCHED_AT,
     },
     {
@@ -112,7 +111,7 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
       airportId: BOSTON,
       source: WeatherSource.SayIntentions,
       informationType: WeatherInformationType.Taf,
-      content: 'TAF KBOS 100820Z 1009/1109 21010KT P6SM FEW040',
+      content: 'KBOS 100820Z 1009/1109 21010KT P6SM FEW040',
       lastFetched: SAY_INTENTIONS_FETCHED_AT,
     },
     {

@@ -667,8 +667,8 @@ Feature: Check in pilot for flight
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "block: 1h 21m"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "ATIS for BOS:"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "Logan airport, information Delta."
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "METAR KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000"
-    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "TAF KBOS 081120Z 0812/0918 21010KT P6SM FEW040"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000"
+    And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "KBOS 081120Z 0812/0918 21010KT P6SM FEW040"
     And I see Discord "briefing" message for flight "23952e79-6b38-49ed-a1db-bd4d9b3cedab" containing "[**MyPreflight app**](http://localhost:5173/track/23952e79-6b38-49ed-a1db-bd4d9b3cedab/briefing)."
     And I set database to initial state
     And I clear Discord messages directory
@@ -1161,7 +1161,7 @@ Feature: Check in pilot for flight
           "id": "@uuid",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000",
+          "content": "KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000",
           "lastFetched": "@date('within 1 minute from now')",
           "publishedAt": null
         },
@@ -1169,7 +1169,7 @@ Feature: Check in pilot for flight
           "id": "@uuid",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF KBOS 081120Z 0812/0918 21010KT P6SM FEW040",
+          "content": "KBOS 081120Z 0812/0918 21010KT P6SM FEW040",
           "lastFetched": "@date('within 1 minute from now')",
           "publishedAt": null
         },
@@ -1193,7 +1193,7 @@ Feature: Check in pilot for flight
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF KBOS 100820Z 1009/1109 21010KT P6SM FEW040",
+          "content": "KBOS 100820Z 1009/1109 21010KT P6SM FEW040",
           "lastFetched": "@date('within 1 minute from now')",
           "publishedAt": null
         },
@@ -1216,7 +1216,7 @@ Feature: Check in pilot for flight
           "id": "@uuid",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR KJFK 081151Z 18010KT 10SM FEW050 27/18 A2998 RMK AO2",
+          "content": "KJFK 081151Z 18010KT 10SM FEW050 27/18 A2998 RMK AO2",
           "lastFetched": "@date('within 1 minute from now')",
           "publishedAt": null
         },
@@ -1224,7 +1224,7 @@ Feature: Check in pilot for flight
           "id": "@uuid",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF KJFK 081120Z 0812/0918 18012KT P6SM FEW050 FM090000 21008KT P6SM SCT060",
+          "content": "KJFK 081120Z 0812/0918 18012KT P6SM FEW050 FM090000 21008KT P6SM SCT060",
           "lastFetched": "@date('within 1 minute from now')",
           "publishedAt": null
         },
@@ -1248,7 +1248,7 @@ Feature: Check in pilot for flight
           "id": "@uuid",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF KJFK 100820Z 1009/1109 18012KT P6SM FEW050 FM110000 21008KT P6SM SCT060",
+          "content": "KJFK 100820Z 1009/1109 18012KT P6SM FEW050 FM110000 21008KT P6SM SCT060",
           "lastFetched": "@date('within 1 minute from now')",
           "publishedAt": null
         },

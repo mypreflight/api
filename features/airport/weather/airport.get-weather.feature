@@ -11,7 +11,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -19,7 +19,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -37,7 +37,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -45,7 +45,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -62,7 +62,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -70,7 +70,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -87,7 +87,7 @@ Feature: Get airport weather
           "id": "e799cf41-0344-4b29-b111-ee9f635535e2",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EDDF 081200Z 24008KT 9999 FEW035 22/12 Q1018 NOSIG",
+          "content": "EDDF 081200Z 24008KT 9999 FEW035 22/12 Q1018 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -95,7 +95,7 @@ Feature: Get airport weather
           "id": "f721308b-9a04-4b20-8af9-89b25fd1986e",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EDDF 081100Z 0812/0918 24010KT 9999 FEW035 BECMG 0815/0817 27012KT",
+          "content": "EDDF 081100Z 0812/0918 24010KT 9999 FEW035 BECMG 0815/0817 27012KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -161,7 +161,7 @@ Feature: Get airport weather
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
+          "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
           "publishedAt": null
         }
@@ -195,7 +195,7 @@ Feature: Get airport weather
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
+          "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
           "publishedAt": null
         }
@@ -213,7 +213,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -221,7 +221,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -238,7 +238,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -246,7 +246,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -263,7 +263,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -271,7 +271,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -295,7 +295,7 @@ Feature: Get airport weather
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
+          "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
           "publishedAt": null
         }
@@ -313,7 +313,7 @@ Feature: Get airport weather
           "id": "bf427471-4e87-4b4c-a5f9-24f5e295ab05",
           "source": "aviation_weather_gov",
           "informationType": "metar",
-          "content": "METAR EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
+          "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         },
@@ -321,7 +321,7 @@ Feature: Get airport weather
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
           "source": "aviation_weather_gov",
           "informationType": "taf",
-          "content": "TAF EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
+          "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
           "publishedAt": null
         }
@@ -354,7 +354,7 @@ Feature: Get airport weather
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
           "source": "say_intentions",
           "informationType": "taf",
-          "content": "TAF EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
+          "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
           "publishedAt": null
         }

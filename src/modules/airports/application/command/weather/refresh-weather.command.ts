@@ -20,6 +20,7 @@ import {
   WeatherSource,
 } from '../../../model/airport-weather.model';
 import { WeatherReport } from '../../../infra/database/airport-weather.repository';
+import { withoutReportTypeToken } from '../../../model/report-type-token';
 import { getErrorMessage } from '../../../../../core/utils/error-message';
 
 const SAY_INTENTIONS_CONCURRENCY = 4;
@@ -279,7 +280,10 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
       .filter(([, content]) => content !== undefined)
       .map(([informationType, content]) => ({
         informationType: informationType as WeatherInformationType,
-        content: content as string,
+        content: withoutReportTypeToken(
+          informationType as WeatherInformationType,
+          content as string,
+        ),
         lastFetched,
         publishedAt: null,
       }));
