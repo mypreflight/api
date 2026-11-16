@@ -4,9 +4,12 @@ import { SkylinkAirportResponse } from '../type/skylink.types';
 import {
   MultipleSkylinkAirportsFoundError,
   SkylinkAirportNotFoundError,
+  SkylinkUnavailableError,
   SkylinkUnknownCountryError,
 } from './skylink.error';
 import { fetchWithRetry } from '../../http/fetch-with-retry';
+import { DomainError } from '../../../errors/domain-error';
+import { getErrorMessage } from '../../../utils/error-message';
 import {
   isKnownCountryCode,
   normalizeCountryCode,
@@ -49,7 +52,12 @@ export class SkyLinkClient {
       });
 
       if (!response.ok) {
-        throw new Error(`Failed to fetch data: ${response.statusText}`);
+        const answer = await response.text().catch(() => '');
+        this.logger.error(
+          `SkyLink answered ${response.status.toString()} for airport ${code}: ${answer.slice(0, 200)}`,
+        );
+
+        throw new SkylinkUnavailableError();
       }
       const body = (await response.json()) as SkylinkAirportResponse[];
 
@@ -70,11 +78,22 @@ export class SkyLinkClient {
         throw new SkylinkUnknownCountryError(code, airport.country);
       }
 
-      return { ...airport, country };
+      return { ...airport, country, city: this.cityName(airport.city) };
     } catch (error) {
-      this.logger.error(`Error using SkyLink to get airport ${code}`);
-      throw error;
+      this.logger.error(
+        `Error using SkyLink to get airport ${code}: ${getErrorMessage(error)}`,
+      );
+
+      throw error instanceof DomainError
+        ? error
+        : new SkylinkUnavailableError();
     }
+  }
+
+  private cityName(reported: string): string {
+    const [name] = reported.split(',');
+
+    return name.trim();
   }
 }
 

@@ -16,6 +16,12 @@ export class MultipleSkylinkAirportsFoundError extends ConflictError {
   }
 }
 
+export class SkylinkUnavailableError extends BadGatewayError {
+  constructor() {
+    super('SkyLink is unavailable.');
+  }
+}
+
 export class SkylinkUnknownCountryError extends BadGatewayError {
   constructor(code: string, country: string) {
     super(
