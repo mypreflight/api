@@ -39,6 +39,7 @@ Feature: As a signed-in user I can link my Discord account to receive flight bri
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "say_intentions",
+        "defaultAtisSource": "say_intentions",
         "emails": [
           {
             "email": "operations@example.com",
@@ -148,6 +149,7 @@ Feature: As a signed-in user I can link my Discord account to receive flight bri
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "say_intentions",
+        "defaultAtisSource": "say_intentions",
         "emails": [
           {
             "email": "operations@example.com",

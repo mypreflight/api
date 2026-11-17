@@ -119,4 +119,13 @@ export class User {
   })
   @IsEnum(WeatherSource)
   defaultWeatherSource!: WeatherSource;
+
+  @ApiProperty({
+    description:
+      'ATIS provider the user reads first, for the ATIS text and the runways it puts in use',
+    example: WeatherSource.Vatsim,
+    enum: WeatherSource,
+  })
+  @IsEnum(WeatherSource)
+  defaultAtisSource!: WeatherSource;
 }

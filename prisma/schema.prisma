@@ -696,6 +696,7 @@ model User {
   lastAirportUpdatedAt DateTime?
 
   defaultWeatherSource WeatherSource @default(aviation_weather_gov)
+  defaultAtisSource    WeatherSource @default(say_intentions)
 
   discordBriefingsEnabled            Boolean @default(true)
   discordPreliminaryLoadsheetEnabled Boolean @default(true)

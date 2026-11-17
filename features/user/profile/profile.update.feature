@@ -24,6 +24,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -70,6 +71,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": true,
@@ -113,6 +115,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -159,6 +162,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -275,6 +279,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -321,6 +326,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": "987654",
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -367,6 +373,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": "987654",
         "defaultWeatherSource": "say_intentions",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -409,6 +416,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -465,6 +473,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -622,6 +631,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -725,6 +735,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -770,6 +781,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -818,6 +830,7 @@ Feature: Update own profile
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "say_intentions",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -919,6 +932,78 @@ Feature: Update own profile
         "violations": {
           "defaultWeatherSource": [
             "defaultWeatherSource must be one of the following values: aviation_weather_gov, say_intentions"
+          ]
+        }
+      }
+      """
+
+  Scenario: As a cabin crew I can choose the ATIS source I read first
+    Given I am signed in as "cabin crew"
+    When I send a "PATCH" request to "/api/v1/user/me" with body:
+      """json
+      {
+        "defaultAtisSource": "vatsim"
+      }
+      """
+    Then the response status should be 200
+    When I send a "GET" request to "/api/v1/user/me"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      {
+        "id": "fcf6f4bc-290d-43a9-843c-409cd47e143d",
+        "name": "Rick Doe",
+        "email": "cabin-crew@example.com",
+        "role": "CabinCrew",
+        "pilotLicenseId": "UK-31270",
+        "currentFlightId": "b3899775-278e-4496-add1-21385a13d93e",
+        "homeAirportId": "3c721cc6-c653-4fad-be43-dc9d6a149383",
+        "lastAirportId": "3c721cc6-c653-4fad-be43-dc9d6a149383",
+        "lastAirportUpdatedAt": null,
+        "simbriefUserId": null,
+        "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "vatsim",
+        "identities": {
+          "google": {
+            "linked": false
+          },
+          "discord": {
+            "linked": true,
+            "userId": "100000000000000300",
+            "username": "rick.doe",
+            "globalName": "Rick Doe",
+            "avatarUrl": "https://cdn.discordapp.com/avatars/100000000000000300/c4d5e6f70819202a3b4c5d6e7f809a1b.png"
+          }
+        },
+        "emails": [
+          {
+            "email": "cabin-crew@example.com",
+            "isConfirmed": true,
+            "active": true
+          }
+        ]
+      }
+      """
+    And I set database to initial state
+
+  Scenario: As a cabin crew I cannot make a source without ATIS my ATIS source
+    Given I am signed in as "cabin crew"
+    When I send a "PATCH" request to "/api/v1/user/me" with body:
+      """json
+      {
+        "defaultAtisSource": "aviation_weather_gov"
+      }
+      """
+    Then the response status should be 400
+    And the response body should contain:
+      """json
+      {
+        "message": "Request validation failed.",
+        "error": "Bad Request",
+        "statusCode": 400,
+        "violations": {
+          "defaultAtisSource": [
+            "defaultAtisSource must be one of the following values: say_intentions, vatsim, faa_datis, atis_guru"
           ]
         }
       }

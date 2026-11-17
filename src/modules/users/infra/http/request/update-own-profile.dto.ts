@@ -15,6 +15,13 @@ const SELECTABLE_WEATHER_SOURCES = [
   WeatherSource.SayIntentions,
 ];
 
+const SELECTABLE_ATIS_SOURCES = [
+  WeatherSource.SayIntentions,
+  WeatherSource.Vatsim,
+  WeatherSource.FaaDatis,
+  WeatherSource.AtisGuru,
+];
+
 export class UpdateOwnProfileDto {
   @ApiProperty({
     description: 'User first and last name',
@@ -77,4 +84,15 @@ export class UpdateOwnProfileDto {
   @IsIn(SELECTABLE_WEATHER_SOURCES)
   @IsOptional()
   defaultWeatherSource?: WeatherSource;
+
+  @ApiProperty({
+    description:
+      'ATIS provider to read first, for the ATIS text and the runways it puts in use',
+    example: WeatherSource.Vatsim,
+    enum: SELECTABLE_ATIS_SOURCES,
+    required: false,
+  })
+  @IsIn(SELECTABLE_ATIS_SOURCES)
+  @IsOptional()
+  defaultAtisSource?: WeatherSource;
 }

@@ -101,6 +101,7 @@ Feature: As a user I can change my own email address
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "say_intentions",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
