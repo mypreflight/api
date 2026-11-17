@@ -1163,7 +1163,9 @@ Feature: Check in pilot for flight
           "informationType": "metar",
           "content": "KBOS 081154Z 21009KT 10SM FEW040 24/16 A3000",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1171,7 +1173,9 @@ Feature: Check in pilot for flight
           "informationType": "taf",
           "content": "KBOS 081120Z 0812/0918 21010KT P6SM FEW040",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1179,7 +1183,9 @@ Feature: Check in pilot for flight
           "informationType": "atis",
           "content": "Logan airport, information Delta. 1054 Zulu. ILS runway 4 right approach in use. Departing runway 9. Wind 210 at 9. Visibility 10. Few 4000. Temperature 24, dewpoint 16. Altimeter 3000. Advise on initial contact you have information Delta.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["affab21d-be0d-4281-bb94-4944122e91e9"],
+          "departureRunways": ["39cdf097-9733-4ab1-a42b-256d24a97851"]
         },
         {
           "id": "@uuid",
@@ -1187,7 +1193,9 @@ Feature: Check in pilot for flight
           "informationType": "metar",
           "content": "KBOS 101054Z 21009KT 10SM FEW040 24/16 A3000",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1195,7 +1203,9 @@ Feature: Check in pilot for flight
           "informationType": "taf",
           "content": "KBOS 100820Z 1009/1109 21010KT P6SM FEW040",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1203,7 +1213,9 @@ Feature: Check in pilot for flight
           "informationType": "atis",
           "content": "BOS ATIS INFO C 1554Z. 32005KT 10SM FEW050 09/M01 A3031 (THREE ZERO THREE ONE). RNAV Z 33L, DEP 27. RY 33L ILS OTS. READBACK ALL HOLD SHORT INSTRCNS AND ASSIGNED ALTITUDES. ...ADVS YOU HAVE INFO C.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": "2026-11-16T15:54:00.000Z"
+          "publishedAt": "2026-11-16T15:54:00.000Z",
+          "arrivalRunways": ["06467ecc-9a99-46d8-aa96-d9956601302f"],
+          "departureRunways": ["a32aeb2f-5f88-4a4b-9976-3791ef481815"]
         }
       ]
       """
@@ -1218,7 +1230,9 @@ Feature: Check in pilot for flight
           "informationType": "metar",
           "content": "KJFK 081151Z 18010KT 10SM FEW050 27/18 A2998 RMK AO2",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1226,7 +1240,9 @@ Feature: Check in pilot for flight
           "informationType": "taf",
           "content": "KJFK 081120Z 0812/0918 18012KT P6SM FEW050 FM090000 21008KT P6SM SCT060",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1234,7 +1250,9 @@ Feature: Check in pilot for flight
           "informationType": "atis",
           "content": "Kennedy airport, information Bravo. 1051 Zulu. ILS runway 4 right approach in use. Departing runway 4 left. Wind 180 at 10. Visibility 10. Few 5000. Temperature 27, dewpoint 18. Altimeter 2998. Advise on initial contact you have information Bravo.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["8324e63e-24ab-44d6-9e57-68be895f8afe"],
+          "departureRunways": ["6bbf43a4-9242-4f04-b195-6a7bcd1f14c4"]
         },
         {
           "id": "@uuid",
@@ -1242,7 +1260,9 @@ Feature: Check in pilot for flight
           "informationType": "metar",
           "content": "KJFK 101051Z 18010KT 10SM FEW050 27/18 A2998 RMK AO2",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1250,7 +1270,9 @@ Feature: Check in pilot for flight
           "informationType": "taf",
           "content": "KJFK 100820Z 1009/1109 18012KT P6SM FEW050 FM110000 21008KT P6SM SCT060",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1258,7 +1280,9 @@ Feature: Check in pilot for flight
           "informationType": "atis",
           "content": "JFK ATIS INFO H 2351Z. 32009KT 10SM FEW038 11/01 A3039 (THREE ZERO THREE NINER). APPROACH IN USE ILS RY 31R, VISUAL APCH RY 31L. DEPG RY 31L. READBACK ALL RWY ASSIGNMENTS AND HOLD SHORT INSTRUCTIONS. ...ADVS YOU HAVE INFO H.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": "2026-11-16T23:51:00.000Z"
+          "publishedAt": "2026-11-16T23:51:00.000Z",
+          "arrivalRunways": ["12881dbb-929e-466c-86a7-3639d8472269", "5caaed05-d5ec-4129-bfd2-3b2a2cf9f39f"],
+          "departureRunways": ["12881dbb-929e-466c-86a7-3639d8472269"]
         },
         {
           "id": "@uuid",
@@ -1266,7 +1290,9 @@ Feature: Check in pilot for flight
           "informationType": "atis",
           "content": "KJFK ATIS INFO H 1551Z.\n32009KT 10SM FEW038 11/01 A3039.\nILS RWY 31R APPROACH IN USE. DEPARTING RWY 31L.\nADVISE ON INITIAL CONTACT YOU HAVE INFO H.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": "2026-11-16T16:17:12.000Z"
+          "publishedAt": "2026-11-16T16:17:12.000Z",
+          "arrivalRunways": ["5caaed05-d5ec-4129-bfd2-3b2a2cf9f39f"],
+          "departureRunways": ["12881dbb-929e-466c-86a7-3639d8472269"]
         }
       ]
       """
@@ -1295,7 +1321,9 @@ Feature: Check in pilot for flight
           "informationType": "atis",
           "content": "Philadelphia airport, information Yankee. 1054 Zulu. ILS runway 27 right approach in use. Departing runway 27 left. Wind 200 at 8. Visibility 10. Scattered 4500. Temperature 26, dewpoint 17. Altimeter 2999. Advise on initial contact you have information Yankee.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["b6a0f863-d46a-4d44-8102-59f395e0a851"],
+          "departureRunways": ["8b35ca2e-8b58-4021-b37c-b9d08c2ea4c3"]
         },
         {
           "id": "@uuid",
@@ -1303,7 +1331,9 @@ Feature: Check in pilot for flight
           "informationType": "metar",
           "content": "KPHL 101054Z 20008KT 10SM SCT045 26/17 A2999",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -1332,7 +1362,9 @@ Feature: Check in pilot for flight
           "informationType": "atis_arrival",
           "content": "PHL ARR INFO H 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043 (THREE ZERO FOUR THREE). ARRIVALS EXPECT RNAV APCH RWY 27R, VISUAL APPROACH RWY 35. ...ADVS YOU HAVE INFO H.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": "2026-11-16T15:54:00.000Z"
+          "publishedAt": "2026-11-16T15:54:00.000Z",
+          "arrivalRunways": ["b6a0f863-d46a-4d44-8102-59f395e0a851", "98f8d86b-6d5c-439c-b1c2-e8d7c5a888fb"],
+          "departureRunways": []
         },
         {
           "id": "@uuid",
@@ -1340,7 +1372,9 @@ Feature: Check in pilot for flight
           "informationType": "atis_departure",
           "content": "PHL DEP INFO U 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043 (THREE ZERO FOUR THREE). DEPG 27L, RWY 35. ...ADVS YOU HAVE INFO U.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": "2026-11-16T15:54:00.000Z"
+          "publishedAt": "2026-11-16T15:54:00.000Z",
+          "arrivalRunways": [],
+          "departureRunways": ["8b35ca2e-8b58-4021-b37c-b9d08c2ea4c3", "98f8d86b-6d5c-439c-b1c2-e8d7c5a888fb"]
         }
       ]
       """
@@ -1355,7 +1389,9 @@ Feature: Check in pilot for flight
           "informationType": "atis_arrival",
           "content": "PHL ARR ATIS H\n1554Z\nPHL ARR INFO H 1554Z. 36010KT 10SM FEW032 SCT250 11/02 A3043.\nARRIVALS EXPECT RNAV APCH RWY 27R, VISUAL APPROACH RWY 35.\n...ADVS YOU HAVE INFO H.",
           "lastFetched": "@date('within 1 minute from now')",
-          "publishedAt": "@date('in the past')"
+          "publishedAt": "@date('in the past')",
+          "arrivalRunways": ["b6a0f863-d46a-4d44-8102-59f395e0a851", "98f8d86b-6d5c-439c-b1c2-e8d7c5a888fb"],
+          "departureRunways": []
         }
       ]
       """

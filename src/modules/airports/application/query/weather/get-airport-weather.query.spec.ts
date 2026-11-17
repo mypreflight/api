@@ -115,6 +115,11 @@ describe('GetAirportWeatherHandler', () => {
         informationType: WeatherInformationType.Atis,
         content: 'Warsaw Chopin airport, information Sierra.',
         lastFetched: new Date('2026-08-10T10:30:00.000Z'),
+        runways: [
+          { runwayId: 'r11', operation: 'arrival' },
+          { runwayId: 'r15', operation: 'departure' },
+          { runwayId: 'r29', operation: 'arrival' },
+        ],
       },
     ]);
 
@@ -130,6 +135,8 @@ describe('GetAirportWeatherHandler', () => {
         informationType: WeatherInformationType.Atis,
         content: 'Warsaw Chopin airport, information Sierra.',
         lastFetched: new Date('2026-08-10T10:30:00.000Z'),
+        arrivalRunways: ['r11', 'r29'],
+        departureRunways: ['r15'],
       },
     ]);
   });

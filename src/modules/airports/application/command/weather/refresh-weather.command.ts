@@ -22,6 +22,7 @@ import {
 import { WeatherReport } from '../../../infra/database/airport-weather.repository';
 import { withoutReportTypeToken } from '../../../model/report-type-token';
 import { getErrorMessage } from '../../../../../core/utils/error-message';
+import { AtisRunwaysResolver } from '../../../infra/service/atis-runways.resolver';
 
 const SAY_INTENTIONS_CONCURRENCY = 4;
 const ATIS_GURU_CONCURRENCY = 2;
@@ -49,6 +50,7 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
     private readonly faaDatisClient: FaaDatisClient,
     private readonly atisGuruClient: AtisGuruClient,
     private readonly vatsimClient: VatsimClient,
+    private readonly atisRunwaysResolver: AtisRunwaysResolver,
   ) {}
 
   async execute(command: RefreshWeatherCommand): Promise<void> {
@@ -252,7 +254,12 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
       }
     }
 
-    const reports = [...byType.values()];
+    const reports = await this.atisRunwaysResolver.resolve(
+      airportId,
+      icaoCode,
+      source,
+      [...byType.values()],
+    );
     await this.weatherRepository.replaceReports(airportId, source, reports);
 
     if (reports.length > 0) {
@@ -300,7 +307,16 @@ export class RefreshWeatherHandler implements ICommandHandler<RefreshWeatherComm
       return;
     }
 
-    await this.weatherRepository.saveReports(airportId, source, reports);
+    await this.weatherRepository.saveReports(
+      airportId,
+      source,
+      await this.atisRunwaysResolver.resolve(
+        airportId,
+        icaoCode,
+        source,
+        reports,
+      ),
+    );
     this.logger.log(
       `Refreshed ${source} ${this.describe(reports)} for ${icaoCode}`,
     );

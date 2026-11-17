@@ -54,10 +54,11 @@ services:
       - '/data/faa-datis.json'
       - '/data/atis-guru.json'
       - '/data/vatsim.json'
+      - '/data/openai.json'
     volumes:
       - ./docker/mock:/data:ro
     ports:
-      - '1080-1093:1080-1093'
+      - '1080-1094:1080-1094'
     networks:
       default:
         aliases:
@@ -72,3 +73,4 @@ services:
           - faa-datis-mock
           - atis-guru-mock
           - vatsim-mock
+          - openai-mock

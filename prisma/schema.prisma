@@ -101,11 +101,26 @@ model AirportWeather {
   content         String
   lastFetched     DateTime
   publishedAt     DateTime?
+  runwaysResolved Boolean                @default(false)
 
-  airport Airport @relation(fields: [airportId], references: [id], onDelete: Cascade)
+  airport Airport                @relation(fields: [airportId], references: [id], onDelete: Cascade)
+  runways AirportWeatherRunway[]
 
   @@unique([airportId, source, informationType])
   @@map("airport_weather")
+}
+
+model AirportWeatherRunway {
+  airportWeatherId String          @db.Uuid
+  runwayId         String          @db.Uuid
+  operation        RunwayOperation
+
+  airportWeather AirportWeather @relation(fields: [airportWeatherId], references: [id], onDelete: Cascade)
+  runway         Runway         @relation(fields: [runwayId], references: [id], onDelete: Cascade)
+
+  @@id([airportWeatherId, runwayId, operation])
+  @@index([runwayId])
+  @@map("airport_weather_runway")
 }
 
 model AirportNotam {
@@ -147,9 +162,10 @@ model Runway {
   lightingType    String @db.VarChar(16)
   coordinates     Json
 
-  airport          Airport  @relation(fields: [airportId], references: [id], onDelete: Cascade)
-  departureFlights Flight[] @relation("FlightDepartureRunway")
-  arrivalFlights   Flight[] @relation("FlightArrivalRunway")
+  airport          Airport                @relation(fields: [airportId], references: [id], onDelete: Cascade)
+  departureFlights Flight[]               @relation("FlightDepartureRunway")
+  arrivalFlights   Flight[]               @relation("FlightArrivalRunway")
+  weatherReports   AirportWeatherRunway[]
 
   @@map("runway")
 }
@@ -1092,6 +1108,11 @@ enum WeatherInformationType {
   atis_departure
   metar
   taf
+}
+
+enum RunwayOperation {
+  arrival
+  departure
 }
 
 enum AircraftState {

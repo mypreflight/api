@@ -1,8 +1,10 @@
 import { Prisma } from '../../client/client';
 import {
+  RunwayOperation,
   WeatherInformationType,
   WeatherSource,
 } from '../../../src/modules/airports/model/airport-weather.model';
+import { RUNWAY_IDS } from './runways.seed';
 
 const WARSAW = '616cbdd7-ccfc-4687-8cf6-1e7236435046';
 const FRANKFURT = 'f35c094a-bec5-4803-be32-bd80a14b441a';
@@ -11,6 +13,45 @@ const BOSTON = 'c03a79fb-c5ae-46c3-95fe-f3b5dc7b85f3';
 const AVIATION_WEATHER_GOV_FETCHED_AT = new Date('2026-07-08T12:00:00.000Z');
 const SAY_INTENTIONS_FETCHED_AT = new Date('2026-07-08T11:30:00.000Z');
 const ATIS_FETCHED_AT = new Date('2026-07-08T12:05:00.000Z');
+
+const RUNWAYS = {
+  warsaw11: RUNWAY_IDS.warsaw11,
+  warsaw15: 'caeefbc3-d620-4af1-b5c7-175485a56db1',
+  boston04R: 'affab21d-be0d-4281-bb94-4944122e91e9',
+  boston09: '39cdf097-9733-4ab1-a42b-256d24a97851',
+  frankfurt18: '2fea3a8b-3fa8-41d4-ac9b-97004ebf2509',
+  frankfurt25C: '290a31a8-ba88-436c-b9ab-d8a5c57ea81f',
+  frankfurt25L: '01847392-32d8-4b6b-98e7-ee7b700677c5',
+  frankfurt25R: 'b0fb79c5-840a-4005-a4f5-b5b8131ca1c9',
+} as const;
+
+const ATIS_RUNWAYS: Record<string, { arrival: string[]; departure: string[] }> =
+  {
+    '17349a5b-a0f3-4740-b04a-6493576fdccd': {
+      arrival: [RUNWAYS.warsaw11],
+      departure: [RUNWAYS.warsaw15],
+    },
+    'f6b7c755-acda-45a9-a6b6-457466aa0e08': {
+      arrival: [RUNWAYS.boston04R],
+      departure: [RUNWAYS.boston09],
+    },
+    '5d0c8d8e-2b8f-4a55-9a51-0d3c7f1e6a21': {
+      arrival: [RUNWAYS.boston04R],
+      departure: [RUNWAYS.boston09],
+    },
+    'a7e3c1b2-6f4d-4e8a-b1c9-3d2f5e7a9b04': {
+      arrival: [RUNWAYS.frankfurt25R, RUNWAYS.frankfurt25L],
+      departure: [],
+    },
+    'c4b9e2d1-8a7f-4c3e-9d6b-1f0e2a3c4d58': {
+      arrival: [],
+      departure: [RUNWAYS.frankfurt25C, RUNWAYS.frankfurt18],
+    },
+    'e8f1a2b3-c4d5-4e6f-8a9b-0c1d2e3f4a5b': {
+      arrival: [RUNWAYS.frankfurt25R, RUNWAYS.frankfurt25L],
+      departure: [],
+    },
+  };
 
 export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
   const weather: Prisma.AirportWeatherCreateManyInput[] = [
@@ -156,5 +197,27 @@ export async function loadWeather(tx: Prisma.TransactionClient): Promise<void> {
     },
   ];
 
-  await tx.airportWeather.createMany({ data: weather });
+  await tx.airportWeather.createMany({
+    data: weather.map((report) => ({
+      ...report,
+      runwaysResolved: Boolean(report.id && ATIS_RUNWAYS[report.id]),
+    })),
+  });
+
+  await tx.airportWeatherRunway.createMany({
+    data: Object.entries(ATIS_RUNWAYS).flatMap(
+      ([airportWeatherId, { arrival, departure }]) => [
+        ...arrival.map((runwayId) => ({
+          airportWeatherId,
+          runwayId,
+          operation: RunwayOperation.Arrival,
+        })),
+        ...departure.map((runwayId) => ({
+          airportWeatherId,
+          runwayId,
+          operation: RunwayOperation.Departure,
+        })),
+      ],
+    ),
+  });
 }

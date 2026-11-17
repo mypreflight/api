@@ -21,6 +21,7 @@ describe('RefreshWeatherHandler', () => {
   let faaDatisClient: { fetchAtis: jest.Mock };
   let atisGuruClient: { fetchAtis: jest.Mock };
   let vatsimClient: { fetchAtis: jest.Mock };
+  let atisRunwaysResolver: { resolve: jest.Mock };
   let handler: RefreshWeatherHandler;
 
   beforeEach(() => {
@@ -60,6 +61,16 @@ describe('RefreshWeatherHandler', () => {
     faaDatisClient = { fetchAtis: jest.fn().mockResolvedValue(new Map()) };
     atisGuruClient = { fetchAtis: jest.fn().mockResolvedValue([]) };
     vatsimClient = { fetchAtis: jest.fn().mockResolvedValue(new Map()) };
+    atisRunwaysResolver = {
+      resolve: jest.fn(
+        (
+          _airportId: string,
+          _icao: string,
+          _source: string,
+          reports: unknown,
+        ) => Promise.resolve(reports),
+      ),
+    };
 
     handler = new RefreshWeatherHandler(
       weatherRepository as never,
@@ -69,6 +80,7 @@ describe('RefreshWeatherHandler', () => {
       faaDatisClient as never,
       atisGuruClient as never,
       vatsimClient as never,
+      atisRunwaysResolver as never,
     );
   });
 
@@ -359,6 +371,34 @@ describe('RefreshWeatherHandler', () => {
 
     expect(replacedWith(WeatherSource.AtisGuru, 'a1')).toBeUndefined();
     expect(replacedWith(WeatherSource.AtisGuru, 'a2')).toHaveLength(1);
+  });
+
+  it('stores the runways in use read from each ATIS', async () => {
+    const runways = { arrival: ['r1'], departure: ['r2'], resolved: true };
+    faaDatisClient.fetchAtis.mockResolvedValue(
+      new Map([
+        [
+          'EPWA',
+          [{ kind: AtisKind.Combined, content: 'ATIS', publishedAt: ISSUED }],
+        ],
+      ]),
+    );
+    atisRunwaysResolver.resolve.mockImplementation(
+      (_airportId: string, _icao: string, _source: string, reports: object[]) =>
+        Promise.resolve(reports.map((report) => ({ ...report, runways }))),
+    );
+
+    await handler.execute(new RefreshWeatherCommand());
+
+    expect(atisRunwaysResolver.resolve).toHaveBeenCalledWith(
+      'a1',
+      'EPWA',
+      WeatherSource.FaaDatis,
+      [expect.objectContaining({ content: 'ATIS' })],
+    );
+    expect(replacedWith(WeatherSource.FaaDatis, 'a1')).toEqual([
+      expect.objectContaining({ content: 'ATIS', runways }),
+    ]);
   });
 
   it('keeps storing ATIS for the other airports when one write fails', async () => {

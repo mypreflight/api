@@ -850,7 +850,9 @@ Feature: Update own profile
           "informationType": "atis",
           "content": "Warsaw Chopin airport, information Sierra. 1030 Zulu. Arriving runway 11. Departing runway 15. Wind 150 at 9. CAVOK. Temperature 29, dewpoint 12. QNH 1013. Transition level 80. Advise on initial contact you have information Sierra.",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["0aaaf26f-29df-45d3-8330-f85f9838de2f"],
+          "departureRunways": ["caeefbc3-d620-4af1-b5c7-175485a56db1"]
         },
         {
           "id": "029388aa-805a-4de8-89bb-a3ac4db9a88f",
@@ -858,7 +860,9 @@ Feature: Update own profile
           "informationType": "metar",
           "content": "EPWA 101030Z 15009KT 130V190 CAVOK 29/12 Q1013 NOSIG",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
@@ -866,7 +870,9 @@ Feature: Update own profile
           "informationType": "taf",
           "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
