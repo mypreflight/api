@@ -1,6 +1,7 @@
 import { Query, QueryHandler, IQueryHandler, QueryBus } from '@nestjs/cqrs';
 import {
   GetAirportWeatherResponse,
+  RunwayOperation,
   WeatherInformationType,
   WeatherSource,
 } from '../../../model/airport-weather.model';
@@ -41,10 +42,16 @@ export class GetAirportWeatherHandler implements IQueryHandler<GetAirportWeather
       source,
     );
 
-    return reports.map((report) => ({
+    return reports.map(({ runways, ...report }) => ({
       ...report,
       source: report.source as WeatherSource,
       informationType: report.informationType as WeatherInformationType,
+      arrivalRunways: runways
+        .filter(({ operation }) => operation === RunwayOperation.Arrival)
+        .map(({ runwayId }) => runwayId),
+      departureRunways: runways
+        .filter(({ operation }) => operation === RunwayOperation.Departure)
+        .map(({ runwayId }) => runwayId),
     }));
   }
 

@@ -43,12 +43,12 @@ export async function loadResources() {
         await loadCities(tx);
         await loadPostcards(tx);
         await loadAirports(tx);
-        await loadWeather(tx);
         await loadNotams(tx);
         await loadTerminals(tx);
         await loadParkingPositions(tx);
         await loadGates(tx);
         await loadRunways(tx);
+        await loadWeather(tx);
         await loadOperators(tx);
         await loadCrew(tx);
         await loadCabinLayouts(tx);

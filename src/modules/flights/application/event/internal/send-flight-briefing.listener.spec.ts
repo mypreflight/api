@@ -71,6 +71,8 @@ function report(
     content,
     lastFetched: new Date('2025-01-05T08:55:00.000Z'),
     publishedAt: null,
+    arrivalRunways: [],
+    departureRunways: [],
   };
 }
 

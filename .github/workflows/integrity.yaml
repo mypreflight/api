@@ -58,6 +58,7 @@ jobs:
       TF_VAR_discord_app_token: 'unused-in-plans'
       TF_VAR_discord_client_secret: 'unused-in-plans'
       TF_VAR_mailgun_api_key: 'unused-in-plans'
+      TF_VAR_openai_api_key: 'unused-in-plans'
       TF_VAR_cloudflare_tunnel_token: 'unused-in-plans'
     steps:
       - name: 'Checkout repository'

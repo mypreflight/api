@@ -22,6 +22,7 @@ locals {
     DISCORD_APP_TOKEN     = var.discord_app_token
     DISCORD_CLIENT_SECRET = var.discord_client_secret
     MAILGUN_API_KEY       = var.mailgun_api_key
+    OPENAI_API_KEY        = var.openai_api_key
   }
 
   secret_names = toset([
@@ -33,6 +34,7 @@ locals {
     "DISCORD_APP_TOKEN",
     "DISCORD_CLIENT_SECRET",
     "MAILGUN_API_KEY",
+    "OPENAI_API_KEY",
   ])
 
   functions = {
@@ -55,6 +57,7 @@ locals {
     FAA_DATIS_API_HOST                             = "https://atis.info"
     ATIS_GURU_HOST                                 = "https://atis.guru"
     VATSIM_DATA_API_HOST                           = "https://data.vatsim.net"
+    OPENAI_API_HOST                                = "https://api.openai.com"
     MAILGUN_API_HOST                               = "https://api.eu.mailgun.net"
     MAILGUN_DOMAIN                                 = "mypreflight.io"
     MAIL_FROM_ADDRESS                              = "MyPreflight <no-reply@mypreflight.io>"

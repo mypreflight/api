@@ -1,0 +1,104 @@
+{
+  "uuid": "09faee41-92be-41b6-a7f0-c6921ca9a84d",
+  "lastMigration": 33,
+  "name": "OpenAI",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 1094,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "3cc4c0b3-f8e7-4491-87f9-c820b40c5c1f",
+      "type": "http",
+      "documentation": "",
+      "method": "post",
+      "endpoint": "v1/responses",
+      "responses": [
+        {
+          "uuid": "051c8bcd-0d27-44fd-9eb0-6a96595aa320",
+          "body": "{\n  \"id\": \"resp_mock\",\n  \"object\": \"response\",\n  \"status\": \"completed\",\n  \"model\": \"gpt-6-luna\",\n  \"output\": [\n    {\n      \"id\": \"msg_mock\",\n      \"type\": \"message\",\n      \"status\": \"completed\",\n      \"role\": \"assistant\",\n      \"content\": [\n        {\n          \"type\": \"output_text\",\n          \"annotations\": [],\n          \"text\": \"{\\\"arrival\\\":[],\\\"departure\\\":[]}\"\n        }\n      ]\n    }\n  ],\n  \"usage\": {\n    \"input_tokens\": 0,\n    \"output_tokens\": 0,\n    \"total_tokens\": 0\n  }\n}",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "Runways in use",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [
+            {
+              "target": "header",
+              "modifier": "Authorization",
+              "value": "Bearer very-secret-token",
+              "invert": false,
+              "operator": "equals"
+            }
+          ],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "1452c3ad-d63f-4db0-938d-571593472701",
+          "body": "{\n  \"error\": {\n    \"message\": \"Incorrect API key provided.\",\n    \"type\": \"invalid_request_error\",\n    \"code\": \"invalid_api_key\"\n  }\n}",
+          "latency": 0,
+          "statusCode": 401,
+          "label": "Wrong API key",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "AND",
+          "disableTemplating": true,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null,
+      "streamingMode": null,
+      "streamingInterval": 0
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "3cc4c0b3-f8e7-4491-87f9-c820b40c5c1f"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": false,
+  "headers": [],
+  "proxyReqHeaders": [],
+  "proxyResHeaders": [],
+  "data": [],
+  "callbacks": []
+}

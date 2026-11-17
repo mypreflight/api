@@ -13,7 +13,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -21,7 +23,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -39,7 +43,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -47,7 +53,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -64,7 +72,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -72,7 +82,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -89,7 +101,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EDDF 081200Z 24008KT 9999 FEW035 22/12 Q1018 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "f721308b-9a04-4b20-8af9-89b25fd1986e",
@@ -97,7 +111,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EDDF 081100Z 0812/0918 24010KT 9999 FEW035 BECMG 0815/0817 27012KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -147,7 +163,9 @@ Feature: Get airport weather
           "informationType": "atis",
           "content": "Warsaw Chopin airport, information Sierra. 1030 Zulu. Arriving runway 11. Departing runway 15. Wind 150 at 9. CAVOK. Temperature 29, dewpoint 12. QNH 1013. Transition level 80. Advise on initial contact you have information Sierra.",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["0aaaf26f-29df-45d3-8330-f85f9838de2f"],
+          "departureRunways": ["caeefbc3-d620-4af1-b5c7-175485a56db1"]
         },
         {
           "id": "029388aa-805a-4de8-89bb-a3ac4db9a88f",
@@ -155,7 +173,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 101030Z 15009KT 130V190 CAVOK 29/12 Q1013 NOSIG",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
@@ -163,7 +183,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -181,7 +203,9 @@ Feature: Get airport weather
           "informationType": "atis",
           "content": "Warsaw Chopin airport, information Sierra. 1030 Zulu. Arriving runway 11. Departing runway 15. Wind 150 at 9. CAVOK. Temperature 29, dewpoint 12. QNH 1013. Transition level 80. Advise on initial contact you have information Sierra.",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["0aaaf26f-29df-45d3-8330-f85f9838de2f"],
+          "departureRunways": ["caeefbc3-d620-4af1-b5c7-175485a56db1"]
         },
         {
           "id": "029388aa-805a-4de8-89bb-a3ac4db9a88f",
@@ -189,7 +213,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 101030Z 15009KT 130V190 CAVOK 29/12 Q1013 NOSIG",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
@@ -197,7 +223,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -215,7 +243,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -223,7 +253,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -240,7 +272,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -248,7 +282,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -265,7 +301,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -273,7 +311,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "17349a5b-a0f3-4740-b04a-6493576fdccd",
@@ -281,7 +321,9 @@ Feature: Get airport weather
           "informationType": "atis",
           "content": "Warsaw Chopin airport, information Sierra. 1030 Zulu. Arriving runway 11. Departing runway 15. Wind 150 at 9. CAVOK. Temperature 29, dewpoint 12. QNH 1013. Transition level 80. Advise on initial contact you have information Sierra.",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["0aaaf26f-29df-45d3-8330-f85f9838de2f"],
+          "departureRunways": ["caeefbc3-d620-4af1-b5c7-175485a56db1"]
         },
         {
           "id": "029388aa-805a-4de8-89bb-a3ac4db9a88f",
@@ -289,7 +331,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 101030Z 15009KT 130V190 CAVOK 29/12 Q1013 NOSIG",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
@@ -297,7 +341,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -315,7 +361,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 081200Z 20006KT 9999 SCT040 24/13 Q1016 NOSIG",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "9ea4d8fe-e098-466f-a3f1-e997d34031c3",
@@ -323,7 +371,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 081100Z 0812/0918 20008KT 9999 SCT040 BECMG 0900/0902 24010KT",
           "lastFetched": "2026-07-08T12:00:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -340,7 +390,9 @@ Feature: Get airport weather
           "informationType": "atis",
           "content": "Warsaw Chopin airport, information Sierra. 1030 Zulu. Arriving runway 11. Departing runway 15. Wind 150 at 9. CAVOK. Temperature 29, dewpoint 12. QNH 1013. Transition level 80. Advise on initial contact you have information Sierra.",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": ["0aaaf26f-29df-45d3-8330-f85f9838de2f"],
+          "departureRunways": ["caeefbc3-d620-4af1-b5c7-175485a56db1"]
         },
         {
           "id": "029388aa-805a-4de8-89bb-a3ac4db9a88f",
@@ -348,7 +400,9 @@ Feature: Get airport weather
           "informationType": "metar",
           "content": "EPWA 101030Z 15009KT 130V190 CAVOK 29/12 Q1013 NOSIG",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         },
         {
           "id": "51f1542c-243f-4114-adf9-164e6a22b458",
@@ -356,7 +410,9 @@ Feature: Get airport weather
           "informationType": "taf",
           "content": "EPWA 100830Z 1009/1109 17007KT CAVOK BECMG 1010/1013 26012KT",
           "lastFetched": "2026-07-08T11:30:00.000Z",
-          "publishedAt": null
+          "publishedAt": null,
+          "arrivalRunways": [],
+          "departureRunways": []
         }
       ]
       """
@@ -381,7 +437,9 @@ Feature: Get airport weather
           "informationType": "atis",
           "content": "BOS ATIS INFO E 1154Z. 21009KT 10SM FEW040 24/16 A3000 (THREE ZERO ZERO ZERO). ILS RY 4R APCH IN USE. DEPG RY 9. ...ADVS YOU HAVE INFO E.",
           "lastFetched": "2026-07-08T12:05:00.000Z",
-          "publishedAt": "2026-07-08T11:54:00.000Z"
+          "publishedAt": "2026-07-08T11:54:00.000Z",
+          "arrivalRunways": ["affab21d-be0d-4281-bb94-4944122e91e9"],
+          "departureRunways": ["39cdf097-9733-4ab1-a42b-256d24a97851"]
         }
       ]
       """
@@ -398,7 +456,9 @@ Feature: Get airport weather
           "informationType": "atis_arrival",
           "content": "EDDF ARR ATIS K\n1150Z\nARR-ATIS EDDF K METAR 081150\nEXPECT INDEPENDENT PARALLEL ILS APCH RWY 25R OR RWY 25L\nTRL 70\nQNH1018\nEND OF ATIS K",
           "lastFetched": "2026-07-08T12:05:00.000Z",
-          "publishedAt": "2026-07-08T11:56:00.000Z"
+          "publishedAt": "2026-07-08T11:56:00.000Z",
+          "arrivalRunways": ["01847392-32d8-4b6b-98e7-ee7b700677c5", "b0fb79c5-840a-4005-a4f5-b5b8131ca1c9"],
+          "departureRunways": []
         },
         {
           "id": "c4b9e2d1-8a7f-4c3e-9d6b-1f0e2a3c4d58",
@@ -406,7 +466,9 @@ Feature: Get airport weather
           "informationType": "atis_departure",
           "content": "EDDF DEP ATIS M\n1150Z -DEP-ATIS EDDF M METAR 081150\n\t-RWY 25C 18\n\t-TRL 70\n\t-QNH1018",
           "lastFetched": "2026-07-08T12:05:00.000Z",
-          "publishedAt": "2026-07-08T10:41:00.000Z"
+          "publishedAt": "2026-07-08T10:41:00.000Z",
+          "arrivalRunways": [],
+          "departureRunways": ["2fea3a8b-3fa8-41d4-ac9b-97004ebf2509", "290a31a8-ba88-436c-b9ab-d8a5c57ea81f"]
         }
       ]
       """
@@ -423,7 +485,9 @@ Feature: Get airport weather
           "informationType": "atis_arrival",
           "content": "ARR-ATIS EDDF K METAR 081150\nEXPECT INDEPENDENT PARALLEL ILS APCH RWY 25R OR RWY 25L\nTRL 70\n24008KT 9999 FEW035 T22 DP12 QNH1018",
           "lastFetched": "2026-07-08T12:05:00.000Z",
-          "publishedAt": "2026-07-08T12:04:31.000Z"
+          "publishedAt": "2026-07-08T12:04:31.000Z",
+          "arrivalRunways": ["01847392-32d8-4b6b-98e7-ee7b700677c5", "b0fb79c5-840a-4005-a4f5-b5b8131ca1c9"],
+          "departureRunways": []
         }
       ]
       """

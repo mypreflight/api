@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { Prisma } from 'prisma/client/client';
 import { PrismaService } from '../../../../core/provider/prisma/prisma.service';
 import {
+  RunwayOperation,
   WeatherInformationType,
   WeatherSource,
 } from '../../model/airport-weather.model';
@@ -13,18 +14,41 @@ const selectWeather = {
   content: true,
   lastFetched: true,
   publishedAt: true,
+  runways: {
+    select: { runwayId: true, operation: true },
+    orderBy: { runway: { designator: 'asc' } },
+  },
 } as const satisfies Prisma.AirportWeatherSelect;
 
 export type AirportWeatherView = Prisma.AirportWeatherGetPayload<{
   select: typeof selectWeather;
 }>;
 
+export type AtisRunways = {
+  arrival: string[];
+  departure: string[];
+  resolved: boolean;
+};
+
 export type WeatherReport = {
   informationType: WeatherInformationType;
   content: string;
   lastFetched: Date;
   publishedAt: Date | null;
+  runways?: AtisRunways;
 };
+
+export type AtisResolution = {
+  informationType: WeatherInformationType;
+  content: string;
+  runwaysResolved: boolean;
+};
+
+const ATIS_INFORMATION_TYPES = [
+  WeatherInformationType.Atis,
+  WeatherInformationType.AtisArrival,
+  WeatherInformationType.AtisDeparture,
+];
 
 @Injectable()
 export class AirportWeatherRepository {
@@ -39,6 +63,25 @@ export class AirportWeatherRepository {
       orderBy: [{ source: 'asc' }, { informationType: 'asc' }],
       select: selectWeather,
     });
+  }
+
+  async findAtisResolutions(
+    airportId: string,
+    source: WeatherSource,
+  ): Promise<AtisResolution[]> {
+    const reports = await this.prisma.airportWeather.findMany({
+      where: {
+        airportId,
+        source,
+        informationType: { in: ATIS_INFORMATION_TYPES },
+      },
+      select: { informationType: true, content: true, runwaysResolved: true },
+    });
+
+    return reports.map((report) => ({
+      ...report,
+      informationType: report.informationType as WeatherInformationType,
+    }));
   }
 
   async findLatestMetarByIataCode(iataCode: string): Promise<string | null> {
@@ -92,6 +135,20 @@ export class AirportWeatherRepository {
     source: WeatherSource,
     report: WeatherReport,
   ) {
+    const runways = report.runways && {
+      runwaysResolved: report.runways.resolved,
+      rows: [
+        ...report.runways.arrival.map((runwayId) => ({
+          runwayId,
+          operation: RunwayOperation.Arrival,
+        })),
+        ...report.runways.departure.map((runwayId) => ({
+          runwayId,
+          operation: RunwayOperation.Departure,
+        })),
+      ],
+    };
+
     return this.prisma.airportWeather.upsert({
       where: {
         airportId_source_informationType: {
@@ -107,11 +164,19 @@ export class AirportWeatherRepository {
         content: report.content,
         lastFetched: report.lastFetched,
         publishedAt: report.publishedAt,
+        ...(runways && {
+          runwaysResolved: runways.runwaysResolved,
+          runways: { create: runways.rows },
+        }),
       },
       update: {
         content: report.content,
         lastFetched: report.lastFetched,
         publishedAt: report.publishedAt,
+        ...(runways && {
+          runwaysResolved: runways.runwaysResolved,
+          runways: { deleteMany: {}, create: runways.rows },
+        }),
       },
     });
   }

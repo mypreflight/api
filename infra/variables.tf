@@ -165,6 +165,17 @@ variable "mailgun_api_key" {
   }
 }
 
+variable "openai_api_key" {
+  type      = string
+  sensitive = true
+  ephemeral = true
+
+  validation {
+    condition     = length(var.openai_api_key) > 0
+    error_message = "Set TF_VAR_openai_api_key."
+  }
+}
+
 variable "cloudflare_tunnel_token" {
   type      = string
   sensitive = true

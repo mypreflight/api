@@ -80,6 +80,7 @@ jobs:
       TF_VAR_discord_app_token: ${{ secrets.DISCORD_APP_TOKEN }}
       TF_VAR_discord_client_secret: ${{ secrets.DISCORD_CLIENT_SECRET }}
       TF_VAR_mailgun_api_key: ${{ secrets.MAILGUN_API_KEY }}
+      TF_VAR_openai_api_key: ${{ secrets.OPENAI_API_KEY }}
       TF_VAR_cloudflare_tunnel_token: ${{ secrets.CLOUDFLARE_TUNNEL_TOKEN }}
     steps:
       - name: 'Checkout repository'

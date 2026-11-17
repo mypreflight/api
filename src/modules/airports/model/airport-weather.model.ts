@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { RunwayId } from './runway.model';
 
 export enum WeatherSource {
   AviationWeatherGov = 'aviation_weather_gov',
@@ -14,6 +15,11 @@ export enum WeatherInformationType {
   AtisDeparture = 'atis_departure',
   Metar = 'metar',
   Taf = 'taf',
+}
+
+export enum RunwayOperation {
+  Arrival = 'arrival',
+  Departure = 'departure',
 }
 
 export class GetAirportWeatherResponse {
@@ -62,4 +68,24 @@ export class GetAirportWeatherResponse {
     nullable: true,
   })
   publishedAt!: Date | null;
+
+  @ApiProperty({
+    description:
+      'Runways the ATIS puts in use for arrivals, as runway ids in designator order. The system reads them from the ATIS text, and only runways the airport has can appear. Empty for METAR and TAF, and for an ATIS that names no arrival runway.',
+    example: ['affab21d-be0d-4281-bb94-4944122e91e9'],
+    type: String,
+    format: 'uuid',
+    isArray: true,
+  })
+  arrivalRunways!: RunwayId[];
+
+  @ApiProperty({
+    description:
+      'Runways the ATIS puts in use for departures, as runway ids in designator order. The system reads them from the ATIS text, and only runways the airport has can appear. Empty for METAR and TAF, and for an ATIS that names no departure runway.',
+    example: ['39cdf097-9733-4ab1-a42b-256d24a97851'],
+    type: String,
+    format: 'uuid',
+    isArray: true,
+  })
+  departureRunways!: RunwayId[];
 }

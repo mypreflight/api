@@ -16,8 +16,10 @@ The system SHALL expose `GET /api/v1/airport/:airportId/weather` returning the w
 reports stored for the airport identified by its UUID as a collection, and SHALL serve it
 without authentication. Each entry SHALL carry the report's identifier, the source that
 published it, the information type it is (`atis`, `atis_arrival`, `atis_departure`, `metar`
-or `taf`), its content, when the system last fetched it, and when the source says it
-published or received the report, or null where the source does not say. The collection SHALL be ordered deterministically by source and
+or `taf`), its content, when the system last fetched it, when the source says it
+published or received the report, or null where the source does not say, and the runways
+the report puts in use for arrivals and for departures as two lists of runway ids, empty for
+METAR and TAF. The collection SHALL be ordered deterministically by source and
 then by information type, so that repeated reads of unchanged data return entries in the
 same order. An airport that holds no report matching the request SHALL yield an empty
 collection rather than an error; only an airport that does not exist SHALL be reported as
@@ -26,7 +28,7 @@ missing.
 #### Scenario: Weather exists for the airport
 
 - **WHEN** an unauthenticated client requests `GET /api/v1/airport/:airportId/weather` for an airport that has stored reports
-- **THEN** the system responds `200 OK` with one entry per stored report, each carrying its identifier, source, information type, content, last-fetched time and published time
+- **THEN** the system responds `200 OK` with one entry per stored report, each carrying its identifier, source, information type, content, last-fetched time, published time, arrival runways and departure runways
 
 #### Scenario: No weather record for the airport
 
@@ -200,6 +202,52 @@ requested an atis.guru ATIS, nor the identity of a VATSIM controller.
 
 - **WHEN** a refresh cannot reach one of these sources or cannot read its answer
 - **THEN** the ATIS stored from that source is left as it was
+
+### Requirement: Runways in use read from ATIS
+
+The system SHALL determine, for every ATIS it stores from any source, which of the airport's
+runways the ATIS puts in use for arrivals and which for departures, and SHALL serve them as
+`arrivalRunways` and `departureRunways`, each a list of runway ids in designator order. Only
+runways the airport has SHALL appear. A runway the ATIS names only as closed, out of service,
+for holding short, crossing, vacating, wind or surface condition, or in its NOTAMs, SHALL NOT
+count as in use. A runway put in use without saying for what SHALL count for both on an ATIS
+that serves both, and for its own operation on an arrival or a departure ATIS. The system
+SHALL read the text itself first and SHALL ask a language model only about an ATIS it cannot
+settle, offering the model only the airport's runways. A refresh that brings the same ATIS
+text again SHALL keep the runways already determined for it rather than determining them
+again, unless the language model could not be reached for it, in which case the system SHALL
+keep its own reading and try again on a later refresh. A failure to determine the runways
+SHALL NOT stop the ATIS from being stored.
+
+#### Scenario: An ATIS names the arrival and the departure runway
+
+- **WHEN** a monitored airport's ATIS reads `ILS RY 4R APCH IN USE. DEPG RY 9.`
+- **THEN** that ATIS carries runway 04R as its arrival runway and runway 09 as its departure runway
+
+#### Scenario: A closed runway is not in use
+
+- **WHEN** an ATIS reads `APPROACH IN USE ILS RY 31L. DEPG RY 31L. RWY 4L, 22R CLSD.`
+- **THEN** runway 31L is its arrival and departure runway, and neither 04L nor 22R appears
+
+#### Scenario: An arrival ATIS gives its runway without saying for what
+
+- **WHEN** an arrival ATIS reads `RWY IN USE 22L`
+- **THEN** runway 22L is its arrival runway and it has no departure runway
+
+#### Scenario: An unclear ATIS goes to the language model
+
+- **WHEN** an ATIS for arrivals and departures reads `OPS AND INFO, RWY 10.`
+- **THEN** the system asks the language model which of the airport's runways are in use and stores its answer
+
+#### Scenario: An unchanged ATIS is not read again
+
+- **WHEN** a refresh brings an ATIS with the same text as the stored one, whose runways were determined
+- **THEN** the stored runways are kept and the language model is not asked
+
+#### Scenario: METAR and TAF carry no runways
+
+- **WHEN** a client reads a METAR or TAF report
+- **THEN** its arrival and departure runways are empty
 
 ### Requirement: Monitor a flight's airports on check-in
 

@@ -83,6 +83,8 @@ import { SayIntentionsModule } from '../../core/provider/sayintentions/say-inten
 import { FaaDatisModule } from '../../core/provider/faa-datis/faa-datis.module';
 import { AtisGuruModule } from '../../core/provider/atis-guru/atis-guru.module';
 import { VatsimModule } from '../../core/provider/vatsim/vatsim.module';
+import { OpenAiModule } from '../../core/provider/openai/openai.module';
+import { AtisRunwaysResolver } from './infra/service/atis-runways.resolver';
 import { AirportWeatherRepository } from './infra/database/airport-weather.repository';
 import { GetWeatherAction } from './infra/http/action/weather/get-weather.action';
 import { GetAirportWeatherHandler } from './application/query/weather/get-airport-weather.query';
@@ -114,6 +116,7 @@ import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module
     FaaDatisModule,
     AtisGuruModule,
     VatsimModule,
+    OpenAiModule,
     OsmModule,
   ],
   controllers: [
@@ -208,6 +211,7 @@ import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module
     StopMonitoringAirportsWeatherHandler,
     WeatherFlightLifecycleListener,
     WeatherRefreshService,
+    AtisRunwaysResolver,
     AirportNotamsRepository,
     ListAirportNotamsHandler,
     ReplaceAirportNotamsHandler,
