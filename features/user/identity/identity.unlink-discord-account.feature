@@ -25,6 +25,7 @@ Feature: As a signed-in user I can unlink my Discord account to stop briefing me
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "emails": [
           {
             "email": "michael.doe@example.com",

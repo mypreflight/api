@@ -70,6 +70,7 @@ Feature: Request a manual dead-head travel
         "lastAirportUpdatedAt": "@date('within 1 minute from now')",
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false

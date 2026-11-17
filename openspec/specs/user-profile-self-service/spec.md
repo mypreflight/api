@@ -10,7 +10,7 @@ out of reach of self-service.
 
 ### Requirement: A user updates their own profile
 
-The system SHALL allow any authenticated user to update their own name, pilot license, home airport, Simbrief user ID, and default weather source, and SHALL return the updated user. The system SHALL apply the update to the requesting user only, identified from the access token, and SHALL ignore any user identifier supplied in the request. Fields omitted from the request SHALL be left unchanged. The default weather source SHALL accept only a source the system actually collects weather from — `aviation_weather_gov` or `say_intentions` — and SHALL reject any other value, including the filter-only values accepted by the weather read endpoint, with a validation error. The Simbrief user ID SHALL consist of digits only, since that is what SimBrief issues, and SHALL be rejected with a validation error otherwise; a well-formed ID SHALL additionally be verified against SimBrief before it is stored.
+The system SHALL allow any authenticated user to update their own name, pilot license, home airport, Simbrief user ID, default weather source and default ATIS source, and SHALL return the updated user. The system SHALL apply the update to the requesting user only, identified from the access token, and SHALL ignore any user identifier supplied in the request. Fields omitted from the request SHALL be left unchanged. The default weather source SHALL accept only a source the system actually collects weather from — `aviation_weather_gov` or `say_intentions` — and SHALL reject any other value, including the filter-only values accepted by the weather read endpoint, with a validation error. The default ATIS source SHALL accept only a source the system collects ATIS from — `say_intentions`, `vatsim`, `faa_datis` or `atis_guru` — SHALL default to `say_intentions`, and SHALL reject any other value with a validation error. The Simbrief user ID SHALL consist of digits only, since that is what SimBrief issues, and SHALL be rejected with a validation error otherwise; a well-formed ID SHALL additionally be verified against SimBrief before it is stored.
 
 #### Scenario: A user changes their own name
 
@@ -52,10 +52,20 @@ The system SHALL allow any authenticated user to update their own name, pilot li
 - **WHEN** an authenticated user submits `faa_datis`, `atis_guru` or `vatsim` as their default weather source
 - **THEN** the request is rejected with a validation error, because only `aviation_weather_gov` and `say_intentions` publish METAR and TAF, and their default weather source is unchanged
 
+#### Scenario: A user chooses the ATIS source they read first
+
+- **WHEN** an authenticated user submits `vatsim` as their default ATIS source
+- **THEN** the default ATIS source is updated and their own profile returns `vatsim`
+
+#### Scenario: A source without ATIS cannot be the default ATIS source
+
+- **WHEN** an authenticated user submits `aviation_weather_gov` as their default ATIS source
+- **THEN** the request is rejected with a validation error, because aviationweather.gov publishes no ATIS, and their default ATIS source is unchanged
+
 #### Scenario: Omitted fields are preserved
 
 - **WHEN** an authenticated user submits only a new name
-- **THEN** their pilot license, home airport, Simbrief user ID, default weather source, and every other profile attribute are unchanged
+- **THEN** their pilot license, home airport, Simbrief user ID, default weather source, default ATIS source, and every other profile attribute are unchanged
 
 #### Scenario: An unauthenticated request is rejected
 
@@ -65,7 +75,7 @@ The system SHALL allow any authenticated user to update their own name, pilot li
 ### Requirement: Self-service cannot change privileged or system-managed fields
 
 The system SHALL reject a self-service profile update that attempts to set any
-attribute other than the five self-service attributes — in particular `role`,
+attribute other than the six self-service attributes — in particular `role`,
 `email`, `password`, `discordId`, `currentFlightId`, or the last-airport attributes —
 with a validation error, and SHALL NOT apply any part of that request. The Discord
 identifier is an authentication identifier, so it SHALL be writable only by a

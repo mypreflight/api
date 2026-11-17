@@ -18,6 +18,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": true,
@@ -55,6 +56,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "say_intentions",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -91,6 +93,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -131,6 +134,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -172,6 +176,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -217,6 +222,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": "333444",
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false
@@ -264,6 +270,7 @@ Feature: Get current user
         "lastAirportUpdatedAt": null,
         "simbriefUserId": null,
         "defaultWeatherSource": "aviation_weather_gov",
+        "defaultAtisSource": "say_intentions",
         "identities": {
           "google": {
             "linked": false

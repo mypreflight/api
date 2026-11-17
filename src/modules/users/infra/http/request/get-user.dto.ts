@@ -9,6 +9,7 @@ export class GetUserDto extends OmitType(User, [
   'password',
   'simbriefUserId',
   'defaultWeatherSource',
+  'defaultAtisSource',
 ]) {}
 
 export class UserEmailDto {

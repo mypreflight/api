@@ -125,6 +125,7 @@ export class UsersRepository {
       ...this.returnWithoutPassword(user),
       simbriefUserId: user.simbriefUserId,
       defaultWeatherSource: user.defaultWeatherSource as WeatherSource,
+      defaultAtisSource: user.defaultAtisSource as WeatherSource,
       emailConfirmedAt: user.emailConfirmedAt,
       googleId: user.googleId,
       googleEmail: user.googleEmail,
