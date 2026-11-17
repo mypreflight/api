@@ -4,7 +4,10 @@ import {
   ICommandHandler,
   QueryBus,
 } from '@nestjs/cqrs';
-import { SimbriefIdNotConnectedError } from '../../model/error/flight.error';
+import {
+  SimbriefIdNotConnectedError,
+  SimbriefPlanWithoutAircraftError,
+} from '../../model/error/flight.error';
 import { FlightsRepository } from '../../infra/database/repository/flights.repository';
 import {
   FlightWasCreatedEvent,
@@ -15,7 +18,7 @@ import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-
 import { GetUserSimbriefIdQuery } from '../../../users/application/query/get-user-simbrief-id.query';
 import { SimbriefClient } from '../../../../core/provider/simbrief/client/simbrief.client';
 import { ImportAirportByIcaoCommand } from '../../../airports/application/command/import-airport-by-icao.command';
-import { GetAircraftByRegistrationQuery } from '../../../aircraft/application/query/get-aircraft-by-registration.query';
+import { ImportAircraftByRegistrationCommand } from '../../../aircraft/application/command/import-aircraft-by-registration.command';
 import { GetOperatorByIcaoCodeQuery } from '../../../operators/application/query/get-operator-by-icao-code.query';
 import { FlightServiceType, FlightTracking } from '../../model/flight.model';
 import {
@@ -108,28 +111,44 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
 
     const ofp = await this.simbriefClient.getOperationalFlightPlan(simbriefId);
 
+    const registration = this.readOfpText(ofp.aircraft.reg)
+      .trim()
+      .toUpperCase();
+    const aircraftType = this.readOfpText(ofp.aircraft.icaocode)
+      .trim()
+      .toUpperCase();
+
+    if (registration.length === 0 || aircraftType.length === 0) {
+      throw new SimbriefPlanWithoutAircraftError();
+    }
+
+    const operatorQuery = new GetOperatorByIcaoCodeQuery(
+      ofp.general.icao_airline,
+    );
+    const operator = await this.queryBus.execute(operatorQuery);
+
     const departureAirportCommand = new ImportAirportByIcaoCommand(
       ofp.origin.icao_code,
     );
     const destinationAirportCommand = new ImportAirportByIcaoCommand(
       ofp.destination.icao_code,
     );
-    const aircraftQuery = new GetAircraftByRegistrationQuery(ofp.aircraft.reg);
-    const operatorQuery = new GetOperatorByIcaoCodeQuery(
-      ofp.general.icao_airline,
+    const aircraftCommand = new ImportAircraftByRegistrationCommand(
+      registration,
+      aircraftType,
+      operator.id,
     );
 
     const alternateCandidates = this.collectAlternateCandidates(ofp);
 
     const [
-      [departureAirportId, destinationAirportId, aircraft, operator],
+      [departureAirportId, destinationAirportId, aircraftId],
       alternateAirports,
     ] = await Promise.all([
       Promise.all([
         this.commandBus.execute(departureAirportCommand),
         this.commandBus.execute(destinationAirportCommand),
-        this.queryBus.execute(aircraftQuery),
-        this.queryBus.execute(operatorQuery),
+        this.commandBus.execute(aircraftCommand),
       ]),
       this.resolveAlternateAirports(alternateCandidates),
     ]);
@@ -150,7 +169,7 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
       fuel: this.mapFuelBreakdown(ofp, unit),
     };
 
-    const capacityQuery = new GetSeatCapacityQuery(aircraft.id);
+    const capacityQuery = new GetSeatCapacityQuery(aircraftId);
     const capacity: CabinCapacity | null =
       await this.queryBus.execute(capacityQuery);
     const loadsheet = capPassengersAtSeatCapacity(
@@ -167,7 +186,7 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
       callsign,
       atcCallsign: filedAtcCallsign.length > 0 ? filedAtcCallsign : callsign,
       isEtops: ofp.general.is_etops === '1',
-      aircraftId: aircraft.id,
+      aircraftId,
       operatorId: operator.id,
       departureAirportId: departureAirportId,
       tracking: FlightTracking.Private,

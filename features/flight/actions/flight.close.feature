@@ -399,6 +399,7 @@ Feature: Close flight
         "selcal": "AB-FG",
         "currentState": "idle",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",

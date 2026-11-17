@@ -61,6 +61,7 @@ export class GetAircraftByIdHandler implements IQueryHandler<GetAircraftByIdQuer
         airframe.iataType,
       ),
       holdVariant: aircraft.holdVariant,
+      isConfirmed: aircraft.isConfirmed,
       baseAirport: toAircraftAirport(aircraft.baseAirport),
       lastAirport: toAircraftAirport(aircraft.lastAirport),
       lastAirportUpdatedAt: aircraft.lastAirportUpdatedAt,

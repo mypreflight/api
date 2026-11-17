@@ -46,6 +46,7 @@ Feature: Update aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -121,6 +122,7 @@ Feature: Update aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -172,6 +174,7 @@ Feature: Update aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 120,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -223,6 +226,7 @@ Feature: Update aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -274,6 +278,7 @@ Feature: Update aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "3c721cc6-c653-4fad-be43-dc9d6a149383",
@@ -325,6 +330,7 @@ Feature: Update aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": null,
         "lastAirport": null,
@@ -539,6 +545,69 @@ Feature: Update aircraft
         "error": "Bad Request",
         "violations": {
           "cabinLayout": ["property cabinLayout should not exist"]
+        }
+      }
+      """
+
+  Scenario: As operations I can confirm an aircraft created from an imported flight plan
+    Given I am signed in as "operations with Simbrief ID but non existing aircraft"
+    When I send a "POST" request to "/api/v1/flight/create-with-simbrief"
+    Then the response status should be 201
+    And I remember the response body property "aircraft.id" as "aircraftId"
+    When I send a "PATCH" request to "/api/v1/operator/40b1b34e-aea1-4cec-acbe-f2bf97c06d7d/aircraft/{{aircraftId}}" with body:
+      """json
+      {
+        "isConfirmed": true
+      }
+      """
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      {
+        "id": "@uuid",
+        "airframe": {
+          "type": "A339",
+          "iataType": "339",
+          "name": "Airbus A330-900",
+          "cruiseSpeed": { "value": 0.8, "unit": "mach" },
+          "serviceCeiling": 41400,
+          "performanceCode": "D",
+          "weightCategory": "heavy",
+          "serviceType": "passenger"
+        },
+        "registration": "D-TEST",
+        "selcal": null,
+        "livery": "@defaultLivery('Lufthansa')",
+        "currentState": "planned",
+        "etopsThresholdMinutes": null,
+        "isConfirmed": true,
+        "cabinLayout": null,
+        "holdVariant": null,
+        "baseAirport": null,
+        "lastAirport": null,
+        "lastAirportUpdatedAt": null,
+        "lastParkingPosition": null
+      }
+      """
+    And I set database to initial state
+
+  Scenario: As operations I cannot set the aircraft confirmation to null
+    Given I am signed in as "operations"
+    When I send a "PATCH" request to "/api/v1/operator/40b1b34e-aea1-4cec-acbe-f2bf97c06d7d/aircraft/9f5da1a4-f09e-4961-8299-82d688337d1f" with body:
+      """json
+      {
+        "isConfirmed": null
+      }
+      """
+    Then the response status should be 400
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 400,
+        "message": "Request validation failed.",
+        "error": "Bad Request",
+        "violations": {
+          "isConfirmed": ["isConfirmed must be a boolean value"]
         }
       }
       """

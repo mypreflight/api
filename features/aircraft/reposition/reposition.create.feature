@@ -135,6 +135,7 @@ Feature: Reposition an aircraft
         "selcal": "SK-PK",
         "currentState": "checked_in",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "de-321",
           "airlineIata": "DE",

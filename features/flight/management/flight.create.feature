@@ -200,6 +200,7 @@ Feature: Create a flight
         "selcal": "KY-JO",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",
@@ -413,6 +414,7 @@ Feature: Create a flight
         "selcal": "KY-JO",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",

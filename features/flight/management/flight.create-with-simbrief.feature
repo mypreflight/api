@@ -530,18 +530,91 @@ Feature: Create a flight with Simbrief
       }
       """
 
-  Scenario: As operations user with incorrect SimBrief flight plan I cannot create a flight
+  Scenario: As operations user importing a plan for an aircraft not in the fleet I create it unconfirmed
     Given I am signed in as "operations with Simbrief ID but non existing aircraft"
     When I send a "POST" request to "/api/v1/flight/create-with-simbrief"
-    Then the response status should be 404
+    Then the response status should be 201
+    And the response body property "aircraft" should contain:
+      """json
+      {
+        "id": "@uuid",
+        "airframe": {
+          "type": "A339",
+          "iataType": "339",
+          "name": "Airbus A330-900",
+          "cruiseSpeed": { "value": 0.8, "unit": "mach" },
+          "serviceCeiling": 41400,
+          "performanceCode": "D",
+          "weightCategory": "heavy",
+          "serviceType": "passenger"
+        },
+        "registration": "D-TEST",
+        "selcal": null,
+        "livery": "@defaultLivery('Lufthansa')",
+        "operator": {
+          "id": "40b1b34e-aea1-4cec-acbe-f2bf97c06d7d",
+          "icaoCode": "DLH",
+          "iataCode": "LH",
+          "shortName": "Lufthansa",
+          "fullName": "Deutsche Lufthansa AG",
+          "callsign": "LUFTHANSA"
+        },
+        "cabinLayout": null
+      }
+      """
+    And I remember the response body property "aircraft.id" as "aircraftId"
+    When I send a "GET" request to "/api/v1/operator/40b1b34e-aea1-4cec-acbe-f2bf97c06d7d/aircraft/{{aircraftId}}"
+    Then the response status should be 200
     And the response body should contain:
       """json
       {
-        "statusCode": 404,
-        "error": "Not Found",
-        "message": "Aircraft with given registration not found."
+        "id": "@uuid",
+        "airframe": {
+          "type": "A339",
+          "iataType": "339",
+          "name": "Airbus A330-900",
+          "cruiseSpeed": { "value": 0.8, "unit": "mach" },
+          "serviceCeiling": 41400,
+          "performanceCode": "D",
+          "weightCategory": "heavy",
+          "serviceType": "passenger"
+        },
+        "registration": "D-TEST",
+        "selcal": null,
+        "livery": "@defaultLivery('Lufthansa')",
+        "currentState": "planned",
+        "etopsThresholdMinutes": null,
+        "isConfirmed": false,
+        "cabinLayout": null,
+        "holdVariant": null,
+        "baseAirport": null,
+        "lastAirport": null,
+        "lastAirportUpdatedAt": null,
+        "lastParkingPosition": null
       }
       """
+    And I set database to initial state
+
+  Scenario: As operations user I cannot import a plan that flies a fleet aircraft as a different type
+    Given I am signed in as "operations with valid Simbrief ID"
+    When I send a "PATCH" request to "/api/v1/operator/40b1b34e-aea1-4cec-acbe-f2bf97c06d7d/aircraft/9f5da1a4-f09e-4961-8299-82d688337d1f" with body:
+      """json
+      {
+        "type": "A359"
+      }
+      """
+    Then the response status should be 200
+    When I send a "POST" request to "/api/v1/flight/create-with-simbrief"
+    Then the response status should be 409
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 409,
+        "error": "Conflict",
+        "message": "Aircraft D-AIMC is registered as A359, but the flight plan uses A339."
+      }
+      """
+    And I set database to initial state
 
   Scenario: As operations user with a SimBrief plan referencing an airport missing from database I import it from SkyLink and create a flight
     Given I am signed in as "operations with Simbrief ID and alternate airport missing from database"

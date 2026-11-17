@@ -1,12 +1,14 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { Aircraft, AircraftState } from '../../../model/aircraft.model';
 import {
+  IsBoolean,
   IsIn,
   IsNotEmpty,
   IsOptional,
   IsString,
   IsUUID,
   Length,
+  ValidateIf,
 } from 'class-validator';
 import { LegacyOperatorResponse } from '../../../../operators/infra/http/request/operator.request';
 import { Coordinates } from '../../../../airports/model/airport.model';
@@ -79,7 +81,17 @@ export class CreateAircraftRequest {
   etopsThresholdMinutes?: number | null;
 }
 
-export class UpdateAircraftRequest extends PartialType(CreateAircraftRequest) {}
+export class UpdateAircraftRequest extends PartialType(CreateAircraftRequest) {
+  @ApiProperty({
+    description:
+      'Whether operations confirmed the aircraft data is correct. Aircraft created from an imported flight plan start unconfirmed.',
+    example: true,
+    required: false,
+  })
+  @ValidateIf((_, value) => value !== undefined)
+  @IsBoolean()
+  isConfirmed?: boolean;
+}
 
 export class AircraftAirport {
   @ApiProperty({
@@ -215,6 +227,13 @@ export class GetAircraftResponse extends Aircraft {
     nullable: true,
   })
   holdVariant!: string | null;
+
+  @ApiProperty({
+    description:
+      'Whether operations confirmed the aircraft data is correct; false for an aircraft created from an imported flight plan until operations confirm it',
+    example: true,
+  })
+  isConfirmed!: boolean;
 }
 
 export class LegacyCreateAircraftResponse extends Aircraft {

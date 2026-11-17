@@ -54,6 +54,7 @@ Feature: Create aircraft for operator
         "livery": "Sunshine",
         "currentState": "idle",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -147,6 +148,7 @@ Feature: Create aircraft for operator
         "livery": "Sunshine",
         "currentState": "idle",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -214,6 +216,7 @@ Feature: Create aircraft for operator
         "livery": "Sunshine",
         "currentState": "idle",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -281,6 +284,7 @@ Feature: Create aircraft for operator
         "livery": "@defaultLivery('Lufthansa')",
         "currentState": "idle",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",

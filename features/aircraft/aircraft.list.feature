@@ -24,6 +24,7 @@ Feature: List aircraft
           "selcal": "LR-CK",
           "currentState": "planned",
           "etopsThresholdMinutes": 180,
+          "isConfirmed": true,
           "cabinLayout": null,
           "baseAirport": {
             "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -61,6 +62,7 @@ Feature: List aircraft
           "selcal": "BD-EF",
           "currentState": "idle",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": {
             "id": "lh-74h",
             "airlineIata": "LH",
@@ -123,6 +125,7 @@ Feature: List aircraft
           "selcal": "BD-EG",
           "currentState": "planned",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": null,
           "baseAirport": {
             "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -177,6 +180,7 @@ Feature: List aircraft
           "selcal": "BD-FG",
           "currentState": "idle",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": {
             "id": "lh-74h",
             "airlineIata": "LH",
@@ -235,6 +239,7 @@ Feature: List aircraft
           "selcal": "BE-FG",
           "currentState": "cruise",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": {
             "id": "lh-74h",
             "airlineIata": "LH",
@@ -293,6 +298,7 @@ Feature: List aircraft
           "selcal": "CD-EF",
           "currentState": "cruise",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": {
             "id": "lh-74h",
             "airlineIata": "LH",
@@ -351,6 +357,7 @@ Feature: List aircraft
           "selcal": "CD-EG",
           "currentState": "planned",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": {
             "id": "lh-74h",
             "airlineIata": "LH",
@@ -409,6 +416,7 @@ Feature: List aircraft
           "selcal": "CE-FG",
           "currentState": "cruise",
           "etopsThresholdMinutes": null,
+          "isConfirmed": true,
           "cabinLayout": {
             "id": "lh-74h",
             "airlineIata": "LH",

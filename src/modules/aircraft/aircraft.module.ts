@@ -23,8 +23,8 @@ import { AssignCabinLayoutHandler } from './application/command/assign-cabin-lay
 import { RemoveCabinLayoutHandler } from './application/command/remove-cabin-layout.command';
 import { AssignHoldVariantHandler } from './application/command/assign-hold-variant.command';
 import { RemoveHoldVariantHandler } from './application/command/remove-hold-variant.command';
+import { ImportAircraftByRegistrationHandler } from './application/command/import-aircraft-by-registration.command';
 import { GetAircraftByIdHandler } from './application/query/get-aircraft-by-id.query';
-import { GetAircraftByRegistrationHandler } from './application/query/get-aircraft-by-registration.query';
 import { ListAllAircraftHandler } from './application/query/list-all-aircraft.query';
 import { CheckAircraftExistsHandler } from './application/query/check-aircraft-exists.query';
 import { GetOperatorFleetSummaryHandler } from './application/query/get-operator-fleet-summary.query';
@@ -63,8 +63,8 @@ import { RepositionFlightLifecycleListener } from './application/event/external/
     RemoveCabinLayoutHandler,
     AssignHoldVariantHandler,
     RemoveHoldVariantHandler,
+    ImportAircraftByRegistrationHandler,
     GetAircraftByIdHandler,
-    GetAircraftByRegistrationHandler,
     ListAllAircraftHandler,
     CheckAircraftExistsHandler,
     GetOperatorFleetSummaryHandler,

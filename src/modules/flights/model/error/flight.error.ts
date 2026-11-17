@@ -176,6 +176,14 @@ export class SimbriefIdNotConnectedError extends BadRequestError {
   }
 }
 
+export class SimbriefPlanWithoutAircraftError extends UnprocessableError {
+  constructor() {
+    super(
+      'The SimBrief plan does not name the aircraft registration and type.',
+    );
+  }
+}
+
 export class InvalidStatusToMarkAsReadyError extends UnprocessableError {
   constructor() {
     super('Cannot mark flight as ready. Flight is not in created status.');

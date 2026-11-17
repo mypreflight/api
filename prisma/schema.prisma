@@ -19,6 +19,7 @@ model Aircraft {
   etopsThresholdMinutes Int?
   cabinLayout           String?
   holdVariant           String?
+  isConfirmed           Boolean       @default(true)
   operatorId            String?       @db.Uuid
   baseAirportId         String?       @db.Uuid
   lastAirportId         String?       @db.Uuid

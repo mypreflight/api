@@ -185,3 +185,31 @@ assignment to its own request, so that the aircraft write endpoints remain uncha
 
 - **WHEN** an aircraft is edited with a hold variant in the request body
 - **THEN** the aircraft's assigned hold variant is unchanged
+
+### Requirement: Aircraft carry whether operations confirmed them
+
+The system SHALL record on every aircraft whether operations confirmed its data, and SHALL return it as `isConfirmed` on every aircraft read model under `/api/v1/operator/{operatorId}/aircraft`. An aircraft operations create SHALL start confirmed; an aircraft a flight plan import creates SHALL start unconfirmed. An operations user SHALL set it by sending `isConfirmed` on `PATCH /api/v1/operator/{operatorId}/aircraft/{aircraftId}`; omitting it SHALL leave it unchanged, and `null` SHALL be rejected with `400 Bad Request`.
+
+#### Scenario: Confirm an aircraft created by an import
+
+- **WHEN** an operations user updates an unconfirmed aircraft with `isConfirmed` set to `true`
+- **THEN** the response's `isConfirmed` is `true`
+
+#### Scenario: Confirmation cannot be null
+
+- **WHEN** an operations user updates an aircraft with `isConfirmed` set to `null`
+- **THEN** the request is rejected with `400 Bad Request` and the aircraft is unchanged
+
+### Requirement: A SimBrief import resolves the aircraft by registration
+
+The system SHALL resolve the aircraft of an imported SimBrief plan by its registration, upper-cased and trimmed. When no aircraft has that registration, the system SHALL create one for the plan's operator with the plan's ICAO type, the operator's default livery and no SELCAL, base airport or ETOPS threshold, marked unconfirmed. When an aircraft has that registration but a different type, the import SHALL be rejected with `409 Conflict` and no flight SHALL be created. A plan with no registration or no type SHALL be rejected with `422 Unprocessable Content`, and a new registration whose type is not a known airframe with `404 Not Found`.
+
+#### Scenario: Import a plan for a registration not in the fleet
+
+- **WHEN** an operations user imports a plan whose registration no aircraft has
+- **THEN** the flight is created on a new aircraft of the plan's operator and type, and the aircraft's `isConfirmed` is `false`
+
+#### Scenario: Import a plan that flies a fleet aircraft as another type
+
+- **WHEN** an operations user imports a plan whose registration belongs to an aircraft of a different type
+- **THEN** the import is rejected with `409 Conflict` naming both types, and no flight is created

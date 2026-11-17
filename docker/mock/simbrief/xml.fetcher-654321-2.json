@@ -1,7 +1,16 @@
 {
+  "params": {
+    "request_id": "162595444",
+    "sequence_id": "816599746ea6",
+    "units": "kgs"
+  },
   "general": {
     "icao_airline": "DLH",
-    "flight_number": "80"
+    "flight_number": "80",
+    "is_etops": "1",
+    "gc_distance": "3350",
+    "total_burn": "156000",
+    "cont_rule": "3%"
   },
   "origin": {
     "icao_code": "EDDF",
@@ -77,7 +86,8 @@
     ]
   },
   "aircraft": {
-    "reg": "D-TEST"
+    "reg": "D-TEST",
+    "icaocode": "A339"
   },
   "times": {
     "sched_out": "1767603600",
@@ -90,6 +100,10 @@
     "payload": "37932",
     "est_zfw": "206523",
     "pax_count": "348"
+  },
+  "text": {
+    "tlr_section": "TAKEOFF AND LANDING REPORT DLH80",
+    "plan_html": "<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>"
   },
   "crew": {
     "pilot_id": "371340",
