@@ -23,6 +23,7 @@ Feature: Get aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -68,6 +69,7 @@ Feature: Get aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -113,6 +115,7 @@ Feature: Get aircraft
         "selcal": "LR-CK",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -158,6 +161,7 @@ Feature: Get aircraft
         "selcal": null,
         "currentState": "idle",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "5c88ea21-f482-47ff-8b1f-3d0c9bbd6caf",

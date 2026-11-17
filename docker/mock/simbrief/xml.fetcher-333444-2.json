@@ -79,7 +79,8 @@
     ]
   },
   "aircraft": {
-    "reg": "D-AIMC"
+    "reg": "D-AIMC",
+    "icaocode": "A339"
   },
   "times": {
     "sched_out": "1767603600",

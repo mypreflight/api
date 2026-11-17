@@ -10,6 +10,7 @@ import {
   UpdateAircraftRequest,
 } from '../../http/request/aircraft.request';
 import { AircraftState } from '../../../model/aircraft.model';
+import { AircraftWithRegistrationAlreadyExistsError } from '../../../model/error/aircraft.error';
 
 const aircraftWithOperatorFields = {
   id: true,
@@ -58,6 +59,7 @@ const aircraft = {
   currentState: true,
   etopsThresholdMinutes: true,
   holdVariant: true,
+  isConfirmed: true,
   operator: { select: { iataCode: true } },
   layout: {
     select: {
@@ -112,6 +114,14 @@ export type AircraftRow = Prisma.AircraftGetPayload<{
   select: typeof aircraft;
 }>;
 
+function isUniqueConstraintViolation(error: unknown): boolean {
+  return (
+    typeof error === 'object' &&
+    error !== null &&
+    (error as { code?: string }).code === 'P2002'
+  );
+}
+
 @Injectable()
 export class AircraftRepository {
   constructor(private readonly prisma: PrismaService) {}
@@ -124,6 +134,24 @@ export class AircraftRepository {
     await this.prisma.aircraft.create({
       data: { id, ...data, operatorId, lastAirportId: data.baseAirportId },
     });
+  }
+
+  async createUnconfirmed(
+    id: string,
+    operatorId: string,
+    data: { type: string; registration: string; livery: string },
+  ): Promise<void> {
+    try {
+      await this.prisma.aircraft.create({
+        data: { id, ...data, operatorId, isConfirmed: false },
+      });
+    } catch (error) {
+      if (isUniqueConstraintViolation(error)) {
+        throw new AircraftWithRegistrationAlreadyExistsError();
+      }
+
+      throw error;
+    }
   }
 
   async findAll(): Promise<AircraftWithOperator[]> {

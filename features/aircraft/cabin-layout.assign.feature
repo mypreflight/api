@@ -28,6 +28,7 @@ Feature: Assign a cabin layout to an aircraft
         "livery": "Oneworld (2023)",
         "currentState": "idle",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",
@@ -100,6 +101,7 @@ Feature: Assign a cabin layout to an aircraft
         "livery": "Team USA (2023)",
         "currentState": "cruise",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w-2",
           "airlineIata": "AA",
@@ -169,6 +171,7 @@ Feature: Assign a cabin layout to an aircraft
         "livery": "KLM (2022)",
         "currentState": "planned",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "baseAirport": {
           "id": "f35c094a-bec5-4803-be32-bd80a14b441a",
@@ -220,6 +223,7 @@ Feature: Assign a cabin layout to an aircraft
         "livery": "Air France (2021)",
         "currentState": "planned",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",
@@ -310,6 +314,7 @@ Feature: Assign a cabin layout to an aircraft
         "livery": "Icelandair (2023)",
         "currentState": "planned",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "fi-752-1",
           "airlineIata": "FI",
@@ -365,6 +370,7 @@ Feature: Assign a cabin layout to an aircraft
         "livery": "KLM (2022)",
         "currentState": "planned",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "kl-738",
           "airlineIata": "KL",

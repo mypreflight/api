@@ -9,15 +9,21 @@ export class AircraftNotFoundError extends NotFoundError {
   }
 }
 
-export class AircraftWithRegistrationNotFoundError extends NotFoundError {
-  constructor() {
-    super('Aircraft with given registration not found.');
-  }
-}
-
 export class AircraftWithRegistrationAlreadyExistsError extends ConflictError {
   constructor() {
     super('Aircraft with given registration already exists.');
+  }
+}
+
+export class AircraftTypeMismatchError extends ConflictError {
+  constructor(
+    registration: string,
+    registeredType: string,
+    plannedType: string,
+  ) {
+    super(
+      `Aircraft ${registration} is registered as ${registeredType}, but the flight plan uses ${plannedType}.`,
+    );
   }
 }
 

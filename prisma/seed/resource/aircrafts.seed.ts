@@ -11,6 +11,7 @@ export async function loadAircraft(
     livery: 'Fanhansa (2024)',
     cabinLayout: null,
     holdVariant: null,
+    isConfirmed: true,
     operatorId: '40b1b34e-aea1-4cec-acbe-f2bf97c06d7d', // Lufthansa
     currentState: AircraftState.planned, // LH450 Created
     etopsThresholdMinutes: 180,
@@ -28,6 +29,7 @@ export async function loadAircraft(
     livery: 'Sunshine (2024)',
     cabinLayout: 'de-321',
     holdVariant: null,
+    isConfirmed: true,
     operatorId: '5c649579-22eb-4c07-a96c-b74a77f53871', // Condor
     currentState: AircraftState.checked_in, // DE1014 CheckedIn
     etopsThresholdMinutes: null,
@@ -45,6 +47,7 @@ export async function loadAircraft(
     livery: 'Water (2024)',
     cabinLayout: null,
     holdVariant: null,
+    isConfirmed: true,
     operatorId: '5c649579-22eb-4c07-a96c-b74a77f53871', // Condor
     currentState: AircraftState.idle,
     etopsThresholdMinutes: null,
@@ -62,6 +65,7 @@ export async function loadAircraft(
     livery: 'Team USA (2023)',
     cabinLayout: 'aa-77w',
     holdVariant: null,
+    isConfirmed: true,
     operatorId: '1f630d38-ad24-47cc-950b-3783e71bbd10', // American Airlines
     currentState: AircraftState.cruise, // AA4913 TaxiingIn
     etopsThresholdMinutes: 180,
@@ -109,6 +113,7 @@ export async function loadAircraft(
     livery,
     cabinLayout: CABIN_LAYOUTS[registration] ?? null,
     holdVariant: null,
+    isConfirmed: true,
     operatorId,
     currentState,
     etopsThresholdMinutes,
@@ -393,6 +398,7 @@ export async function loadAircraft(
     livery: 'Air France (2021)',
     cabinLayout: null,
     holdVariant: 'a320-cls',
+    isConfirmed: true,
     operatorId: '3a1354c5-d9fb-428b-9f87-0e887e491f0d', // Air France
     currentState: AircraftState.planned,
     etopsThresholdMinutes: null,
@@ -410,6 +416,7 @@ export async function loadAircraft(
     livery: 'Icelandair (2023)',
     cabinLayout: 'fi-752-1',
     holdVariant: null,
+    isConfirmed: true,
     operatorId: 'e4ba1445-b413-49a9-b0c5-c8bd3df14b42', // Icelandair
     currentState: AircraftState.planned,
     etopsThresholdMinutes: 180,
@@ -427,6 +434,7 @@ export async function loadAircraft(
     livery: 'KLM (2022)',
     cabinLayout: 'kl-738',
     holdVariant: null,
+    isConfirmed: true,
     operatorId: '7d724b05-8eb9-4e66-84cc-bb101369d1a0', // KLM
     currentState: AircraftState.planned,
     etopsThresholdMinutes: null,

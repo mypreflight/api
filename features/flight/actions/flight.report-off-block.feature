@@ -320,6 +320,7 @@ Feature: Report off-block
         "selcal": "AB-DE",
         "currentState": "cruise",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",

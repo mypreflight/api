@@ -439,6 +439,7 @@ Feature: Check in pilot for flight
         "selcal": "KY-JO",
         "currentState": "checked_in",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",

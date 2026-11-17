@@ -1283,6 +1283,7 @@ Feature: Report on-block
         "selcal": "KY-JO",
         "currentState": "idle",
         "etopsThresholdMinutes": 180,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "aa-77w",
           "airlineIata": "AA",

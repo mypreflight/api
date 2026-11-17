@@ -3,12 +3,14 @@ import {
   ApiBadRequestResponse,
   ApiBearerAuth,
   ApiBody,
+  ApiConflictResponse,
   ApiCreatedResponse,
   ApiForbiddenResponse,
   ApiNotFoundResponse,
   ApiOperation,
   ApiTags,
   ApiUnauthorizedResponse,
+  ApiUnprocessableEntityResponse,
 } from '@nestjs/swagger';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { v4 } from 'uuid';
@@ -21,6 +23,7 @@ import { GenericBadRequestResponse } from '../../../../../../core/http/response/
 import { GenericNotFoundResponse } from '../../../../../../core/http/response/not-found.response';
 import { UnauthorizedResponse } from '../../../../../../core/http/response/unauthorized.response';
 import { ForbiddenResponse } from '../../../../../../core/http/response/forbidden.response';
+import { GenericConflictResponse } from '../../../../../../core/http/response/conflict.response';
 import { Role } from '../../../../../../core/http/auth/decorator/role.decorator';
 import { AuthorizedRequest } from '../../../../../../core/http/request/authorized.request';
 import { CreateFlightFromSimbriefCommand } from '../../../../application/command/create-flight-from-simbrief.command';
@@ -38,7 +41,8 @@ export class CreateFlightFromSimbriefAction {
     summary: 'Create a flight with SimBrief data',
     description:
       '**NOTE:** This endpoint is only available for users with the ` operations ` role. <br />' +
-      '**NOTE:** Simbrief ID must be provided for the user, otherwise import will throw HTTP 400.',
+      '**NOTE:** Simbrief ID must be provided for the user, otherwise import will throw HTTP 400. <br />' +
+      '**NOTE:** An aircraft registration not yet in the fleet is created for the flight operator and marked unconfirmed until operations confirm it.',
   })
   @ApiBearerAuth('jwt')
   @ApiBody({ type: CreateFlightRequest })
@@ -47,8 +51,17 @@ export class CreateFlightFromSimbriefAction {
   @ApiUnauthorizedResponse({ type: UnauthorizedResponse })
   @ApiForbiddenResponse({ type: ForbiddenResponse })
   @ApiNotFoundResponse({
-    description: 'Airports or aircraft does not exist',
+    description:
+      'The operator or an airport cannot be found, or the aircraft is not in the fleet and its type is not a known airframe',
     type: GenericNotFoundResponse,
+  })
+  @ApiConflictResponse({
+    description:
+      'The aircraft is in the fleet with a different type than the plan uses',
+    type: GenericConflictResponse,
+  })
+  @ApiUnprocessableEntityResponse({
+    description: 'The plan does not name the aircraft registration and type',
   })
   @Post('/create-with-simbrief')
   @Role(UserRole.Operations)

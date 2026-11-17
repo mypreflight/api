@@ -28,6 +28,7 @@ Feature: Assign a cargo hold variant to an aircraft
         "livery": "Sunshine (2024)",
         "currentState": "checked_in",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": {
           "id": "de-321",
           "airlineIata": "DE",
@@ -95,6 +96,7 @@ Feature: Assign a cargo hold variant to an aircraft
         "livery": "Air France (2021)",
         "currentState": "planned",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "holdVariant": null,
         "baseAirport": {
@@ -146,6 +148,7 @@ Feature: Assign a cargo hold variant to an aircraft
         "livery": "Air France (2021)",
         "currentState": "planned",
         "etopsThresholdMinutes": null,
+        "isConfirmed": true,
         "cabinLayout": null,
         "holdVariant": "a320-bulk",
         "baseAirport": {
