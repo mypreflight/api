@@ -457,6 +457,31 @@ Feature: List aircraft
           "lastAirportUpdatedAt": "2026-01-01T08:00:00.000Z",
           "holdVariant": null,
           "lastParkingPosition": null
+        },
+        {
+          "id": "915fb458-d587-4256-adec-3b07951aaf25",
+          "airframe": {
+            "type": "A359",
+            "iataType": "359",
+            "name": "Airbus A350-900",
+            "cruiseSpeed": { "value": 0.85, "unit": "mach" },
+            "serviceCeiling": 43100,
+            "performanceCode": "D",
+            "weightCategory": "heavy",
+            "serviceType": "passenger"
+          },
+          "registration": "D-AIXP",
+          "selcal": null,
+          "livery": "Lufthansa 2026",
+          "currentState": "idle",
+          "etopsThresholdMinutes": null,
+          "isConfirmed": false,
+          "cabinLayout": null,
+          "baseAirport": null,
+          "lastAirport": null,
+          "lastAirportUpdatedAt": null,
+          "holdVariant": null,
+          "lastParkingPosition": null
         }
       ]
       """

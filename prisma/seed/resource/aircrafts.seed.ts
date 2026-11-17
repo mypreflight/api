@@ -444,6 +444,24 @@ export async function loadAircraft(
     lastParkingPositionId: null,
   };
 
+  const a359unconfirmed: Aircraft = {
+    id: '915fb458-d587-4256-adec-3b07951aaf25',
+    type: 'A359',
+    registration: 'D-AIXP',
+    selcal: null,
+    livery: 'Lufthansa 2026',
+    cabinLayout: null,
+    holdVariant: null,
+    isConfirmed: false,
+    operatorId: DLH,
+    currentState: AircraftState.idle,
+    etopsThresholdMinutes: null,
+    baseAirportId: null,
+    lastAirportId: null,
+    lastAirportUpdatedAt: null,
+    lastParkingPositionId: null,
+  };
+
   for (const aircraft of [
     a330,
     a321,
@@ -453,6 +471,7 @@ export async function loadAircraft(
     a320af,
     b752fi,
     b738kl,
+    a359unconfirmed,
   ]) {
     await tx.aircraft.create({ data: aircraft });
   }
