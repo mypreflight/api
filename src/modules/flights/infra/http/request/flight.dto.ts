@@ -28,6 +28,7 @@ import {
 import { Loadsheet } from '../../../model/loadsheet.model';
 import { Type } from 'class-transformer';
 import {
+  FlightListCaptain,
   FlightListOrder,
   FlightListSort,
   FlightPhase,
@@ -401,6 +402,10 @@ export class FlightListFilters {
   @IsOptional()
   @IsEnum(FlightListOrder)
   order: FlightListOrder = FlightListOrder.Descending;
+
+  @IsOptional()
+  @IsEnum(FlightListCaptain)
+  captain?: FlightListCaptain;
 }
 
 export class UpdateFlightVisibilityRequest extends PickType(FlightDto, [

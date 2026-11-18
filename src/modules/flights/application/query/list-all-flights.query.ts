@@ -31,6 +31,7 @@ export class ListAllFlightsQuery extends Query<ListAllFlightsResult> {
   constructor(
     public readonly onlyPublic: boolean,
     public readonly filters?: FlightListFilters,
+    public readonly captainId: string | null = null,
   ) {
     super();
   }
@@ -47,6 +48,7 @@ export class ListAllFlightsHandler implements IQueryHandler<ListAllFlightsQuery>
     const { flights, totalCount } = await this.repository.findAll(
       query.filters,
       query.onlyPublic,
+      query.captainId,
     );
 
     const [pilotsById, flightsWithNotoc] = await Promise.all([

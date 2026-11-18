@@ -14,11 +14,13 @@ import { UnauthorizedResponse } from '../../../../../../core/http/response/unaut
 import { SkipAuth } from '../../../../../../core/http/auth/decorator/skip-auth.decorator';
 import { AuthorizedRequest } from '../../../../../../core/http/request/authorized.request';
 import {
+  FlightListCaptain,
   FlightListOrder,
   FlightListSort,
   FlightPhase,
 } from '../../../../model/flight.model';
 import { ListAllFlightsQuery } from '../../../../application/query/list-all-flights.query';
+import { OwnFlightsRequireSignInError } from '../../../../model/error/flight.error';
 
 @ApiTags('flight')
 @Controller('api/v1/flight')
@@ -60,6 +62,14 @@ export class ListFlightsAction {
     required: false,
   })
   @ApiQuery({
+    name: 'captain',
+    description:
+      'Only the flights the signed-in user captained, that is checked in to. Requires signing in.',
+    type: 'string',
+    enum: FlightListCaptain,
+    required: false,
+  })
+  @ApiQuery({
     name: 'order',
     description: 'Direction of the ordering',
     type: 'string',
@@ -87,7 +97,14 @@ export class ListFlightsAction {
     @Res() response: Response,
   ): Promise<void> {
     const onlyPublic = !request.user;
-    const query = new ListAllFlightsQuery(onlyPublic, filters);
+
+    if (filters.captain === FlightListCaptain.Me && !request.user) {
+      throw new OwnFlightsRequireSignInError();
+    }
+
+    const captainId =
+      filters.captain === FlightListCaptain.Me ? request.user.sub : null;
+    const query = new ListAllFlightsQuery(onlyPublic, filters, captainId);
     const { flights, totalCount } = await this.queryBus.execute(query);
 
     response.setHeader('X-Total-Count', totalCount.toString());

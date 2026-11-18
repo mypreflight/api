@@ -3,8 +3,15 @@ import {
   ConflictError,
   ForbiddenError,
   NotFoundError,
+  UnauthorizedError,
   UnprocessableError,
 } from '../../../../core/errors/domain-error';
+
+export class OwnFlightsRequireSignInError extends UnauthorizedError {
+  constructor() {
+    super('Sign in to list your own flights.');
+  }
+}
 
 export class FlightNotFoundError extends NotFoundError {
   constructor() {

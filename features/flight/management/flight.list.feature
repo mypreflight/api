@@ -74,6 +74,58 @@ Feature: Get flights list
     Then the response status should be 200
     And the response header "X-Total-Count" should be "16"
 
+  Scenario: As a cabin crew I can list only the flights I captained
+    Given I am signed in as "cabin crew"
+    When I send a "GET" request to "/api/v1/flight?phase=finished&captain=me&sort=actualOnBlockTime&order=desc"
+    Then the response status should be 200
+    And the response header "X-Total-Count" should be "3"
+    And the response body property "0.flightNumber" should contain:
+      """json
+      "LH40"
+      """
+    And the response body property "2.flightNumber" should contain:
+      """json
+      "AA4905"
+      """
+
+  Scenario: As a cabin crew who hasn't finished a flight yet I list none of my own
+    Given I am signed in as "Alan Doe"
+    When I send a "GET" request to "/api/v1/flight?phase=finished&captain=me"
+    Then the response status should be 200
+    And the response header "X-Total-Count" should be "0"
+    And the response body should contain:
+      """json
+      []
+      """
+
+  Scenario: As an unauthorized user I cannot list my own flights
+    When I send a "GET" request to "/api/v1/flight?captain=me"
+    Then the response status should be 401
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 401,
+        "error": "Unauthorized",
+        "message": "Sign in to list your own flights."
+      }
+      """
+
+  Scenario: As cabin crew I cannot list the flights of another captain
+    Given I am signed in as "cabin crew"
+    When I send a "GET" request to "/api/v1/flight?captain=someone"
+    Then the response status should be 400
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 400,
+        "message": "Request validation failed.",
+        "error": "Bad Request",
+        "violations": {
+          "captain": ["captain must be one of the following values: me"]
+        }
+      }
+      """
+
   Scenario: As cabin crew I can list upcoming flights by scheduled off-block, earliest first
     Given I am signed in as "cabin crew"
     When I send a "GET" request to "/api/v1/flight?phase=upcoming&sort=scheduledOffBlockTime&order=asc&limit=5"
