@@ -33,6 +33,10 @@ export enum FlightListOrder {
   Descending = 'desc',
 }
 
+export enum FlightListCaptain {
+  Me = 'me',
+}
+
 export enum FlightSource {
   Manual = 'manual',
   Simbrief = 'simbrief',

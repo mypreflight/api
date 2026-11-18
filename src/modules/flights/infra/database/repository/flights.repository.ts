@@ -565,8 +565,13 @@ export class FlightsRepository {
   async findAll(
     filters?: FlightListFilters,
     onlyPublic?: boolean,
+    captainId?: string | null,
   ): Promise<FlightsWithCount> {
     const where: Prisma.FlightWhereInput = {};
+
+    if (captainId) {
+      where.captainId = captainId;
+    }
 
     if (filters?.phase === FlightPhase.Upcoming) {
       where.status = {

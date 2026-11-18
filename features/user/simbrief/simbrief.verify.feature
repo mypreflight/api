@@ -13,11 +13,13 @@ Feature: Verify a Simbrief user ID
           "origin": {
             "icaoCode": "EDDF",
             "iataCode": "FRA",
+            "city": "Frankfurt",
             "name": "FRANKFURT INTL"
           },
           "destination": {
             "icaoCode": "EPWA",
             "iataCode": "WAW",
+            "city": "Warsaw",
             "name": "WARSAW CHOPIN"
           },
           "aircraft": {
@@ -45,11 +47,13 @@ Feature: Verify a Simbrief user ID
           "origin": {
             "icaoCode": "EDDF",
             "iataCode": "FRA",
+            "city": "Frankfurt",
             "name": "FRANKFURT INTL"
           },
           "destination": {
             "icaoCode": "EPWA",
             "iataCode": "WAW",
+            "city": "Warsaw",
             "name": "WARSAW CHOPIN"
           },
           "aircraft": {

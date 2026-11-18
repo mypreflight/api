@@ -1,4 +1,4 @@
-import { IQueryHandler, Query, QueryHandler } from '@nestjs/cqrs';
+import { IQueryHandler, Query, QueryBus, QueryHandler } from '@nestjs/cqrs';
 import { SimbriefClient } from '../../../../core/provider/simbrief/client/simbrief.client';
 import { SimbriefUserNotFoundError } from '../../../../core/provider/simbrief/error/simbrief.error';
 import {
@@ -11,6 +11,10 @@ import {
   SimbriefAirport,
   SimbriefFlight,
 } from '../../model/simbrief-account.model';
+import { GetAirportByIcaoCodeQuery } from '../../../airports/application/query/get-airport-by-icao-code.query';
+import { AirportByIcaoCodeNotFoundError } from '../../../airports/model/error/airport.error';
+
+type KnownAirport = { iataCode: string; city: string };
 
 export class VerifySimbriefUserQuery extends Query<SimbriefAccount> {
   constructor(public readonly simbriefUserId: string) {
@@ -20,7 +24,10 @@ export class VerifySimbriefUserQuery extends Query<SimbriefAccount> {
 
 @QueryHandler(VerifySimbriefUserQuery)
 export class VerifySimbriefUserHandler implements IQueryHandler<VerifySimbriefUserQuery> {
-  constructor(private readonly simbriefClient: SimbriefClient) {}
+  constructor(
+    private readonly simbriefClient: SimbriefClient,
+    private readonly queryBus: QueryBus,
+  ) {}
 
   async execute(query: VerifySimbriefUserQuery): Promise<SimbriefAccount> {
     const ofp = await this.simbriefClient.findOperationalFlightPlan(
@@ -33,15 +40,20 @@ export class VerifySimbriefUserHandler implements IQueryHandler<VerifySimbriefUs
 
     return {
       simbriefUserId: query.simbriefUserId,
-      latestFlight: this.toFlight(ofp),
+      latestFlight: await this.toFlight(ofp),
     };
   }
 
-  private toFlight(ofp: OperationalFlightPlan): SimbriefFlight {
+  private async toFlight(ofp: OperationalFlightPlan): Promise<SimbriefFlight> {
+    const [origin, destination] = await Promise.all([
+      this.toAirport(ofp.origin),
+      this.toAirport(ofp.destination),
+    ]);
+
     return {
       callsign: `${ofp.general.icao_airline ?? ''}${ofp.general.flight_number ?? ''}`,
-      origin: this.toAirport(ofp.origin),
-      destination: this.toAirport(ofp.destination),
+      origin,
+      destination,
       aircraft: this.toAircraft(ofp.aircraft),
       scheduledOffBlockTime: this.toDate(ofp.times?.sched_out),
       scheduledOnBlockTime: this.toDate(ofp.times?.sched_in),
@@ -49,12 +61,35 @@ export class VerifySimbriefUserHandler implements IQueryHandler<VerifySimbriefUs
     };
   }
 
-  private toAirport(airport: OperationalFlightPlan['origin']): SimbriefAirport {
+  private async toAirport(
+    airport: OperationalFlightPlan['origin'],
+  ): Promise<SimbriefAirport> {
+    const known = await this.findKnownAirport(airport.icao_code);
+
     return {
       icaoCode: airport.icao_code,
-      iataCode: this.readText(airport.iata_code),
+      iataCode: known?.iataCode ?? this.readText(airport.iata_code),
+      city: known?.city ?? null,
       name: this.readText(airport.name),
     };
+  }
+
+  private async findKnownAirport(
+    icaoCode: string,
+  ): Promise<KnownAirport | null> {
+    try {
+      const airport = await this.queryBus.execute(
+        new GetAirportByIcaoCodeQuery(icaoCode),
+      );
+
+      return { iataCode: airport.iataCode, city: airport.city.name };
+    } catch (error) {
+      if (error instanceof AirportByIcaoCodeNotFoundError) {
+        return null;
+      }
+
+      throw error;
+    }
   }
 
   private toAircraft(

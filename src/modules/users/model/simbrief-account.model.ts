@@ -8,12 +8,22 @@ export class SimbriefAirport {
   icaoCode!: string;
 
   @ApiProperty({
-    description: 'IATA code of the airport',
+    description:
+      "IATA code of the airport, MyPreflight's own when the airport is known, otherwise as SimBrief reports it",
     example: 'LHR',
     type: 'string',
     nullable: true,
   })
   iataCode!: string | null;
+
+  @ApiProperty({
+    description:
+      'City the airport serves, when MyPreflight already knows the airport',
+    example: 'London',
+    type: 'string',
+    nullable: true,
+  })
+  city!: string | null;
 
   @ApiProperty({
     description: 'Airport name as SimBrief reports it',
