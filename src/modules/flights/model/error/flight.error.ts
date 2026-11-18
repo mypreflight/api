@@ -171,6 +171,12 @@ export class DestinationAirportSameAsDepartureAirportError extends BadRequestErr
   }
 }
 
+export class StaleCheckInHasMovedOnError extends ConflictError {
+  constructor() {
+    super('Only a checked-in flight that has not started boarding is removed.');
+  }
+}
+
 export class ScheduledFlightCannotBeRemovedError extends BadRequestError {
   constructor() {
     super('Flight that has been scheduled cannot be removed.');

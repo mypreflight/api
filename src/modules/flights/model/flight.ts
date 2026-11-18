@@ -21,6 +21,7 @@ import {
   PilotCheckedInEvent,
   PredictedTimesheetWasUpdatedEvent,
   ScheduledTimesheetWasUpdatedEvent,
+  StaleCheckInWasRemovedEvent,
   TakeoffWasReportedEvent,
 } from '../../../core/domain/events/dto/flight.events';
 import { AirportType } from '../../airports/model/airport.model';
@@ -59,6 +60,7 @@ import {
   InvalidStatusToUpdateLoadsheetError,
   PreliminaryLoadsheetMissingError,
   ScheduledFlightCannotBeRemovedError,
+  StaleCheckInHasMovedOnError,
 } from './error/flight.error';
 import { UnresolvedEmergencyCannotCloseFlightError } from './error/emergency.error';
 import { FlightHasUnacceptedDelayError } from './error/delay.error';
@@ -503,6 +505,19 @@ export class Flight extends AggregateRoot<FlightLifecycleEvent> {
     this.expectStatus(
       FlightStatus.Created,
       ScheduledFlightCannotBeRemovedError,
+    );
+  }
+
+  removeStaleCheckIn(): void {
+    this.expectStatus(FlightStatus.CheckedIn, StaleCheckInHasMovedOnError);
+
+    this.apply(
+      new StaleCheckInWasRemovedEvent({
+        ...this.eventFor({ id: null, scope: FlightEventScope.Operations }),
+        aircraftId: this.state.aircraftId,
+        captainId: this.state.captainId,
+        airportIds: this.airportIds(),
+      }),
     );
   }
 

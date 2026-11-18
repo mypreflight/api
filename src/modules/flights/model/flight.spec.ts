@@ -19,6 +19,7 @@ import {
   PilotCheckedInEvent,
   PredictedTimesheetWasUpdatedEvent,
   ScheduledTimesheetWasUpdatedEvent,
+  StaleCheckInWasRemovedEvent,
   TakeoffWasReportedEvent,
 } from '../../../core/domain/events/dto/flight.events';
 import { Flight, FlightActor } from './flight';
@@ -63,6 +64,7 @@ import {
   InvalidStatusToUpdateLoadsheetError,
   PreliminaryLoadsheetMissingError,
   ScheduledFlightCannotBeRemovedError,
+  StaleCheckInHasMovedOnError,
 } from './error/flight.error';
 import { UnresolvedEmergencyCannotCloseFlightError } from './error/emergency.error';
 import { FlightHasUnacceptedDelayError } from './error/delay.error';
@@ -584,6 +586,37 @@ describe('Flight', () => {
 
       expect(flight.snapshot().tracking).toBe(FlightTracking.Public);
     });
+  });
+
+  describe('removing a stale check-in', () => {
+    it('records the removal with the captain, aircraft and airports to clean up', () => {
+      const flight = flightIn(FlightStatus.CheckedIn, { captainId: 'pilot-1' });
+
+      flight.removeStaleCheckIn();
+
+      const event = onlyEvent(flight);
+      expect(event).toBeInstanceOf(StaleCheckInWasRemovedEvent);
+      expect(event.payload).toEqual({
+        flightId: flight.snapshot().id,
+        scope: FlightEventScope.Operations,
+        actorId: null,
+        aircraftId: flight.snapshot().aircraftId,
+        captainId: 'pilot-1',
+        airportIds: flight.snapshot().airports.map((airport) => airport.id),
+      });
+    });
+
+    it.each(LIFECYCLE.filter((status) => status !== FlightStatus.CheckedIn))(
+      'leaves a flight in %s alone',
+      (status) => {
+        const flight = flightIn(status);
+
+        expect(() => flight.removeStaleCheckIn()).toThrow(
+          StaleCheckInHasMovedOnError,
+        );
+        expect(flight.getUncommittedEvents()).toHaveLength(0);
+      },
+    );
   });
 
   describe('guards for records outside the flight', () => {

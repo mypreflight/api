@@ -83,6 +83,16 @@ export class UserTravelRepository {
     });
   }
 
+  async removePendingPerformingFlight(flightId: string): Promise<void> {
+    await this.prisma.userTravel.deleteMany({
+      where: {
+        flightId,
+        type: UserTravelType.performing_flight,
+        status: UserTravelStatus.pending,
+      },
+    });
+  }
+
   async createDeadhead(
     type: DeadheadType,
     userId: string,

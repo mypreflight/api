@@ -7,6 +7,7 @@ import {
   OffBlockWasReportedEvent,
   OnBlockWasReportedEvent,
   FlightWasClosedEvent,
+  StaleCheckInWasRemovedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { QueryBus } from '@nestjs/cqrs';
 import { AircraftRepository } from '../../../infra/database/repository/aircraft.repository';
@@ -33,6 +34,16 @@ export class FlightLifecycleListener {
     await this.aircraftRepository.updateState(
       event.payload.aircraftId,
       AircraftState.CheckedIn,
+    );
+  }
+
+  @OnEvent(FlightEventType.StaleCheckInWasRemoved)
+  async onStaleCheckInWasRemoved(
+    event: StaleCheckInWasRemovedEvent,
+  ): Promise<void> {
+    await this.aircraftRepository.updateState(
+      event.payload.aircraftId,
+      AircraftState.Idle,
     );
   }
 

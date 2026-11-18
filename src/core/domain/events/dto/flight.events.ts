@@ -25,6 +25,7 @@ export enum FlightEventType {
   AtcCallsignWasChanged = 'flight.atc-callsign-changed',
   FlightWasReleased = 'flight.released',
   PilotCheckedIn = 'flight.pilot-checked-in',
+  StaleCheckInWasRemoved = 'flight.stale-check-in-removed',
   BoardingWasStarted = 'flight.boarding-started',
   BoardingWasFinished = 'flight.boarding-finished',
   OffBlockWasReported = 'flight.off-block-reported',
@@ -68,6 +69,11 @@ export type OnBlockReportedEventPayload = AircraftLandedEventPayload & {
 };
 
 export type PilotCheckedInEventPayload = AircraftFlightEventPayload & {
+  airportIds: string[];
+};
+
+export type StaleCheckInRemovedEventPayload = AircraftFlightEventPayload & {
+  captainId: string | null;
   airportIds: string[];
 };
 
@@ -143,6 +149,10 @@ export class FlightWasReleasedEvent extends FlightLifecycleEvent {
 
 export class PilotCheckedInEvent extends FlightLifecycleEvent<PilotCheckedInEventPayload> {
   static readonly name = FlightEventType.PilotCheckedIn;
+}
+
+export class StaleCheckInWasRemovedEvent extends FlightLifecycleEvent<StaleCheckInRemovedEventPayload> {
+  static readonly name = FlightEventType.StaleCheckInWasRemoved;
 }
 
 export class BoardingWasStartedEvent extends FlightLifecycleEvent<GroundServiceEventPayload> {

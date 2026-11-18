@@ -16,6 +16,7 @@ import {
   toFlightSnapshot,
 } from './flight-aggregate.mapper';
 import { PrismaService } from '../../../../../core/provider/prisma/prisma.service';
+import { FlightEventType } from '../../../../../core/domain/events/dto/flight.events';
 import { AircraftCabinLayout } from '../../../../aircraft/model/cabin-layout.model';
 import { toAircraftCabinLayout } from '../../../../aircraft/model/cabin-layout-assignment';
 import {
@@ -645,6 +646,23 @@ export class FlightsRepository {
       flights: flights.map((flight) => withTimesheet(flight)),
       totalCount,
     };
+  }
+
+  async findStaleCheckIns(checkedInBefore: Date): Promise<string[]> {
+    const flights = await this.prisma.flight.findMany({
+      where: {
+        status: FlightStatus.CheckedIn,
+        flightEvent: {
+          some: {
+            type: FlightEventType.PilotCheckedIn,
+            createdAt: { lte: checkedInBefore },
+          },
+        },
+      },
+      select: { id: true },
+    });
+
+    return flights.map(({ id }) => id);
   }
 
   async remove(id: string): Promise<void> {

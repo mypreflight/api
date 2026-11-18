@@ -5,6 +5,7 @@ import {
   FlightEventType,
   PilotCheckedInEvent,
   OnBlockWasReportedEvent,
+  StaleCheckInWasRemovedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { AircraftRepository } from '../../../infra/database/repository/aircraft.repository';
 import { RepositionRepository } from '../../../infra/database/repository/reposition.repository';
@@ -25,6 +26,16 @@ export class RepositionFlightLifecycleListener {
   @OnEvent(FlightEventType.PilotCheckedIn)
   async onPilotCheckedIn(event: PilotCheckedInEvent): Promise<void> {
     await this.recordCheckInReposition(
+      event.payload.aircraftId,
+      event.payload.flightId,
+    );
+  }
+
+  @OnEvent(FlightEventType.StaleCheckInWasRemoved)
+  async onStaleCheckInWasRemoved(
+    event: StaleCheckInWasRemovedEvent,
+  ): Promise<void> {
+    await this.repositionRepository.removePendingPerformingFlight(
       event.payload.aircraftId,
       event.payload.flightId,
     );

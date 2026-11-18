@@ -5,6 +5,7 @@ import {
   FlightEventType,
   OnBlockWasReportedEvent,
   PilotCheckedInEvent,
+  StaleCheckInWasRemovedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { StartMonitoringAirportsWeatherCommand } from '../../command/weather/start-monitoring-airports-weather.command';
 import { StopMonitoringAirportsWeatherCommand } from '../../command/weather/stop-monitoring-airports-weather.command';
@@ -33,6 +34,16 @@ export class WeatherFlightLifecycleListener {
         `Could not fetch weather at check-in for flight ${flightId}: ${error}`,
       );
     }
+  }
+
+  @OnEvent(FlightEventType.StaleCheckInWasRemoved)
+  async onStaleCheckInWasRemoved(
+    event: StaleCheckInWasRemovedEvent,
+  ): Promise<void> {
+    const command = new StopMonitoringAirportsWeatherCommand(
+      event.payload.airportIds,
+    );
+    await this.commandBus.execute(command);
   }
 
   @OnEvent(FlightEventType.OnBlockWasReported)
