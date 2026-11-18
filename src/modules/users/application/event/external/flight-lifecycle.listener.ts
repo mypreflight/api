@@ -6,6 +6,7 @@ import {
   PilotCheckedInEvent,
   OnBlockWasReportedEvent,
   FlightWasClosedEvent,
+  StaleCheckInWasRemovedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { UsersRepository } from '../../../infra/database/repository/users.repository';
 import { UserTravelRepository } from '../../../infra/database/repository/user-travel.repository';
@@ -32,6 +33,16 @@ export class FlightLifecycleListener {
     await this.usersRepository.setCurrentFlight(userId, event.payload.flightId);
 
     await this.recordCheckInTravel(userId, event.payload.flightId);
+  }
+
+  @OnEvent(FlightEventType.StaleCheckInWasRemoved)
+  async onStaleCheckInWasRemoved(
+    event: StaleCheckInWasRemovedEvent,
+  ): Promise<void> {
+    const { flightId } = event.payload;
+
+    await this.usersRepository.clearCurrentFlight(flightId);
+    await this.travelRepository.removePendingPerformingFlight(flightId);
   }
 
   @OnEvent(FlightEventType.OnBlockWasReported)

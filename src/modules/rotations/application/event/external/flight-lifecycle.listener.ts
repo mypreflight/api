@@ -4,9 +4,11 @@ import {
   FlightEventType,
   PilotCheckedInEvent,
   FlightWasClosedEvent,
+  StaleCheckInWasRemovedEvent,
 } from '../../../../../core/domain/events/dto/flight.events';
 import { RotationsRepository } from '../../../infra/database/repository/rotations.repository';
 import { RotationStatus } from '../../../model/rotation.model';
+import { FlightStatus } from '../../../../flights/model/flight.model';
 
 @Injectable()
 export class FlightLifecycleListener {
@@ -29,6 +31,30 @@ export class FlightLifecycleListener {
       RotationStatus.InProgress,
       event.payload.actorId,
     );
+  }
+
+  @OnEvent(FlightEventType.StaleCheckInWasRemoved)
+  async onStaleCheckInWasRemoved(
+    event: StaleCheckInWasRemovedEvent,
+  ): Promise<void> {
+    const leg = await this.repository.findLegByFlightId(event.payload.flightId);
+    if (!leg) {
+      return;
+    }
+
+    const rotation = await this.repository.findById(leg.rotationId);
+    if (!rotation || rotation.status !== RotationStatus.InProgress) {
+      return;
+    }
+
+    const anyLegFlown = rotation.legs.some(
+      (candidate) => candidate.flight?.status === FlightStatus.Closed,
+    );
+    if (anyLegFlown) {
+      return;
+    }
+
+    await this.repository.updateStatus(rotation.id, RotationStatus.Ready, null);
   }
 
   @OnEvent(FlightEventType.FlightWasClosed)

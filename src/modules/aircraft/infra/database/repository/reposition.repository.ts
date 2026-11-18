@@ -84,6 +84,20 @@ export class RepositionRepository {
     });
   }
 
+  async removePendingPerformingFlight(
+    aircraftId: string,
+    flightId: string,
+  ): Promise<void> {
+    await this.prisma.aircraftReposition.deleteMany({
+      where: {
+        aircraftId,
+        flightId,
+        type: AircraftRepositionType.performing_flight,
+        status: AircraftRepositionStatus.pending,
+      },
+    });
+  }
+
   async createDeadhead(
     type: DeadheadType,
     aircraftId: string,

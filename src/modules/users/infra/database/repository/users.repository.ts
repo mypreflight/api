@@ -418,6 +418,17 @@ export class UsersRepository {
     await this.cacheManager.del(cacheByUser(CACHE_KEYS.USER_ME, id));
   }
 
+  async clearCurrentFlight(flightId: string): Promise<void> {
+    const user = await this.prisma.user.findFirst({
+      where: { currentFlightId: flightId },
+      select: { id: true },
+    });
+
+    if (user) {
+      await this.setCurrentFlight(user.id, null);
+    }
+  }
+
   async setCurrentFlight(
     userId: string,
     flightId: string | null,

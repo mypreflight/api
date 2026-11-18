@@ -69,6 +69,8 @@ import { GetFlightHandler } from './application/query/get-flight.query';
 import { ListAllFlightsHandler } from './application/query/list-all-flights.query';
 import { GetAircraftFlightHistoryHandler } from './application/query/get-aircraft-flight-history.query';
 import { RemoveFlightHandler } from './application/command/remove-flight.command';
+import { RemoveStaleCheckInHandler } from './application/command/remove-stale-check-in.command';
+import { ListStaleCheckInsHandler } from './application/query/list-stale-check-ins.query';
 import { CheckInPilotForFlightHandler } from './application/command/check-in-pilot.command';
 import { StartBoardingHandler } from './application/command/start-boarding.command';
 import { FinishBoardingHandler } from './application/command/finish-boarding.command';
@@ -214,6 +216,8 @@ import { ScheduledJobsModule } from '../../core/scheduling/scheduled-jobs.module
     ListAllFlightsHandler,
     GetAircraftFlightHistoryHandler,
     RemoveFlightHandler,
+    RemoveStaleCheckInHandler,
+    ListStaleCheckInsHandler,
     CheckInPilotForFlightHandler,
     StartBoardingHandler,
     FinishBoardingHandler,

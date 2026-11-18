@@ -53,6 +53,10 @@ export class UserAircraftRepository {
     await this.prisma.userAircraft.create({ data });
   }
 
+  async removeForFlight(flightId: string): Promise<void> {
+    await this.prisma.userAircraft.deleteMany({ where: { flightId } });
+  }
+
   async findByUser(userId: string): Promise<UserAircraftEntry[]> {
     const rows = await this.prisma.userAircraft.findMany({
       where: { userId },
