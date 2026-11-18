@@ -463,7 +463,7 @@ export class Flight extends AggregateRoot<FlightLifecycleEvent> {
     parkingPositionId: string,
   ): void {
     this.expectBefore(
-      FlightStatus.CheckedIn,
+      FlightStatus.BoardingStarted,
       InvalidStatusToUpdateDepartureParkingPositionError,
     );
 

@@ -309,33 +309,33 @@ Feature: Update flight departure parking position
       }
       """
 
-  Scenario: As operations I cannot update departure parking position after pilot checked in
+  Scenario: As operations I cannot update departure parking position after boarding started
     Given I am signed in as "operations"
-    When I send a "PATCH" request to "/api/v1/flight/48760636-9520-4863-b32f-f3618556feb7/departure-parking-position" with body:
+    When I send a "PATCH" request to "/api/v1/flight/7e2b8d5c-a6f3-4049-98b1-d4f9a2e35b67/departure-parking-position" with body:
       """json
-      { "departureParkingPositionId": "ad5a6ebd-dad8-4400-8bb4-b7cee3b00fa9" }
+      { "departureParkingPositionId": "ae098e8f-b088-41a6-a566-880c7dd5e931" }
       """
     Then the response status should be 422
     And the response body should contain:
       """json
       {
-        "message": "Cannot update departure parking position, because pilot is already checked in.",
+        "message": "Cannot update departure parking position, because boarding has started.",
         "error": "Unprocessable Content",
         "statusCode": 422
       }
       """
 
-  Scenario: As cabin crew I cannot update departure parking position after pilot checked in
+  Scenario: As cabin crew I cannot update departure parking position after boarding started
     Given I am signed in as "cabin crew"
-    When I send a "PATCH" request to "/api/v1/flight/48760636-9520-4863-b32f-f3618556feb7/departure-parking-position" with body:
+    When I send a "PATCH" request to "/api/v1/flight/7e2b8d5c-a6f3-4049-98b1-d4f9a2e35b67/departure-parking-position" with body:
       """json
-      { "departureParkingPositionId": "ad5a6ebd-dad8-4400-8bb4-b7cee3b00fa9" }
+      { "departureParkingPositionId": "ae098e8f-b088-41a6-a566-880c7dd5e931" }
       """
     Then the response status should be 422
     And the response body should contain:
       """json
       {
-        "message": "Cannot update departure parking position, because pilot is already checked in.",
+        "message": "Cannot update departure parking position, because boarding has started.",
         "error": "Unprocessable Content",
         "statusCode": 422
       }

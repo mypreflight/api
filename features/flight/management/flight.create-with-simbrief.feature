@@ -517,18 +517,141 @@ Feature: Create a flight with Simbrief
       """
     And I set database to initial state
 
-  Scenario: As a cabin crew I cannot create a flight
+  Scenario: As a cabin crew without SimBrief connected I cannot import a flight
     Given I am signed in as "cabin crew"
     When I send a "POST" request to "/api/v1/flight/create-with-simbrief"
-    Then the response status should be 403
+    Then the response status should be 400
     And the response body should contain:
       """json
       {
-        "message": "Forbidden resource",
-        "error": "Forbidden",
-        "statusCode": 403
+        "statusCode": 400,
+        "error": "Bad Request",
+        "message": "User has not connected SimBrief ID."
       }
       """
+
+  Scenario: As a cabin crew with SimBrief connected I import my flight and I am checked in with the estimated times of the plan
+    Given I am signed in as "admin"
+    When I send a "POST" request to "/api/v1/user" with body:
+      """json
+      {
+        "name": "Nina Doe",
+        "email": "nina.doe@example.com",
+        "password": "P@$$w0rd",
+        "role": "CabinCrew",
+        "pilotLicenseId": "UK-54321",
+        "homeAirportId": "3c721cc6-c653-4fad-be43-dc9d6a149383",
+        "simbriefUserId": "123456"
+      }
+      """
+    Then the response status should be 201
+    Given I am signed in with a new session as "new cabin crew"
+    When I send a "POST" request to "/api/v1/flight/create-with-simbrief"
+    Then the response status should be 201
+    And the response body property "status" should contain:
+      """json
+      "checked_in"
+      """
+    And the response body property "timesheet" should contain:
+      """json
+      {
+        "scheduled": {
+          "offBlockTime": "2026-01-05T09:00:00.000Z",
+          "takeoffTime": "2026-01-05T09:20:00.000Z",
+          "arrivalTime": "2026-01-05T17:10:00.000Z",
+          "onBlockTime": "2026-01-05T17:25:00.000Z"
+        },
+        "estimated": {
+          "offBlockTime": "2026-01-05T09:05:00.000Z",
+          "takeoffTime": "2026-01-05T09:23:00.000Z",
+          "arrivalTime": "2026-01-05T17:14:00.000Z",
+          "onBlockTime": "2026-01-05T17:26:00.000Z"
+        }
+      }
+      """
+    And the response body property "pilot" should contain:
+      """json
+      {
+        "id": "@uuid",
+        "name": "Nina Doe",
+        "pilotLicenseId": "UK-54321",
+        "totalFlightTime": 0
+      }
+      """
+    And I remember the response body property "id" as "flightId"
+    When I send a "GET" request to "/api/v1/flight/{{flightId}}/events"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      [
+        {
+          "id": "@uuid",
+          "scope": "user",
+          "type": "flight.preliminary-loadsheet-updated",
+          "payload": {},
+          "actor": {
+            "id": "@uuid",
+            "name": "Nina Doe"
+          },
+          "createdAt": "@date('within 1 minute from now')"
+        },
+        {
+          "id": "@uuid",
+          "scope": "user",
+          "type": "flight.released",
+          "payload": {},
+          "actor": {
+            "id": "@uuid",
+            "name": "Nina Doe"
+          },
+          "createdAt": "@date('within 1 minute from now')"
+        },
+        {
+          "id": "@uuid",
+          "scope": "user",
+          "type": "flight.pilot-checked-in",
+          "payload": {},
+          "actor": {
+            "id": "@uuid",
+            "name": "Nina Doe"
+          },
+          "createdAt": "@date('within 1 minute from now')"
+        }
+      ]
+      """
+    When I send a "PATCH" request to "/api/v1/flight/{{flightId}}/departure-parking-position" with body:
+      """json
+      { "departureParkingPositionId": "ad5a6ebd-dad8-4400-8bb4-b7cee3b00fa9" }
+      """
+    Then the response status should be 200
+    When I send a "GET" request to "/api/v1/user/me"
+    Then the response status should be 200
+    And the response body property "currentFlightId" should contain:
+      """json
+      "@uuid"
+      """
+    And I set database to initial state
+
+  Scenario: As a cabin crew with a flight in progress I cannot import another flight
+    Given I am signed in as "cabin crew"
+    When I send a "PATCH" request to "/api/v1/user/me" with body:
+      """json
+      {
+        "simbriefUserId": "123456"
+      }
+      """
+    Then the response status should be 200
+    When I send a "POST" request to "/api/v1/flight/create-with-simbrief"
+    Then the response status should be 409
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 409,
+        "error": "Conflict",
+        "message": "A flight is already in progress. Close it before importing another plan."
+      }
+      """
+    And I set database to initial state
 
   Scenario: As operations user importing a plan for an aircraft not in the fleet I create it unconfirmed
     Given I am signed in as "operations with Simbrief ID but non existing aircraft"

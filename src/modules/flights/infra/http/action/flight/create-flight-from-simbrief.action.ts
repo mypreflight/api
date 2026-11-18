@@ -40,9 +40,10 @@ export class CreateFlightFromSimbriefAction {
   @ApiOperation({
     summary: 'Create a flight with SimBrief data',
     description:
-      '**NOTE:** This endpoint is only available for users with the ` operations ` role. <br />' +
+      '**NOTE:** This endpoint is only available for users with the ` operations ` or ` cabin crew ` role. <br />' +
       '**NOTE:** Simbrief ID must be provided for the user, otherwise import will throw HTTP 400. <br />' +
-      '**NOTE:** An aircraft registration not yet in the fleet is created for the flight operator and marked unconfirmed until operations confirm it.',
+      '**NOTE:** An aircraft registration not yet in the fleet is created for the flight operator and marked unconfirmed until operations confirm it. <br />' +
+      '**NOTE:** A flight imported by operations stays in created status. A flight imported by cabin crew is marked ready and the pilot is checked in with the estimated times of the plan, so a pilot with a flight in progress cannot import another.',
   })
   @ApiBearerAuth('jwt')
   @ApiBody({ type: CreateFlightRequest })
@@ -57,20 +58,21 @@ export class CreateFlightFromSimbriefAction {
   })
   @ApiConflictResponse({
     description:
-      'The aircraft is in the fleet with a different type than the plan uses',
+      'The aircraft is in the fleet with a different type than the plan uses, or the importing pilot has a flight in progress',
     type: GenericConflictResponse,
   })
   @ApiUnprocessableEntityResponse({
     description: 'The plan does not name the aircraft registration and type',
   })
   @Post('/create-with-simbrief')
-  @Role(UserRole.Operations)
+  @Role(UserRole.Operations, UserRole.CabinCrew)
   async run(@Req() request: AuthorizedRequest): Promise<GetFlightResponse> {
     const flightId = v4();
 
     const command = new CreateFlightFromSimbriefCommand(
       flightId,
       request.user.sub,
+      request.user.role === UserRole.CabinCrew.toLowerCase(),
     );
     await this.commandBus.execute(command);
 

@@ -491,7 +491,7 @@ describe('Flight', () => {
   describe.each([
     {
       name: 'changeDepartureParkingPosition',
-      firstForbidden: FlightStatus.CheckedIn,
+      firstForbidden: FlightStatus.BoardingStarted,
       act: (flight: Flight) =>
         flight.changeDepartureParkingPosition(ACTOR, 'stand-1'),
       field: 'departureParkingPositionId',

@@ -216,6 +216,10 @@ export type Times = {
   sched_off: string;
   sched_on: string;
   sched_in: string;
+  est_out?: string | EmptyElement;
+  est_off?: string | EmptyElement;
+  est_on?: string | EmptyElement;
+  est_in?: string | EmptyElement;
 };
 
 export type Fuel = {

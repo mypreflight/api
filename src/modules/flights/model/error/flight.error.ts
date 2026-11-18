@@ -33,7 +33,7 @@ export class FlightOfpNotFoundError extends NotFoundError {
 export class InvalidStatusToUpdateDepartureParkingPositionError extends UnprocessableError {
   constructor() {
     super(
-      'Cannot update departure parking position, because pilot is already checked in.',
+      'Cannot update departure parking position, because boarding has started.',
     );
   }
 }
@@ -180,6 +180,14 @@ export class SimbriefPlanWithoutAircraftError extends UnprocessableError {
   constructor() {
     super(
       'The SimBrief plan does not name the aircraft registration and type.',
+    );
+  }
+}
+
+export class PilotHasFlightInProgressError extends ConflictError {
+  constructor() {
+    super(
+      'A flight is already in progress. Close it before importing another plan.',
     );
   }
 }
