@@ -14,6 +14,7 @@ export type ApiUserType =
   | 'operations with Simbrief ID but non existing aircraft'
   | 'operations with Simbrief ID and alternate airport missing from database'
   | 'cabin crew'
+  | 'new cabin crew'
   | 'Alan Doe'
   | 'Michael Doe';
 
@@ -28,6 +29,10 @@ const apiUsers: Record<ApiUserType, { email: string; password: string }> = {
   },
   'cabin crew': {
     email: 'cabin-crew@example.com',
+    password: 'P@$$w0rd',
+  },
+  'new cabin crew': {
+    email: 'nina.doe@example.com',
     password: 'P@$$w0rd',
   },
   'operations with valid Simbrief ID': {

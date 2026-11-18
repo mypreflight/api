@@ -41,7 +41,7 @@ export class UpdateDepartureParkingPositionAction {
     summary: 'Update flight departure parking position',
     description:
       'Assigns the departure parking position to a flight. <br />' +
-      '**NOTE:** This action is only allowed while the flight is in `created` or `ready` status (before the pilot has checked in). <br />' +
+      '**NOTE:** This action is only allowed while the flight is in `created`, `ready` or `checked_in` status (before boarding starts). <br />' +
       '**NOTE:** This endpoint is available for `operations` and `cabin crew` roles.',
   })
   @ApiBearerAuth('jwt')

@@ -1,5 +1,6 @@
 import {
   AlternateAirportCandidate,
+  CreateFlightFromSimbriefCommand,
   CreateFlightFromSimbriefHandler,
 } from './create-flight-from-simbrief.command';
 import { AirportType } from '../../../airports/model/airport.model';
@@ -7,7 +8,11 @@ import { FlightServiceType } from '../../model/flight.model';
 import {
   Crew,
   OperationalFlightPlan,
+  Times,
 } from '../../../../core/provider/simbrief/type/simbrief.types';
+import { Schedule } from '../../model/timesheet.model';
+import { PilotHasFlightInProgressError } from '../../model/error/flight.error';
+import { GetUserSimbriefIdQuery } from '../../../users/application/query/get-user-simbrief-id.query';
 import { CrewMember } from '../../../crew/application/command/assign-crew-to-flight.command';
 import { CrewRole } from '../../../crew/model/crew.model';
 
@@ -285,5 +290,97 @@ describe('CreateFlightFromSimbriefHandler weight import', () => {
 
   it('derives no mass when the payload does not exceed the cargo', () => {
     expect(massOf(ofpWithWeights('8004', '8004', '120'))).toBeNull();
+  });
+});
+
+describe('CreateFlightFromSimbriefHandler estimated times', () => {
+  let handler: CreateFlightFromSimbriefHandler;
+
+  function estimate(times: Partial<Times>): Schedule {
+    return (
+      handler as unknown as {
+        estimatedSchedule: (ofp: OperationalFlightPlan) => Schedule;
+      }
+    ).estimatedSchedule({
+      times: {
+        sched_out: '1767603600',
+        sched_off: '1767604800',
+        sched_on: '1767633000',
+        sched_in: '1767633900',
+        ...times,
+      },
+    } as OperationalFlightPlan);
+  }
+
+  beforeEach(() => {
+    handler = buildHandler();
+  });
+
+  it('takes the estimated times of the plan', () => {
+    expect(
+      estimate({
+        est_out: '1767603900',
+        est_off: '1767604980',
+        est_on: '1767633240',
+        est_in: '1767633960',
+      }),
+    ).toEqual({
+      offBlockTime: new Date('2026-01-05T09:05:00.000Z'),
+      takeoffTime: new Date('2026-01-05T09:23:00.000Z'),
+      arrivalTime: new Date('2026-01-05T17:14:00.000Z'),
+      onBlockTime: new Date('2026-01-05T17:26:00.000Z'),
+    });
+  });
+
+  it('falls back to the scheduled time where the plan has no estimate', () => {
+    expect(estimate({ est_off: '1767604980', est_on: {} })).toEqual({
+      offBlockTime: new Date('2026-01-05T09:00:00.000Z'),
+      takeoffTime: new Date('2026-01-05T09:23:00.000Z'),
+      arrivalTime: new Date('2026-01-05T17:10:00.000Z'),
+      onBlockTime: new Date('2026-01-05T17:25:00.000Z'),
+    });
+  });
+});
+
+describe('CreateFlightFromSimbriefHandler pilot import', () => {
+  const getOperationalFlightPlan = jest.fn();
+
+  function buildPilotHandler(
+    currentFlightId: string | null,
+  ): CreateFlightFromSimbriefHandler {
+    const queryBus = {
+      execute: jest.fn((query: unknown) =>
+        Promise.resolve(
+          query instanceof GetUserSimbriefIdQuery
+            ? '123456'
+            : { currentFlightId },
+        ),
+      ),
+    };
+
+    return new CreateFlightFromSimbriefHandler(
+      queryBus as never,
+      undefined as never,
+      { getOperationalFlightPlan } as never,
+      undefined as never,
+      undefined as never,
+      undefined as never,
+      undefined as never,
+    );
+  }
+
+  beforeEach(() => {
+    getOperationalFlightPlan.mockReset();
+  });
+
+  it('refuses a pilot with a flight in progress before fetching the plan', async () => {
+    const handler = buildPilotHandler('23952e79-6b38-49ed-a1db-bd4d9b3cedab');
+
+    await expect(
+      handler.execute(
+        new CreateFlightFromSimbriefCommand('flight-id', 'pilot-id', true),
+      ),
+    ).rejects.toBeInstanceOf(PilotHasFlightInProgressError);
+    expect(getOperationalFlightPlan).not.toHaveBeenCalled();
   });
 });

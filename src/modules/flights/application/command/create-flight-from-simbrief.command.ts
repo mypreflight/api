@@ -5,6 +5,7 @@ import {
   QueryBus,
 } from '@nestjs/cqrs';
 import {
+  PilotHasFlightInProgressError,
   SimbriefIdNotConnectedError,
   SimbriefPlanWithoutAircraftError,
 } from '../../model/error/flight.error';
@@ -16,6 +17,7 @@ import {
 import { FlightEventScope } from '../../model/event.model';
 import { DomainEventEmitter } from '../../../../core/domain/events/domain-event-emitter';
 import { GetUserSimbriefIdQuery } from '../../../users/application/query/get-user-simbrief-id.query';
+import { GetUserByIdQuery } from '../../../users/application/query/get-user-by-id.query';
 import { SimbriefClient } from '../../../../core/provider/simbrief/client/simbrief.client';
 import { ImportAirportByIcaoCommand } from '../../../airports/application/command/import-airport-by-icao.command';
 import { ImportAircraftByRegistrationCommand } from '../../../aircraft/application/command/import-aircraft-by-registration.command';
@@ -65,6 +67,9 @@ import { WaypointsRepository } from '../../../waypoints/infra/database/waypoints
 import { GetSeatCapacityQuery } from '../../../manifest/application/query/get-seat-capacity.query';
 import { CabinCapacity } from '../../../cabin-layouts/model/cabin-capacity.model';
 import { capPassengersAtSeatCapacity } from '../../model/loadsheet.policy';
+import { Schedule } from '../../model/timesheet.model';
+import { MarkAsReadyCommand } from './mark-as-ready.command';
+import { CheckInPilotCommand } from './check-in-pilot.command';
 
 export type AlternateAirportCandidate = {
   icaoCode: string;
@@ -84,6 +89,7 @@ export class CreateFlightFromSimbriefCommand {
   constructor(
     public readonly flightId: string,
     public readonly initiatorId: string,
+    public readonly checkInInitiator: boolean,
   ) {}
 }
 
@@ -100,13 +106,20 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
   ) {}
 
   async execute(command: CreateFlightFromSimbriefCommand): Promise<void> {
-    const { flightId, initiatorId } = command;
+    const { flightId, initiatorId, checkInInitiator } = command;
+    const scope = checkInInitiator
+      ? FlightEventScope.User
+      : FlightEventScope.Operations;
 
     const getSimbriefIdQuery = new GetUserSimbriefIdQuery(initiatorId);
     const simbriefId = await this.queryBus.execute(getSimbriefIdQuery);
 
     if (simbriefId === null) {
       throw new SimbriefIdNotConnectedError();
+    }
+
+    if (checkInInitiator) {
+      await this.assertNoFlightInProgress(initiatorId);
     }
 
     const ofp = await this.simbriefClient.getOperationalFlightPlan(simbriefId);
@@ -257,7 +270,7 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
     this.domainEvents.emit(
       new FlightWasCreatedEvent({
         flightId: flightId,
-        scope: FlightEventScope.Operations,
+        scope,
         actorId: initiatorId,
         aircraftId: flightData.aircraftId,
       }),
@@ -266,10 +279,46 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
     await this.domainEvents.emitAsync(
       new PreliminaryLoadsheetWasUpdatedEvent({
         flightId,
-        scope: FlightEventScope.Operations,
+        scope,
         actorId: initiatorId,
       }),
     );
+
+    if (checkInInitiator) {
+      await this.commandBus.execute(
+        new MarkAsReadyCommand(flightId, initiatorId),
+      );
+      await this.commandBus.execute(
+        new CheckInPilotCommand(
+          flightId,
+          initiatorId,
+          this.estimatedSchedule(ofp),
+        ),
+      );
+    }
+  }
+
+  private async assertNoFlightInProgress(pilotId: string): Promise<void> {
+    const pilot = await this.queryBus.execute(new GetUserByIdQuery(pilotId));
+
+    if (pilot.currentFlightId !== null) {
+      throw new PilotHasFlightInProgressError();
+    }
+  }
+
+  private estimatedSchedule(ofp: OperationalFlightPlan): Schedule {
+    const { times } = ofp;
+    const estimateOr = (
+      estimated: string | EmptyElement | undefined,
+      scheduled: string,
+    ): Date => this.ofpTimeToDate(this.readOfpText(estimated) || scheduled);
+
+    return {
+      offBlockTime: estimateOr(times.est_out, times.sched_out),
+      takeoffTime: estimateOr(times.est_off, times.sched_off),
+      arrivalTime: estimateOr(times.est_on, times.sched_on),
+      onBlockTime: estimateOr(times.est_in, times.sched_in),
+    };
   }
 
   private collectAirportNotams(ofp: OperationalFlightPlan): AirportNotams[] {
