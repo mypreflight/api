@@ -49,8 +49,8 @@ export async function loadOperators(
     type: OperatorType.legacy,
     serviceType: OperatorServiceType.both,
     hubs: ['FRA', 'MUC'] as Prisma.InputJsonValue,
-    fleetSize: 8,
-    fleetTypes: ['A339'] as Prisma.InputJsonValue,
+    fleetSize: 9,
+    fleetTypes: ['A339', 'A359'] as Prisma.InputJsonValue,
     avgFleetAge: 14.2,
     logoUrl:
       'https://api-ninjas-data.s3.us-west-2.amazonaws.com/airline_logos/brandmark/lufthansa.png',

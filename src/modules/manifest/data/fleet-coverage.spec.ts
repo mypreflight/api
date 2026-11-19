@@ -4,6 +4,11 @@ import { findHoldLayoutByType } from './cargo-holds';
 
 const SEEDS = ['aircrafts.seed.ts', 'cargo-flights.seed.ts'];
 const DEGRADED_PATH_FIXTURE_TYPES = ['B762'];
+const IMPORTED_UNCURATED_TYPES = ['A359'];
+const UNCURATED_TYPES = [
+  ...DEGRADED_PATH_FIXTURE_TYPES,
+  ...IMPORTED_UNCURATED_TYPES,
+];
 const DESIGNATOR = /^\s+type: '([A-Z0-9]{3,4})',$/gm;
 
 function fleetTypes(): string[] {
@@ -26,7 +31,7 @@ describe('curated hold data against the operated fleet', () => {
 
   it('covers every airframe type an aircraft is recorded as', () => {
     const uncovered = fleetTypes()
-      .filter((type) => !DEGRADED_PATH_FIXTURE_TYPES.includes(type))
+      .filter((type) => !UNCURATED_TYPES.includes(type))
       .filter((type) => findHoldLayoutByType(type) === undefined);
 
     expect(uncovered).toEqual([]);
@@ -42,7 +47,7 @@ describe('curated hold data against the operated fleet', () => {
 
   it('gives every fleet type a default variant to fall back to', () => {
     const withoutDefault = fleetTypes()
-      .filter((type) => !DEGRADED_PATH_FIXTURE_TYPES.includes(type))
+      .filter((type) => !UNCURATED_TYPES.includes(type))
       .filter((type) => {
         const layout = findHoldLayoutByType(type);
 
