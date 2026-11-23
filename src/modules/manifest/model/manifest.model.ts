@@ -11,11 +11,19 @@ export enum PassengerSpecialService {
   WheelchairRamp = 'WCHR',
   WheelchairSteps = 'WCHS',
   WheelchairCabin = 'WCHC',
+  WheelchairDryBattery = 'WCBD',
+  WheelchairWetBattery = 'WCBW',
+  WheelchairLithiumBattery = 'WCLB',
+  Stretcher = 'STCR',
+  MedicalCase = 'MEDA',
   UnaccompaniedMinor = 'UMNR',
   Blind = 'BLND',
   Deaf = 'DEAF',
   MeetAndAssist = 'MAAS',
   PetInCabin = 'PETC',
+  DeporteeEscorted = 'DEPA',
+  DeporteeUnescorted = 'DEPU',
+  Inadmissible = 'INAD',
 }
 
 export class ManifestPassenger {

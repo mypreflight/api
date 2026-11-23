@@ -20,7 +20,7 @@ Feature: Read the seated passenger manifest of a flight
     And every entry of the response body list "passengers" should have a "pnr"
     And every entry of the response body list "passengers" should have a "cabin"
     And between 1 and 60 entries of the response body list "passengers" should have a "ssr"
-    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,UMNR,BLND,DEAF,MAAS,PETC"
+    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,WCBD,WCBW,WCLB,STCR,MEDA,UMNR,BLND,DEAF,MAAS,PETC,DEPA,DEPU,INAD"
 
   Scenario: As the captain I read the manifest of the flight I command
     Given I am signed in as "cabin crew"
@@ -38,7 +38,7 @@ Feature: Read the seated passenger manifest of a flight
       }
       """
     And every entry of the response body list "passengers" should have a "designator"
-    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,UMNR,BLND,DEAF,MAAS,PETC"
+    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,WCBD,WCBW,WCLB,STCR,MEDA,UMNR,BLND,DEAF,MAAS,PETC,DEPA,DEPU,INAD"
 
   Scenario: As operations I list only the passengers who boarded
     Given I am signed in as "operations"

@@ -711,7 +711,7 @@
   {
     "id": "blood-plasma",
     "name": "Blood plasma",
-    "descriptions": ["Frozen blood plasma units", "Plasma for fractionation"],
+    "descriptions": ["Blood plasma units, chilled", "Plasma for fractionation"],
     "shc": ["PIL", "COL", "ACT"],
     "densityKgM3": 1010,
     "piece": {
@@ -3761,7 +3761,7 @@
     "id": "munitions-of-war",
     "name": "Munitions of war",
     "descriptions": ["Munitions of war, crated", "Defence materiel, sealed"],
-    "shc": ["MUW", "CAO", "RXS"],
+    "shc": ["MUW", "CAO", "REX"],
     "densityKgM3": 1400,
     "piece": {
       "minKg": 25,

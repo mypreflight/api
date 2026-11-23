@@ -1079,7 +1079,8 @@ Feature: Check in pilot for flight
               "properShippingName": "Dry ice"
             }
           ],
-          "header": null
+          "header": null,
+          "specialPassengers": []
         },
         "changes": null
       }

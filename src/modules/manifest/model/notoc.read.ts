@@ -18,9 +18,10 @@ type StoredSpecialLoad = Omit<
 
 type StoredNotocDocument = Omit<
   NotocDocument,
-  'header' | 'dangerousGoods' | 'specialLoads'
+  'header' | 'specialPassengers' | 'dangerousGoods' | 'specialLoads'
 > & {
   header?: NotocDocument['header'];
+  specialPassengers?: NotocDocument['specialPassengers'];
   dangerousGoods: StoredDangerousGoods[];
   specialLoads: StoredSpecialLoad[];
 };
@@ -31,6 +32,7 @@ export function readNotocDocument(stored: unknown): NotocDocument {
   return {
     ...document,
     header: document.header ?? null,
+    specialPassengers: document.specialPassengers ?? [],
     dangerousGoods: document.dangerousGoods.map((entry) => ({
       ...entry,
       classOrDivision: entry.classOrDivision ?? entry.hazardClass,

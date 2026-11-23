@@ -30,6 +30,7 @@ import {
   RadioactiveCategory,
 } from './notoc.model';
 import { dryIceKgOf } from './segregation.policy';
+import { NotifiablePassenger, specialPassengersOf } from './notoc-passengers';
 import { stableUnit } from './stable-random';
 
 export const NOTIFIABLE_HANDLING_CODES: SpecialHandlingCode[] = [
@@ -59,6 +60,7 @@ export const NOTIFIABLE_HANDLING_CODES: SpecialHandlingCode[] = [
 ];
 
 export const DANGEROUS_GOODS_IMP_CODES: SpecialHandlingCode[] = [
+  SpecialHandlingCode.ExplosivesOther,
   SpecialHandlingCode.ExplosivesDivision14S,
   SpecialHandlingCode.ExplosivesDivision14G,
   SpecialHandlingCode.FlammableGas,
@@ -140,6 +142,7 @@ export function composeNotoc(
   manifest: FlightCargoManifest,
   unloadingAirport: string,
   header: NotocHeader | null = null,
+  passengers: NotifiablePassenger[] = [],
 ): NotocDocument {
   const placed = loadedShipmentsOf(manifest);
   const dangerousGoods = [
@@ -154,6 +157,7 @@ export function composeNotoc(
 
   return {
     header,
+    specialPassengers: specialPassengersOf(passengers, manifest),
     statement:
       dangerousGoods.length === 0
         ? NO_DANGEROUS_GOODS_STATEMENT

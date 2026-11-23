@@ -10,6 +10,7 @@ import {
   TemperatureRegime,
 } from './commodity.model';
 import { ColdChainRisk } from './cold-chain';
+import { PassengerSpecialService } from './manifest.model';
 
 export enum NotocStageName {
   Preliminary = 'preliminary',
@@ -462,6 +463,29 @@ export class NotocLoadSummary {
   tightestConnectionMinutes!: number | null;
 }
 
+export class NotocSpecialPassenger {
+  @ApiProperty({ example: '34C' })
+  seat!: string;
+
+  @ApiProperty({
+    enum: PassengerSpecialService,
+    example: PassengerSpecialService.WheelchairLithiumBattery,
+  })
+  ssr!: PassengerSpecialService;
+
+  @ApiProperty({
+    description:
+      'What the commander needs to know, one line each, such as where a mobility aid and its battery are carried',
+    example: [
+      'LITHIUM BATTERY REMOVED, IN CABIN AT 34C',
+      'MOBILITY AID IN HOLD, CPT 5',
+    ],
+    isArray: true,
+    type: String,
+  })
+  remarks!: string[];
+}
+
 export class NotocDocument {
   @ApiProperty({
     description:
@@ -470,6 +494,14 @@ export class NotocDocument {
     type: NotocHeader,
   })
   header!: NotocHeader | null;
+
+  @ApiProperty({
+    description:
+      'Special category passengers aboard, by seat. Empty on a notification issued before they were recorded.',
+    type: NotocSpecialPassenger,
+    isArray: true,
+  })
+  specialPassengers!: NotocSpecialPassenger[];
 
   @ApiProperty({
     description:

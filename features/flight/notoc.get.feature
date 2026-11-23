@@ -208,7 +208,8 @@ Feature: Get flight notification to captain
               "properShippingName": "Dry ice"
             }
           ],
-          "header": null
+          "header": null,
+          "specialPassengers": []
         },
         "changes": null
       }
@@ -422,7 +423,8 @@ Feature: Get flight notification to captain
               "properShippingName": "Dry ice"
             }
           ],
-          "header": null
+          "header": null,
+          "specialPassengers": []
         },
         "changes": null
       }
@@ -495,7 +497,8 @@ Feature: Get flight notification to captain
             }
           ],
           "dangerousGoods": [],
-          "header": null
+          "header": null,
+          "specialPassengers": []
         },
         "changes": null
       }
@@ -585,7 +588,8 @@ Feature: Get flight notification to captain
             }
           ],
           "dangerousGoods": [],
-          "header": null
+          "header": null,
+          "specialPassengers": []
         },
         "changes": null
       }
