@@ -1,8 +1,10 @@
 import {
+  BULK_DOOR_LIMIT,
   capacityAt,
   fits,
   formatUldCode,
   generateUldSerial,
+  pieceFits,
   ULD_SPECS,
   uldSpecsFor,
   UldType,
@@ -109,5 +111,33 @@ describe('unit load devices', () => {
     );
 
     expect(orphans).toEqual([]);
+  });
+
+  it('takes a piece that fits the device floor and height', () => {
+    const coffin = { kg: 260, lengthCm: 220, widthCm: 70, heightCm: 60 };
+
+    expect(pieceFits(coffin, ULD_SPECS[UldType.Pallet96].pieceLimit)).toBe(
+      true,
+    );
+    expect(pieceFits(coffin, ULD_SPECS[UldType.Ld3].pieceLimit)).toBe(false);
+  });
+
+  it('never tips a piece on its side to fit a device', () => {
+    const stall = { kg: 620, lengthCm: 300, widthCm: 110, heightCm: 230 };
+
+    expect(pieceFits(stall, ULD_SPECS[UldType.Pallet96].pieceLimit)).toBe(
+      false,
+    );
+    expect(pieceFits(stall, ULD_SPECS[UldType.MainDeck].pieceLimit)).toBe(true);
+  });
+
+  it('lets a loose piece turn to pass the bulk door', () => {
+    const coffin = { kg: 260, lengthCm: 220, widthCm: 60, heightCm: 100 };
+
+    expect(pieceFits(coffin, BULK_DOOR_LIMIT, true)).toBe(true);
+  });
+
+  it('takes any load that reports no heaviest piece', () => {
+    expect(pieceFits(undefined, ULD_SPECS[UldType.Ld3].pieceLimit)).toBe(true);
   });
 });

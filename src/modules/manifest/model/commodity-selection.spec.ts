@@ -130,6 +130,43 @@ describe('commodity selection', () => {
     expect(weightIn(2)).toBeGreaterThan(weightIn(4));
   });
 
+  it('weights a commodity less where its destination does not want it', () => {
+    const nairobi = {
+      iataCode: 'NBO',
+      country: 'KE',
+      continent: Continent.Africa,
+      month: 2,
+    };
+    const weightTo = (destinationContinent: Continent): number =>
+      offeredCommodities({ ...nairobi, destinationContinent }).find(
+        (offer) => offer.commodity.id === 'flowers-roses',
+      )!.weight;
+
+    expect(weightTo(Continent.Europe)).toBeGreaterThan(
+      weightTo(Continent.Oceania),
+    );
+  });
+
+  it('weights a commodity the same when no destination is known', () => {
+    const nairobi = {
+      iataCode: 'NBO',
+      country: 'KE',
+      continent: Continent.Africa,
+      month: 2,
+    };
+    const weightOf = (context: typeof nairobi): number =>
+      offeredCommodities(context).find(
+        (offer) => offer.commodity.id === 'flowers-roses',
+      )!.weight;
+
+    expect(weightOf(nairobi)).toBe(
+      weightOf({
+        ...nairobi,
+        destinationContinent: Continent.Europe,
+      } as typeof nairobi),
+    );
+  });
+
   it('recognises a commodity available from anywhere as generic', () => {
     expect(isGeneric(findCommodityById('postal-mail')!)).toBe(true);
     expect(isGeneric(findCommodityById('cod-fresh')!)).toBe(false);

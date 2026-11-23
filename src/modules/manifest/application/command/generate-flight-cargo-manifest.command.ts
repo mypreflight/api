@@ -126,6 +126,7 @@ export class GenerateFlightCargoManifestHandler implements ICommandHandler<Gener
           country: departure.country,
           continent: departure.continent,
           month: departureAt.getUTCMonth() + 1,
+          destinationContinent: arrival.continent,
         }),
         passengers,
       ),
