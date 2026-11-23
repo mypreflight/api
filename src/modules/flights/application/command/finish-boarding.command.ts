@@ -21,6 +21,7 @@ import { ReconcileFlightCargoManifestCommand } from '../../../manifest/applicati
 import { AirportType } from '../../../airports/model/airport.model';
 import { scheduledFlightHours } from '../../model/timesheet.model';
 import { IssueNotocCommand } from '../../../manifest/application/command/issue-notoc.command';
+import { notocHeaderContextOf } from '../../../manifest/model/notoc-header';
 import { AcknowledgeNotocCommand } from '../../../manifest/application/command/acknowledge-notoc.command';
 import { NotocStageName } from '../../../manifest/model/notoc.model';
 import { GetCurrentLoadsheetQuery } from '../query/get-current-loadsheet.query';
@@ -111,6 +112,7 @@ export class FinishBoardingHandler implements ICommandHandler<FinishBoardingComm
         NotocStageName.Final,
         arrival.iataCode,
         issuedAt,
+        notocHeaderContextOf(details),
       );
       await this.commandBus.execute(issueNotoc);
 

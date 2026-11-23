@@ -56,9 +56,84 @@ export class NotocDrill {
   additionalRisks!: string[];
 }
 
+export enum RadioactiveCategory {
+  IWhite = 'I-WHITE',
+  IIYellow = 'II-YELLOW',
+  IIIYellow = 'III-YELLOW',
+}
+
+export class NotocRadioactive {
+  @ApiProperty({
+    enum: RadioactiveCategory,
+    example: RadioactiveCategory.IIYellow,
+  })
+  category!: RadioactiveCategory;
+
+  @ApiProperty({
+    description:
+      'Transport index per package; null for a category I-WHITE package, which carries none',
+    example: 0.6,
+    nullable: true,
+    type: Number,
+  })
+  transportIndex!: number | null;
+}
+
+export class NotocHeader {
+  @ApiProperty({ example: 'British Airways' })
+  operatorName!: string;
+
+  @ApiProperty({ example: 'BA178' })
+  flightNumber!: string;
+
+  @ApiProperty({
+    description: 'Scheduled date of the flight, UTC',
+    example: '2026-11-23',
+  })
+  flightDate!: string;
+
+  @ApiProperty({ description: 'Port of loading', example: 'JFK' })
+  stationOfLoading!: string;
+
+  @ApiProperty({ example: 'New York' })
+  stationOfLoadingCity!: string;
+
+  @ApiProperty({ example: 'G-STBA' })
+  aircraftRegistration!: string;
+
+  @ApiProperty({ example: 'B77W' })
+  aircraftType!: string;
+
+  @ApiProperty({
+    description: 'Who prepared the notification at the station of loading',
+    example: 'Megan Ortiz',
+  })
+  preparedBy!: string;
+
+  @ApiProperty({
+    description:
+      'Who supervised loading and certifies the positions and that nothing was damaged or leaking',
+    example: 'Daniel Kowalski',
+  })
+  loadingSupervisor!: string;
+
+  @ApiProperty({
+    description:
+      'Telephone number monitored for the whole flight, from which the dangerous goods information can be obtained. Drawn from a range reserved for fiction, so it reaches no one.',
+    example: '+44 20 7946 0412',
+  })
+  emergencyTelephone!: string;
+}
+
 export class NotocDangerousGoods {
-  @ApiProperty({ example: '020-53729071' })
-  awb!: string;
+  @ApiProperty({
+    description:
+      'Air waybill; null on a dry ice line, which totals the dry ice in one compartment across waybills',
+    example: '020-53729071',
+    nullable: true,
+    type: String,
+  })
+  awb!: string | null;
 
   @ApiProperty({ example: 'Paint' })
   properShippingName!: string;
@@ -68,6 +143,13 @@ export class NotocDangerousGoods {
 
   @ApiProperty({ enum: HazardClass, example: HazardClass.FlammableLiquid })
   hazardClass!: HazardClass;
+
+  @ApiProperty({
+    description:
+      'Class or division as the form prints it: the division and compatibility group for explosives, the class otherwise',
+    example: '1.4S',
+  })
+  classOrDivision!: string;
 
   @ApiProperty({ enum: HazardClass, nullable: true })
   subsidiaryRisk!: HazardClass | null;
@@ -80,6 +162,38 @@ export class NotocDangerousGoods {
 
   @ApiProperty({ example: '5 L' })
   netPerPackage!: string;
+
+  @ApiProperty({
+    description:
+      'Whether the quantity is the total for the compartment rather than per package, as on a dry ice line',
+    example: false,
+  })
+  quantityIsTotal!: boolean;
+
+  @ApiProperty({
+    description: 'Radioactive package category and transport index',
+    nullable: true,
+    type: NotocRadioactive,
+  })
+  radioactive!: NotocRadioactive | null;
+
+  @ApiProperty({
+    description:
+      'IATA dangerous goods handling code printed in the Code column',
+    enum: SpecialHandlingCode,
+    example: SpecialHandlingCode.FlammableLiquid,
+    nullable: true,
+  })
+  impCode!: SpecialHandlingCode | null;
+
+  @ApiProperty({
+    description:
+      'Unit load device the packages are loaded in; null for loose load',
+    example: 'AKE 12345 BA',
+    nullable: true,
+    type: String,
+  })
+  uldId!: string | null;
 
   @ApiProperty({
     description:
@@ -204,6 +318,32 @@ export class NotocSpecialLoad {
   description!: string;
 
   @ApiProperty({
+    description:
+      'Number of packages loaded; null on a notification issued before packages were recorded',
+    example: 12,
+    nullable: true,
+    type: Number,
+  })
+  pieces!: number | null;
+
+  @ApiProperty({
+    description:
+      'Supplementary information the form prints for the load, one line each: handling remarks, temperature, hold conditions and the heaviest piece',
+    example: ['LIVE FISH IN OXYGENATED BAGS', 'KEEP AT +22 TO +26 °C'],
+    isArray: true,
+    type: String,
+  })
+  supplementaryInformation!: string[];
+
+  @ApiProperty({
+    description: 'Unit load device the load is in; null for loose load',
+    example: 'PMC 41235 BA',
+    nullable: true,
+    type: String,
+  })
+  uldId!: string | null;
+
+  @ApiProperty({
     description: 'IATA special handling codes that make the load notifiable',
     enum: SpecialHandlingCode,
     isArray: true,
@@ -323,6 +463,14 @@ export class NotocLoadSummary {
 }
 
 export class NotocDocument {
+  @ApiProperty({
+    description:
+      'Form header: flight, port of loading, aircraft and the people who prepared and certified it. Null on a notification issued before the header was recorded.',
+    nullable: true,
+    type: NotocHeader,
+  })
+  header!: NotocHeader | null;
+
   @ApiProperty({
     description:
       'Says in as many words whether dangerous goods are aboard, so a clean flight carries a statement rather than an empty document',

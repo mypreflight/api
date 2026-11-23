@@ -133,6 +133,21 @@ describe('segregation policy', () => {
     expect(dryIceKgOf([SpecialHandlingCode.DryIce], 132)).toBe(132);
     expect(dryIceKgOf([SpecialHandlingCode.Perishable], 132)).toBe(0);
   });
+
+  it('counts only the dry ice packed around a frozen load', () => {
+    const shc = [SpecialHandlingCode.Frozen, SpecialHandlingCode.DryIce];
+
+    expect(dryIceKgOf(shc, 250, { pieces: 10, kgPerPiece: 3 })).toBe(30);
+  });
+
+  it('never counts more dry ice than the load weighs', () => {
+    expect(
+      dryIceKgOf([SpecialHandlingCode.DryIce], 20, {
+        pieces: 10,
+        kgPerPiece: 3,
+      }),
+    ).toBe(20);
+  });
 });
 
 describe('segregation against the real catalogue', () => {

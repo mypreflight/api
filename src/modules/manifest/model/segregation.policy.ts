@@ -106,9 +106,23 @@ export function compartmentAccepts(
   return !(commodity.compartment.requiresVentilated && !compartment.ventilated);
 }
 
+export type DryIceRefrigerant = {
+  pieces: number;
+  kgPerPiece?: number;
+};
+
 export function dryIceKgOf(
   shc: SpecialHandlingCode[],
   grossKg: number,
+  refrigerant?: DryIceRefrigerant,
 ): number {
-  return shc.includes(SpecialHandlingCode.DryIce) ? grossKg : 0;
+  if (!shc.includes(SpecialHandlingCode.DryIce)) {
+    return 0;
+  }
+
+  if (refrigerant?.kgPerPiece) {
+    return Math.min(grossKg, refrigerant.pieces * refrigerant.kgPerPiece);
+  }
+
+  return grossKg;
 }

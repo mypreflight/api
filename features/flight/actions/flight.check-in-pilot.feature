@@ -930,6 +930,8 @@ Feature: Check in pilot for flight
             {
               "awb": "172-62001100",
               "shc": ["AVI", "HEA"],
+              "uldId": "AMA62011CV",
+              "pieces": 7,
               "grossKg": 4000,
               "position": "6AL",
               "compartment": 6,
@@ -940,11 +942,18 @@ Feature: Check in pilot for flight
                 "heightCm": 230,
                 "lengthCm": 300
               },
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "supplementaryInformation": [
+                "HORSES IN AIR STALLS, GROOM ON BOARD",
+                "HEATED AND VENTILATED HOLD",
+                "HEAVIEST PIECE 620 KG, 300x110x230 CM"
+              ]
             },
             {
               "awb": "172-62001111",
               "shc": ["HEA", "BIG"],
+              "uldId": "AMA62012CV",
+              "pieces": 4,
               "grossKg": 4200,
               "position": "6BL",
               "compartment": 6,
@@ -955,11 +964,14 @@ Feature: Check in pilot for flight
                 "heightCm": 150,
                 "lengthCm": 340
               },
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "supplementaryInformation": ["HEAVIEST PIECE 1600 KG, 340x130x150 CM"]
             },
             {
               "awb": "172-62001122",
               "shc": ["HUM", "HEA"],
+              "uldId": "AMA62013CV",
+              "pieces": 6,
               "grossKg": 1072,
               "position": "6CL",
               "compartment": 6,
@@ -970,17 +982,21 @@ Feature: Check in pilot for flight
                 "heightCm": 60,
                 "lengthCm": 220
               },
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 260 KG, 220x70x60 CM"]
             },
             {
               "awb": "172-62001166",
-              "shc": ["PIL"],
+              "shc": ["PIL", "COL", "ACT"],
+              "uldId": "AKE62017CV",
+              "pieces": 50,
               "grossKg": 700,
               "position": "31L",
               "compartment": 3,
               "description": "Vaccine doses, 2-8C",
               "heaviestPiece": null,
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "supplementaryInformation": ["KEEP AT +2 TO +8 °C", "ACTIVE CONTAINER"]
             }
           ],
           "dangerousGoods": [
@@ -993,14 +1009,19 @@ Feature: Check in pilot for flight
                 "spillAndFireProcedure": "Contain the spill and keep every ignition source away. Fight the fire with water spray, foam, dry chemical or carbon dioxide.",
                 "riskToAircraftAndOccupants": "Rapid fire spread and dense smoke; heat may weaken structure and burn anyone in reach."
               },
+              "uldId": "AKE62014CV",
+              "impCode": "RFL",
               "packages": 78,
               "position": "11L",
               "unNumber": "1263",
               "compartment": 1,
               "hazardClass": "3",
+              "radioactive": null,
               "packingGroup": "II",
               "netPerPackage": "5 L",
               "subsidiaryRisk": null,
+              "classOrDivision": "3",
+              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": false,
               "properShippingName": "Paint"
@@ -1014,20 +1035,25 @@ Feature: Check in pilot for flight
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
                 "riskToAircraftAndOccupants": "Depends on the substance; may affect instruments, air quality or the health of anyone exposed."
               },
+              "uldId": "AKE62015CV",
+              "impCode": "RLI",
               "packages": 140,
               "position": "11R",
               "unNumber": "3480",
               "compartment": 1,
               "hazardClass": "9",
+              "radioactive": null,
               "packingGroup": "II",
               "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
+              "classOrDivision": "9",
+              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": true,
               "properShippingName": "Lithium ion batteries"
             },
             {
-              "awb": "172-62001155",
+              "awb": null,
               "drill": {
                 "ercCode": "9A",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
@@ -1035,19 +1061,25 @@ Feature: Check in pilot for flight
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
                 "riskToAircraftAndOccupants": "Depends on the substance; may affect instruments, air quality or the health of anyone exposed."
               },
+              "uldId": null,
+              "impCode": "ICE",
               "packages": 41,
-              "position": "12L",
+              "position": null,
               "unNumber": "1845",
               "compartment": 1,
               "hazardClass": "9",
+              "radioactive": null,
               "packingGroup": null,
-              "netPerPackage": "22 kg",
+              "netPerPackage": "900 kg",
               "subsidiaryRisk": null,
+              "classOrDivision": "9",
+              "quantityIsTotal": true,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": false,
-              "properShippingName": "Carbon dioxide, solid"
+              "properShippingName": "Dry ice"
             }
-          ]
+          ],
+          "header": null
         },
         "changes": null
       }

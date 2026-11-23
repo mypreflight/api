@@ -2,6 +2,7 @@ import { CommandHandler, ICommandHandler, QueryBus } from '@nestjs/cqrs';
 import { NotocRepository } from '../../infra/database/repository/notoc.repository';
 import { composeNotoc } from '../../model/notoc';
 import { NotocStageName } from '../../model/notoc.model';
+import { NotocHeaderContext, notocHeaderFor } from '../../model/notoc-header';
 import {
   FlightCargoManifest,
   CargoShipmentStatusName,
@@ -16,6 +17,7 @@ export class IssueNotocCommand {
     public readonly stage: NotocStageName,
     public readonly unloadingAirport: string,
     public readonly issuedAt: Date,
+    public readonly header: NotocHeaderContext | null = null,
   ) {}
 }
 
@@ -27,7 +29,7 @@ export class IssueNotocHandler implements ICommandHandler<IssueNotocCommand> {
   ) {}
 
   async execute(command: IssueNotocCommand): Promise<void> {
-    const { flightId, stage, unloadingAirport, issuedAt } = command;
+    const { flightId, stage, unloadingAirport, issuedAt, header } = command;
     const manifest = await this.loadOf(flightId);
 
     await this.notocRepository.issue(
@@ -37,6 +39,7 @@ export class IssueNotocHandler implements ICommandHandler<IssueNotocCommand> {
       composeNotoc(
         manifest,
         unloadingAirport,
+        header ? notocHeaderFor(header, issuedAt) : null,
       ) as unknown as Prisma.InputJsonValue,
     );
   }

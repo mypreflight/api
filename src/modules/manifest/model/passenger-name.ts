@@ -111,3 +111,15 @@ export function fakerFor(locale: string): Faker {
 
   return faker;
 }
+
+const NON_LATIN_LOCALES = new Set(['ja', 'zh_CN']);
+
+export function staffNameFactory(locale: string, seed: number): () => string {
+  const definition = NON_LATIN_LOCALES.has(locale)
+    ? en
+    : (LOCALES[locale] ?? en);
+  const faker = new Faker({ locale: [definition, en, base] });
+  faker.seed(seed);
+
+  return () => faker.person.fullName();
+}

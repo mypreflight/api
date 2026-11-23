@@ -31,13 +31,15 @@ const AIRPORTS = [
   {
     type: AirportType.Departure,
     iataCode: 'FRA',
-    country: 'Germany',
+    city: { name: 'Frankfurt' },
+    country: { code: 'DE' },
     continent: Continent.Europe,
   },
   {
     type: AirportType.Destination,
     iataCode: 'LHR',
-    country: 'United Kingdom',
+    city: { name: 'London' },
+    country: { code: 'GB' },
     continent: Continent.Europe,
   },
 ];
@@ -71,8 +73,17 @@ describe('GenerateManifestsListener', () => {
         if (query instanceof GetFlightQuery) {
           return Promise.resolve({
             id: FLIGHT_ID,
-            aircraft: { id: AIRCRAFT_ID },
-            operator: { id: OPERATOR_ID, iataCode: 'LH' },
+            flightNumber: 'LH900',
+            aircraft: {
+              id: AIRCRAFT_ID,
+              registration: 'D-AIZA',
+              airframe: { type: 'A320' },
+            },
+            operator: {
+              id: OPERATOR_ID,
+              iataCode: 'LH',
+              fullName: 'Deutsche Lufthansa AG',
+            },
             airports,
             timesheet: {
               scheduled: {
@@ -130,6 +141,13 @@ describe('GenerateManifestsListener', () => {
     expect(command).toBeInstanceOf(IssueNotocCommand);
     expect(command.stage).toBe(NotocStageName.Preliminary);
     expect(command.unloadingAirport).toBe('LHR');
+    expect(command.header).toMatchObject({
+      flightNumber: 'LH900',
+      operatorName: 'Deutsche Lufthansa AG',
+      departure: { iataCode: 'FRA', city: 'Frankfurt', country: 'DE' },
+      aircraftRegistration: 'D-AIZA',
+      aircraftType: 'A320',
+    });
   });
 
   it('generates nothing when the flight has no preliminary loadsheet', async () => {
