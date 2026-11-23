@@ -560,12 +560,12 @@ describe('cargo packing', () => {
       continent: Continent.Africa,
       month: 2,
     }).filter((offer) => offer.commodity.id === 'flowers-roses');
-    const moulds = offeredCommodities({
+    const books = offeredCommodities({
       iataCode: 'FRA',
       country: 'DE',
       continent: Continent.Europe,
       month: 6,
-    }).filter((offer) => offer.commodity.id === 'injection-moulds');
+    }).filter((offer) => offer.commodity.id === 'printed-matter');
 
     const variant = variantOf('B77W');
     const countUnits = (offered: OfferedCommodity[]): number =>
@@ -579,7 +579,30 @@ describe('cargo packing', () => {
         random: seededRandom(9),
       }).filter((unit) => unit.kind === LoadUnitKind.Uld).length;
 
-    expect(countUnits(flowers)).toBeGreaterThan(countUnits(moulds));
+    expect(countUnits(flowers)).toBeGreaterThan(countUnits(books));
+  });
+
+  it('never puts a piece into a device it does not fit', () => {
+    const coffins = offeredCommodities({
+      iataCode: 'FRA',
+      country: 'DE',
+      continent: Continent.Europe,
+      month: 6,
+    }).filter((offer) => offer.commodity.id === 'human-remains');
+    const variant = variantOf('B77W');
+
+    const units = planCargoLoad({
+      targetKg: 800,
+      offered: coffins,
+      slots: slotsOf(variant),
+      looseSlots: looseSlotsOf(variant),
+      journey: journeyContext(4),
+      coldChain,
+      random: seededRandom(4),
+    });
+
+    expect(units.length).toBeGreaterThan(0);
+    expect(units.every((unit) => unit.uldType !== UldType.Ld3)).toBe(true);
   });
 
   it('plans nothing for no cargo and nothing to offer', () => {

@@ -449,6 +449,8 @@ describe('composeNotoc', () => {
         unit([
           shipment({
             commodity: 'horses',
+            pieces: 4,
+            grossKg: 2400,
             shc: [SpecialHandlingCode.LiveAnimals, SpecialHandlingCode.Heavy],
           }),
         ]),
@@ -457,8 +459,31 @@ describe('composeNotoc', () => {
     );
 
     expect(document.specialLoads[0].supplementaryInformation).toContain(
-      'HEAVIEST PIECE 620 KG, 300x110x230 CM',
+      'HEAVIEST PIECE 600 KG, 300x110x230 CM',
     );
+  });
+
+  it('never reports a heaviest piece heavier than the shipment allows', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'human-remains',
+            pieces: 1,
+            grossKg: 220,
+            shc: [SpecialHandlingCode.HumanRemains, SpecialHandlingCode.Heavy],
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    expect(document.specialLoads[0].heaviestPiece).toEqual({
+      kg: 220,
+      lengthCm: 220,
+      widthCm: 70,
+      heightCm: 60,
+    });
   });
 
   it('leaves ordinary freight out of the special loads section', () => {

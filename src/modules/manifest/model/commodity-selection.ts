@@ -14,6 +14,7 @@ export type DepartureContext = {
   country: string;
   continent: Continent;
   month: number;
+  destinationContinent?: Continent;
 };
 
 export type OfferedCommodity = {
@@ -30,6 +31,7 @@ const TIER_WEIGHT: Record<SourceTier, number> = {
 };
 
 const PEAK_MULTIPLIER = 2;
+const OFF_DEMAND_MULTIPLIER = 0.25;
 
 export function isGeneric(commodity: Commodity): boolean {
   const { airports, countries, continents } = commodity.sources;
@@ -81,7 +83,10 @@ export function offeredCommodities(
 
     const peaking = commodity.peakMonths.includes(context.month);
     const weight =
-      commodity.frequency * TIER_WEIGHT[tier] * (peaking ? PEAK_MULTIPLIER : 1);
+      commodity.frequency *
+      TIER_WEIGHT[tier] *
+      (peaking ? PEAK_MULTIPLIER : 1) *
+      demandMultiplier(commodity, context.destinationContinent);
 
     offered.push({ commodity, tier, weight });
   }
@@ -91,6 +96,17 @@ export function offeredCommodities(
       other.weight - one.weight ||
       one.commodity.id.localeCompare(other.commodity.id),
   );
+}
+
+export function demandMultiplier(
+  commodity: Commodity,
+  destination: Continent | undefined,
+): number {
+  if (destination === undefined || commodity.demand.includes(destination)) {
+    return 1;
+  }
+
+  return OFF_DEMAND_MULTIPLIER;
 }
 
 export function selectCommodities(

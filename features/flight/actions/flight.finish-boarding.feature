@@ -1482,14 +1482,14 @@ Feature: Finish flight boarding
               "compartment": 1,
               "description": "Turbofan blade set, AOG",
               "heaviestPiece": {
-                "kg": 900,
+                "kg": 364,
                 "widthCm": 110,
                 "heightCm": 95,
                 "lengthCm": 240
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 900 KG, 240x110x95 CM"],
+              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
               "uldId": "AKE48204AA"
             }
           ],
@@ -1582,14 +1582,14 @@ Feature: Finish flight boarding
               "compartment": 1,
               "description": "Turbofan blade set, AOG",
               "heaviestPiece": {
-                "kg": 900,
+                "kg": 364,
                 "widthCm": 110,
                 "heightCm": 95,
                 "lengthCm": 240
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 900 KG, 240x110x95 CM"],
+              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
               "uldId": "AKE48204AA"
             }
           ],

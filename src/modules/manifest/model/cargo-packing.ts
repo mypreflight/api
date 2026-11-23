@@ -12,7 +12,16 @@ import {
   TemperatureSolution,
 } from './commodity.model';
 import { drawCommodity, OfferedCommodity } from './commodity-selection';
-import { capacityAt, fits, ULD_SPECS, UldSpec, UldType } from './uld';
+import {
+  BULK_DOOR_LIMIT,
+  capacityAt,
+  fits,
+  PieceLimit,
+  pieceFits,
+  ULD_SPECS,
+  UldSpec,
+  UldType,
+} from './uld';
 import { volumeOf } from './cargo-volume';
 import {
   drawBeyondPoint,
@@ -236,7 +245,8 @@ export function admissibleFor(
     (offer) =>
       compartmentAccepts(offer.commodity, slot.compartment) &&
       mayJoinCompartment(offer.commodity.shc, loadedShc) &&
-      mayJoinCompartmentRegime(offer.commodity, loadedRegimes),
+      mayJoinCompartmentRegime(offer.commodity, loadedRegimes) &&
+      specFor(offer.commodity, slot.position) !== null,
   );
 }
 
@@ -246,7 +256,9 @@ export function specFor(
 ): UldSpec | null {
   const candidates = Object.values(ULD_SPECS).filter(
     (spec) =>
-      fits(spec, position) && spec.active === needsActiveContainer(commodity),
+      fits(spec, position) &&
+      spec.active === needsActiveContainer(commodity) &&
+      pieceFits(commodity.heaviestPiece, spec.pieceLimit),
   );
 
   return (
@@ -336,6 +348,7 @@ function fillUnit(
   fixedDestination: string | null | undefined,
   coldChain: ColdChainContext,
   dangerousGoods: DangerousGoodsBudget,
+  pieceLimit: PieceLimit,
 ): PlannedShipment[] {
   const shipments: PlannedShipment[] = [];
   let remainingWeight = Math.min(weightCapacityKg, budgetKg);
@@ -379,7 +392,10 @@ function fillUnit(
     }
 
     const next = drawCommodity(pool, random());
-    commodity = canShareUnit(first, next) ? next : null;
+    commodity =
+      canShareUnit(first, next) && pieceFits(next.heaviestPiece, pieceLimit)
+        ? next
+        : null;
   }
 
   return shipments;
@@ -464,6 +480,7 @@ export function planCargoLoad(request: CargoLoadRequest): PlannedUnit[] {
       beyondDestination === null ? undefined : beyondDestination,
       coldChain,
       dangerousGoods,
+      spec.pieceLimit,
     );
 
     if (shipments.length === 0) {
@@ -740,7 +757,8 @@ export function admissibleForCompartment(
     (offer) =>
       compartmentAccepts(offer.commodity, slot.compartment) &&
       mayJoinCompartment(offer.commodity.shc, loadedShc) &&
-      mayJoinCompartmentRegime(offer.commodity, loadedRegimes),
+      mayJoinCompartmentRegime(offer.commodity, loadedRegimes) &&
+      pieceFits(offer.commodity.heaviestPiece, BULK_DOOR_LIMIT, true),
   );
 }
 
