@@ -68,6 +68,7 @@ function document(
 ): NotocDocument {
   return {
     header: null,
+    specialPassengers: [],
     statement:
       (overrides.dangerousGoods ?? []).length === 0
         ? NO_DANGEROUS_GOODS_STATEMENT

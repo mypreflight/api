@@ -5,6 +5,7 @@ import {
   assertBreakdownFitsCabins,
   assignSpecialServices,
   cabinSizesOf,
+  drawSpecialService,
   distributePassengers,
   generatePnr,
   planReconciliation,
@@ -382,6 +383,22 @@ describe('special service requests', () => {
     );
 
     expect(invalid).toEqual([]);
+  });
+
+  it('draws infants and wheelchairs far more often than deportees', () => {
+    const draws = Array.from({ length: 1000 }, (_, index) =>
+      drawSpecialService((index + 0.5) / 1000),
+    );
+    const count = (service: PassengerSpecialService): number =>
+      draws.filter((draw) => draw === service).length;
+
+    expect(count(PassengerSpecialService.Infant)).toBeGreaterThan(
+      count(PassengerSpecialService.Inadmissible) * 10,
+    );
+    expect(
+      count(PassengerSpecialService.WheelchairLithiumBattery),
+    ).toBeGreaterThan(0);
+    expect(count(PassengerSpecialService.Stretcher)).toBeGreaterThan(0);
   });
 
   it('gives every passenger at most one code', () => {

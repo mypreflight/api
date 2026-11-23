@@ -38,6 +38,10 @@ import { resolveHoldVariant } from '../../../src/modules/manifest/model/hold-var
 import { composeFlightCargoManifest } from '../../../src/modules/manifest/model/cargo-manifest.read';
 import { composeNotoc } from '../../../src/modules/manifest/model/notoc';
 import { notocHeaderFor } from '../../../src/modules/manifest/model/notoc-header';
+import {
+  PassengerSpecialService,
+  PassengerStatus,
+} from '../../../src/modules/manifest/model/manifest.model';
 
 const DELIBERATELY_UNPLACEABLE = ['KL2016', 'AF2019'];
 const BUILD_UP_HOURS = 3;
@@ -215,6 +219,11 @@ export async function loadGeneratedManifests(
         )
       : null;
 
+    const passengers = await tx.flightPassenger.findMany({
+      where: { flightId: flight.id },
+      select: { designator: true, status: true, ssr: true },
+    });
+
     await tx.flightNotoc.create({
       data: {
         flightId: flight.id,
@@ -224,6 +233,11 @@ export async function loadGeneratedManifests(
           composeFlightCargoManifest(flight.id, rows, variant),
           arrival.iataCode,
           header,
+          passengers.map((passenger) => ({
+            designator: passenger.designator,
+            status: passenger.status as unknown as PassengerStatus,
+            ssr: passenger.ssr as PassengerSpecialService | null,
+          })),
         ) as unknown as Prisma.InputJsonValue,
       },
     });

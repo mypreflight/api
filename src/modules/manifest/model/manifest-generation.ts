@@ -26,7 +26,29 @@ const PNR_ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const PNR_LENGTH = 6;
 const SHARED_PNR_CHANCE = 0.2;
 const SPECIAL_SERVICE_CHANCE = 0.15;
-const SPECIAL_SERVICES = Object.values(PassengerSpecialService);
+const SPECIAL_SERVICE_WEIGHTS: Record<PassengerSpecialService, number> = {
+  [PassengerSpecialService.Infant]: 30,
+  [PassengerSpecialService.WheelchairRamp]: 20,
+  [PassengerSpecialService.WheelchairSteps]: 6,
+  [PassengerSpecialService.WheelchairCabin]: 3,
+  [PassengerSpecialService.WheelchairDryBattery]: 1.5,
+  [PassengerSpecialService.WheelchairWetBattery]: 0.5,
+  [PassengerSpecialService.WheelchairLithiumBattery]: 1.5,
+  [PassengerSpecialService.Stretcher]: 0.2,
+  [PassengerSpecialService.MedicalCase]: 1,
+  [PassengerSpecialService.UnaccompaniedMinor]: 6,
+  [PassengerSpecialService.Blind]: 2,
+  [PassengerSpecialService.Deaf]: 2,
+  [PassengerSpecialService.MeetAndAssist]: 8,
+  [PassengerSpecialService.PetInCabin]: 5,
+  [PassengerSpecialService.DeporteeEscorted]: 0.5,
+  [PassengerSpecialService.DeporteeUnescorted]: 0.5,
+  [PassengerSpecialService.Inadmissible]: 0.3,
+};
+const SPECIAL_SERVICE_TOTAL = Object.values(SPECIAL_SERVICE_WEIGHTS).reduce(
+  (sum, weight) => sum + weight,
+  0,
+);
 
 export function cabinSizesOf(seats: AllocatableSeat[]): Record<string, number> {
   const sizes: Record<string, number> = {};
@@ -188,9 +210,23 @@ export function assignSpecialServices(
 ): (PassengerSpecialService | null)[] {
   return Array.from({ length: Math.max(0, count) }, () =>
     Math.random() < SPECIAL_SERVICE_CHANCE
-      ? SPECIAL_SERVICES[Math.floor(Math.random() * SPECIAL_SERVICES.length)]
+      ? drawSpecialService(Math.random())
       : null,
   );
+}
+
+export function drawSpecialService(roll: number): PassengerSpecialService {
+  let cursor = roll * SPECIAL_SERVICE_TOTAL;
+
+  for (const [service, weight] of Object.entries(SPECIAL_SERVICE_WEIGHTS)) {
+    cursor -= weight;
+
+    if (cursor < 0) {
+      return service as PassengerSpecialService;
+    }
+  }
+
+  return PassengerSpecialService.Infant;
 }
 
 function groupByCabin(

@@ -1,4 +1,5 @@
 import { composeNotoc } from './notoc';
+import { PassengerSpecialService, PassengerStatus } from './manifest.model';
 import {
   DANGEROUS_GOODS_STATEMENT,
   NO_DANGEROUS_GOODS_STATEMENT,
@@ -242,6 +243,24 @@ describe('composeNotoc', () => {
     const document = composeNotoc(manifest([unit([shipment()])]), 'JFK');
 
     expect(document.header).toBeNull();
+  });
+
+  it('notifies the special category passengers it is given', () => {
+    const document = composeNotoc(manifest([unit([shipment()])]), 'JFK', null, [
+      {
+        designator: '14C',
+        status: PassengerStatus.Boarded,
+        ssr: PassengerSpecialService.Stretcher,
+      },
+    ]);
+
+    expect(document.specialPassengers).toEqual([
+      {
+        seat: '14C',
+        ssr: PassengerSpecialService.Stretcher,
+        remarks: ['STRETCHER, MEDICAL ESCORT ON BOARD'],
+      },
+    ]);
   });
 
   it('prints an explosive by its division and compatibility group', () => {
