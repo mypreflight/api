@@ -674,7 +674,11 @@ Feature: Read the cargo manifest of a flight
                   "netPerPackage": "1 TBq",
                   "subsidiaryRisk": null,
                   "cargoAircraftOnly": false,
-                  "properShippingName": "Radioactive material, Type A package, non-special form"
+                  "properShippingName": "Radioactive material, Type A package, non-special form",
+                  "netQuantity": {
+                    "amount": 1,
+                    "unit": "TBq"
+                  }
                 },
                 "coldChain": null,
                 "status": "offloaded",
@@ -725,7 +729,11 @@ Feature: Read the cargo manifest of a flight
                   "netPerPackage": "22 kg",
                   "subsidiaryRisk": null,
                   "cargoAircraftOnly": false,
-                  "properShippingName": "Carbon dioxide, solid"
+                  "properShippingName": "Carbon dioxide, solid",
+                  "netQuantity": {
+                    "amount": 22,
+                    "unit": "kg"
+                  }
                 },
                 "coldChain": null,
                 "status": "loaded",

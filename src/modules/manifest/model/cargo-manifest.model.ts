@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger';
 import { CargoDeck } from './hold-layout.model';
 import { LoadUnitKind } from './cargo-packing';
 import { UldType } from './uld';
@@ -10,11 +10,16 @@ import {
   ERC_PATTERN,
   HazardClass,
   PackingGroup,
+  QuantityUnit,
   SpecialHandlingCode,
   TemperatureRegime,
   TemperatureSolution,
 } from './commodity.model';
-import { ColdChainAssessment, ColdChainRisk } from './cold-chain';
+import {
+  ColdChainAssessment,
+  ColdChainReasonKind,
+  ColdChainRisk,
+} from './cold-chain';
 import { BaggageSource } from './baggage';
 import { OffloadReason } from './cargo-reconciliation';
 
@@ -28,6 +33,55 @@ export enum CargoShipmentStatusName {
   Loaded = 'loaded',
   Offloaded = 'offloaded',
 }
+
+export class NetQuantityPerPackage {
+  @ApiProperty({ example: 10 })
+  amount!: number;
+
+  @ApiProperty({ enum: QuantityUnit, example: QuantityUnit.Kilograms })
+  unit!: QuantityUnit;
+}
+
+export class ColdChainPlainReason {
+  @ApiProperty({
+    enum: [
+      ColdChainReasonKind.EnduranceExceeded,
+      ColdChainReasonKind.ThinMargin,
+      ColdChainReasonKind.WithinMargin,
+    ],
+    example: ColdChainReasonKind.WithinMargin,
+  })
+  kind!: ColdChainReasonKind;
+}
+
+export class ColdChainHotTransferReason {
+  @ApiProperty({ enum: [ColdChainReasonKind.HotTransfer] })
+  kind!: ColdChainReasonKind.HotTransfer;
+
+  @ApiProperty({
+    description: 'Temperature at the transfer point, °C',
+    example: 34,
+  })
+  ambientC!: number;
+}
+
+export class ColdChainLongConnectionReason {
+  @ApiProperty({ enum: [ColdChainReasonKind.LongConnection] })
+  kind!: ColdChainReasonKind.LongConnection;
+
+  @ApiProperty({ description: 'Hours the connection lasts', example: 9.5 })
+  connectionHours!: number;
+}
+
+export const COLD_CHAIN_REASON_SCHEMA = {
+  description:
+    'Why the assessment carries its risk: the endurance is exceeded, the transfer point is too hot, the connection is too long, the margin is thin with no cooling in flight, or the load is within its margin',
+  oneOf: [
+    { $ref: getSchemaPath(ColdChainPlainReason) },
+    { $ref: getSchemaPath(ColdChainHotTransferReason) },
+    { $ref: getSchemaPath(ColdChainLongConnectionReason) },
+  ],
+};
 
 export class DangerousGoods {
   @ApiProperty({ example: '3480' })
@@ -47,6 +101,13 @@ export class DangerousGoods {
 
   @ApiProperty({
     description: 'Net quantity permitted per package',
+    type: NetQuantityPerPackage,
+  })
+  netQuantity!: NetQuantityPerPackage;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'Net quantity as text; read netQuantity instead',
     example: '10 kg',
   })
   netPerPackage!: string;
@@ -74,6 +135,11 @@ export class DangerousGoods {
   sourceNote?: string;
 }
 
+@ApiExtraModels(
+  ColdChainPlainReason,
+  ColdChainHotTransferReason,
+  ColdChainLongConnectionReason,
+)
 export class ColdChain {
   @ApiProperty({ enum: TemperatureRegime })
   regime!: TemperatureRegime;
@@ -113,12 +179,18 @@ export class ColdChain {
   @ApiProperty({ enum: ColdChainRisk })
   risk!: ColdChainRisk;
 
+  @ApiProperty(COLD_CHAIN_REASON_SCHEMA)
+  reason!: ColdChainAssessment['reason'];
+
   @ApiProperty({
+    deprecated: true,
+    description: 'The reason as a sentence; read reason instead',
     example: 'An active container with 85.9 h margin on a 100 h endurance.',
   })
   explanation!: string;
 
   @ApiProperty({
+    deprecated: true,
     description: 'Always true: the assessment informs and gates nothing',
     example: true,
   })
@@ -235,7 +307,7 @@ export class CargoShipmentEntry {
       hazardClass: '9',
       subsidiaryRisk: null,
       packingGroup: 'II',
-      netPerPackage: '10 kg',
+      netQuantity: { amount: 10, unit: 'kg' },
       cargoAircraftOnly: true,
       ercCode: '9F',
     },
@@ -257,9 +329,7 @@ export class CargoShipmentEntry {
       exposureHours: 14.1,
       marginHours: 85.9,
       risk: 'low',
-      explanation:
-        'An active container with 85.9 h margin on a 100 h endurance.',
-      advisory: true,
+      reason: { kind: 'within_margin' },
     },
     type: ColdChain,
   })

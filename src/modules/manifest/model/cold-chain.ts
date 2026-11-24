@@ -28,6 +28,29 @@ export type ColdChainExposure = {
   ambientC: number | null;
 };
 
+export enum ColdChainReasonKind {
+  EnduranceExceeded = 'endurance_exceeded',
+  HotTransfer = 'hot_transfer',
+  LongConnection = 'long_connection',
+  ThinMargin = 'thin_margin',
+  WithinMargin = 'within_margin',
+}
+
+export type ColdChainReason =
+  | { kind: ColdChainReasonKind.EnduranceExceeded }
+  | { kind: ColdChainReasonKind.HotTransfer; ambientC: number }
+  | { kind: ColdChainReasonKind.LongConnection; connectionHours: number }
+  | { kind: ColdChainReasonKind.ThinMargin }
+  | { kind: ColdChainReasonKind.WithinMargin };
+
+export const RISK_BY_REASON: Record<ColdChainReasonKind, ColdChainRisk> = {
+  [ColdChainReasonKind.EnduranceExceeded]: ColdChainRisk.High,
+  [ColdChainReasonKind.HotTransfer]: ColdChainRisk.High,
+  [ColdChainReasonKind.LongConnection]: ColdChainRisk.High,
+  [ColdChainReasonKind.ThinMargin]: ColdChainRisk.Elevated,
+  [ColdChainReasonKind.WithinMargin]: ColdChainRisk.Low,
+};
+
 export type ColdChainAssessment = {
   regime: TemperatureRegime;
   minC: number;
@@ -38,8 +61,7 @@ export type ColdChainAssessment = {
   exposureHours: number;
   marginHours: number;
   risk: ColdChainRisk;
-  explanation: string;
-  advisory: boolean;
+  reason: ColdChainReason;
 };
 
 export function ambientFromMetar(metar: string | null): number | null {
@@ -79,18 +101,9 @@ export function assessColdChain(
 ): ColdChainAssessment {
   const exposureHours = exposureHoursOf(exposure);
   const marginHours = round1(profile.enduranceHours - exposureHours);
-  const active = profile.solution === TemperatureSolution.Active;
-  const solution = solutionPhrase(profile.solution);
-  const waiting = (exposure.connectionHours ?? 0) >= AMBIENT_EXPOSURE_HOURS;
-  const hotRamp =
-    exposure.ambientC !== null &&
-    exposure.ambientC > CRITICAL_AMBIENT_C &&
-    waiting &&
-    !active;
-  const longConnection =
-    (exposure.connectionHours ?? 0) > LONG_CONNECTION_HOURS && !active;
+  const reason = reasonOf(profile, exposure, marginHours);
 
-  const base = {
+  return {
     regime: profile.regime,
     minC: profile.minC,
     maxC: profile.maxC,
@@ -99,49 +112,71 @@ export function assessColdChain(
     enduranceHours: profile.enduranceHours,
     exposureHours,
     marginHours,
-    advisory: true,
+    risk: RISK_BY_REASON[reason.kind],
+    reason,
   };
+}
+
+function reasonOf(
+  profile: TemperatureProfile,
+  exposure: ColdChainExposure,
+  marginHours: number,
+): ColdChainReason {
+  const active = profile.solution === TemperatureSolution.Active;
+  const connectionHours = exposure.connectionHours ?? 0;
 
   if (marginHours <= 0) {
+    return { kind: ColdChainReasonKind.EnduranceExceeded };
+  }
+
+  if (
+    exposure.ambientC !== null &&
+    exposure.ambientC > CRITICAL_AMBIENT_C &&
+    connectionHours >= AMBIENT_EXPOSURE_HOURS &&
+    !active
+  ) {
     return {
-      ...base,
-      risk: ColdChainRisk.High,
-      explanation: `Exposure of ${exposureHours} h exceeds the ${profile.enduranceHours} h endurance of ${solution}.`,
+      kind: ColdChainReasonKind.HotTransfer,
+      ambientC: exposure.ambientC,
     };
   }
 
-  if (hotRamp) {
-    return {
-      ...base,
-      risk: ColdChainRisk.High,
-      explanation: `${exposure.ambientC} °C at the transfer point exceeds what ${solution} is validated for.`,
-    };
-  }
-
-  if (longConnection) {
-    return {
-      ...base,
-      risk: ColdChainRisk.High,
-      explanation: `${articleFor(exposure.connectionHours!)} ${exposure.connectionHours} h connection leaves the shipment on ${solution} longer than it should be.`,
-    };
+  if (connectionHours > LONG_CONNECTION_HOURS && !active) {
+    return { kind: ColdChainReasonKind.LongConnection, connectionHours };
   }
 
   if (
     !active &&
     marginHours < profile.enduranceHours * ELEVATED_MARGIN_FRACTION
   ) {
-    return {
-      ...base,
-      risk: ColdChainRisk.Elevated,
-      explanation: `${capitalise(solution)} with ${marginHours} h margin on a ${profile.enduranceHours} h endurance; no cooling available in flight.`,
-    };
+    return { kind: ColdChainReasonKind.ThinMargin };
   }
 
-  return {
-    ...base,
-    risk: ColdChainRisk.Low,
-    explanation: `${capitalise(solution)} with ${marginHours} h margin on a ${profile.enduranceHours} h endurance.`,
-  };
+  return { kind: ColdChainReasonKind.WithinMargin };
+}
+
+export function explanationOf(
+  assessment: Pick<
+    ColdChainAssessment,
+    'reason' | 'solution' | 'enduranceHours' | 'exposureHours' | 'marginHours'
+  >,
+): string {
+  const { reason, solution, enduranceHours, exposureHours, marginHours } =
+    assessment;
+  const phrase = solutionPhrase(solution);
+
+  switch (reason.kind) {
+    case ColdChainReasonKind.EnduranceExceeded:
+      return `Exposure of ${exposureHours} h exceeds the ${enduranceHours} h endurance of ${phrase}.`;
+    case ColdChainReasonKind.HotTransfer:
+      return `${reason.ambientC} °C at the transfer point exceeds what ${phrase} is validated for.`;
+    case ColdChainReasonKind.LongConnection:
+      return `${articleFor(reason.connectionHours)} ${reason.connectionHours} h connection leaves the shipment on ${phrase} longer than it should be.`;
+    case ColdChainReasonKind.ThinMargin:
+      return `${capitalise(phrase)} with ${marginHours} h margin on a ${enduranceHours} h endurance; no cooling available in flight.`;
+    case ColdChainReasonKind.WithinMargin:
+      return `${capitalise(phrase)} with ${marginHours} h margin on a ${enduranceHours} h endurance.`;
+  }
 }
 
 export function needsBetterSolution(
