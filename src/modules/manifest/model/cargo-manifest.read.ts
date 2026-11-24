@@ -212,8 +212,9 @@ function compartmentLoadOf(rows: CargoUnitRow[]): CompartmentLoad[] {
         sum +
         dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg, {
           pieces: shipment.pieces,
-          kgPerPiece: findCommodityById(shipment.commodityId)?.temperature
-            ?.dryIceKgPerPiece,
+          kgPerPiece:
+            findCommodityById(shipment.commodityId)?.temperature
+              ?.dryIceKgPerPiece ?? null,
         }),
       0,
     );

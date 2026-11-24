@@ -41,7 +41,10 @@ function seededAirports(): SeededAirport[] {
 }
 
 function dangerousGoodsShare(airport: SeededAirport, month: number): number {
-  const offered = offeredCommodities({ ...airport, month }, COMMODITIES);
+  const offered = offeredCommodities(
+    { ...airport, month, destinationContinent: airport.continent },
+    COMMODITIES,
+  );
   const total = offered.reduce((sum, offer) => sum + offer.weight, 0);
   const dangerous = offered
     .filter((offer) => offer.commodity.dangerousGoods !== undefined)

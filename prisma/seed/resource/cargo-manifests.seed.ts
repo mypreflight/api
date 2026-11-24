@@ -1073,7 +1073,12 @@ function compartmentLoadOf(units: CargoUnitEntry[]): CompartmentLoad[] {
     const dryIceKg = unit.shipments.reduce(
       (sum, shipment) =>
         sum +
-        dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg),
+        dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg, {
+          pieces: shipment.pieces,
+          kgPerPiece:
+            findCommodityById(shipment.commodity)?.temperature
+              ?.dryIceKgPerPiece ?? null,
+        }),
       0,
     );
 

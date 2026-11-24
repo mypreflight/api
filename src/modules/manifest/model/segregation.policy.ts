@@ -108,19 +108,19 @@ export function compartmentAccepts(
 
 export type DryIceRefrigerant = {
   pieces: number;
-  kgPerPiece?: number;
+  kgPerPiece: number | null;
 };
 
 export function dryIceKgOf(
   shc: SpecialHandlingCode[],
   grossKg: number,
-  refrigerant?: DryIceRefrigerant,
+  refrigerant: DryIceRefrigerant,
 ): number {
   if (!shc.includes(SpecialHandlingCode.DryIce)) {
     return 0;
   }
 
-  if (refrigerant?.kgPerPiece) {
+  if (refrigerant.kgPerPiece !== null) {
     return Math.min(grossKg, refrigerant.pieces * refrigerant.kgPerPiece);
   }
 

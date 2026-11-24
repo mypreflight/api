@@ -382,8 +382,9 @@ function dryIceLoadsOf(placed: PlacedShipment[]): DryIceLoad[] {
       shipment.grossKg,
       {
         pieces: shipment.pieces,
-        kgPerPiece: findCommodityById(shipment.commodity)?.temperature
-          ?.dryIceKgPerPiece,
+        kgPerPiece:
+          findCommodityById(shipment.commodity)?.temperature
+            ?.dryIceKgPerPiece ?? null,
       },
     );
 
