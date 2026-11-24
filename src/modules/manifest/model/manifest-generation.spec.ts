@@ -410,9 +410,11 @@ describe('special service requests', () => {
     ).toBe(true);
   });
 
-  it('spreads codes across the curated set', () => {
+  it('can draw every code in the curated set', () => {
     const used = new Set(
-      assignSpecialServices(5000).filter((code) => code !== null),
+      Array.from({ length: 10000 }, (_, index) =>
+        drawSpecialService((index + 0.5) / 10000),
+      ),
     );
 
     expect(used.size).toBe(CURATED.length);
