@@ -3,7 +3,7 @@ import {
   FlightCargoManifest,
 } from './cargo-manifest.model';
 import { PassengerSpecialService, PassengerStatus } from './manifest.model';
-import { NotocSpecialPassenger } from './notoc.model';
+import { NotocSpecialPassenger, SpecialPassengerRemark } from './notoc.model';
 
 export type NotifiablePassenger = {
   designator: string;
@@ -49,10 +49,13 @@ function remarksFor(
 ): string[] {
   switch (ssr) {
     case PassengerSpecialService.WheelchairDryBattery:
-      return ['NON-SPILLABLE BATTERY INSTALLED', `MOBILITY AID IN ${hold}`];
+      return [
+        SpecialPassengerRemark.NonSpillableBattery,
+        `MOBILITY AID IN ${hold}`,
+      ];
     case PassengerSpecialService.WheelchairWetBattery:
       return [
-        'SPILLABLE BATTERY INSTALLED, AID STOWED UPRIGHT',
+        SpecialPassengerRemark.SpillableBattery,
         `MOBILITY AID IN ${hold}`,
       ];
     case PassengerSpecialService.WheelchairLithiumBattery:
@@ -61,19 +64,19 @@ function remarksFor(
         `MOBILITY AID IN ${hold}`,
       ];
     case PassengerSpecialService.Stretcher:
-      return ['STRETCHER, MEDICAL ESCORT ON BOARD'];
+      return [SpecialPassengerRemark.MedicalEscort];
     case PassengerSpecialService.MedicalCase:
-      return ['MEDICAL CLEARANCE GIVEN'];
+      return [SpecialPassengerRemark.MedicalClearance];
     case PassengerSpecialService.DeporteeEscorted:
-      return ['ESCORTS SEATED ALONGSIDE'];
+      return [SpecialPassengerRemark.EscortsAlongside];
     case PassengerSpecialService.Inadmissible:
-      return ['TRAVEL DOCUMENTS HELD BY CREW'];
+      return [SpecialPassengerRemark.DocumentsHeldByCrew];
     case PassengerSpecialService.UnaccompaniedMinor:
-      return ['IN THE CARE OF CABIN CREW'];
+      return [SpecialPassengerRemark.CabinCrewCare];
     case PassengerSpecialService.Infant:
-      return ['ON LAP'];
+      return [SpecialPassengerRemark.OnLap];
     case PassengerSpecialService.PetInCabin:
-      return ['IN CONTAINER UNDER SEAT'];
+      return [SpecialPassengerRemark.UnderSeat];
     default:
       return [];
   }
