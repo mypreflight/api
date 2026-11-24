@@ -1474,7 +1474,6 @@ Feature: Finish flight boarding
               "uldId": "AKE48203AA",
               "handlingRemark": null,
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": null
             },
             {
@@ -1495,7 +1494,6 @@ Feature: Finish flight boarding
               "uldId": "AKE48204AA",
               "handlingRemark": null,
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": null
             }
           ],
@@ -1582,7 +1580,6 @@ Feature: Finish flight boarding
               "uldId": "AKE48203AA",
               "handlingRemark": null,
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": null
             },
             {
@@ -1603,7 +1600,6 @@ Feature: Finish flight boarding
               "uldId": "AKE48204AA",
               "handlingRemark": null,
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": null
             }
           ],

@@ -14,6 +14,7 @@ import {
   HazardClass,
   OffloadPriority,
   PackingGroup,
+  QuantityUnit,
   SPECIAL_HANDLING_CODES,
   SpecialHandlingCode,
   TemperatureRegime,
@@ -198,6 +199,7 @@ describe('cargo commodities dataset', () => {
   it('declares every dangerous goods entry in full', () => {
     const hazardClasses: string[] = Object.values(HazardClass);
     const packingGroups: string[] = Object.values(PackingGroup);
+    const units: string[] = Object.values(QuantityUnit);
 
     const wrong = dangerousCommodities()
       .filter((commodity) => {
@@ -211,7 +213,8 @@ describe('cargo commodities dataset', () => {
             !hazardClasses.includes(dg.subsidiaryRisk)) ||
           (dg.packingGroup !== null &&
             !packingGroups.includes(dg.packingGroup)) ||
-          dg.netPerPackage.trim().length === 0
+          !(dg.netQuantity.amount > 0) ||
+          !units.includes(dg.netQuantity.unit)
         );
       })
       .map((commodity) => commodity.id);

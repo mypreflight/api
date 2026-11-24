@@ -922,7 +922,13 @@ Feature: Check in pilot for flight
               "advisory": true,
               "description": "Vaccine doses, 2-8C",
               "explanation": "An active container with 88.5 h margin on a 100 h endurance.",
-              "marginHours": 88.5
+              "marginHours": 88.5,
+              "reason": {
+                "kind": "within_margin"
+              },
+              "solution": "active",
+              "enduranceHours": 100,
+              "exposureHours": 11.5
             }
           ],
           "statement": "Dangerous goods loaded as listed below.",
@@ -945,7 +951,6 @@ Feature: Check in pilot for flight
               "unloadingAirport": "JFK",
               "handlingRemark": "horses_with_groom",
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": "heated_and_ventilated"
             },
             {
@@ -966,7 +971,6 @@ Feature: Check in pilot for flight
               "unloadingAirport": "JFK",
               "handlingRemark": null,
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": null
             },
             {
@@ -987,7 +991,6 @@ Feature: Check in pilot for flight
               "unloadingAirport": "JFK",
               "handlingRemark": "coffin_apart_from_foodstuffs",
               "temperature": null,
-              "temperatureSolution": null,
               "holdCondition": null
             },
             {
@@ -1006,7 +1009,6 @@ Feature: Check in pilot for flight
                 "maxC": 8,
                 "minC": 2
               },
-              "temperatureSolution": "active",
               "holdCondition": null
             }
           ],
@@ -1034,7 +1036,11 @@ Feature: Check in pilot for flight
               "classOrDivision": "3",
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": false,
-              "properShippingName": "Paint"
+              "properShippingName": "Paint",
+              "netQuantity": {
+                "amount": 5,
+                "unit": "L"
+              }
             },
             {
               "awb": "172-62001144",
@@ -1059,7 +1065,11 @@ Feature: Check in pilot for flight
               "classOrDivision": "9",
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": true,
-              "properShippingName": "Lithium ion batteries"
+              "properShippingName": "Lithium ion batteries",
+              "netQuantity": {
+                "amount": 10,
+                "unit": "kg"
+              }
             }
           ],
           "header": {
