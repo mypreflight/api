@@ -85,6 +85,7 @@ const frankfurt = {
   country: 'DE',
   continent: Continent.Europe,
   month: 6,
+  destinationContinent: Continent.Europe,
 };
 
 function offersFor(context = frankfurt): OfferedCommodity[] {
@@ -559,12 +560,14 @@ describe('cargo packing', () => {
       country: 'KE',
       continent: Continent.Africa,
       month: 2,
+      destinationContinent: Continent.Africa,
     }).filter((offer) => offer.commodity.id === 'flowers-roses');
     const books = offeredCommodities({
       iataCode: 'FRA',
       country: 'DE',
       continent: Continent.Europe,
       month: 6,
+      destinationContinent: Continent.Europe,
     }).filter((offer) => offer.commodity.id === 'printed-matter');
 
     const variant = variantOf('B77W');
@@ -588,6 +591,7 @@ describe('cargo packing', () => {
       country: 'DE',
       continent: Continent.Europe,
       month: 6,
+      destinationContinent: Continent.Europe,
     }).filter((offer) => offer.commodity.id === 'human-remains');
     const variant = variantOf('B77W');
 

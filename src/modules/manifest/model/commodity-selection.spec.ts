@@ -14,6 +14,7 @@ const reykjavik = {
   country: 'IS',
   continent: Continent.Europe,
   month: 6,
+  destinationContinent: Continent.Europe,
 };
 
 const boston = {
@@ -21,6 +22,7 @@ const boston = {
   country: 'US',
   continent: Continent.NorthAmerica,
   month: 6,
+  destinationContinent: Continent.NorthAmerica,
 };
 
 const nowhere = {
@@ -28,6 +30,7 @@ const nowhere = {
   country: 'ZZ',
   continent: Continent.Oceania,
   month: 6,
+  destinationContinent: Continent.Oceania,
 };
 
 describe('commodity selection', () => {
@@ -50,6 +53,7 @@ describe('commodity selection', () => {
       country: 'BR',
       continent: Continent.SouthAmerica,
       month: 6,
+      destinationContinent: Continent.SouthAmerica,
     };
 
     expect(beef.sources.airports).not.toContain('VCP');
@@ -63,6 +67,7 @@ describe('commodity selection', () => {
       country: 'DE',
       continent: Continent.Europe,
       month: 3,
+      destinationContinent: Continent.Europe,
     };
 
     expect(tierOf(tulips, munich)).toBe(SourceTier.Continent);
@@ -121,6 +126,7 @@ describe('commodity selection', () => {
       country: 'KE',
       continent: Continent.Africa,
       month: 2,
+      destinationContinent: Continent.Africa,
     };
     const weightIn = (month: number): number =>
       offeredCommodities({ ...nairobi, month }).find(
@@ -136,6 +142,7 @@ describe('commodity selection', () => {
       country: 'KE',
       continent: Continent.Africa,
       month: 2,
+      destinationContinent: Continent.Africa,
     };
     const weightTo = (destinationContinent: Continent): number =>
       offeredCommodities({ ...nairobi, destinationContinent }).find(
@@ -144,26 +151,6 @@ describe('commodity selection', () => {
 
     expect(weightTo(Continent.Europe)).toBeGreaterThan(
       weightTo(Continent.Oceania),
-    );
-  });
-
-  it('weights a commodity the same when no destination is known', () => {
-    const nairobi = {
-      iataCode: 'NBO',
-      country: 'KE',
-      continent: Continent.Africa,
-      month: 2,
-    };
-    const weightOf = (context: typeof nairobi): number =>
-      offeredCommodities(context).find(
-        (offer) => offer.commodity.id === 'flowers-roses',
-      )!.weight;
-
-    expect(weightOf(nairobi)).toBe(
-      weightOf({
-        ...nairobi,
-        destinationContinent: Continent.Europe,
-      } as typeof nairobi),
     );
   });
 
@@ -200,7 +187,14 @@ describe('commodity selection', () => {
 
     const barren = seeded.flatMap((airport) =>
       Array.from({ length: 12 }, (_, index) => index + 1)
-        .filter((month) => offeredCommodities({ ...airport, month }).length < 5)
+        .filter(
+          (month) =>
+            offeredCommodities({
+              ...airport,
+              month,
+              destinationContinent: airport.continent,
+            }).length < 5,
+        )
         .map((month) => `${airport.iataCode}/${month}`),
     );
 
@@ -213,7 +207,13 @@ describe('commodity selection', () => {
       country: string,
       continent: Continent,
     ): string[] =>
-      offeredCommodities({ iataCode, country, continent, month: 6 })
+      offeredCommodities({
+        iataCode,
+        country,
+        continent,
+        month: 6,
+        destinationContinent: continent,
+      })
         .filter((offer) => offer.tier === SourceTier.Airport)
         .map((offer) => offer.commodity.id);
 
