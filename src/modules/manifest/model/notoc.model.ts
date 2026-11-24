@@ -27,7 +27,7 @@ export enum NotocStageName {
   Final = 'final',
 }
 
-export const NOTOC_FORM_VERSION = 2;
+export const NOTOC_FORM_VERSION = 3;
 
 export class NotocDrill {
   @ApiProperty({
