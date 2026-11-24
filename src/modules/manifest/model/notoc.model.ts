@@ -311,6 +311,18 @@ export class NotocChangeSet {
   deadloadChangeKg!: number;
 }
 
+export enum HoldCondition {
+  HeatedAndVentilated = 'HEATED AND VENTILATED HOLD',
+  Heated = 'HEATED HOLD',
+  Ventilated = 'VENTILATED HOLD',
+}
+
+export enum SpecialLoadRemark {
+  SecuredStowage = 'SECURED STOWAGE',
+  ActiveContainer = 'ACTIVE CONTAINER',
+  PackedInDryIce = 'PACKED IN DRY ICE',
+}
+
 export class NotocSpecialLoad {
   @ApiProperty({ example: '020-53729071' })
   awb!: string;
