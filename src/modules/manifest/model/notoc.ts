@@ -19,6 +19,7 @@ import { ColdChainRisk } from './cold-chain';
 import { drillFor } from './emergency-drill';
 import {
   DANGEROUS_GOODS_STATEMENT,
+  HoldCondition,
   NO_DANGEROUS_GOODS_STATEMENT,
   NotocColdChain,
   NotocDangerousGoods,
@@ -28,6 +29,7 @@ import {
   NotocRadioactive,
   NotocSpecialLoad,
   RadioactiveCategory,
+  SpecialLoadRemark,
 } from './notoc.model';
 import { dryIceKgOf } from './segregation.policy';
 import { stableUnit } from './stable-random';
@@ -412,7 +414,7 @@ function supplementaryInformationOf(
   if (commodity?.notocRemark) {
     lines.push(commodity.notocRemark);
   } else if (shipment.shc.includes(SpecialHandlingCode.Valuable)) {
-    lines.push('SECURED STOWAGE');
+    lines.push(SpecialLoadRemark.SecuredStowage);
   }
 
   if (commodity?.temperature) {
@@ -421,9 +423,9 @@ function supplementaryInformationOf(
   }
 
   if (shipment.coldChain?.solution === TemperatureSolution.Active) {
-    lines.push('ACTIVE CONTAINER');
+    lines.push(SpecialLoadRemark.ActiveContainer);
   } else if (shipment.coldChain?.solution === TemperatureSolution.DryIce) {
-    lines.push('PACKED IN DRY ICE');
+    lines.push(SpecialLoadRemark.PackedInDryIce);
   }
 
   const hold = holdConditionOf(commodity);
@@ -442,19 +444,21 @@ function supplementaryInformationOf(
   return lines;
 }
 
-function holdConditionOf(commodity: Commodity | undefined): string | null {
+function holdConditionOf(
+  commodity: Commodity | undefined,
+): HoldCondition | null {
   const heated = commodity?.compartment.requiresHeated ?? false;
   const ventilated = commodity?.compartment.requiresVentilated ?? false;
 
   if (heated && ventilated) {
-    return 'HEATED AND VENTILATED HOLD';
+    return HoldCondition.HeatedAndVentilated;
   }
 
   if (heated) {
-    return 'HEATED HOLD';
+    return HoldCondition.Heated;
   }
 
-  return ventilated ? 'VENTILATED HOLD' : null;
+  return ventilated ? HoldCondition.Ventilated : null;
 }
 
 function signed(celsius: number): string {
