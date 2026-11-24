@@ -18,7 +18,6 @@ import { CargoContentClass, CargoShipmentStatus } from 'prisma/client/client';
 import { BaggageSource } from './baggage';
 import { isTightConnection, TransferRole } from './shipment-journey';
 import { OffloadReason } from './cargo-reconciliation';
-import { withExplanation, withNetPerPackage } from './transitional-fields';
 
 export function composeFlightCargoManifest(
   flightId: string,
@@ -102,12 +101,10 @@ function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
       onwardFlightNumber: shipment.onwardFlightNumber,
       connectionMinutes: shipment.connectionMinutes,
       connectionAtRisk: isTightConnection(shipment.connectionMinutes),
-      dangerousGoods: shipment.dangerousGoods
-        ? withNetPerPackage(shipment.dangerousGoods as DangerousGoodsProfile)
-        : null,
-      coldChain: shipment.temperatureControl
-        ? withExplanation(shipment.temperatureControl as ColdChainAssessment)
-        : null,
+      dangerousGoods:
+        (shipment.dangerousGoods as DangerousGoodsProfile | null) ?? null,
+      coldChain:
+        (shipment.temperatureControl as ColdChainAssessment | null) ?? null,
       status: shipment.status as unknown as CargoShipmentStatusName,
       offloadReason:
         (shipment.offloadReason as unknown as OffloadReason) ?? null,

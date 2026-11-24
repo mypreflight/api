@@ -1720,7 +1720,6 @@ Feature: Update flight preliminary loadsheet
         "acknowledgedById": null,
         "acknowledgedAt": null,
         "document": {
-          "statement": "@any",
           "dangerousGoods": "@any",
           "specialLoads": "@any",
           "coldChain": "@any",

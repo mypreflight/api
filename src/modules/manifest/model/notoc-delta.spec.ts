@@ -1,7 +1,7 @@
 import { notocChanges } from './notoc-delta';
 import {
-  NotocDangerousGoodsRecord,
-  NotocDocumentRecord,
+  NotocDangerousGoods,
+  NotocDocument,
   NotocSpecialLoad,
 } from './notoc.model';
 import {
@@ -15,7 +15,7 @@ import { CargoDeck } from './hold-layout.model';
 function dangerousGoods(
   awb: string,
   position: string | null,
-): NotocDangerousGoodsRecord {
+): NotocDangerousGoods {
   return {
     awb,
     properShippingName: 'Paint',
@@ -62,10 +62,10 @@ function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
 }
 
 function document(
-  overrides: Partial<NotocDocumentRecord> = {},
+  overrides: Partial<NotocDocument> = {},
   cargoKg = 6000,
   baggageKg = 2000,
-): NotocDocumentRecord {
+): NotocDocument {
   return {
     header: {
       operatorName: 'American Airlines, Inc.',

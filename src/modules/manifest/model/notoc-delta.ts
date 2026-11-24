@@ -1,4 +1,4 @@
-import { NotocDocumentRecord } from './notoc.model';
+import { NotocDocument } from './notoc.model';
 
 export type NotocReposition = {
   awb: string;
@@ -18,8 +18,8 @@ export type NotocChanges = {
 };
 
 export function notocChanges(
-  preliminary: NotocDocumentRecord,
-  final: NotocDocumentRecord,
+  preliminary: NotocDocument,
+  final: NotocDocument,
 ): NotocChanges {
   const dangerousGoodsAdded = missingFrom(
     final.dangerousGoods,
@@ -74,8 +74,8 @@ function missingFrom(
 }
 
 function repositionsBetween(
-  preliminary: NotocDocumentRecord,
-  final: NotocDocumentRecord,
+  preliminary: NotocDocument,
+  final: NotocDocument,
 ): NotocReposition[] {
   const before = positionsOf(preliminary);
   const after = positionsOf(final);
@@ -86,9 +86,7 @@ function repositionsBetween(
     .sort((one, other) => one.awb.localeCompare(other.awb));
 }
 
-function positionsOf(
-  document: NotocDocumentRecord,
-): Map<string, string | null> {
+function positionsOf(document: NotocDocument): Map<string, string | null> {
   return new Map(
     [...document.dangerousGoods, ...document.specialLoads].map((entry) => [
       entry.awb,

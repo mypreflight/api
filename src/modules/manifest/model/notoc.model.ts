@@ -169,13 +169,6 @@ export class NotocDangerousGoods {
   netQuantity!: NetQuantityPerPackage;
 
   @ApiProperty({
-    deprecated: true,
-    description: 'Net quantity as text; read netQuantity instead',
-    example: '5 L',
-  })
-  netPerPackage!: string;
-
-  @ApiProperty({
     description: 'Radioactive package category and transport index',
     nullable: true,
     type: NotocRadioactive,
@@ -472,21 +465,6 @@ export class NotocColdChain {
 
   @ApiProperty(COLD_CHAIN_REASON_SCHEMA)
   reason!: ColdChainReason;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The reason as a sentence; read reason instead',
-    example: 'An active container with 85.9 h margin on a 100 h endurance.',
-  })
-  explanation!: string;
-
-  @ApiProperty({
-    deprecated: true,
-    description:
-      'Always true: the assessment informs the captain and gates nothing',
-    example: true,
-  })
-  advisory!: boolean;
 }
 
 export class NotocCompartmentLoad {
@@ -589,14 +567,6 @@ export class NotocDocument {
   })
   specialPassengers!: NotocSpecialPassenger[];
 
-  @ApiProperty({
-    deprecated: true,
-    description:
-      'Whether dangerous goods are aboard, as a sentence; read the dangerous goods and dry ice lists instead',
-    example: 'No dangerous goods loaded.',
-  })
-  statement!: string;
-
   @ApiProperty({ type: NotocDangerousGoods, isArray: true })
   dangerousGoods!: NotocDangerousGoods[];
 
@@ -653,21 +623,3 @@ export class FlightNotoc {
   })
   changes!: NotocChanges | null;
 }
-
-export type NotocDangerousGoodsRecord = Omit<
-  NotocDangerousGoods,
-  'netPerPackage'
->;
-
-export type NotocColdChainRecord = Omit<
-  NotocColdChain,
-  'explanation' | 'advisory'
->;
-
-export type NotocDocumentRecord = Omit<
-  NotocDocument,
-  'statement' | 'dangerousGoods' | 'coldChain'
-> & {
-  dangerousGoods: NotocDangerousGoodsRecord[];
-  coldChain: NotocColdChainRecord[];
-};

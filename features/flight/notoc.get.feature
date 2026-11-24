@@ -48,9 +48,7 @@ Feature: Get flight notification to captain
               "awb": "172-62001166",
               "risk": "low",
               "regime": "COL",
-              "advisory": true,
               "description": "Vaccine doses, 2-8C",
-              "explanation": "An active container with 88.5 h margin on a 100 h endurance.",
               "marginHours": 88.5,
               "reason": {
                 "kind": "within_margin"
@@ -60,7 +58,6 @@ Feature: Get flight notification to captain
               "exposureHours": 11.5
             }
           ],
-          "statement": "Dangerous goods loaded as listed below.",
           "specialLoads": [
             {
               "awb": "172-62001100",
@@ -160,7 +157,6 @@ Feature: Get flight notification to captain
               "hazardClass": "3",
               "radioactive": null,
               "packingGroup": "II",
-              "netPerPackage": "5 L",
               "subsidiaryRisk": null,
               "classOrDivision": "3",
               "unloadingAirport": "JFK",
@@ -189,7 +185,6 @@ Feature: Get flight notification to captain
               "hazardClass": "9",
               "radioactive": null,
               "packingGroup": "II",
-              "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
               "classOrDivision": "9",
               "unloadingAirport": "JFK",
@@ -282,9 +277,7 @@ Feature: Get flight notification to captain
               "awb": "172-62001166",
               "risk": "low",
               "regime": "COL",
-              "advisory": true,
               "description": "Vaccine doses, 2-8C",
-              "explanation": "An active container with 88.5 h margin on a 100 h endurance.",
               "marginHours": 88.5,
               "reason": {
                 "kind": "within_margin"
@@ -294,7 +287,6 @@ Feature: Get flight notification to captain
               "exposureHours": 11.5
             }
           ],
-          "statement": "Dangerous goods loaded as listed below.",
           "specialLoads": [
             {
               "awb": "172-62001100",
@@ -394,7 +386,6 @@ Feature: Get flight notification to captain
               "hazardClass": "3",
               "radioactive": null,
               "packingGroup": "II",
-              "netPerPackage": "5 L",
               "subsidiaryRisk": null,
               "classOrDivision": "3",
               "unloadingAirport": "JFK",
@@ -423,7 +414,6 @@ Feature: Get flight notification to captain
               "hazardClass": "9",
               "radioactive": null,
               "packingGroup": "II",
-              "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
               "classOrDivision": "9",
               "unloadingAirport": "JFK",
@@ -500,7 +490,6 @@ Feature: Get flight notification to captain
             "tightestConnectionMinutes": null
           },
           "coldChain": [],
-          "statement": "No dangerous goods loaded.",
           "specialLoads": [
             {
               "awb": "001-48203735",
@@ -607,7 +596,6 @@ Feature: Get flight notification to captain
             "tightestConnectionMinutes": null
           },
           "coldChain": [],
-          "statement": "No dangerous goods loaded.",
           "specialLoads": [
             {
               "awb": "001-48203735",

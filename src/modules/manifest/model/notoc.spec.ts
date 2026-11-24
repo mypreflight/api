@@ -1,6 +1,6 @@
 import { composeNotoc } from './notoc';
 import { PassengerSpecialService, PassengerStatus } from './manifest.model';
-import { HoldCondition, NotocDocumentRecord, NotocHeader } from './notoc.model';
+import { HoldCondition, NotocDocument, NotocHeader } from './notoc.model';
 import { NotifiablePassenger } from './notoc-passengers';
 import {
   CargoContentClassName,
@@ -46,7 +46,7 @@ const HEADER: NotocHeader = {
 function compose(
   load: FlightCargoManifest,
   passengers: NotifiablePassenger[] = [],
-): NotocDocumentRecord {
+): NotocDocument {
   return composeNotoc(load, 'JFK', HEADER, passengers);
 }
 

@@ -106,13 +106,6 @@ export class DangerousGoods {
   netQuantity!: NetQuantityPerPackage;
 
   @ApiProperty({
-    deprecated: true,
-    description: 'Net quantity as text; read netQuantity instead',
-    example: '10 kg',
-  })
-  netPerPackage!: string;
-
-  @ApiProperty({
     description: 'Whether the load may travel only on a cargo aircraft',
     example: true,
   })
@@ -181,20 +174,6 @@ export class ColdChain {
 
   @ApiProperty(COLD_CHAIN_REASON_SCHEMA)
   reason!: ColdChainAssessment['reason'];
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The reason as a sentence; read reason instead',
-    example: 'An active container with 85.9 h margin on a 100 h endurance.',
-  })
-  explanation!: string;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'Always true: the assessment informs and gates nothing',
-    example: true,
-  })
-  advisory!: boolean;
 }
 
 export class CargoShipmentEntry {

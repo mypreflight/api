@@ -1459,7 +1459,6 @@ Feature: Finish flight boarding
             "tightestConnectionMinutes": null
           },
           "coldChain": [],
-          "statement": "No dangerous goods loaded.",
           "specialLoads": [
             {
               "awb": "001-48203735",
@@ -1565,7 +1564,6 @@ Feature: Finish flight boarding
             "tightestConnectionMinutes": null
           },
           "coldChain": [],
-          "statement": "No dangerous goods loaded.",
           "specialLoads": [
             {
               "awb": "001-48203735",

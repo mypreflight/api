@@ -155,30 +155,6 @@ function reasonOf(
   return { kind: ColdChainReasonKind.WithinMargin };
 }
 
-export function explanationOf(
-  assessment: Pick<
-    ColdChainAssessment,
-    'reason' | 'solution' | 'enduranceHours' | 'exposureHours' | 'marginHours'
-  >,
-): string {
-  const { reason, solution, enduranceHours, exposureHours, marginHours } =
-    assessment;
-  const phrase = solutionPhrase(solution);
-
-  switch (reason.kind) {
-    case ColdChainReasonKind.EnduranceExceeded:
-      return `Exposure of ${exposureHours} h exceeds the ${enduranceHours} h endurance of ${phrase}.`;
-    case ColdChainReasonKind.HotTransfer:
-      return `${reason.ambientC} °C at the transfer point exceeds what ${phrase} is validated for.`;
-    case ColdChainReasonKind.LongConnection:
-      return `${articleFor(reason.connectionHours)} ${reason.connectionHours} h connection leaves the shipment on ${phrase} longer than it should be.`;
-    case ColdChainReasonKind.ThinMargin:
-      return `${capitalise(phrase)} with ${marginHours} h margin on a ${enduranceHours} h endurance; no cooling available in flight.`;
-    case ColdChainReasonKind.WithinMargin:
-      return `${capitalise(phrase)} with ${marginHours} h margin on a ${enduranceHours} h endurance.`;
-  }
-}
-
 export function needsBetterSolution(
   profile: TemperatureProfile,
   exposureHours: number,
@@ -219,30 +195,6 @@ export function upgradeOfferedSolutions(
     ...offer,
     commodity: withSuitableSolution(offer.commodity, exposureHours),
   }));
-}
-
-function solutionPhrase(solution: TemperatureSolution): string {
-  if (solution === TemperatureSolution.Active) {
-    return 'an active container';
-  }
-
-  return solution === TemperatureSolution.DryIce
-    ? 'a dry ice pack'
-    : 'a passive shipper';
-}
-
-function articleFor(value: number): string {
-  const digits = String(Math.floor(value));
-
-  if (digits.startsWith('8') || digits === '11' || digits === '18') {
-    return 'An';
-  }
-
-  return 'A';
-}
-
-function capitalise(phrase: string): string {
-  return `${phrase.charAt(0).toUpperCase()}${phrase.slice(1)}`;
 }
 
 function round1(value: number): number {
