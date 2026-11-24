@@ -22,12 +22,11 @@ function dangerousGoods(
     properShippingName: 'Paint',
     unNumber: 'UN1263',
     hazardClass: HazardClass.FlammableLiquid,
-    classOrDivision: '3',
+    classOrDivision: HazardClass.FlammableLiquid,
     subsidiaryRisk: null,
     packingGroup: PackingGroup.Medium,
     packages: 24,
     netPerPackage: '5 L',
-    quantityIsTotal: false,
     radioactive: null,
     impCode: SpecialHandlingCode.FlammableLiquid,
     uldId: 'AKE 12345 BA',
@@ -52,7 +51,10 @@ function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
     pieces: 40,
     shc: [SpecialHandlingCode.LiveAnimals],
     grossKg: 640,
-    supplementaryInformation: [],
+    handlingRemark: null,
+    temperature: null,
+    temperatureSolution: null,
+    holdCondition: null,
     uldId: null,
     position,
     compartment: 3,
@@ -67,13 +69,25 @@ function document(
   baggageKg = 2000,
 ): NotocDocument {
   return {
-    header: null,
+    header: {
+      operatorName: 'American Airlines, Inc.',
+      flightNumber: 'AA2010',
+      flightDate: '2026-06-02',
+      stationOfLoading: 'FRA',
+      stationOfLoadingCity: 'Frankfurt',
+      aircraftRegistration: 'N78881',
+      aircraftType: 'B77W',
+      preparedBy: 'Cameron Goldner',
+      loadingSupervisor: 'Ettie Maggio',
+      emergencyTelephone: '+44 20 7946 0639',
+    },
     specialPassengers: [],
     statement:
       (overrides.dangerousGoods ?? []).length === 0
         ? NO_DANGEROUS_GOODS_STATEMENT
         : DANGEROUS_GOODS_STATEMENT,
     dangerousGoods: [],
+    dryIce: [],
     specialLoads: [],
     coldChain: [],
     ...overrides,
@@ -204,16 +218,5 @@ describe('notocChanges', () => {
       '001-2',
       '001-9',
     ]);
-  });
-
-  it('leaves dry ice totals, which carry no waybill, out of the report', () => {
-    const dryIce = { ...dangerousGoods('', null), awb: null };
-    const before = document({ dangerousGoods: [] });
-    const after = document({ dangerousGoods: [dryIce] });
-
-    const changes = notocChanges(before, after);
-
-    expect(changes.dangerousGoodsAdded).toEqual([]);
-    expect(changes.repositioned).toEqual([]);
   });
 });

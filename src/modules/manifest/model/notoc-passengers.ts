@@ -3,7 +3,7 @@ import {
   FlightCargoManifest,
 } from './cargo-manifest.model';
 import { PassengerSpecialService, PassengerStatus } from './manifest.model';
-import { NotocSpecialPassenger, SpecialPassengerRemark } from './notoc.model';
+import { NotocMobilityAid, NotocSpecialPassenger } from './notoc.model';
 
 export type NotifiablePassenger = {
   designator: string;
@@ -15,13 +15,19 @@ const NOT_NOTIFIED: PassengerSpecialService[] = [
   PassengerSpecialService.MeetAndAssist,
 ];
 
+const MOBILITY_AIDS_IN_HOLD: PassengerSpecialService[] = [
+  PassengerSpecialService.WheelchairDryBattery,
+  PassengerSpecialService.WheelchairWetBattery,
+  PassengerSpecialService.WheelchairLithiumBattery,
+];
+
 const SEAT = /^(\d+)([A-Z]*)$/;
 
 export function specialPassengersOf(
   passengers: NotifiablePassenger[],
   load: FlightCargoManifest | null,
 ): NotocSpecialPassenger[] {
-  const hold = holdOfMobilityAids(load);
+  const compartment = baggageCompartmentOf(load);
 
   return passengers
     .filter(
@@ -38,51 +44,18 @@ export function specialPassengersOf(
     .map((passenger) => ({
       seat: passenger.designator,
       ssr: passenger.ssr,
-      remarks: remarksFor(passenger.ssr, passenger.designator, hold),
+      mobilityAid: mobilityAidOf(passenger.ssr, compartment),
     }));
 }
 
-function remarksFor(
+function mobilityAidOf(
   ssr: PassengerSpecialService,
-  seat: string,
-  hold: string,
-): string[] {
-  switch (ssr) {
-    case PassengerSpecialService.WheelchairDryBattery:
-      return [
-        SpecialPassengerRemark.NonSpillableBattery,
-        `MOBILITY AID IN ${hold}`,
-      ];
-    case PassengerSpecialService.WheelchairWetBattery:
-      return [
-        SpecialPassengerRemark.SpillableBattery,
-        `MOBILITY AID IN ${hold}`,
-      ];
-    case PassengerSpecialService.WheelchairLithiumBattery:
-      return [
-        `LITHIUM BATTERY REMOVED, IN CABIN AT ${seat}`,
-        `MOBILITY AID IN ${hold}`,
-      ];
-    case PassengerSpecialService.Stretcher:
-      return [SpecialPassengerRemark.MedicalEscort];
-    case PassengerSpecialService.MedicalCase:
-      return [SpecialPassengerRemark.MedicalClearance];
-    case PassengerSpecialService.DeporteeEscorted:
-      return [SpecialPassengerRemark.EscortsAlongside];
-    case PassengerSpecialService.Inadmissible:
-      return [SpecialPassengerRemark.DocumentsHeldByCrew];
-    case PassengerSpecialService.UnaccompaniedMinor:
-      return [SpecialPassengerRemark.CabinCrewCare];
-    case PassengerSpecialService.Infant:
-      return [SpecialPassengerRemark.OnLap];
-    case PassengerSpecialService.PetInCabin:
-      return [SpecialPassengerRemark.UnderSeat];
-    default:
-      return [];
-  }
+  compartment: number | null,
+): NotocMobilityAid | null {
+  return MOBILITY_AIDS_IN_HOLD.includes(ssr) ? { compartment } : null;
 }
 
-function holdOfMobilityAids(load: FlightCargoManifest | null): string {
+function baggageCompartmentOf(load: FlightCargoManifest | null): number | null {
   const compartments = (load?.units ?? [])
     .filter(
       (unit) =>
@@ -91,9 +64,7 @@ function holdOfMobilityAids(load: FlightCargoManifest | null): string {
     )
     .map((unit) => unit.compartment as number);
 
-  return compartments.length === 0
-    ? 'HOLD'
-    : `HOLD, CPT ${Math.max(...compartments)}`;
+  return compartments.length === 0 ? null : Math.max(...compartments);
 }
 
 function bySeat(one: string, other: string): number {

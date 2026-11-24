@@ -59,6 +59,26 @@ export enum SpecialHandlingCode {
   ExplosivesDivision14G = 'RXG',
 }
 
+export enum ExplosiveDivision {
+  Division12E = '1.2E',
+  Division14G = '1.4G',
+  Division14S = '1.4S',
+}
+
+export enum HandlingRemark {
+  CattleWithAttendant = 'cattle_with_attendant',
+  ChicksInVentilatedBoxes = 'chicks_in_ventilated_boxes',
+  CoffinApartFromFoodstuffs = 'coffin_apart_from_foodstuffs',
+  BeesInVentilatedPackages = 'bees_in_ventilated_packages',
+  FishInOxygenatedBags = 'fish_in_oxygenated_bags',
+  HatchingEggsFragile = 'hatching_eggs_fragile',
+  HorsesWithGroom = 'horses_with_groom',
+  PetsInKennels = 'pets_in_kennels',
+  SecuredStowage = 'secured_stowage',
+  TimeCriticalUnloadFirst = 'time_critical_unload_first',
+  ZooAnimalWithKeeper = 'zoo_animal_with_keeper',
+}
+
 export enum TemperatureRegime {
   ControlledRoomTemperature = 'CRT',
   Cool = 'COL',
@@ -189,7 +209,7 @@ export type DangerousGoodsProfile = {
   netPerPackage: string;
   cargoAircraftOnly: boolean;
   ercCode: string;
-  division?: string;
+  division?: ExplosiveDivision;
   notocExempt?: boolean;
   sourceNote?: string;
 };
@@ -224,5 +244,5 @@ export type Commodity = {
   peakMonths: number[];
   frequency: number;
   compartment: CompartmentRequirements;
-  notocRemark?: string;
+  notocRemark?: HandlingRemark;
 };
