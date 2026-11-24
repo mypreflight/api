@@ -1471,8 +1471,11 @@ Feature: Finish flight boarding
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
               "pieces": 56,
-              "supplementaryInformation": [],
-              "uldId": "AKE48203AA"
+              "uldId": "AKE48203AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "001-48203746",
@@ -1489,13 +1492,17 @@ Feature: Finish flight boarding
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
-              "uldId": "AKE48204AA"
+              "uldId": "AKE48204AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [],
           "header": "@any",
-          "specialPassengers": "@any"
+          "specialPassengers": "@any",
+          "dryIce": []
         },
         "changes": {
           "changed": true,
@@ -1572,8 +1579,11 @@ Feature: Finish flight boarding
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
               "pieces": 56,
-              "supplementaryInformation": [],
-              "uldId": "AKE48203AA"
+              "uldId": "AKE48203AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "001-48203746",
@@ -1590,13 +1600,17 @@ Feature: Finish flight boarding
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
-              "uldId": "AKE48204AA"
+              "uldId": "AKE48204AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [],
           "header": "@any",
-          "specialPassengers": "@any"
+          "specialPassengers": "@any",
+          "dryIce": []
         },
         "changes": {
           "changed": false,

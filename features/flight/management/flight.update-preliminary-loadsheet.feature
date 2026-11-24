@@ -1747,7 +1747,8 @@ Feature: Update flight preliminary loadsheet
             "loadingSupervisor": "@any",
             "emergencyTelephone": "@any"
           },
-          "specialPassengers": "@any"
+          "specialPassengers": "@any",
+          "dryIce": "@any"
         },
         "changes": null
       }

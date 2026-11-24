@@ -1,4 +1,4 @@
-import { AirportType, Continent } from '../../airports/model/airport.model';
+import { Continent } from '../../airports/model/airport.model';
 import { NotocHeader } from './notoc.model';
 import { resolvePassengerLocale, staffNameFactory } from './passenger-name';
 import { stableSeed } from './stable-random';
@@ -64,26 +64,19 @@ export type NotocFlightFacts = {
   timesheet: { scheduled?: { offBlockTime: Date | string | null } | null };
   operator: { fullName: string; iataCode: string };
   aircraft: { registration: string; airframe: { type: string } };
-  airports: {
-    type: AirportType;
-    iataCode: string;
-    city: { name: string };
-    country: { code: string };
-    continent: Continent;
-  }[];
+};
+
+export type NotocAirportFacts = {
+  iataCode: string;
+  city: { name: string };
+  country: { code: string };
+  continent: Continent;
 };
 
 export function notocHeaderContextOf(
   flight: NotocFlightFacts,
-): NotocHeaderContext | null {
-  const departure = flight.airports.find(
-    (airport) => airport.type === AirportType.Departure,
-  );
-
-  if (!departure) {
-    return null;
-  }
-
+  departure: NotocAirportFacts,
+): NotocHeaderContext {
   const offBlock = flight.timesheet.scheduled?.offBlockTime ?? null;
 
   return {

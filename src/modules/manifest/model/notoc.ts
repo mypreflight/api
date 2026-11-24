@@ -8,15 +8,16 @@ import { LoadUnitKind } from './cargo-packing';
 import {
   Commodity,
   DangerousGoodsProfile,
+  ExplosiveDivision,
+  HandlingRemark,
   HazardClass,
   SpecialHandlingCode,
-  TemperatureSolution,
 } from './commodity.model';
 import { ULD_SPECS, UldType } from './uld';
 import { UldBaseCode } from './uld-code.model';
 import { findCommodityById } from '../data/cargo-commodities';
 import { ColdChainRisk } from './cold-chain';
-import { drillFor } from './emergency-drill';
+import { drillFor, EmergencyDrill } from './emergency-drill';
 import {
   DANGEROUS_GOODS_STATEMENT,
   HoldCondition,
@@ -24,12 +25,12 @@ import {
   NotocColdChain,
   NotocDangerousGoods,
   NotocDocument,
+  NotocDryIce,
   NotocHeader,
   NotocLoadSummary,
   NotocRadioactive,
   NotocSpecialLoad,
   RadioactiveCategory,
-  SpecialLoadRemark,
 } from './notoc.model';
 import { dryIceKgOf } from './segregation.policy';
 import { NotifiablePassenger, specialPassengersOf } from './notoc-passengers';
@@ -97,9 +98,56 @@ const SIZED_HANDLING_CODES: SpecialHandlingCode[] = [
   SpecialHandlingCode.Outsized,
 ];
 
+const IMP_CODE_BY_CLASS: Record<
+  ExplosiveDivision | HazardClass,
+  SpecialHandlingCode
+> = {
+  [ExplosiveDivision.Division12E]: SpecialHandlingCode.ExplosivesOther,
+  [ExplosiveDivision.Division14G]: SpecialHandlingCode.ExplosivesDivision14G,
+  [ExplosiveDivision.Division14S]: SpecialHandlingCode.ExplosivesDivision14S,
+  [HazardClass.Explosives]: SpecialHandlingCode.ExplosivesOther,
+  [HazardClass.FlammableGas]: SpecialHandlingCode.FlammableGas,
+  [HazardClass.NonFlammableGas]: SpecialHandlingCode.NonFlammableGas,
+  [HazardClass.ToxicGas]: SpecialHandlingCode.ToxicGas,
+  [HazardClass.FlammableLiquid]: SpecialHandlingCode.FlammableLiquid,
+  [HazardClass.FlammableSolid]: SpecialHandlingCode.FlammableSolid,
+  [HazardClass.SpontaneouslyCombustible]:
+    SpecialHandlingCode.SpontaneouslyCombustible,
+  [HazardClass.DangerousWhenWet]: SpecialHandlingCode.DangerousWhenWet,
+  [HazardClass.Oxidizer]: SpecialHandlingCode.Oxidizer,
+  [HazardClass.OrganicPeroxide]: SpecialHandlingCode.OrganicPeroxide,
+  [HazardClass.ToxicSubstance]: SpecialHandlingCode.Toxic,
+  [HazardClass.InfectiousSubstance]: SpecialHandlingCode.InfectiousSubstance,
+  [HazardClass.Radioactive]: SpecialHandlingCode.RadioactiveYellow,
+  [HazardClass.Corrosive]: SpecialHandlingCode.Corrosive,
+  [HazardClass.Miscellaneous]: SpecialHandlingCode.MiscellaneousDangerousGoods,
+};
+
 type PlacedShipment = {
   shipment: CargoShipmentEntry;
   unit: CargoUnitEntry;
+};
+
+type ListedDangerousGoods = PlacedShipment & {
+  profile: DangerousGoodsProfile;
+  drill: EmergencyDrill;
+};
+
+type NotifiableSpecialLoad = PlacedShipment & {
+  codes: SpecialHandlingCode[];
+};
+
+type DryIceLoad = {
+  compartment: number | null;
+  packages: number;
+  kg: number;
+};
+
+type NotifiableLoads = {
+  dangerousGoods: ListedDangerousGoods[];
+  dryIce: DryIceLoad[];
+  specialLoads: NotifiableSpecialLoad[];
+  coldChain: NotocColdChain[];
 };
 
 export type NotifiableLoadSummary = {
@@ -118,17 +166,15 @@ const RISK_ORDER = [
 export function notifiableLoadSummary(
   manifest: FlightCargoManifest,
 ): NotifiableLoadSummary {
-  const document = composeNotoc(manifest, '');
+  const loads = notifiableLoadsOf(loadedShipmentsOf(manifest));
 
   return {
-    dangerousGoodsCount: document.dangerousGoods.length,
-    cargoAircraftOnlyCount: document.dangerousGoods.filter(
-      (entry) => entry.cargoAircraftOnly,
+    dangerousGoodsCount: loads.dangerousGoods.length + loads.dryIce.length,
+    cargoAircraftOnlyCount: loads.dangerousGoods.filter(
+      ({ profile }) => profile.cargoAircraftOnly,
     ).length,
-    specialLoadCount: document.specialLoads.length,
-    worstColdChainRisk: worstRiskOf(
-      document.coldChain.map((entry) => entry.risk),
-    ),
+    specialLoadCount: loads.specialLoads.length,
+    worstColdChainRisk: worstRiskOf(loads.coldChain.map((entry) => entry.risk)),
   };
 }
 
@@ -143,38 +189,49 @@ function worstRiskOf(risks: ColdChainRisk[]): ColdChainRisk | null {
 export function composeNotoc(
   manifest: FlightCargoManifest,
   unloadingAirport: string,
-  header: NotocHeader | null = null,
-  passengers: NotifiablePassenger[] = [],
+  header: NotocHeader,
+  passengers: NotifiablePassenger[],
 ): NotocDocument {
   const placed = loadedShipmentsOf(manifest);
-  const dangerousGoods = [
-    ...placed
-      .filter(({ shipment }) => isListedDangerousGoods(shipment))
-      .map(({ shipment, unit }) =>
-        dangerousGoodsEntry(shipment, unit, unloadingAirport),
-      )
-      .filter((entry): entry is NotocDangerousGoods => entry !== null),
-    ...dryIceEntries(placed, unloadingAirport),
-  ];
+  const loads = notifiableLoadsOf(placed);
+  const dangerousGoods = loads.dangerousGoods.map((entry) =>
+    dangerousGoodsEntry(entry, unloadingAirport),
+  );
+  const dryIce = dryIceEntries(loads.dryIce, unloadingAirport);
 
   return {
     header,
     specialPassengers: specialPassengersOf(passengers, manifest),
     statement:
-      dangerousGoods.length === 0
+      dangerousGoods.length + dryIce.length === 0
         ? NO_DANGEROUS_GOODS_STATEMENT
         : DANGEROUS_GOODS_STATEMENT,
     dangerousGoods,
-    specialLoads: placed
-      .filter(({ shipment }) => shipment.dangerousGoods === null)
-      .map(({ shipment, unit }) =>
-        specialLoadEntry(shipment, unit, unloadingAirport),
-      )
-      .filter((entry): entry is NotocSpecialLoad => entry !== null),
+    dryIce,
+    specialLoads: loads.specialLoads.map((entry) =>
+      specialLoadEntry(entry, unloadingAirport),
+    ),
+    coldChain: loads.coldChain,
+    summary: summaryOf(manifest, placed),
+  };
+}
+
+function notifiableLoadsOf(placed: PlacedShipment[]): NotifiableLoads {
+  return {
+    dangerousGoods: placed.flatMap((entry) => {
+      const listed = listedDangerousGoodsOf(entry);
+
+      return listed ? [listed] : [];
+    }),
+    dryIce: dryIceLoadsOf(placed),
+    specialLoads: placed.flatMap((entry) => {
+      const notifiable = notifiableSpecialLoadOf(entry);
+
+      return notifiable ? [notifiable] : [];
+    }),
     coldChain: placed
       .map(({ shipment }) => coldChainEntry(shipment))
       .filter((entry): entry is NotocColdChain => entry !== null),
-    summary: summaryOf(manifest, placed),
   };
 }
 
@@ -184,6 +241,20 @@ function loadedShipmentsOf(manifest: FlightCargoManifest): PlacedShipment[] {
       .filter((shipment) => shipment.status === CargoShipmentStatusName.Loaded)
       .map((shipment) => ({ shipment, unit })),
   );
+}
+
+function listedDangerousGoodsOf(
+  entry: PlacedShipment,
+): ListedDangerousGoods | null {
+  const profile = entry.shipment.dangerousGoods;
+
+  if (!profile || !isListedDangerousGoods(entry.shipment)) {
+    return null;
+  }
+
+  const drill = drillFor(profile.ercCode);
+
+  return drill ? { ...entry, profile, drill } : null;
 }
 
 function isListedDangerousGoods(shipment: CargoShipmentEntry): boolean {
@@ -200,6 +271,20 @@ function isListedDangerousGoods(shipment: CargoShipmentEntry): boolean {
   );
 }
 
+function notifiableSpecialLoadOf(
+  entry: PlacedShipment,
+): NotifiableSpecialLoad | null {
+  if (entry.shipment.dangerousGoods !== null) {
+    return null;
+  }
+
+  const codes = entry.shipment.shc.filter((code): code is SpecialHandlingCode =>
+    NOTIFIABLE_HANDLING_CODES.includes(code as SpecialHandlingCode),
+  );
+
+  return codes.length === 0 ? null : { ...entry, codes };
+}
+
 function catalogueProfileOf(
   shipment: CargoShipmentEntry,
 ): DangerousGoodsProfile | undefined {
@@ -207,33 +292,23 @@ function catalogueProfileOf(
 }
 
 function dangerousGoodsEntry(
-  shipment: CargoShipmentEntry,
-  unit: CargoUnitEntry,
+  { shipment, unit, profile, drill }: ListedDangerousGoods,
   unloadingAirport: string,
-): NotocDangerousGoods | null {
-  const profile = shipment.dangerousGoods;
-  const drill = profile ? drillFor(profile.ercCode) : null;
-
-  if (!profile || !drill) {
-    return null;
-  }
+): NotocDangerousGoods {
+  const classOrDivision = classOrDivisionOf(shipment, profile);
 
   return {
     awb: shipment.awb,
     properShippingName: profile.properShippingName,
     unNumber: profile.unNumber,
     hazardClass: profile.hazardClass,
-    classOrDivision:
-      profile.division ??
-      catalogueProfileOf(shipment)?.division ??
-      profile.hazardClass,
+    classOrDivision,
     subsidiaryRisk: profile.subsidiaryRisk,
     packingGroup: profile.packingGroup,
     packages: shipment.pieces,
     netPerPackage: profile.netPerPackage,
-    quantityIsTotal: false,
     radioactive: radioactiveOf(shipment, profile),
-    impCode: impCodeOf(shipment.shc),
+    impCode: impCodeOf(shipment.shc, classOrDivision),
     uldId: unit.uldCode,
     position: unit.positionDesignator,
     compartment: unit.compartment,
@@ -243,12 +318,26 @@ function dangerousGoodsEntry(
   };
 }
 
-function impCodeOf(codes: string[]): SpecialHandlingCode | null {
+function classOrDivisionOf(
+  shipment: CargoShipmentEntry,
+  profile: DangerousGoodsProfile,
+): ExplosiveDivision | HazardClass {
   return (
-    (codes.find((code) =>
-      DANGEROUS_GOODS_IMP_CODES.includes(code as SpecialHandlingCode),
-    ) as SpecialHandlingCode | undefined) ?? null
+    profile.division ??
+    catalogueProfileOf(shipment)?.division ??
+    profile.hazardClass
   );
+}
+
+function impCodeOf(
+  codes: string[],
+  classOrDivision: ExplosiveDivision | HazardClass,
+): SpecialHandlingCode {
+  const listed = codes.find((code): code is SpecialHandlingCode =>
+    DANGEROUS_GOODS_IMP_CODES.includes(code as SpecialHandlingCode),
+  );
+
+  return listed ?? IMP_CODE_BY_CLASS[classOrDivision];
 }
 
 function radioactiveOf(
@@ -260,7 +349,7 @@ function radioactiveOf(
   }
 
   if (shipment.shc.includes(SpecialHandlingCode.RadioactiveWhite)) {
-    return { category: RadioactiveCategory.IWhite, transportIndex: null };
+    return { category: RadioactiveCategory.IWhite, transportIndex: 0 };
   }
 
   const roll = stableUnit(shipment.awb);
@@ -284,17 +373,7 @@ function round1(value: number): number {
   return Math.round(value * 10) / 10;
 }
 
-type DryIceLoad = {
-  compartment: number | null;
-  packages: number;
-  kg: number;
-};
-
-function dryIceEntries(
-  placed: PlacedShipment[],
-  unloadingAirport: string,
-): NotocDangerousGoods[] {
-  const drill = drillFor(DRY_ICE_ERC_CODE);
+function dryIceLoadsOf(placed: PlacedShipment[]): DryIceLoad[] {
   const byCompartment = new Map<number | null, DryIceLoad>();
 
   for (const { shipment, unit } of placed) {
@@ -322,74 +401,57 @@ function dryIceEntries(
     byCompartment.set(unit.compartment, load);
   }
 
+  return [...byCompartment.values()].sort(
+    (one, other) =>
+      (one.compartment ?? Number.MAX_SAFE_INTEGER) -
+      (other.compartment ?? Number.MAX_SAFE_INTEGER),
+  );
+}
+
+function dryIceEntries(
+  loads: DryIceLoad[],
+  unloadingAirport: string,
+): NotocDryIce[] {
+  const drill = drillFor(DRY_ICE_ERC_CODE);
+
   if (!drill) {
     return [];
   }
 
-  return [...byCompartment.values()]
-    .sort(
-      (one, other) =>
-        (one.compartment ?? Number.MAX_SAFE_INTEGER) -
-        (other.compartment ?? Number.MAX_SAFE_INTEGER),
-    )
-    .map((load) => ({
-      awb: null,
-      properShippingName: 'Dry ice',
-      unNumber: DRY_ICE_UN_NUMBER,
-      hazardClass: HazardClass.Miscellaneous,
-      classOrDivision: HazardClass.Miscellaneous,
-      subsidiaryRisk: null,
-      packingGroup: null,
-      packages: load.packages,
-      netPerPackage: `${Math.round(load.kg)} kg`,
-      quantityIsTotal: true,
-      radioactive: null,
-      impCode: SpecialHandlingCode.DryIce,
-      uldId: null,
-      position: null,
-      compartment: load.compartment,
-      unloadingAirport,
-      cargoAircraftOnly: false,
-      drill,
-    }));
+  return loads.map((load) => ({
+    compartment: load.compartment,
+    packages: load.packages,
+    kg: Math.round(load.kg),
+    unloadingAirport,
+    drill,
+  }));
 }
 
 function specialLoadEntry(
-  shipment: CargoShipmentEntry,
-  unit: CargoUnitEntry,
+  { shipment, unit, codes }: NotifiableSpecialLoad,
   unloadingAirport: string,
-): NotocSpecialLoad | null {
-  const notifiable = shipment.shc.filter((code) =>
-    NOTIFIABLE_HANDLING_CODES.includes(code as SpecialHandlingCode),
-  );
-
-  if (notifiable.length === 0) {
-    return null;
-  }
-
-  const sized = notifiable.some((code) =>
-    SIZED_HANDLING_CODES.includes(code as SpecialHandlingCode),
-  );
-
+): NotocSpecialLoad {
   const commodity = findCommodityById(shipment.commodity);
-  const heaviestPiece = sized ? heaviestPieceOf(shipment, commodity) : null;
+  const sized = codes.some((code) => SIZED_HANDLING_CODES.includes(code));
+  const temperature = commodity?.temperature;
 
   return {
     awb: shipment.awb,
     description: shipment.description,
     pieces: shipment.pieces,
-    shc: notifiable,
+    shc: codes,
     grossKg: shipment.grossKg,
-    supplementaryInformation: supplementaryInformationOf(
-      shipment,
-      commodity,
-      heaviestPiece,
-    ),
+    handlingRemark: handlingRemarkOf(shipment, commodity),
+    temperature: temperature
+      ? { minC: temperature.minC, maxC: temperature.maxC }
+      : null,
+    temperatureSolution: shipment.coldChain?.solution ?? null,
+    holdCondition: holdConditionOf(commodity),
     uldId: unit.uldCode,
     position: unit.positionDesignator,
     compartment: unit.compartment,
     unloadingAirport,
-    heaviestPiece,
+    heaviestPiece: sized ? heaviestPieceOf(shipment, commodity) : null,
   };
 }
 
@@ -408,44 +470,17 @@ function heaviestPieceOf(
   return { ...largest, kg: Math.min(largest.kg, perPieceKg) };
 }
 
-function supplementaryInformationOf(
+function handlingRemarkOf(
   shipment: CargoShipmentEntry,
   commodity: Commodity | undefined,
-  heaviestPiece: NotocSpecialLoad['heaviestPiece'],
-): string[] {
-  const lines: string[] = [];
-
+): HandlingRemark | null {
   if (commodity?.notocRemark) {
-    lines.push(commodity.notocRemark);
-  } else if (shipment.shc.includes(SpecialHandlingCode.Valuable)) {
-    lines.push(SpecialLoadRemark.SecuredStowage);
+    return commodity.notocRemark;
   }
 
-  if (commodity?.temperature) {
-    const { minC, maxC } = commodity.temperature;
-    lines.push(`KEEP AT ${signed(minC)} TO ${signed(maxC)} °C`);
-  }
-
-  if (shipment.coldChain?.solution === TemperatureSolution.Active) {
-    lines.push(SpecialLoadRemark.ActiveContainer);
-  } else if (shipment.coldChain?.solution === TemperatureSolution.DryIce) {
-    lines.push(SpecialLoadRemark.PackedInDryIce);
-  }
-
-  const hold = holdConditionOf(commodity);
-
-  if (hold) {
-    lines.push(hold);
-  }
-
-  if (heaviestPiece) {
-    const { kg, lengthCm, widthCm, heightCm } = heaviestPiece;
-    lines.push(
-      `HEAVIEST PIECE ${kg} KG, ${lengthCm}x${widthCm}x${heightCm} CM`,
-    );
-  }
-
-  return lines;
+  return shipment.shc.includes(SpecialHandlingCode.Valuable)
+    ? HandlingRemark.SecuredStowage
+    : null;
 }
 
 function holdConditionOf(
@@ -463,10 +498,6 @@ function holdConditionOf(
   }
 
   return ventilated ? HoldCondition.Ventilated : null;
-}
-
-function signed(celsius: number): string {
-  return celsius > 0 ? `+${celsius}` : `${celsius}`;
 }
 
 function coldChainEntry(shipment: CargoShipmentEntry): NotocColdChain | null {

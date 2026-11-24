@@ -91,7 +91,7 @@ export class GenerateManifestsListener {
       NotocStageName.Preliminary,
       arrival.iataCode,
       new Date(),
-      notocHeaderContextOf(flight),
+      notocHeaderContextOf(flight, departure),
     );
     await this.commandBus.execute(issueNotoc);
   }
