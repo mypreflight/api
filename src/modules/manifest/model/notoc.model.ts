@@ -475,6 +475,18 @@ export class NotocLoadSummary {
   tightestConnectionMinutes!: number | null;
 }
 
+export enum SpecialPassengerRemark {
+  NonSpillableBattery = 'NON-SPILLABLE BATTERY INSTALLED',
+  SpillableBattery = 'SPILLABLE BATTERY INSTALLED, AID STOWED UPRIGHT',
+  MedicalEscort = 'STRETCHER, MEDICAL ESCORT ON BOARD',
+  MedicalClearance = 'MEDICAL CLEARANCE GIVEN',
+  EscortsAlongside = 'ESCORTS SEATED ALONGSIDE',
+  DocumentsHeldByCrew = 'TRAVEL DOCUMENTS HELD BY CREW',
+  CabinCrewCare = 'IN THE CARE OF CABIN CREW',
+  OnLap = 'ON LAP',
+  UnderSeat = 'IN CONTAINER UNDER SEAT',
+}
+
 export class NotocSpecialPassenger {
   @ApiProperty({ example: '34C' })
   seat!: string;
