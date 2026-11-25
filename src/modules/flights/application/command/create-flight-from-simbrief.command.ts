@@ -267,7 +267,7 @@ export class CreateFlightFromSimbriefHandler implements ICommandHandler<CreateFl
     );
     await this.commandBus.execute(replaceNotamsCommand);
 
-    this.domainEvents.emit(
+    await this.domainEvents.emitAsync(
       new FlightWasCreatedEvent({
         flightId: flightId,
         scope,

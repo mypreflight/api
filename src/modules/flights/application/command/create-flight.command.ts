@@ -56,7 +56,7 @@ export class CreateFlightHandler implements ICommandHandler<CreateFlightCommand>
 
     await this.flightsRepository.create(flightId, flightData, initiatorId);
 
-    this.domainEvents.emit(
+    await this.domainEvents.emitAsync(
       new FlightWasCreatedEvent({
         flightId: flightId,
         scope: FlightEventScope.Operations,
