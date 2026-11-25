@@ -22,7 +22,7 @@ export class ListHoldLayoutsAction {
   @ApiOperation({
     summary: 'List the hold configurations of every curated airframe type',
     description:
-      'Curated reference data. Hold volumes and ULD counts follow published airframe figures where those exist; per-compartment weights are derived from the positions a compartment holds, since manufacturers do not publish them. Position designators are a convention of this system, not a published designation.',
+      'Curated reference data. Hold volumes and ULD counts follow published airframe figures where those exist; per-compartment weights are derived from the positions a compartment holds, since manufacturers do not publish them. Positions are reported as deck, compartment, row and side; how they are written is a convention of this system, not a published designation.',
   })
   @ApiBearerAuth('jwt')
   @ApiOkResponse({ type: AircraftHoldLayout, isArray: true })

@@ -939,7 +939,8 @@ Feature: Check in pilot for flight
               "uldId": "AMA62011CV",
               "pieces": 7,
               "grossKg": 4000,
-              "position": "6AL",
+              "loadingPosition": { "deck": "main", "compartment": 6, "row": 1, "side": "L" },
+              "position": "AL",
               "compartment": 6,
               "description": "Live horses in air stalls",
               "heaviestPiece": {
@@ -959,7 +960,8 @@ Feature: Check in pilot for flight
               "uldId": "AMA62012CV",
               "pieces": 4,
               "grossKg": 4200,
-              "position": "6BL",
+              "loadingPosition": { "deck": "main", "compartment": 6, "row": 2, "side": "L" },
+              "position": "BL",
               "compartment": 6,
               "description": "Main landing gear leg, AOG",
               "heaviestPiece": {
@@ -979,7 +981,8 @@ Feature: Check in pilot for flight
               "uldId": "AMA62013CV",
               "pieces": 6,
               "grossKg": 1072,
-              "position": "6CL",
+              "loadingPosition": { "deck": "main", "compartment": 6, "row": 3, "side": "L" },
+              "position": "CL",
               "compartment": 6,
               "description": "Human remains in coffin",
               "heaviestPiece": {
@@ -999,6 +1002,7 @@ Feature: Check in pilot for flight
               "uldId": "AKE62017CV",
               "pieces": 50,
               "grossKg": 700,
+              "loadingPosition": { "deck": "lower", "compartment": 3, "row": 1, "side": "L" },
               "position": "31L",
               "compartment": 3,
               "description": "Vaccine doses, 2-8C",
@@ -1016,6 +1020,7 @@ Feature: Check in pilot for flight
             {
               "awb": "172-62001133",
               "drill": {
+                "responseCode": { "drillNumber": 3, "drillLetters": ["L"] },
                 "ercCode": "3L",
                 "inherentRisk": "Flammable liquid or solid; vapours may form an explosive mixture.",
                 "additionalRisks": ["No significant risk beyond the drill itself."],
@@ -1025,6 +1030,7 @@ Feature: Check in pilot for flight
               "uldId": "AKE62014CV",
               "impCode": "RFL",
               "packages": 78,
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "L" },
               "position": "11L",
               "unNumber": "1263",
               "compartment": 1,
@@ -1045,6 +1051,7 @@ Feature: Check in pilot for flight
             {
               "awb": "172-62001144",
               "drill": {
+                "responseCode": { "drillNumber": 9, "drillLetters": ["F"] },
                 "ercCode": "9F",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
                 "additionalRisks": ["Flammable."],
@@ -1054,6 +1061,7 @@ Feature: Check in pilot for flight
               "uldId": "AKE62015CV",
               "impCode": "RLI",
               "packages": 140,
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
               "position": "11R",
               "unNumber": "3480",
               "compartment": 1,
@@ -1089,6 +1097,7 @@ Feature: Check in pilot for flight
             {
               "kg": 900,
               "drill": {
+                "responseCode": { "drillNumber": 9, "drillLetters": ["A"] },
                 "ercCode": "9A",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
                 "additionalRisks": ["Anaesthetic or narcotic vapour."],

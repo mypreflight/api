@@ -9,10 +9,7 @@ import {
   compartmentsOf,
   positionsOf,
 } from '../model/hold-layout.model';
-import {
-  MAX_NUMERIC_ROWS,
-  PositionOrdinals,
-} from '../model/hold-position-expander';
+import { designatorOf } from '../model/position-designator';
 import { ULD_BASE_CODES, ULD_CONTOUR_CODES } from '../model/uld-code.model';
 import { findAirframeByType } from '../../airframes/data/airframes';
 import { AirframeServiceType } from '../../airframes/model/airframe.model';
@@ -109,13 +106,11 @@ describe('cargo holds dataset', () => {
     expect(wrong).toEqual([]);
   });
 
-  it('keeps position designators unique within a variant', () => {
+  it('keeps written positions unique within a variant', () => {
     const wrong = AIRCRAFT_HOLD_LAYOUTS.flatMap((layout) =>
       layout.variants
         .filter((variant) => {
-          const designators = positionsOf(variant).map(
-            (position) => position.designator,
-          );
+          const designators = positionsOf(variant).map(designatorOf);
 
           return new Set(designators).size !== designators.length;
         })
@@ -172,7 +167,7 @@ describe('cargo holds dataset', () => {
                 (contour) => !ULD_CONTOUR_CODES.includes(contour),
               ),
           )
-          .map((position) => `${variant.id}/${position.designator}`),
+          .map((position) => `${variant.id}/${designatorOf(position)}`),
       ),
     );
 
@@ -217,16 +212,15 @@ describe('cargo holds dataset', () => {
     expect(wrong).toEqual([]);
   });
 
-  it('keeps a numerically designated compartment within nine rows', () => {
+  it('keeps lower deck rows below ten and main deck rows within the alphabet', () => {
     const wrong = HOLD_LAYOUT_SOURCE.flatMap((layout) =>
       layout.variants.flatMap((variant) =>
         variant.decks.flatMap((deck) =>
           deck.compartments
             .filter(
               (compartment) =>
-                compartment.positionTemplate?.ordinals ===
-                  PositionOrdinals.Numeric &&
-                compartment.positionTemplate.rows > MAX_NUMERIC_ROWS,
+                (compartment.positionTemplate?.rows ?? 0) >
+                (deck.deck === CargoDeck.Main ? 26 : 9),
             )
             .map((compartment) => `${variant.id}/${compartment.number}`),
         ),
@@ -238,22 +232,23 @@ describe('cargo holds dataset', () => {
 
   it('overrides only positions the template produces', () => {
     const wrong = HOLD_LAYOUT_SOURCE.flatMap((layout) =>
-      layout.variants.flatMap((variant) => {
-        const expanded = AIRCRAFT_HOLD_LAYOUTS.find(
-          (candidate) => candidate.type === layout.type,
-        )!.variants.find((candidate) => candidate.id === variant.id)!;
-        const designators = new Set(
-          positionsOf(expanded).map((position) => position.designator),
-        );
-
-        return variant.decks.flatMap((deck) =>
+      layout.variants.flatMap((variant) =>
+        variant.decks.flatMap((deck) =>
           deck.compartments.flatMap((compartment) =>
             (compartment.positionOverrides ?? [])
-              .filter((override) => !designators.has(override.designator))
-              .map((override) => `${variant.id}/${override.designator}`),
+              .filter(
+                (override) =>
+                  override.row < 1 ||
+                  override.row > (compartment.positionTemplate?.rows ?? 0) ||
+                  !compartment.positionTemplate?.sides.includes(override.side),
+              )
+              .map(
+                (override) =>
+                  `${variant.id}/${compartment.number}/${override.row}${override.side}`,
+              ),
           ),
-        );
-      }),
+        ),
+      ),
     );
 
     expect(wrong).toEqual([]);

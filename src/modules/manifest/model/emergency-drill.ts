@@ -1,7 +1,7 @@
-import { DrillLetter, drillLettersOf, drillNumberOf } from './commodity.model';
+import { DrillLetter, DrillNumber, ResponseCode } from './commodity.model';
 
 export type EmergencyDrill = {
-  ercCode: string;
+  responseCode: ResponseCode;
   inherentRisk: string;
   riskToAircraftAndOccupants: string;
   spillAndFireProcedure: string;
@@ -9,8 +9,8 @@ export type EmergencyDrill = {
 };
 
 const DRILL_BY_NUMBER: Record<
-  number,
-  Omit<EmergencyDrill, 'ercCode' | 'additionalRisks'>
+  DrillNumber,
+  Omit<EmergencyDrill, 'responseCode' | 'additionalRisks'>
 > = {
   1: {
     inherentRisk: 'Explosion, which may be a mass explosion of the whole load.',
@@ -120,18 +120,12 @@ const ADDITIONAL_RISK_BY_LETTER: Record<DrillLetter, string> = {
   [DrillLetter.Infectious]: 'Infectious.',
 };
 
-export function drillFor(ercCode: string): EmergencyDrill | null {
-  const drill = DRILL_BY_NUMBER[drillNumberOf(ercCode)];
-
-  if (!drill) {
-    return null;
-  }
-
+export function drillFor(responseCode: ResponseCode): EmergencyDrill {
   return {
-    ercCode,
-    ...drill,
-    additionalRisks: drillLettersOf(ercCode)
-      .map((letter) => ADDITIONAL_RISK_BY_LETTER[letter as DrillLetter])
-      .filter((risk): risk is string => risk !== undefined),
+    responseCode,
+    ...DRILL_BY_NUMBER[responseCode.drillNumber],
+    additionalRisks: responseCode.drillLetters.map(
+      (letter) => ADDITIONAL_RISK_BY_LETTER[letter],
+    ),
   };
 }

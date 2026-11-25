@@ -1,10 +1,10 @@
 import {
   expandCompartment,
   expandPositions,
-  PositionOrdinals,
   SourceCompartment,
 } from './hold-position-expander';
 import {
+  CargoDeck,
   CargoDoorSide,
   CompartmentLoading,
   HoldCompartmentName,
@@ -25,7 +25,6 @@ function compartment(
     ventilated: false,
     doorSide: CargoDoorSide.Right,
     positionTemplate: {
-      ordinals: PositionOrdinals.Numeric,
       rows: 2,
       sides: [HoldPositionSide.Left, HoldPositionSide.Right],
       acceptedBases: [UldBaseCode.Ld3],
@@ -40,23 +39,49 @@ function compartment(
 }
 
 describe('hold position expander', () => {
-  it('designates a paired run by compartment, ordinal and side', () => {
-    const positions = expandPositions(compartment());
+  it('numbers a paired run by row, left before right', () => {
+    const positions = expandPositions(compartment(), CargoDeck.Lower);
 
-    expect(positions.map((position) => position.designator)).toEqual([
-      '11L',
-      '11R',
-      '12L',
-      '12R',
+    expect(
+      positions.map(({ deck, compartment, row, side }) => ({
+        deck,
+        compartment,
+        row,
+        side,
+      })),
+    ).toEqual([
+      {
+        deck: CargoDeck.Lower,
+        compartment: 1,
+        row: 1,
+        side: HoldPositionSide.Left,
+      },
+      {
+        deck: CargoDeck.Lower,
+        compartment: 1,
+        row: 1,
+        side: HoldPositionSide.Right,
+      },
+      {
+        deck: CargoDeck.Lower,
+        compartment: 1,
+        row: 2,
+        side: HoldPositionSide.Left,
+      },
+      {
+        deck: CargoDeck.Lower,
+        compartment: 1,
+        row: 2,
+        side: HoldPositionSide.Right,
+      },
     ]);
   });
 
-  it('designates a full-width run with a pallet suffix', () => {
+  it('numbers a full-width run by row alone', () => {
     const positions = expandPositions(
       compartment({
         number: 4,
         positionTemplate: {
-          ordinals: PositionOrdinals.Numeric,
           rows: 3,
           sides: [HoldPositionSide.Full],
           acceptedBases: [UldBaseCode.Pallet96],
@@ -64,22 +89,22 @@ describe('hold position expander', () => {
           maxWeightKg: 6800,
         },
       }),
+      CargoDeck.Lower,
     );
 
-    expect(positions.map((position) => position.designator)).toEqual([
-      '41P',
-      '42P',
-      '43P',
+    expect(positions.map(({ row, side }) => [row, side])).toEqual([
+      [1, HoldPositionSide.Full],
+      [2, HoldPositionSide.Full],
+      [3, HoldPositionSide.Full],
     ]);
   });
 
-  it('designates a main deck run by letter', () => {
+  it('places a main deck run on the main deck', () => {
     const positions = expandPositions(
       compartment({
         number: 6,
         name: HoldCompartmentName.Main,
         positionTemplate: {
-          ordinals: PositionOrdinals.Alpha,
           rows: 3,
           sides: [HoldPositionSide.Left, HoldPositionSide.Right],
           acceptedBases: [UldBaseCode.Pallet96],
@@ -87,20 +112,17 @@ describe('hold position expander', () => {
           maxWeightKg: 6804,
         },
       }),
+      CargoDeck.Main,
     );
 
-    expect(positions.map((position) => position.designator)).toEqual([
-      'AL',
-      'AR',
-      'BL',
-      'BR',
-      'CL',
-      'CR',
-    ]);
+    expect(
+      positions.every((position) => position.deck === CargoDeck.Main),
+    ).toBe(true);
+    expect(positions.map(({ row }) => row)).toEqual([1, 1, 2, 2, 3, 3]);
   });
 
   it('carries the template onto every position', () => {
-    const positions = expandPositions(compartment());
+    const positions = expandPositions(compartment(), CargoDeck.Lower);
 
     expect(positions.every((position) => position.compartment === 1)).toBe(
       true,
@@ -119,18 +141,22 @@ describe('hold position expander', () => {
       compartment({
         positionOverrides: [
           {
-            designator: '12R',
+            row: 2,
+            side: HoldPositionSide.Right,
             acceptedContours: [UldContourCode.Ld3ReducedHeight],
           },
         ],
       }),
+      CargoDeck.Lower,
     );
 
     const overridden = positions.find(
-      (position) => position.designator === '12R',
+      (position) =>
+        position.row === 2 && position.side === HoldPositionSide.Right,
     )!;
     const untouched = positions.find(
-      (position) => position.designator === '12L',
+      (position) =>
+        position.row === 2 && position.side === HoldPositionSide.Left,
     )!;
 
     expect(overridden.acceptedContours).toEqual([
@@ -150,13 +176,14 @@ describe('hold position expander', () => {
       positionTemplate: undefined,
     });
 
-    expect(expandPositions(loose)).toEqual([]);
-    expect(expandCompartment(loose).positions).toEqual([]);
+    expect(expandPositions(loose, CargoDeck.Lower)).toEqual([]);
+    expect(expandCompartment(loose, CargoDeck.Lower).positions).toEqual([]);
   });
 
   it('keeps the fields of the compartment it expands', () => {
     const expanded = expandCompartment(
       compartment({ heated: true, ventilated: true, volumeM3: 12.4 }),
+      CargoDeck.Lower,
     );
 
     expect(expanded.heated).toBe(true);

@@ -4,6 +4,7 @@ import {
   CargoUnitRow,
   CargoUnitTotals,
 } from '../../infra/database/repository/cargo.repository';
+import { loadingPositionOfRow } from '../../model/cargo-unit-position';
 import {
   AircraftHold,
   GetAircraftHoldQuery,
@@ -27,6 +28,7 @@ import {
   CompartmentUsage,
   looseSlotsOf,
   MAX_DANGEROUS_GOODS_PER_FLIGHT,
+  OccupiedPositions,
   planCargoLoad,
   slotsOf,
 } from '../../model/cargo-packing';
@@ -150,7 +152,7 @@ export class ReconcileFlightCargoManifestHandler implements ICommandHandler<Reco
       offloads: plan.offloads.map((offload) => ({
         shipmentId: offload.shipmentId,
         reason: offload.reason as unknown as CargoOffloadReason,
-        offloadedFrom: offload.offloadedFrom,
+        offloadedFromPosition: offload.offloadedFromPosition,
       })),
       emptiedUnitIds: plan.emptiedUnitIds,
       totals,
@@ -282,7 +284,7 @@ function toReconcilableUnit(row: CargoUnitRow): ReconcilableUnit {
   return {
     id: row.id,
     tareKg: row.tareKg,
-    positionDesignator: row.positionDesignator,
+    loadingPosition: loadingPositionOfRow(row),
     shipments: row.shipments
       .filter((shipment) => shipment.status === CargoShipmentStatus.loaded)
       .map((shipment) => ({
@@ -303,11 +305,13 @@ function loadedShipmentsOf(row: CargoUnitRow, offloaded: Set<string>) {
   );
 }
 
-function occupiedPositionsOf(rows: CargoUnitRow[]): Set<string> {
-  return new Set(
-    rows
-      .map((row) => row.positionDesignator)
-      .filter((designator): designator is string => designator !== null),
+function occupiedPositionsOf(rows: CargoUnitRow[]): OccupiedPositions {
+  return new OccupiedPositions(
+    rows.flatMap((row) => {
+      const position = loadingPositionOfRow(row);
+
+      return position === null ? [] : [position];
+    }),
   );
 }
 

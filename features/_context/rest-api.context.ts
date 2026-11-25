@@ -269,7 +269,7 @@ Then(
   'the response body list {string} should have distinct {string} values',
   (listProperty: string, itemProperty: string) => {
     const items = itemsOf(listProperty);
-    const values = items.map((item) => item[itemProperty]);
+    const values = items.map((item) => JSON.stringify(item[itemProperty]));
 
     expect(new Set(values).size).toBe(values.length);
   },
