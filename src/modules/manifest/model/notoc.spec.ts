@@ -10,7 +10,11 @@ import {
   FlightCargoManifest,
 } from './cargo-manifest.model';
 import { LoadUnitKind } from './cargo-packing';
-import { CargoDeck } from './hold-layout.model';
+import {
+  CargoDeck,
+  HoldPositionSide,
+  LoadingPosition,
+} from './hold-layout.model';
 import { UldType } from './uld';
 import { TransferRole } from './shipment-journey';
 import {
@@ -20,6 +24,7 @@ import {
 } from './cold-chain';
 import {
   DangerousGoodsProfile,
+  DrillLetter,
   ExplosiveDivision,
   HandlingRemark,
   HazardClass,
@@ -42,6 +47,14 @@ const HEADER: NotocHeader = {
   loadingSupervisor: 'Ettie Maggio',
   emergencyTelephone: '+44 20 7946 0639',
 };
+
+function lower(
+  compartment: number,
+  row: number,
+  side: HoldPositionSide,
+): LoadingPosition {
+  return { deck: CargoDeck.Lower, compartment, row, side };
+}
 
 function compose(
   load: FlightCargoManifest,
@@ -74,7 +87,7 @@ function shipment(
     coldChain: null,
     status: CargoShipmentStatusName.Loaded,
     offloadReason: null,
-    offloadedFrom: null,
+    offloadedFromPosition: null,
     ...overrides,
   };
 }
@@ -87,7 +100,7 @@ function unit(
     kind: LoadUnitKind.Uld,
     uldCode: 'AKE48201AA',
     uldType: UldType.Ld3,
-    positionDesignator: '11L',
+    loadingPosition: lower(1, 1, HoldPositionSide.Left),
     compartment: 1,
     deck: CargoDeck.Lower,
     tareKg: 82,
@@ -143,7 +156,10 @@ const paint: DangerousGoodsProfile = {
   packingGroup: PackingGroup.Medium,
   netQuantity: { amount: 5, unit: QuantityUnit.Litres },
   cargoAircraftOnly: false,
-  ercCode: '3L',
+  responseCode: {
+    drillNumber: 3,
+    drillLetters: [DrillLetter.OtherRiskLowOrNone],
+  },
 };
 
 const chilled: ColdChainAssessment = {
@@ -197,12 +213,15 @@ describe('composeNotoc', () => {
         radioactive: null,
         impCode: SpecialHandlingCode.FlammableLiquid,
         uldId: 'AKE48201AA',
-        position: '11L',
+        loadingPosition: lower(1, 1, HoldPositionSide.Left),
         compartment: 1,
         unloadingAirport: 'JFK',
         cargoAircraftOnly: false,
         drill: {
-          ercCode: '3L',
+          responseCode: {
+            drillNumber: 3,
+            drillLetters: [DrillLetter.OtherRiskLowOrNone],
+          },
           inherentRisk: expect.stringContaining('Flammable liquid'),
           riskToAircraftAndOccupants: expect.stringContaining('fire'),
           spillAndFireProcedure: expect.stringContaining('ignition source'),
@@ -252,7 +271,7 @@ describe('composeNotoc', () => {
       awb: '001-22222225',
       shc: [SpecialHandlingCode.LiveAnimals, SpecialHandlingCode.Heavy],
       grossKg: 2400,
-      position: '11L',
+      loadingPosition: lower(1, 1, HoldPositionSide.Left),
       compartment: 1,
       unloadingAirport: 'JFK',
     });
@@ -294,7 +313,10 @@ describe('composeNotoc', () => {
               unNumber: '0012',
               hazardClass: HazardClass.Explosives,
               division: ExplosiveDivision.Division14S,
-              ercCode: '1L',
+              responseCode: {
+                drillNumber: 1,
+                drillLetters: [DrillLetter.OtherRiskLowOrNone],
+              },
             },
           }),
         ]),
@@ -335,7 +357,10 @@ describe('composeNotoc', () => {
               ...paint,
               unNumber: '0012',
               hazardClass: HazardClass.Explosives,
-              ercCode: '1L',
+              responseCode: {
+                drillNumber: 1,
+                drillLetters: [DrillLetter.OtherRiskLowOrNone],
+              },
             },
           }),
         ]),
@@ -359,7 +384,10 @@ describe('composeNotoc', () => {
               ...paint,
               unNumber: '3373',
               hazardClass: HazardClass.InfectiousSubstance,
-              ercCode: '11Y',
+              responseCode: {
+                drillNumber: 11,
+                drillLetters: [DrillLetter.Infectious],
+              },
             },
           }),
         ]),
@@ -380,7 +408,10 @@ describe('composeNotoc', () => {
               ...paint,
               unNumber: '2915',
               hazardClass: HazardClass.Radioactive,
-              ercCode: '7L',
+              responseCode: {
+                drillNumber: 7,
+                drillLetters: [DrillLetter.OtherRiskLowOrNone],
+              },
             },
           }),
         ]),
@@ -405,7 +436,10 @@ describe('composeNotoc', () => {
               ...paint,
               unNumber: '2915',
               hazardClass: HazardClass.Radioactive,
-              ercCode: '7L',
+              responseCode: {
+                drillNumber: 7,
+                drillLetters: [DrillLetter.OtherRiskLowOrNone],
+              },
             },
           }),
         ]),
@@ -436,11 +470,14 @@ describe('composeNotoc', () => {
   });
 
   it('totals dry ice per compartment, apart from the dangerous goods lines', () => {
-    const dryIce = {
+    const dryIce: DangerousGoodsProfile = {
       ...paint,
       unNumber: '1845',
       hazardClass: HazardClass.Miscellaneous,
-      ercCode: '9A',
+      responseCode: {
+        drillNumber: 9,
+        drillLetters: [DrillLetter.Anaesthetic],
+      },
     };
     const document = compose(
       manifest([
@@ -472,7 +509,10 @@ describe('composeNotoc', () => {
               shc: [SpecialHandlingCode.Frozen, SpecialHandlingCode.DryIce],
             }),
           ],
-          { positionDesignator: '31L', compartment: 3 },
+          {
+            loadingPosition: lower(3, 1, HoldPositionSide.Left),
+            compartment: 3,
+          },
         ),
       ]),
     );
@@ -484,14 +524,24 @@ describe('composeNotoc', () => {
         packages: 6,
         kg: 120,
         unloadingAirport: 'JFK',
-        drill: expect.objectContaining({ ercCode: '9A' }),
+        drill: expect.objectContaining({
+          responseCode: {
+            drillNumber: 9,
+            drillLetters: [DrillLetter.Anaesthetic],
+          },
+        }),
       },
       {
         compartment: 3,
         packages: 10,
         kg: 30,
         unloadingAirport: 'JFK',
-        drill: expect.objectContaining({ ercCode: '9A' }),
+        drill: expect.objectContaining({
+          responseCode: {
+            drillNumber: 9,
+            drillLetters: [DrillLetter.Anaesthetic],
+          },
+        }),
       },
     ]);
   });
@@ -643,16 +693,16 @@ describe('composeNotoc', () => {
   it('counts containers, pallets and loose lots separately', () => {
     const document = compose(
       manifest([
-        unit([shipment()], { uldType: UldType.Ld3, positionDesignator: '11L' }),
+        unit([shipment()], { uldType: UldType.Ld3 }),
         unit([shipment()], {
           uldType: UldType.Pallet96,
-          positionDesignator: '21P',
+          loadingPosition: lower(2, 1, HoldPositionSide.Full),
         }),
         unit([shipment()], {
           kind: LoadUnitKind.BulkLot,
           uldType: null,
           uldCode: null,
-          positionDesignator: null,
+          loadingPosition: null,
           tareKg: 0,
         }),
       ]),
@@ -668,7 +718,7 @@ describe('composeNotoc', () => {
       manifest([
         unit([shipment()]),
         unit([], {
-          positionDesignator: null,
+          loadingPosition: null,
           tareKg: 0,
           grossKg: 0,
           uldCode: 'AKE48202AA',

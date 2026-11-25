@@ -46,7 +46,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "bulk_lot",
             "uldCode": null,
             "uldType": null,
-            "positionDesignator": null,
+            "loadingPosition": null,
             "compartment": "@any",
             "deck": "lower",
             "tareKg": 0,
@@ -79,7 +79,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": "@any",
                 "status": "loaded",
                 "offloadReason": null,
-                "offloadedFrom": null
+                "offloadedFromPosition": null
               }
             ]
           }
@@ -289,7 +289,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48201AA",
             "uldType": "AKE",
-            "positionDesignator": null,
+            "loadingPosition": null,
             "compartment": 1,
             "deck": "lower",
             "tareKg": 0,
@@ -322,7 +322,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "offloaded",
                 "offloadReason": "payload_restriction",
-                "offloadedFrom": "11L"
+                "offloadedFromPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "L" }
               }
             ]
           },
@@ -330,7 +330,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48202AA",
             "uldType": "AKE",
-            "positionDesignator": "11R",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
             "compartment": 1,
             "deck": "lower",
             "tareKg": 82,
@@ -347,7 +347,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48203AA",
             "uldType": "AKE",
-            "positionDesignator": "12L",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
             "compartment": 1,
             "deck": "lower",
             "tareKg": 82,
@@ -364,7 +364,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48204AA",
             "uldType": "AKE",
-            "positionDesignator": "12R",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "R" },
             "compartment": 1,
             "deck": "lower",
             "tareKg": 82,
@@ -413,7 +413,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48201AA",
             "uldType": "AKE",
-            "positionDesignator": null,
+            "loadingPosition": null,
             "compartment": 1,
             "deck": "lower",
             "tareKg": 0,
@@ -430,7 +430,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48202AA",
             "uldType": "AKE",
-            "positionDesignator": "11R",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
             "compartment": 1,
             "deck": "lower",
             "tareKg": 82,
@@ -463,7 +463,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
-                "offloadedFrom": null
+                "offloadedFromPosition": null
               }
             ]
           },
@@ -471,7 +471,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48203AA",
             "uldType": "AKE",
-            "positionDesignator": "12L",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
             "compartment": 1,
             "deck": "lower",
             "tareKg": 82,
@@ -504,7 +504,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
-                "offloadedFrom": null
+                "offloadedFromPosition": null
               }
             ]
           },
@@ -512,7 +512,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE48204AA",
             "uldType": "AKE",
-            "positionDesignator": "12R",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "R" },
             "compartment": 1,
             "deck": "lower",
             "tareKg": 82,
@@ -545,7 +545,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
-                "offloadedFrom": null
+                "offloadedFromPosition": null
               }
             ]
           }
@@ -596,7 +596,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE55101AA",
             "uldType": "AKE",
-            "positionDesignator": "31L",
+            "loadingPosition": { "deck": "lower", "compartment": 3, "row": 1, "side": "L" },
             "compartment": 3,
             "deck": "lower",
             "tareKg": 82,
@@ -629,7 +629,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
-                "offloadedFrom": null
+                "offloadedFromPosition": null
               }
             ]
           },
@@ -637,7 +637,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE55103AA",
             "uldType": "AKE",
-            "positionDesignator": null,
+            "loadingPosition": null,
             "compartment": 3,
             "deck": "lower",
             "tareKg": 0,
@@ -667,7 +667,7 @@ Feature: Read the cargo manifest of a flight
                 "connectionMinutes": null,
                 "connectionAtRisk": false,
                 "dangerousGoods": {
-                  "ercCode": "7L",
+                  "responseCode": { "drillNumber": 7, "drillLetters": ["L"] },
                   "unNumber": "2915",
                   "hazardClass": "7",
                   "packingGroup": null,
@@ -682,7 +682,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "offloaded",
                 "offloadReason": "payload_restriction",
-                "offloadedFrom": "32L"
+                "offloadedFromPosition": { "deck": "lower", "compartment": 3, "row": 2, "side": "L" }
               }
             ]
           },
@@ -690,7 +690,7 @@ Feature: Read the cargo manifest of a flight
             "kind": "uld",
             "uldCode": "AKE55102AA",
             "uldType": "AKE",
-            "positionDesignator": "31R",
+            "loadingPosition": { "deck": "lower", "compartment": 3, "row": 1, "side": "R" },
             "compartment": 3,
             "deck": "lower",
             "tareKg": 82,
@@ -720,7 +720,7 @@ Feature: Read the cargo manifest of a flight
                 "connectionMinutes": null,
                 "connectionAtRisk": false,
                 "dangerousGoods": {
-                  "ercCode": "9A",
+                  "responseCode": { "drillNumber": 9, "drillLetters": ["A"] },
                   "unNumber": "1845",
                   "sourceNote": "An asphyxiant rather than an anaesthetic; A is the nearest additional-risk letter the drill chart defines.",
                   "hazardClass": "9",
@@ -736,7 +736,7 @@ Feature: Read the cargo manifest of a flight
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
-                "offloadedFrom": null
+                "offloadedFromPosition": null
               }
             ]
           }

@@ -5,16 +5,36 @@ import {
   NotocSpecialLoad,
 } from './notoc.model';
 import {
+  DrillLetter,
   HazardClass,
   PackingGroup,
   QuantityUnit,
   SpecialHandlingCode,
 } from './commodity.model';
-import { CargoDeck } from './hold-layout.model';
+import {
+  CargoDeck,
+  HoldPositionSide,
+  LoadingPosition,
+} from './hold-layout.model';
+
+const SIDES: Record<string, HoldPositionSide> = {
+  L: HoldPositionSide.Left,
+  R: HoldPositionSide.Right,
+  P: HoldPositionSide.Full,
+};
+
+function at(written: string): LoadingPosition {
+  return {
+    deck: CargoDeck.Lower,
+    compartment: Number(written[0]),
+    row: Number(written[1]),
+    side: SIDES[written[2]],
+  };
+}
 
 function dangerousGoods(
   awb: string,
-  position: string | null,
+  loadingPosition: LoadingPosition | null,
 ): NotocDangerousGoods {
   return {
     awb,
@@ -29,12 +49,15 @@ function dangerousGoods(
     radioactive: null,
     impCode: SpecialHandlingCode.FlammableLiquid,
     uldId: 'AKE 12345 BA',
-    position,
+    loadingPosition,
     compartment: 1,
     unloadingAirport: 'JFK',
     cargoAircraftOnly: false,
     drill: {
-      ercCode: '3L',
+      responseCode: {
+        drillNumber: 3,
+        drillLetters: [DrillLetter.OtherRiskLowOrNone],
+      },
       inherentRisk: 'Flammable liquid or solid.',
       riskToAircraftAndOccupants: 'Rapid fire spread.',
       spillAndFireProcedure: 'Contain the spill.',
@@ -43,7 +66,10 @@ function dangerousGoods(
   };
 }
 
-function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
+function specialLoad(
+  awb: string,
+  loadingPosition: LoadingPosition | null,
+): NotocSpecialLoad {
   return {
     awb,
     description: 'Live tropical fish, boxed',
@@ -54,7 +80,7 @@ function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
     temperature: null,
     holdCondition: null,
     uldId: null,
-    position,
+    loadingPosition,
     compartment: 3,
     unloadingAirport: 'JFK',
     heaviestPiece: null,
@@ -110,7 +136,7 @@ function document(
 describe('notocChanges', () => {
   it('reports no change when the load is identical', () => {
     const before = document({
-      dangerousGoods: [dangerousGoods('001-1', '11L')],
+      dangerousGoods: [dangerousGoods('001-1', at('11L'))],
     });
 
     expect(notocChanges(before, before)).toEqual({
@@ -127,12 +153,12 @@ describe('notocChanges', () => {
 
   it('reports a dangerous goods shipment the reconciliation added', () => {
     const before = document({
-      dangerousGoods: [dangerousGoods('001-1', '11L')],
+      dangerousGoods: [dangerousGoods('001-1', at('11L'))],
     });
     const after = document({
       dangerousGoods: [
-        dangerousGoods('001-1', '11L'),
-        dangerousGoods('001-2', '11R'),
+        dangerousGoods('001-1', at('11L')),
+        dangerousGoods('001-2', at('11R')),
       ],
     });
 
@@ -144,7 +170,9 @@ describe('notocChanges', () => {
   });
 
   it('reports a special load the reconciliation offloaded', () => {
-    const before = document({ specialLoads: [specialLoad('001-9', '31L')] });
+    const before = document({
+      specialLoads: [specialLoad('001-9', at('31L'))],
+    });
     const after = document({ specialLoads: [] });
 
     const changes = notocChanges(before, after);
@@ -156,30 +184,32 @@ describe('notocChanges', () => {
 
   it('reports a shipment that moved to another position', () => {
     const before = document({
-      dangerousGoods: [dangerousGoods('001-1', '11L')],
+      dangerousGoods: [dangerousGoods('001-1', at('11L'))],
     });
     const after = document({
-      dangerousGoods: [dangerousGoods('001-1', '21R')],
+      dangerousGoods: [dangerousGoods('001-1', at('21R'))],
     });
 
     expect(notocChanges(before, after).repositioned).toEqual([
-      { awb: '001-1', from: '11L', to: '21R' },
+      { awb: '001-1', fromPosition: at('11L'), toPosition: at('21R') },
     ]);
   });
 
   it('reports a shipment whose unit lost its position', () => {
-    const before = document({ specialLoads: [specialLoad('001-9', '31L')] });
+    const before = document({
+      specialLoads: [specialLoad('001-9', at('31L'))],
+    });
     const after = document({ specialLoads: [specialLoad('001-9', null)] });
 
     expect(notocChanges(before, after).repositioned).toEqual([
-      { awb: '001-9', from: '31L', to: null },
+      { awb: '001-9', fromPosition: at('31L'), toPosition: null },
     ]);
   });
 
   it('does not call an added shipment repositioned', () => {
     const before = document({ dangerousGoods: [] });
     const after = document({
-      dangerousGoods: [dangerousGoods('001-2', '11R')],
+      dangerousGoods: [dangerousGoods('001-2', at('11R'))],
     });
 
     const changes = notocChanges(before, after);
@@ -203,8 +233,8 @@ describe('notocChanges', () => {
     const before = document({ dangerousGoods: [] });
     const after = document({
       dangerousGoods: [
-        dangerousGoods('001-9', '11L'),
-        dangerousGoods('001-2', '11R'),
+        dangerousGoods('001-9', at('11L')),
+        dangerousGoods('001-2', at('11R')),
       ],
     });
 

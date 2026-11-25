@@ -111,24 +111,27 @@ Feature: Get aircraft hold layout by type
                     "doorSide": "right",
                     "positions": [
                       {
-                        "designator": "11P",
+                        "deck": "lower",
                         "compartment": 1,
+                        "row": 1,
                         "side": "full",
                         "acceptedBases": ["K"],
                         "acceptedContours": ["H"],
                         "maxWeightKg": 1134
                       },
                       {
-                        "designator": "12P",
+                        "deck": "lower",
                         "compartment": 1,
+                        "row": 2,
                         "side": "full",
                         "acceptedBases": ["K"],
                         "acceptedContours": ["H"],
                         "maxWeightKg": 1134
                       },
                       {
-                        "designator": "13P",
+                        "deck": "lower",
                         "compartment": 1,
+                        "row": 3,
                         "side": "full",
                         "acceptedBases": ["K"],
                         "acceptedContours": ["H"],

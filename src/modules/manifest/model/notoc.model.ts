@@ -1,8 +1,6 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
-import { NotocChanges } from './notoc-delta';
-import { CargoDeck } from './hold-layout.model';
+import { CargoDeck, LoadingPosition } from './hold-layout.model';
 import {
-  ERC_PATTERN,
   ExplosiveDivision,
   HandlingRemark,
   HazardClass,
@@ -18,6 +16,7 @@ import {
   ColdChainHotTransferReason,
   ColdChainLongConnectionReason,
   ColdChainPlainReason,
+  EmergencyResponseCode,
   NetQuantityPerPackage,
 } from './cargo-manifest.model';
 import { PassengerSpecialService } from './manifest.model';
@@ -27,16 +26,15 @@ export enum NotocStageName {
   Final = 'final',
 }
 
-export const NOTOC_FORM_VERSION = 3;
+export const NOTOC_FORM_VERSION = 4;
 
 export class NotocDrill {
   @ApiProperty({
     description:
-      'Emergency response code: a drill number of 1 to 11 followed by one letter per additional risk. Constructed from the published drill chart rather than drawn from a fixed list.',
-    pattern: ERC_PATTERN.source,
-    example: '3L',
+      'Emergency response code: a drill number and one letter per additional risk, constructed from the published drill chart',
+    type: EmergencyResponseCode,
   })
-  ercCode!: string;
+  responseCode!: EmergencyResponseCode;
 
   @ApiProperty({
     example:
@@ -194,12 +192,11 @@ export class NotocDangerousGoods {
 
   @ApiProperty({
     description:
-      'Hold position the load occupies, composed of compartment number, ordinal and side. This is a convention of this system, not a published designation. Null for loose load and for an aircraft whose type carries no curated hold data.',
-    example: '12R',
+      'Hold position the load occupies. Null for loose load and for an aircraft whose type carries no curated hold data.',
     nullable: true,
-    type: String,
+    type: LoadingPosition,
   })
-  position!: string | null;
+  loadingPosition!: LoadingPosition | null;
 
   @ApiProperty({ example: 1, nullable: true, type: Number })
   compartment!: number | null;
@@ -239,20 +236,19 @@ export class NotocReposition {
   awb!: string;
 
   @ApiProperty({
-    description: 'Position it held on the preliminary document',
-    example: '11L',
+    description:
+      'Position it held on the preliminary document; null when it was loose',
     nullable: true,
-    type: String,
+    type: LoadingPosition,
   })
-  from!: string | null;
+  fromPosition!: LoadingPosition | null;
 
   @ApiProperty({
     description: 'Position it holds now; null once its unit lost its position',
-    example: '21R',
     nullable: true,
-    type: String,
+    type: LoadingPosition,
   })
-  to!: string | null;
+  toPosition!: LoadingPosition | null;
 }
 
 export class NotocChangeSet {
@@ -404,12 +400,11 @@ export class NotocSpecialLoad {
 
   @ApiProperty({
     description:
-      'Hold position the load occupies, composed of compartment number, ordinal and side. This is a convention of this system, not a published designation. Null for loose load and for an aircraft whose type carries no curated hold data.',
-    example: '31L',
+      'Hold position the load occupies. Null for loose load and for an aircraft whose type carries no curated hold data.',
     nullable: true,
-    type: String,
+    type: LoadingPosition,
   })
-  position!: string | null;
+  loadingPosition!: LoadingPosition | null;
 
   @ApiProperty({ example: 3, nullable: true, type: Number })
   compartment!: number | null;
@@ -621,5 +616,5 @@ export class FlightNotoc {
     nullable: true,
     type: NotocChangeSet,
   })
-  changes!: NotocChanges | null;
+  changes!: NotocChangeSet | null;
 }

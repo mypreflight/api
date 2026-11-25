@@ -936,7 +936,7 @@ Feature: Check in pilot for flight
               "uldId": "AMA62011CV",
               "pieces": 7,
               "grossKg": 4000,
-              "position": "6AL",
+              "loadingPosition": { "deck": "main", "compartment": 6, "row": 1, "side": "L" },
               "compartment": 6,
               "description": "Live horses in air stalls",
               "heaviestPiece": {
@@ -956,7 +956,7 @@ Feature: Check in pilot for flight
               "uldId": "AMA62012CV",
               "pieces": 4,
               "grossKg": 4200,
-              "position": "6BL",
+              "loadingPosition": { "deck": "main", "compartment": 6, "row": 2, "side": "L" },
               "compartment": 6,
               "description": "Main landing gear leg, AOG",
               "heaviestPiece": {
@@ -976,7 +976,7 @@ Feature: Check in pilot for flight
               "uldId": "AMA62013CV",
               "pieces": 6,
               "grossKg": 1072,
-              "position": "6CL",
+              "loadingPosition": { "deck": "main", "compartment": 6, "row": 3, "side": "L" },
               "compartment": 6,
               "description": "Human remains in coffin",
               "heaviestPiece": {
@@ -996,7 +996,7 @@ Feature: Check in pilot for flight
               "uldId": "AKE62017CV",
               "pieces": 50,
               "grossKg": 700,
-              "position": "31L",
+              "loadingPosition": { "deck": "lower", "compartment": 3, "row": 1, "side": "L" },
               "compartment": 3,
               "description": "Vaccine doses, 2-8C",
               "heaviestPiece": null,
@@ -1013,7 +1013,7 @@ Feature: Check in pilot for flight
             {
               "awb": "172-62001133",
               "drill": {
-                "ercCode": "3L",
+                "responseCode": { "drillNumber": 3, "drillLetters": ["L"] },
                 "inherentRisk": "Flammable liquid or solid; vapours may form an explosive mixture.",
                 "additionalRisks": ["No significant risk beyond the drill itself."],
                 "spillAndFireProcedure": "Contain the spill and keep every ignition source away. Fight the fire with water spray, foam, dry chemical or carbon dioxide.",
@@ -1022,7 +1022,7 @@ Feature: Check in pilot for flight
               "uldId": "AKE62014CV",
               "impCode": "RFL",
               "packages": 78,
-              "position": "11L",
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "L" },
               "unNumber": "1263",
               "compartment": 1,
               "hazardClass": "3",
@@ -1041,7 +1041,7 @@ Feature: Check in pilot for flight
             {
               "awb": "172-62001144",
               "drill": {
-                "ercCode": "9F",
+                "responseCode": { "drillNumber": 9, "drillLetters": ["F"] },
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
                 "additionalRisks": ["Flammable."],
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
@@ -1050,7 +1050,7 @@ Feature: Check in pilot for flight
               "uldId": "AKE62015CV",
               "impCode": "RLI",
               "packages": 140,
-              "position": "11R",
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
               "unNumber": "3480",
               "compartment": 1,
               "hazardClass": "9",
@@ -1084,7 +1084,7 @@ Feature: Check in pilot for flight
             {
               "kg": 900,
               "drill": {
-                "ercCode": "9A",
+                "responseCode": { "drillNumber": 9, "drillLetters": ["A"] },
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
                 "additionalRisks": ["Anaesthetic or narcotic vapour."],
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",

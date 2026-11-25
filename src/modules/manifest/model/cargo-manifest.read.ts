@@ -1,4 +1,5 @@
 import { CargoUnitRow } from '../infra/database/repository/cargo.repository';
+import { loadingPositionOfRow } from './cargo-unit-position';
 import {
   CargoContentClassName,
   CargoShipmentStatusName,
@@ -7,7 +8,7 @@ import {
   FlightCargoManifest,
   SegregationAdvisory,
 } from './cargo-manifest.model';
-import { CargoDeck, HoldVariant } from './hold-layout.model';
+import { CargoDeck, HoldVariant, LoadingPosition } from './hold-layout.model';
 import { DangerousGoodsProfile, SpecialHandlingCode } from './commodity.model';
 import { findCommodityById } from '../data/cargo-commodities';
 import { conflictingPairsWithin, dryIceKgOf } from './segregation.policy';
@@ -66,6 +67,8 @@ export function composeFlightCargoManifest(
 }
 
 function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
+  const loadingPosition = loadingPositionOfRow(row);
+
   return {
     kind: row.kind as unknown as LoadUnitKind,
     uldCode:
@@ -73,7 +76,7 @@ function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
         ? formatUldCode(row.uldType as UldType, row.uldSerial, row.uldOwner)
         : null,
     uldType: (row.uldType as UldType) ?? null,
-    positionDesignator: row.positionDesignator,
+    loadingPosition,
     compartment: row.compartment,
     deck: (row.deck as unknown as CargoDeck) ?? null,
     tareKg: row.tareKg,
@@ -108,9 +111,18 @@ function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
       status: shipment.status as unknown as CargoShipmentStatusName,
       offloadReason:
         (shipment.offloadReason as unknown as OffloadReason) ?? null,
-      offloadedFrom: shipment.offloadedFrom,
+      offloadedFromPosition: offloadedFromPositionOf(shipment),
     })),
   };
+}
+
+function offloadedFromPositionOf(
+  shipment: CargoUnitRow['shipments'][number],
+): LoadingPosition | null {
+  return (
+    (shipment.offloadedFromPosition as unknown as LoadingPosition | null) ??
+    null
+  );
 }
 
 function baggageSourceOf(rows: CargoUnitRow[]): BaggageSource | null {

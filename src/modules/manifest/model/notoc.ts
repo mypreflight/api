@@ -8,9 +8,11 @@ import { LoadUnitKind } from './cargo-packing';
 import {
   Commodity,
   DangerousGoodsProfile,
+  DrillLetter,
   ExplosiveDivision,
   HandlingRemark,
   HazardClass,
+  ResponseCode,
   SpecialHandlingCode,
 } from './commodity.model';
 import { ULD_SPECS, UldType } from './uld';
@@ -88,7 +90,10 @@ export const DANGEROUS_GOODS_IMP_CODES: SpecialHandlingCode[] = [
 ];
 
 const DRY_ICE_UN_NUMBER = '1845';
-const DRY_ICE_ERC_CODE = '9A';
+const DRY_ICE_RESPONSE_CODE: ResponseCode = {
+  drillNumber: 9,
+  drillLetters: [DrillLetter.Anaesthetic],
+};
 const YELLOW_II_SHARE = 0.6;
 
 const SIZED_HANDLING_CODES: SpecialHandlingCode[] = [
@@ -246,9 +251,7 @@ function listedDangerousGoodsOf(
     return null;
   }
 
-  const drill = drillFor(profile.ercCode);
-
-  return drill ? { ...entry, profile, drill } : null;
+  return { ...entry, profile, drill: drillFor(profile.responseCode) };
 }
 
 function isListedDangerousGoods(shipment: CargoShipmentEntry): boolean {
@@ -304,7 +307,7 @@ function dangerousGoodsEntry(
     radioactive: radioactiveOf(shipment, profile),
     impCode: impCodeOf(shipment.shc, classOrDivision),
     uldId: unit.uldCode,
-    position: unit.positionDesignator,
+    loadingPosition: unit.loadingPosition,
     compartment: unit.compartment,
     unloadingAirport,
     cargoAircraftOnly: profile.cargoAircraftOnly,
@@ -407,11 +410,7 @@ function dryIceEntries(
   loads: DryIceLoad[],
   unloadingAirport: string,
 ): NotocDryIce[] {
-  const drill = drillFor(DRY_ICE_ERC_CODE);
-
-  if (!drill) {
-    return [];
-  }
+  const drill = drillFor(DRY_ICE_RESPONSE_CODE);
 
   return loads.map((load) => ({
     compartment: load.compartment,
@@ -442,7 +441,7 @@ function specialLoadEntry(
       : null,
     holdCondition: holdConditionOf(commodity),
     uldId: unit.uldCode,
-    position: unit.positionDesignator,
+    loadingPosition: unit.loadingPosition,
     compartment: unit.compartment,
     unloadingAirport,
     heaviestPiece: sized ? heaviestPieceOf(shipment, commodity) : null,

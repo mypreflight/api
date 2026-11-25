@@ -6,6 +6,7 @@ import {
   Prisma,
 } from 'prisma/client/client';
 import { NewCargoUnit } from '../infra/database/repository/cargo.repository';
+import { positionColumnsOf } from './cargo-unit-position';
 import { LoadContentClass, LoadUnitKind, PlannedUnit } from './cargo-packing';
 import { awbPrefixFor, generateAwb } from './awb';
 import { isRaisedByOperator } from './shipment-journey';
@@ -31,7 +32,7 @@ export function toNewCargoUnit(
     kind: containerised ? CargoUnitKind.uld : CargoUnitKind.bulk_lot,
     deck: unit.deck ? (unit.deck as unknown as PrismaCargoDeck) : null,
     compartment: unit.compartment,
-    positionDesignator: unit.positionDesignator,
+    ...positionColumnsOf(unit.loadingPosition),
     uldType: unit.uldType,
     uldSerial: containerised ? generateUldSerial(context.random()) : null,
     uldOwner: containerised ? context.operatorIata : null,

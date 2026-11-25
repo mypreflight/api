@@ -5,10 +5,8 @@ import {
 } from './cargo-commodities';
 import {
   DRILL_LETTERS,
-  drillLettersOf,
+  DRILL_NUMBERS,
   drillNumberForHazardClass,
-  drillNumberOf,
-  ERC_PATTERN,
   ExplosiveDivision,
   HandlingRemark,
   HazardClass,
@@ -250,10 +248,13 @@ describe('cargo commodities dataset', () => {
     expect(invalid).toEqual([]);
   });
 
-  it('shapes every emergency response code as a drill number and letters', () => {
+  it('gives every emergency response code a drill number from the chart', () => {
     const wrong = dangerousCommodities()
       .filter(
-        (commodity) => !ERC_PATTERN.test(commodity.dangerousGoods!.ercCode),
+        (commodity) =>
+          !DRILL_NUMBERS.includes(
+            commodity.dangerousGoods!.responseCode.drillNumber,
+          ),
       )
       .map((commodity) => commodity.id);
 
@@ -266,12 +267,13 @@ describe('cargo commodities dataset', () => {
         const dg = commodity.dangerousGoods!;
 
         return (
-          drillNumberOf(dg.ercCode) !==
+          dg.responseCode.drillNumber !==
           drillNumberForHazardClass(dg.hazardClass)
         );
       })
       .map(
-        (commodity) => `${commodity.id}/${commodity.dangerousGoods!.ercCode}`,
+        (commodity) =>
+          `${commodity.id}/${commodity.dangerousGoods!.responseCode.drillNumber}`,
       );
 
     expect(wrong).toEqual([]);
@@ -280,7 +282,7 @@ describe('cargo commodities dataset', () => {
   it('uses only drill letters the chart defines', () => {
     const wrong = dangerousCommodities()
       .filter((commodity) =>
-        drillLettersOf(commodity.dangerousGoods!.ercCode).some(
+        commodity.dangerousGoods!.responseCode.drillLetters.some(
           (letter) => !DRILL_LETTERS.includes(letter),
         ),
       )
@@ -291,7 +293,10 @@ describe('cargo commodities dataset', () => {
 
   it('never states a road transport guide number as an emergency response code', () => {
     const wrong = dangerousCommodities()
-      .filter((commodity) => /^\d+$/.test(commodity.dangerousGoods!.ercCode))
+      .filter(
+        (commodity) =>
+          commodity.dangerousGoods!.responseCode.drillLetters.length === 0,
+      )
       .map((commodity) => commodity.id);
 
     expect(wrong).toEqual([]);

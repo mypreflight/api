@@ -9,14 +9,15 @@ import {
   uldSpecsFor,
   UldType,
 } from './uld';
-import { HoldPosition, HoldPositionSide } from './hold-layout.model';
+import { CargoDeck, HoldPosition, HoldPositionSide } from './hold-layout.model';
 import { UldBaseCode, UldContourCode } from './uld-code.model';
 import { findHoldLayoutByType } from '../data/cargo-holds';
 import { positionsOf } from './hold-layout.model';
 
 const ld3Position: HoldPosition = {
-  designator: '11L',
+  deck: CargoDeck.Lower,
   compartment: 1,
+  row: 1,
   side: HoldPositionSide.Left,
   acceptedBases: [UldBaseCode.Ld3],
   acceptedContours: [
@@ -29,7 +30,6 @@ const ld3Position: HoldPosition = {
 
 const reducedPosition: HoldPosition = {
   ...ld3Position,
-  designator: '11P',
   side: HoldPositionSide.Full,
   acceptedContours: [UldContourCode.Ld3ReducedHeight],
   maxWeightKg: 1134,
@@ -106,7 +106,10 @@ describe('unit load devices', () => {
       findHoldLayoutByType(type)!.variants.flatMap((variant) =>
         positionsOf(variant)
           .filter((position) => uldSpecsFor(position).length === 0)
-          .map((position) => `${variant.id}/${position.designator}`),
+          .map(
+            (position) =>
+              `${variant.id}/${position.compartment}/${position.row}${position.side}`,
+          ),
       ),
     );
 

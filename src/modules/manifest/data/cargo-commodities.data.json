@@ -928,7 +928,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 1, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "11Y",
+      "responseCode": { "drillNumber": 11, "drillLetters": ["Y"] },
       "notocExempt": true
     }
   },
@@ -977,7 +977,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 50, "unit": "mL" },
       "cargoAircraftOnly": false,
-      "ercCode": "11Y"
+      "responseCode": { "drillNumber": 11, "drillLetters": ["Y"] }
     }
   },
   {
@@ -1025,7 +1025,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 1, "unit": "TBq" },
       "cargoAircraftOnly": false,
-      "ercCode": "7L"
+      "responseCode": { "drillNumber": 7, "drillLetters": ["L"] }
     }
   },
   {
@@ -1664,7 +1664,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 2, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "9F",
+      "responseCode": { "drillNumber": 9, "drillLetters": ["F"] },
       "notocExempt": true
     }
   },
@@ -1713,7 +1713,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 10, "unit": "kg" },
       "cargoAircraftOnly": true,
-      "ercCode": "9F"
+      "responseCode": { "drillNumber": 9, "drillLetters": ["F"] }
     }
   },
   {
@@ -1761,7 +1761,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 5, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "9F"
+      "responseCode": { "drillNumber": 9, "drillLetters": ["F"] }
     }
   },
   {
@@ -1809,7 +1809,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 2.5, "unit": "kg" },
       "cargoAircraftOnly": true,
-      "ercCode": "9F"
+      "responseCode": { "drillNumber": 9, "drillLetters": ["F"] }
     }
   },
   {
@@ -1857,7 +1857,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 22, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "9A",
+      "responseCode": { "drillNumber": 9, "drillLetters": ["A"] },
       "sourceNote": "An asphyxiant rather than an anaesthetic; A is the nearest additional-risk letter the drill chart defines."
     }
   },
@@ -1906,7 +1906,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 60, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "9M"
+      "responseCode": { "drillNumber": 9, "drillLetters": ["M"] }
     }
   },
   {
@@ -1954,7 +1954,7 @@
       "packingGroup": "III",
       "netQuantity": { "amount": 25, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "9L"
+      "responseCode": { "drillNumber": 9, "drillLetters": ["L"] }
     }
   },
   {
@@ -1999,7 +1999,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 5, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "3L"
+      "responseCode": { "drillNumber": 3, "drillLetters": ["L"] }
     }
   },
   {
@@ -2044,7 +2044,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 1, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "10L"
+      "responseCode": { "drillNumber": 10, "drillLetters": ["L"] }
     }
   },
   {
@@ -2092,7 +2092,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 50, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "2X"
+      "responseCode": { "drillNumber": 2, "drillLetters": ["X"] }
     }
   },
   {
@@ -2140,7 +2140,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 50, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "2L"
+      "responseCode": { "drillNumber": 2, "drillLetters": ["L"] }
     }
   },
   {
@@ -2188,7 +2188,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 25, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "2L"
+      "responseCode": { "drillNumber": 2, "drillLetters": ["L"] }
     }
   },
   {
@@ -2236,7 +2236,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "3L"
+      "responseCode": { "drillNumber": 3, "drillLetters": ["L"] }
     }
   },
   {
@@ -2284,7 +2284,7 @@
       "packingGroup": "III",
       "netQuantity": { "amount": 5, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "3L"
+      "responseCode": { "drillNumber": 3, "drillLetters": ["L"] }
     }
   },
   {
@@ -2329,7 +2329,7 @@
       "packingGroup": "III",
       "netQuantity": { "amount": 15, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "3L"
+      "responseCode": { "drillNumber": 3, "drillLetters": ["L"] }
     }
   },
   {
@@ -2377,7 +2377,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 25, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "4W"
+      "responseCode": { "drillNumber": 4, "drillLetters": ["W"] }
     }
   },
   {
@@ -2425,7 +2425,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "5C"
+      "responseCode": { "drillNumber": 5, "drillLetters": ["C"] }
     }
   },
   {
@@ -2470,7 +2470,7 @@
       "packingGroup": "III",
       "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "8L"
+      "responseCode": { "drillNumber": 8, "drillLetters": ["L"] }
     }
   },
   {
@@ -2518,7 +2518,7 @@
       "packingGroup": "II",
       "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "8L"
+      "responseCode": { "drillNumber": 8, "drillLetters": ["L"] }
     }
   },
   {
@@ -2566,7 +2566,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 25, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "1L",
+      "responseCode": { "drillNumber": 1, "drillLetters": ["L"] },
       "sourceNote": "Division 1.4S; the drill chart offers no division-specific number, so drill 1 with no additional risk.",
       "division": "1.4S"
     }
@@ -2613,7 +2613,7 @@
       "packingGroup": "III",
       "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "6L"
+      "responseCode": { "drillNumber": 6, "drillLetters": ["L"] }
     }
   },
   {
@@ -2705,7 +2705,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 1, "unit": "unit" },
       "cargoAircraftOnly": false,
-      "ercCode": "9F"
+      "responseCode": { "drillNumber": 9, "drillLetters": ["F"] }
     }
   },
   {
@@ -2750,7 +2750,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 20, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "1L",
+      "responseCode": { "drillNumber": 1, "drillLetters": ["L"] },
       "sourceNote": "Division 1.4G; drill 1 with no additional risk, as the chart is not division-specific.",
       "division": "1.4G"
     }
@@ -3084,7 +3084,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 1, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "9F",
+      "responseCode": { "drillNumber": 9, "drillLetters": ["F"] },
       "notocExempt": true
     }
   },
@@ -3168,7 +3168,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 10, "unit": "kg" },
       "cargoAircraftOnly": false,
-      "ercCode": "5L"
+      "responseCode": { "drillNumber": 5, "drillLetters": ["L"] }
     }
   },
   {
@@ -3799,7 +3799,7 @@
       "packingGroup": null,
       "netQuantity": { "amount": 30, "unit": "kg" },
       "cargoAircraftOnly": true,
-      "ercCode": "1E",
+      "responseCode": { "drillNumber": 1, "drillLetters": ["E"] },
       "sourceNote": "Division 1.2E; drill 1 with the explosive additional-risk letter.",
       "division": "1.2E"
     }
@@ -4069,7 +4069,7 @@
       "packingGroup": "III",
       "netQuantity": { "amount": 5, "unit": "L" },
       "cargoAircraftOnly": false,
-      "ercCode": "3L"
+      "responseCode": { "drillNumber": 3, "drillLetters": ["L"] }
     }
   },
   {

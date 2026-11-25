@@ -7,8 +7,10 @@ import {
   CargoShipmentStatus,
   CargoTransferRole,
   CargoUnitKind,
+  HoldPositionSide as PrismaHoldPositionSide,
   Prisma,
 } from 'prisma/client/client';
+import { LoadingPosition } from '../../../model/hold-layout.model';
 
 export type NewCargoShipment = {
   commodityId: string;
@@ -34,7 +36,8 @@ export type NewCargoUnit = {
   kind: CargoUnitKind;
   deck: CargoDeck | null;
   compartment: number | null;
-  positionDesignator: string | null;
+  positionRow: number | null;
+  positionSide: PrismaHoldPositionSide | null;
   uldType: string | null;
   uldSerial: string | null;
   uldOwner: string | null;
@@ -57,7 +60,7 @@ export type CargoUnitRow = Prisma.FlightCargoUnitGetPayload<{
 export type CargoOffloadWrite = {
   shipmentId: string;
   reason: CargoOffloadReason;
-  offloadedFrom: string | null;
+  offloadedFromPosition: LoadingPosition | null;
 };
 
 export type CargoUnitTotals = {
@@ -109,7 +112,10 @@ export class CargoRepository {
           data: {
             status: CargoShipmentStatus.offloaded,
             offloadReason: offload.reason,
-            offloadedFrom: offload.offloadedFrom,
+            offloadedFromPosition:
+              offload.offloadedFromPosition === null
+                ? Prisma.DbNull
+                : (offload.offloadedFromPosition as unknown as Prisma.InputJsonValue),
           },
         });
       }
@@ -125,7 +131,8 @@ export class CargoRepository {
         await transaction.flightCargoUnit.update({
           where: { id: unitId },
           data: {
-            positionDesignator: null,
+            positionRow: null,
+            positionSide: null,
             tareKg: 0,
             grossKg: 0,
             volumeM3: 0,
