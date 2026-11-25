@@ -130,8 +130,18 @@ describe('segregation policy', () => {
   });
 
   it('counts dry ice weight only where dry ice is carried', () => {
-    expect(dryIceKgOf([SpecialHandlingCode.DryIce], 132)).toBe(132);
-    expect(dryIceKgOf([SpecialHandlingCode.Perishable], 132)).toBe(0);
+    expect(
+      dryIceKgOf([SpecialHandlingCode.DryIce], 132, {
+        pieces: 1,
+        kgPerPiece: null,
+      }),
+    ).toBe(132);
+    expect(
+      dryIceKgOf([SpecialHandlingCode.Perishable], 132, {
+        pieces: 1,
+        kgPerPiece: null,
+      }),
+    ).toBe(0);
   });
 
   it('counts only the dry ice packed around a frozen load', () => {

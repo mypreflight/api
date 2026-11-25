@@ -64,7 +64,7 @@ describe('specialPassengersOf', () => {
     ).toEqual([]);
   });
 
-  it('says where a lithium battery wheelchair and its battery travel', () => {
+  it('puts a battery wheelchair in the aftmost compartment holding baggage', () => {
     const [entry] = specialPassengersOf(
       [passenger('34C', PassengerSpecialService.WheelchairLithiumBattery)],
       loadWithBaggageIn([3, 5]),
@@ -73,22 +73,25 @@ describe('specialPassengersOf', () => {
     expect(entry).toEqual({
       seat: '34C',
       ssr: PassengerSpecialService.WheelchairLithiumBattery,
-      remarks: [
-        'LITHIUM BATTERY REMOVED, IN CABIN AT 34C',
-        'MOBILITY AID IN HOLD, CPT 5',
-      ],
+      mobilityAid: { compartment: 5 },
     });
   });
 
-  it('names only the hold when no baggage has a compartment', () => {
+  it('names no compartment when no baggage has one', () => {
     const [entry] = specialPassengersOf(
       [passenger('8F', PassengerSpecialService.WheelchairDryBattery)],
       null,
     );
 
-    expect(entry.remarks).toEqual([
-      'NON-SPILLABLE BATTERY INSTALLED',
-      'MOBILITY AID IN HOLD',
-    ]);
+    expect(entry.mobilityAid).toEqual({ compartment: null });
+  });
+
+  it('gives no mobility aid to a passenger travelling without one', () => {
+    const [entry] = specialPassengersOf(
+      [passenger('8F', PassengerSpecialService.WheelchairRamp)],
+      loadWithBaggageIn([5]),
+    );
+
+    expect(entry.mobilityAid).toBeNull();
   });
 });

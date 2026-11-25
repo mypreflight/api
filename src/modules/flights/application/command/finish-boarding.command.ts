@@ -112,7 +112,7 @@ export class FinishBoardingHandler implements ICommandHandler<FinishBoardingComm
         NotocStageName.Final,
         arrival.iataCode,
         issuedAt,
-        notocHeaderContextOf(details),
+        notocHeaderContextOf(details, departure),
       );
       await this.commandBus.execute(issueNotoc);
 

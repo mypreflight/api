@@ -9,6 +9,8 @@ import {
   drillNumberForHazardClass,
   drillNumberOf,
   ERC_PATTERN,
+  ExplosiveDivision,
+  HandlingRemark,
   HazardClass,
   OffloadPriority,
   PackingGroup,
@@ -215,6 +217,34 @@ describe('cargo commodities dataset', () => {
       .map((commodity) => commodity.id);
 
     expect(wrong).toEqual([]);
+  });
+
+  it('gives every explosive a known division and nothing else one', () => {
+    const divisions: string[] = Object.values(ExplosiveDivision);
+
+    const invalid = dangerousCommodities()
+      .filter((commodity) => {
+        const dg = commodity.dangerousGoods!;
+
+        return dg.hazardClass === HazardClass.Explosives
+          ? !divisions.includes(dg.division ?? '')
+          : dg.division !== undefined;
+      })
+      .map((commodity) => commodity.id);
+
+    expect(invalid).toEqual([]);
+  });
+
+  it('uses only recognised handling remarks', () => {
+    const remarks: string[] = Object.values(HandlingRemark);
+
+    const invalid = COMMODITIES.filter(
+      (commodity) =>
+        commodity.notocRemark !== undefined &&
+        !remarks.includes(commodity.notocRemark),
+    ).map((commodity) => commodity.id);
+
+    expect(invalid).toEqual([]);
   });
 
   it('shapes every emergency response code as a drill number and letters', () => {

@@ -8,7 +8,6 @@ import {
   NotocDocument,
   NotocStageName,
 } from '../../model/notoc.model';
-import { readNotocDocument } from '../../model/notoc.read';
 import { notocChanges } from '../../model/notoc-delta';
 import {
   NotocNotIssuedError,
@@ -70,7 +69,7 @@ export class GetFlightNotocHandler implements IQueryHandler<GetFlightNotocQuery>
       issuedAt: row.issuedAt,
       acknowledgedById: row.acknowledgedById,
       acknowledgedAt: row.acknowledgedAt,
-      document: readNotocDocument(row.document),
+      document: row.document as unknown as NotocDocument,
       changes: await this.changesOn(flightId, row),
     };
   }

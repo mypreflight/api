@@ -1529,6 +1529,7 @@ model FlightNotoc {
   stage            NotocStage
   issuedAt         DateTime
   document         Json
+  formVersion      Int        @default(1)
   acknowledgedById String?    @db.Uuid
   acknowledgedAt   DateTime?
 

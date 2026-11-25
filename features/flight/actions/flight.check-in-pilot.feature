@@ -943,11 +943,10 @@ Feature: Check in pilot for flight
                 "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": [
-                "HORSES IN AIR STALLS, GROOM ON BOARD",
-                "HEATED AND VENTILATED HOLD",
-                "HEAVIEST PIECE 572 KG, 300x110x230 CM"
-              ]
+              "handlingRemark": "horses_with_groom",
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": "heated_and_ventilated"
             },
             {
               "awb": "172-62001111",
@@ -965,7 +964,10 @@ Feature: Check in pilot for flight
                 "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["HEAVIEST PIECE 1050 KG, 300x130x150 CM"]
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "172-62001122",
@@ -983,7 +985,10 @@ Feature: Check in pilot for flight
                 "lengthCm": 220
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 179 KG, 220x70x60 CM"]
+              "handlingRemark": "coffin_apart_from_foodstuffs",
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "172-62001166",
@@ -996,7 +1001,13 @@ Feature: Check in pilot for flight
               "description": "Vaccine doses, 2-8C",
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["KEEP AT +2 TO +8 °C", "ACTIVE CONTAINER"]
+              "handlingRemark": null,
+              "temperature": {
+                "maxC": 8,
+                "minC": 2
+              },
+              "temperatureSolution": "active",
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [
@@ -1021,7 +1032,6 @@ Feature: Check in pilot for flight
               "netPerPackage": "5 L",
               "subsidiaryRisk": null,
               "classOrDivision": "3",
-              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": false,
               "properShippingName": "Paint"
@@ -1047,13 +1057,27 @@ Feature: Check in pilot for flight
               "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
               "classOrDivision": "9",
-              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": true,
               "properShippingName": "Lithium ion batteries"
-            },
+            }
+          ],
+          "header": {
+            "flightDate": "2026-06-02",
+            "preparedBy": "Jana Brandt",
+            "aircraftType": "B74F",
+            "flightNumber": "CV2020",
+            "operatorName": "Cargolux Airlines International S.A.",
+            "stationOfLoading": "FRA",
+            "loadingSupervisor": "Hennes Umlauft",
+            "emergencyTelephone": "+44 20 7946 0588",
+            "aircraftRegistration": "LX-VCA",
+            "stationOfLoadingCity": "Frankfurt"
+          },
+          "specialPassengers": [],
+          "dryIce": [
             {
-              "awb": null,
+              "kg": 900,
               "drill": {
                 "ercCode": "9A",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
@@ -1061,26 +1085,11 @@ Feature: Check in pilot for flight
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
                 "riskToAircraftAndOccupants": "Depends on the substance; may affect instruments, air quality or the health of anyone exposed."
               },
-              "uldId": null,
-              "impCode": "ICE",
               "packages": 41,
-              "position": null,
-              "unNumber": "1845",
               "compartment": 1,
-              "hazardClass": "9",
-              "radioactive": null,
-              "packingGroup": null,
-              "netPerPackage": "900 kg",
-              "subsidiaryRisk": null,
-              "classOrDivision": "9",
-              "quantityIsTotal": true,
-              "unloadingAirport": "JFK",
-              "cargoAircraftOnly": false,
-              "properShippingName": "Dry ice"
+              "unloadingAirport": "JFK"
             }
-          ],
-          "header": null,
-          "specialPassengers": []
+          ]
         },
         "changes": null
       }

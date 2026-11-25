@@ -30,6 +30,9 @@ import {
 } from '../../../src/modules/manifest/model/cargo-manifest.model';
 import { CargoDeck as CargoDeckName } from '../../../src/modules/manifest/model/hold-layout.model';
 import { composeNotoc } from '../../../src/modules/manifest/model/notoc';
+import { NOTOC_FORM_VERSION } from '../../../src/modules/manifest/model/notoc.model';
+import { AirportType } from '../../../src/modules/airports/model/airport.model';
+import { seededNotocHeader } from './notoc-header.seed';
 
 const AA2018 = 'd2601432-e8cb-4018-8cee-f24aaaa29ca5';
 const AA2019 = 'dc20c7ff-114e-42be-86cc-34fd90b71b35';
@@ -880,6 +883,24 @@ export async function loadCargoManifests(
   }
 
   for (const notoc of NOTOCS) {
+    const flight = await tx.flight.findUniqueOrThrow({
+      where: { id: notoc.flightId },
+      include: {
+        aircraft: true,
+        operator: true,
+        airports: { include: { airport: { include: { city: true } } } },
+      },
+    });
+    const departure = flight.airports.find(
+      (entry) => entry.airportType === AirportType.Departure,
+    )?.airport;
+
+    if (!departure) {
+      throw new Error(
+        `seeded NOTOC flight ${flight.flightNumber} departs nowhere`,
+      );
+    }
+
     await tx.flightNotoc.create({
       data: {
         flightId: notoc.flightId,
@@ -888,13 +909,39 @@ export async function loadCargoManifests(
         document: composeNotoc(
           manifestOf(notoc.flightId),
           UNLOADING_AIRPORT,
+          seededNotocHeader(flight, departure, notoc.issuedAt),
+          [],
         ) as unknown as Prisma.InputJsonValue,
+        formVersion: NOTOC_FORM_VERSION,
         acknowledgedById: notoc.acknowledgedAt ? RICK : null,
         acknowledgedAt: notoc.acknowledgedAt,
       },
     });
   }
+
+  await tx.flightNotoc.create({
+    data: {
+      flightId: LEGACY_NOTOC.flightId,
+      stage: NotocStage.final,
+      issuedAt: LEGACY_NOTOC.issuedAt,
+      document: LEGACY_NOTOC.document,
+      formVersion: LEGACY_FORM_VERSION,
+    },
+  });
 }
+
+const LEGACY_FORM_VERSION = 1;
+
+const LEGACY_NOTOC = {
+  flightId: CV2020,
+  issuedAt: new Date('2026-06-02 08:30'),
+  document: {
+    statement: 'No dangerous goods loaded.',
+    dangerousGoods: [],
+    specialLoads: [],
+    coldChain: [],
+  },
+};
 
 const NOTOCS = [
   {
@@ -1026,7 +1073,12 @@ function compartmentLoadOf(units: CargoUnitEntry[]): CompartmentLoad[] {
     const dryIceKg = unit.shipments.reduce(
       (sum, shipment) =>
         sum +
-        dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg),
+        dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg, {
+          pieces: shipment.pieces,
+          kgPerPiece:
+            findCommodityById(shipment.commodity)?.temperature
+              ?.dryIceKgPerPiece ?? null,
+        }),
       0,
     );
 

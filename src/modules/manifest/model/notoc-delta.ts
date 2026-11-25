@@ -62,20 +62,15 @@ export function notocChanges(
 }
 
 function missingFrom(
-  entries: { awb: string | null }[],
-  reference: { awb: string | null }[],
+  entries: { awb: string }[],
+  reference: { awb: string }[],
 ): string[] {
-  const known = new Set(waybillsOf(reference));
+  const known = new Set(reference.map((entry) => entry.awb));
 
-  return waybillsOf(entries)
-    .filter((awb) => !known.has(awb))
-    .sort();
-}
-
-function waybillsOf(entries: { awb: string | null }[]): string[] {
   return entries
     .map((entry) => entry.awb)
-    .filter((awb): awb is string => awb !== null);
+    .filter((awb) => !known.has(awb))
+    .sort();
 }
 
 function repositionsBetween(
@@ -93,8 +88,9 @@ function repositionsBetween(
 
 function positionsOf(document: NotocDocument): Map<string, string | null> {
   return new Map(
-    [...document.dangerousGoods, ...document.specialLoads]
-      .filter((entry) => entry.awb !== null)
-      .map((entry) => [entry.awb as string, entry.position]),
+    [...document.dangerousGoods, ...document.specialLoads].map((entry) => [
+      entry.awb,
+      entry.position,
+    ]),
   );
 }

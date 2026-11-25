@@ -72,11 +72,10 @@ Feature: Get flight notification to captain
                 "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": [
-                "HORSES IN AIR STALLS, GROOM ON BOARD",
-                "HEATED AND VENTILATED HOLD",
-                "HEAVIEST PIECE 572 KG, 300x110x230 CM"
-              ]
+              "handlingRemark": "horses_with_groom",
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": "heated_and_ventilated"
             },
             {
               "awb": "172-62001111",
@@ -94,7 +93,10 @@ Feature: Get flight notification to captain
                 "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["HEAVIEST PIECE 1050 KG, 300x130x150 CM"]
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "172-62001122",
@@ -112,7 +114,10 @@ Feature: Get flight notification to captain
                 "lengthCm": 220
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 179 KG, 220x70x60 CM"]
+              "handlingRemark": "coffin_apart_from_foodstuffs",
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "172-62001166",
@@ -125,7 +130,13 @@ Feature: Get flight notification to captain
               "description": "Vaccine doses, 2-8C",
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["KEEP AT +2 TO +8 °C", "ACTIVE CONTAINER"]
+              "handlingRemark": null,
+              "temperature": {
+                "maxC": 8,
+                "minC": 2
+              },
+              "temperatureSolution": "active",
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [
@@ -150,7 +161,6 @@ Feature: Get flight notification to captain
               "netPerPackage": "5 L",
               "subsidiaryRisk": null,
               "classOrDivision": "3",
-              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": false,
               "properShippingName": "Paint"
@@ -176,13 +186,27 @@ Feature: Get flight notification to captain
               "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
               "classOrDivision": "9",
-              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": true,
               "properShippingName": "Lithium ion batteries"
-            },
+            }
+          ],
+          "header": {
+            "flightDate": "2026-06-02",
+            "preparedBy": "Jana Brandt",
+            "aircraftType": "B74F",
+            "flightNumber": "CV2020",
+            "operatorName": "Cargolux Airlines International S.A.",
+            "stationOfLoading": "FRA",
+            "loadingSupervisor": "Hennes Umlauft",
+            "emergencyTelephone": "+44 20 7946 0588",
+            "aircraftRegistration": "LX-VCA",
+            "stationOfLoadingCity": "Frankfurt"
+          },
+          "specialPassengers": [],
+          "dryIce": [
             {
-              "awb": null,
+              "kg": 900,
               "drill": {
                 "ercCode": "9A",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
@@ -190,26 +214,11 @@ Feature: Get flight notification to captain
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
                 "riskToAircraftAndOccupants": "Depends on the substance; may affect instruments, air quality or the health of anyone exposed."
               },
-              "uldId": null,
-              "impCode": "ICE",
               "packages": 41,
-              "position": null,
-              "unNumber": "1845",
               "compartment": 1,
-              "hazardClass": "9",
-              "radioactive": null,
-              "packingGroup": null,
-              "netPerPackage": "900 kg",
-              "subsidiaryRisk": null,
-              "classOrDivision": "9",
-              "quantityIsTotal": true,
-              "unloadingAirport": "JFK",
-              "cargoAircraftOnly": false,
-              "properShippingName": "Dry ice"
+              "unloadingAirport": "JFK"
             }
-          ],
-          "header": null,
-          "specialPassengers": []
+          ]
         },
         "changes": null
       }
@@ -287,11 +296,10 @@ Feature: Get flight notification to captain
                 "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": [
-                "HORSES IN AIR STALLS, GROOM ON BOARD",
-                "HEATED AND VENTILATED HOLD",
-                "HEAVIEST PIECE 572 KG, 300x110x230 CM"
-              ]
+              "handlingRemark": "horses_with_groom",
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": "heated_and_ventilated"
             },
             {
               "awb": "172-62001111",
@@ -309,7 +317,10 @@ Feature: Get flight notification to captain
                 "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["HEAVIEST PIECE 1050 KG, 300x130x150 CM"]
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "172-62001122",
@@ -327,7 +338,10 @@ Feature: Get flight notification to captain
                 "lengthCm": 220
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 179 KG, 220x70x60 CM"]
+              "handlingRemark": "coffin_apart_from_foodstuffs",
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "172-62001166",
@@ -340,7 +354,13 @@ Feature: Get flight notification to captain
               "description": "Vaccine doses, 2-8C",
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["KEEP AT +2 TO +8 °C", "ACTIVE CONTAINER"]
+              "handlingRemark": null,
+              "temperature": {
+                "maxC": 8,
+                "minC": 2
+              },
+              "temperatureSolution": "active",
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [
@@ -365,7 +385,6 @@ Feature: Get flight notification to captain
               "netPerPackage": "5 L",
               "subsidiaryRisk": null,
               "classOrDivision": "3",
-              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": false,
               "properShippingName": "Paint"
@@ -391,13 +410,27 @@ Feature: Get flight notification to captain
               "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
               "classOrDivision": "9",
-              "quantityIsTotal": false,
               "unloadingAirport": "JFK",
               "cargoAircraftOnly": true,
               "properShippingName": "Lithium ion batteries"
-            },
+            }
+          ],
+          "header": {
+            "flightDate": "2026-06-02",
+            "preparedBy": "Jana Brandt",
+            "aircraftType": "B74F",
+            "flightNumber": "CV2020",
+            "operatorName": "Cargolux Airlines International S.A.",
+            "stationOfLoading": "FRA",
+            "loadingSupervisor": "Hennes Umlauft",
+            "emergencyTelephone": "+44 20 7946 0588",
+            "aircraftRegistration": "LX-VCA",
+            "stationOfLoadingCity": "Frankfurt"
+          },
+          "specialPassengers": [],
+          "dryIce": [
             {
-              "awb": null,
+              "kg": 900,
               "drill": {
                 "ercCode": "9A",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
@@ -405,26 +438,11 @@ Feature: Get flight notification to captain
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
                 "riskToAircraftAndOccupants": "Depends on the substance; may affect instruments, air quality or the health of anyone exposed."
               },
-              "uldId": null,
-              "impCode": "ICE",
               "packages": 41,
-              "position": null,
-              "unNumber": "1845",
               "compartment": 1,
-              "hazardClass": "9",
-              "radioactive": null,
-              "packingGroup": null,
-              "netPerPackage": "900 kg",
-              "subsidiaryRisk": null,
-              "classOrDivision": "9",
-              "quantityIsTotal": true,
-              "unloadingAirport": "JFK",
-              "cargoAircraftOnly": false,
-              "properShippingName": "Dry ice"
+              "unloadingAirport": "JFK"
             }
-          ],
-          "header": null,
-          "specialPassengers": []
+          ]
         },
         "changes": null
       }
@@ -474,8 +492,11 @@ Feature: Get flight notification to captain
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
               "pieces": 56,
-              "supplementaryInformation": [],
-              "uldId": "AKE48203AA"
+              "uldId": "AKE48203AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "001-48203746",
@@ -492,13 +513,28 @@ Feature: Get flight notification to captain
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
-              "uldId": "AKE48204AA"
+              "uldId": "AKE48204AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [],
-          "header": null,
-          "specialPassengers": []
+          "header": {
+            "flightDate": "2026-06-02",
+            "preparedBy": "Berat Gamper",
+            "aircraftType": "B77W",
+            "flightNumber": "AA2018",
+            "operatorName": "American Airlines, Inc.",
+            "stationOfLoading": "FRA",
+            "loadingSupervisor": "Frau Eveline Waschbüsch",
+            "emergencyTelephone": "+44 20 7946 0639",
+            "aircraftRegistration": "N78881",
+            "stationOfLoadingCity": "Frankfurt"
+          },
+          "specialPassengers": [],
+          "dryIce": []
         },
         "changes": null
       }
@@ -565,8 +601,11 @@ Feature: Get flight notification to captain
               "heaviestPiece": null,
               "unloadingAirport": "JFK",
               "pieces": 56,
-              "supplementaryInformation": [],
-              "uldId": "AKE48203AA"
+              "uldId": "AKE48203AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             },
             {
               "awb": "001-48203746",
@@ -583,13 +622,28 @@ Feature: Get flight notification to captain
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
-              "uldId": "AKE48204AA"
+              "uldId": "AKE48204AA",
+              "handlingRemark": null,
+              "temperature": null,
+              "temperatureSolution": null,
+              "holdCondition": null
             }
           ],
           "dangerousGoods": [],
-          "header": null,
-          "specialPassengers": []
+          "header": {
+            "flightDate": "2026-06-02",
+            "preparedBy": "Berat Gamper",
+            "aircraftType": "B77W",
+            "flightNumber": "AA2018",
+            "operatorName": "American Airlines, Inc.",
+            "stationOfLoading": "FRA",
+            "loadingSupervisor": "Frau Eveline Waschbüsch",
+            "emergencyTelephone": "+44 20 7946 0639",
+            "aircraftRegistration": "N78881",
+            "stationOfLoadingCity": "Frankfurt"
+          },
+          "specialPassengers": [],
+          "dryIce": []
         },
         "changes": null
       }
@@ -599,6 +653,19 @@ Feature: Get flight notification to captain
   Scenario: A flight whose loadsheet has not been written reports no notification
     Given I am signed in as "operations"
     When I send a "GET" request to "/api/v1/flight/c0e83544-cefd-41c8-9c60-aadfaaf08590/notoc"
+    Then the response status should be 404
+    And the response body should contain:
+      """json
+      {
+        "statusCode": 404,
+        "error": "Not Found",
+        "message": "Flight has no notification to captain yet. It is issued from the preliminary loadsheet."
+      }
+      """
+
+  Scenario: A notification issued on the form before this one reads as not issued
+    Given I am signed in as "operations"
+    When I send a "GET" request to "/api/v1/flight/2fbd8bb1-6d47-4e35-9f0a-5c2e17a4d380/notoc?stage=final"
     Then the response status should be 404
     And the response body should contain:
       """json

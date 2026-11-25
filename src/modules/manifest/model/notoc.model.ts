@@ -3,11 +3,14 @@ import { NotocChanges } from './notoc-delta';
 import { CargoDeck } from './hold-layout.model';
 import {
   ERC_PATTERN,
+  ExplosiveDivision,
+  HandlingRemark,
   HazardClass,
   HeaviestPiece,
   PackingGroup,
   SpecialHandlingCode,
   TemperatureRegime,
+  TemperatureSolution,
 } from './commodity.model';
 import { ColdChainRisk } from './cold-chain';
 import { PassengerSpecialService } from './manifest.model';
@@ -17,6 +20,7 @@ export enum NotocStageName {
   Final = 'final',
 }
 
+export const NOTOC_FORM_VERSION = 2;
 export const NO_DANGEROUS_GOODS_STATEMENT = 'No dangerous goods loaded.';
 export const DANGEROUS_GOODS_STATEMENT =
   'Dangerous goods loaded as listed below.';
@@ -72,12 +76,10 @@ export class NotocRadioactive {
 
   @ApiProperty({
     description:
-      'Transport index per package; null for a category I-WHITE package, which carries none',
+      'Transport index per package; 0 for a category I-WHITE package',
     example: 0.6,
-    nullable: true,
-    type: Number,
   })
-  transportIndex!: number | null;
+  transportIndex!: number;
 }
 
 export class NotocHeader {
@@ -127,14 +129,8 @@ export class NotocHeader {
 }
 
 export class NotocDangerousGoods {
-  @ApiProperty({
-    description:
-      'Air waybill; null on a dry ice line, which totals the dry ice in one compartment across waybills',
-    example: '020-53729071',
-    nullable: true,
-    type: String,
-  })
-  awb!: string | null;
+  @ApiProperty({ example: '020-53729071' })
+  awb!: string;
 
   @ApiProperty({ example: 'Paint' })
   properShippingName!: string;
@@ -148,9 +144,10 @@ export class NotocDangerousGoods {
   @ApiProperty({
     description:
       'Class or division as the form prints it: the division and compatibility group for explosives, the class otherwise',
-    example: '1.4S',
+    enum: [...Object.values(ExplosiveDivision), ...Object.values(HazardClass)],
+    example: ExplosiveDivision.Division14S,
   })
-  classOrDivision!: string;
+  classOrDivision!: ExplosiveDivision | HazardClass;
 
   @ApiProperty({ enum: HazardClass, nullable: true })
   subsidiaryRisk!: HazardClass | null;
@@ -165,13 +162,6 @@ export class NotocDangerousGoods {
   netPerPackage!: string;
 
   @ApiProperty({
-    description:
-      'Whether the quantity is the total for the compartment rather than per package, as on a dry ice line',
-    example: false,
-  })
-  quantityIsTotal!: boolean;
-
-  @ApiProperty({
     description: 'Radioactive package category and transport index',
     nullable: true,
     type: NotocRadioactive,
@@ -183,9 +173,8 @@ export class NotocDangerousGoods {
       'IATA dangerous goods handling code printed in the Code column',
     enum: SpecialHandlingCode,
     example: SpecialHandlingCode.FlammableLiquid,
-    nullable: true,
   })
-  impCode!: SpecialHandlingCode | null;
+  impCode!: SpecialHandlingCode;
 
   @ApiProperty({
     description:
@@ -311,16 +300,47 @@ export class NotocChangeSet {
   deadloadChangeKg!: number;
 }
 
-export enum HoldCondition {
-  HeatedAndVentilated = 'HEATED AND VENTILATED HOLD',
-  Heated = 'HEATED HOLD',
-  Ventilated = 'VENTILATED HOLD',
+export class NotocDryIce {
+  @ApiProperty({
+    description:
+      'Compartment the dry ice is loaded in; null on an aircraft whose type carries no curated hold data',
+    example: 1,
+    nullable: true,
+    type: Number,
+  })
+  compartment!: number | null;
+
+  @ApiProperty({
+    description: 'Packages refrigerated with dry ice in the compartment',
+    example: 41,
+  })
+  packages!: number;
+
+  @ApiProperty({
+    description: 'Dry ice in the compartment, totalled across air waybills',
+    example: 900,
+  })
+  kg!: number;
+
+  @ApiProperty({ example: 'JFK' })
+  unloadingAirport!: string;
+
+  @ApiProperty({ type: NotocDrill })
+  drill!: NotocDrill;
 }
 
-export enum SpecialLoadRemark {
-  SecuredStowage = 'SECURED STOWAGE',
-  ActiveContainer = 'ACTIVE CONTAINER',
-  PackedInDryIce = 'PACKED IN DRY ICE',
+export enum HoldCondition {
+  HeatedAndVentilated = 'heated_and_ventilated',
+  Heated = 'heated',
+  Ventilated = 'ventilated',
+}
+
+export class NotocTemperatureRange {
+  @ApiProperty({ example: 2 })
+  minC!: number;
+
+  @ApiProperty({ example: 8 })
+  maxC!: number;
 }
 
 export class NotocSpecialLoad {
@@ -330,23 +350,40 @@ export class NotocSpecialLoad {
   @ApiProperty({ example: 'Live tropical fish, boxed' })
   description!: string;
 
+  @ApiProperty({ description: 'Number of packages loaded', example: 12 })
+  pieces!: number;
+
   @ApiProperty({
-    description:
-      'Number of packages loaded; null on a notification issued before packages were recorded',
-    example: 12,
+    description: 'How the load must be handled, where it needs telling',
+    enum: HandlingRemark,
+    example: HandlingRemark.FishInOxygenatedBags,
     nullable: true,
-    type: Number,
   })
-  pieces!: number | null;
+  handlingRemark!: HandlingRemark | null;
+
+  @ApiProperty({
+    description: 'Temperature the load must be kept at, where it has one',
+    nullable: true,
+    type: NotocTemperatureRange,
+  })
+  temperature!: NotocTemperatureRange | null;
 
   @ApiProperty({
     description:
-      'Supplementary information the form prints for the load, one line each: handling remarks, temperature, hold conditions and the heaviest piece',
-    example: ['LIVE FISH IN OXYGENATED BAGS', 'KEEP AT +22 TO +26 °C'],
-    isArray: true,
-    type: String,
+      'What keeps the load at its temperature, where it needs keeping',
+    enum: TemperatureSolution,
+    example: TemperatureSolution.Active,
+    nullable: true,
   })
-  supplementaryInformation!: string[];
+  temperatureSolution!: TemperatureSolution | null;
+
+  @ApiProperty({
+    description: 'Hold the load needs, where it needs heating or ventilation',
+    enum: HoldCondition,
+    example: HoldCondition.HeatedAndVentilated,
+    nullable: true,
+  })
+  holdCondition!: HoldCondition | null;
 
   @ApiProperty({
     description: 'Unit load device the load is in; null for loose load',
@@ -475,16 +512,15 @@ export class NotocLoadSummary {
   tightestConnectionMinutes!: number | null;
 }
 
-export enum SpecialPassengerRemark {
-  NonSpillableBattery = 'NON-SPILLABLE BATTERY INSTALLED',
-  SpillableBattery = 'SPILLABLE BATTERY INSTALLED, AID STOWED UPRIGHT',
-  MedicalEscort = 'STRETCHER, MEDICAL ESCORT ON BOARD',
-  MedicalClearance = 'MEDICAL CLEARANCE GIVEN',
-  EscortsAlongside = 'ESCORTS SEATED ALONGSIDE',
-  DocumentsHeldByCrew = 'TRAVEL DOCUMENTS HELD BY CREW',
-  CabinCrewCare = 'IN THE CARE OF CABIN CREW',
-  OnLap = 'ON LAP',
-  UnderSeat = 'IN CONTAINER UNDER SEAT',
+export class NotocMobilityAid {
+  @ApiProperty({
+    description:
+      'Compartment the aid travels in: the aftmost one holding baggage. Null on an aircraft whose type carries no curated hold data.',
+    example: 5,
+    nullable: true,
+    type: Number,
+  })
+  compartment!: number | null;
 }
 
 export class NotocSpecialPassenger {
@@ -499,29 +535,23 @@ export class NotocSpecialPassenger {
 
   @ApiProperty({
     description:
-      'What the commander needs to know, one line each, such as where a mobility aid and its battery are carried',
-    example: [
-      'LITHIUM BATTERY REMOVED, IN CABIN AT 34C',
-      'MOBILITY AID IN HOLD, CPT 5',
-    ],
-    isArray: true,
-    type: String,
+      'Battery-powered mobility aid carried in the hold, for a passenger travelling with one',
+    nullable: true,
+    type: NotocMobilityAid,
   })
-  remarks!: string[];
+  mobilityAid!: NotocMobilityAid | null;
 }
 
 export class NotocDocument {
   @ApiProperty({
     description:
-      'Form header: flight, port of loading, aircraft and the people who prepared and certified it. Null on a notification issued before the header was recorded.',
-    nullable: true,
+      'Form header: flight, port of loading, aircraft and the people who prepared and certified it',
     type: NotocHeader,
   })
-  header!: NotocHeader | null;
+  header!: NotocHeader;
 
   @ApiProperty({
-    description:
-      'Special category passengers aboard, by seat. Empty on a notification issued before they were recorded.',
+    description: 'Special category passengers aboard, by seat',
     type: NotocSpecialPassenger,
     isArray: true,
   })
@@ -536,6 +566,13 @@ export class NotocDocument {
 
   @ApiProperty({ type: NotocDangerousGoods, isArray: true })
   dangerousGoods!: NotocDangerousGoods[];
+
+  @ApiProperty({
+    description: 'Dry ice aboard, totalled per compartment',
+    type: NotocDryIce,
+    isArray: true,
+  })
+  dryIce!: NotocDryIce[];
 
   @ApiProperty({ type: NotocSpecialLoad, isArray: true })
   specialLoads!: NotocSpecialLoad[];

@@ -874,7 +874,7 @@
       "solution": "passive",
       "enduranceHours": 8
     },
-    "notocRemark": "TIME-CRITICAL, UNLOAD FIRST"
+    "notocRemark": "time_critical_unload_first"
   },
   {
     "id": "biological-cat-b",
@@ -1071,7 +1071,7 @@
       "widthCm": 110,
       "heightCm": 230
     },
-    "notocRemark": "HORSES IN AIR STALLS, GROOM ON BOARD"
+    "notocRemark": "horses_with_groom"
   },
   {
     "id": "day-old-chicks",
@@ -1110,7 +1110,7 @@
       "requiresHeated": true,
       "requiresVentilated": true
     },
-    "notocRemark": "DAY-OLD CHICKS IN VENTILATED BOXES"
+    "notocRemark": "chicks_in_ventilated_boxes"
   },
   {
     "id": "hatching-eggs",
@@ -1149,7 +1149,7 @@
       "requiresHeated": true,
       "requiresVentilated": true
     },
-    "notocRemark": "HATCHING EGGS, FRAGILE"
+    "notocRemark": "hatching_eggs_fragile"
   },
   {
     "id": "tropical-fish",
@@ -1195,7 +1195,7 @@
       "solution": "passive",
       "enduranceHours": 30
     },
-    "notocRemark": "LIVE FISH IN OXYGENATED BAGS"
+    "notocRemark": "fish_in_oxygenated_bags"
   },
   {
     "id": "breeding-cattle",
@@ -1240,7 +1240,7 @@
       "widthCm": 120,
       "heightCm": 200
     },
-    "notocRemark": "CATTLE IN AIR STALLS, ATTENDANT ON BOARD"
+    "notocRemark": "cattle_with_attendant"
   },
   {
     "id": "pets-in-hold",
@@ -1279,7 +1279,7 @@
       "requiresHeated": true,
       "requiresVentilated": true
     },
-    "notocRemark": "PETS IN IATA KENNELS"
+    "notocRemark": "pets_in_kennels"
   },
   {
     "id": "zoo-transfer",
@@ -1324,7 +1324,7 @@
       "widthCm": 180,
       "heightCm": 200
     },
-    "notocRemark": "ZOO ANIMAL IN TRANSPORT CRATE, KEEPER ON BOARD"
+    "notocRemark": "zoo_animal_with_keeper"
   },
   {
     "id": "honey-bees",
@@ -1360,7 +1360,7 @@
       "requiresHeated": false,
       "requiresVentilated": true
     },
-    "notocRemark": "LIVE BEES IN VENTILATED PACKAGES"
+    "notocRemark": "bees_in_ventilated_packages"
   },
   {
     "id": "semiconductor-wafers",
@@ -3717,7 +3717,7 @@
       "widthCm": 70,
       "heightCm": 60
     },
-    "notocRemark": "COFFIN, STOW APART FROM FOODSTUFFS"
+    "notocRemark": "coffin_apart_from_foodstuffs"
   },
   {
     "id": "sporting-weapons",

@@ -23,7 +23,7 @@ export class IssueNotocCommand {
     public readonly stage: NotocStageName,
     public readonly unloadingAirport: string,
     public readonly issuedAt: Date,
-    public readonly header: NotocHeaderContext | null = null,
+    public readonly header: NotocHeaderContext,
   ) {}
 }
 
@@ -47,7 +47,7 @@ export class IssueNotocHandler implements ICommandHandler<IssueNotocCommand> {
       composeNotoc(
         manifest,
         unloadingAirport,
-        header ? notocHeaderFor(header, issuedAt) : null,
+        notocHeaderFor(header, issuedAt),
         passengers,
       ) as unknown as Prisma.InputJsonValue,
     );

@@ -2,8 +2,12 @@ import { composeNotoc } from './notoc';
 import { PassengerSpecialService, PassengerStatus } from './manifest.model';
 import {
   DANGEROUS_GOODS_STATEMENT,
+  HoldCondition,
   NO_DANGEROUS_GOODS_STATEMENT,
+  NotocDocument,
+  NotocHeader,
 } from './notoc.model';
+import { NotifiablePassenger } from './notoc-passengers';
 import {
   CargoContentClassName,
   CargoShipmentEntry,
@@ -18,12 +22,34 @@ import { TransferRole } from './shipment-journey';
 import { ColdChainRisk, ColdChainAssessment } from './cold-chain';
 import {
   DangerousGoodsProfile,
+  ExplosiveDivision,
+  HandlingRemark,
   HazardClass,
   PackingGroup,
   SpecialHandlingCode,
   TemperatureRegime,
   TemperatureSolution,
 } from './commodity.model';
+
+const HEADER: NotocHeader = {
+  operatorName: 'American Airlines, Inc.',
+  flightNumber: 'AA2010',
+  flightDate: '2026-06-02',
+  stationOfLoading: 'FRA',
+  stationOfLoadingCity: 'Frankfurt',
+  aircraftRegistration: 'N78881',
+  aircraftType: 'B77W',
+  preparedBy: 'Cameron Goldner',
+  loadingSupervisor: 'Ettie Maggio',
+  emergencyTelephone: '+44 20 7946 0639',
+};
+
+function compose(
+  load: FlightCargoManifest,
+  passengers: NotifiablePassenger[] = [],
+): NotocDocument {
+  return composeNotoc(load, 'JFK', HEADER, passengers);
+}
 
 function shipment(
   overrides: Partial<CargoShipmentEntry> = {},
@@ -137,14 +163,14 @@ const chilled: ColdChainAssessment = {
 
 describe('composeNotoc', () => {
   it('states in as many words that nothing hazardous is aboard', () => {
-    const document = composeNotoc(manifest([unit([shipment()])]), 'JFK');
+    const document = compose(manifest([unit([shipment()])]));
 
     expect(document.statement).toBe(NO_DANGEROUS_GOODS_STATEMENT);
     expect(document.dangerousGoods).toEqual([]);
   });
 
   it('reports a dangerous goods shipment in full, with its drill', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -157,7 +183,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.statement).toBe(DANGEROUS_GOODS_STATEMENT);
@@ -172,7 +197,6 @@ describe('composeNotoc', () => {
         packingGroup: PackingGroup.Medium,
         packages: 24,
         netPerPackage: '5 L',
-        quantityIsTotal: false,
         radioactive: null,
         impCode: SpecialHandlingCode.FlammableLiquid,
         uldId: 'AKE48201AA',
@@ -192,7 +216,7 @@ describe('composeNotoc', () => {
   });
 
   it('keeps a dangerous goods shipment out of the special loads section', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -205,7 +229,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.dangerousGoods).toHaveLength(1);
@@ -213,7 +236,7 @@ describe('composeNotoc', () => {
   });
 
   it('reports a notifiable load that is not dangerous goods', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -225,7 +248,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.specialLoads).toHaveLength(1);
@@ -239,14 +261,14 @@ describe('composeNotoc', () => {
     });
   });
 
-  it('carries no header unless one is given', () => {
-    const document = composeNotoc(manifest([unit([shipment()])]), 'JFK');
+  it('carries the header it is given', () => {
+    const document = compose(manifest([unit([shipment()])]));
 
-    expect(document.header).toBeNull();
+    expect(document.header).toEqual(HEADER);
   });
 
   it('notifies the special category passengers it is given', () => {
-    const document = composeNotoc(manifest([unit([shipment()])]), 'JFK', null, [
+    const document = compose(manifest([unit([shipment()])]), [
       {
         designator: '14C',
         status: PassengerStatus.Boarded,
@@ -258,13 +280,55 @@ describe('composeNotoc', () => {
       {
         seat: '14C',
         ssr: PassengerSpecialService.Stretcher,
-        remarks: ['STRETCHER, MEDICAL ESCORT ON BOARD'],
+        mobilityAid: null,
       },
     ]);
   });
 
+  it('prints the division of an explosive and the code its division takes', () => {
+    const document = compose(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'ammunition-sporting',
+            shc: [],
+            dangerousGoods: {
+              ...paint,
+              unNumber: '0012',
+              hazardClass: HazardClass.Explosives,
+              division: ExplosiveDivision.Division14S,
+              ercCode: '1L',
+            },
+          }),
+        ]),
+      ]),
+    );
+
+    expect(document.dangerousGoods[0]).toMatchObject({
+      classOrDivision: ExplosiveDivision.Division14S,
+      impCode: SpecialHandlingCode.ExplosivesDivision14S,
+    });
+  });
+
+  it('codes dangerous goods by their class where the shipment names no code', () => {
+    const document = compose(
+      manifest([
+        unit([
+          shipment({
+            shc: [SpecialHandlingCode.DangerousGoods],
+            dangerousGoods: { ...paint, hazardClass: HazardClass.Corrosive },
+          }),
+        ]),
+      ]),
+    );
+
+    expect(document.dangerousGoods[0].impCode).toBe(
+      SpecialHandlingCode.Corrosive,
+    );
+  });
+
   it('prints an explosive by its division and compatibility group', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -279,7 +343,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.dangerousGoods[0]).toMatchObject({
@@ -289,7 +352,7 @@ describe('composeNotoc', () => {
   });
 
   it('leaves dangerous goods the notification does not require off it', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -304,7 +367,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.dangerousGoods).toEqual([]);
@@ -312,7 +374,7 @@ describe('composeNotoc', () => {
   });
 
   it('reports a radioactive package by category and transport index', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -327,7 +389,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     const { radioactive } = document.dangerousGoods[0];
@@ -335,6 +396,30 @@ describe('composeNotoc', () => {
     expect(['II-YELLOW', 'III-YELLOW']).toContain(radioactive!.category);
     expect(radioactive!.transportIndex).toBeGreaterThan(0);
     expect(radioactive!.transportIndex).toBeLessThanOrEqual(3);
+  });
+
+  it('gives a category I-WHITE package a transport index of nought', () => {
+    const document = compose(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'radiopharmaceuticals',
+            shc: [SpecialHandlingCode.RadioactiveWhite],
+            dangerousGoods: {
+              ...paint,
+              unNumber: '2915',
+              hazardClass: HazardClass.Radioactive,
+              ercCode: '7L',
+            },
+          }),
+        ]),
+      ]),
+    );
+
+    expect(document.dangerousGoods[0]).toMatchObject({
+      radioactive: { category: 'I-WHITE', transportIndex: 0 },
+      impCode: SpecialHandlingCode.RadioactiveWhite,
+    });
   });
 
   it('gives the same radioactive package the same transport index every time', () => {
@@ -349,19 +434,19 @@ describe('composeNotoc', () => {
       ]),
     ]);
 
-    expect(composeNotoc(load, 'JFK').dangerousGoods[0].radioactive).toEqual(
-      composeNotoc(load, 'JFK').dangerousGoods[0].radioactive,
+    expect(compose(load).dangerousGoods[0].radioactive).toEqual(
+      compose(load).dangerousGoods[0].radioactive,
     );
   });
 
-  it('totals dry ice per compartment on one line without a waybill', () => {
+  it('totals dry ice per compartment, apart from the dangerous goods lines', () => {
     const dryIce = {
       ...paint,
       unNumber: '1845',
       hazardClass: HazardClass.Miscellaneous,
       ercCode: '9A',
     };
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -394,31 +479,30 @@ describe('composeNotoc', () => {
           { positionDesignator: '31L', compartment: 3 },
         ),
       ]),
-      'JFK',
     );
 
-    expect(document.dangerousGoods).toEqual([
-      expect.objectContaining({
-        awb: null,
-        unNumber: '1845',
-        packages: 6,
-        netPerPackage: '120 kg',
-        quantityIsTotal: true,
-        impCode: SpecialHandlingCode.DryIce,
-        position: null,
+    expect(document.dangerousGoods).toEqual([]);
+    expect(document.statement).toBe(DANGEROUS_GOODS_STATEMENT);
+    expect(document.dryIce).toEqual([
+      {
         compartment: 1,
-      }),
-      expect.objectContaining({
-        awb: null,
-        packages: 10,
-        netPerPackage: '30 kg',
+        packages: 6,
+        kg: 120,
+        unloadingAirport: 'JFK',
+        drill: expect.objectContaining({ ercCode: '9A' }),
+      },
+      {
         compartment: 3,
-      }),
+        packages: 10,
+        kg: 30,
+        unloadingAirport: 'JFK',
+        drill: expect.objectContaining({ ercCode: '9A' }),
+      },
     ]);
   });
 
   it('reports what the form asks of a special load', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -430,21 +514,20 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.specialLoads[0]).toMatchObject({
       pieces: 2,
       uldId: 'AKE48201AA',
-      supplementaryInformation: [
-        'PETS IN IATA KENNELS',
-        'HEATED AND VENTILATED HOLD',
-      ],
+      handlingRemark: HandlingRemark.PetsInKennels,
+      temperature: null,
+      temperatureSolution: null,
+      holdCondition: HoldCondition.HeatedAndVentilated,
     });
   });
 
   it('states the temperature a perishable load must be kept at', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -454,16 +537,18 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
-    expect(document.specialLoads[0].supplementaryInformation).toEqual([
-      'KEEP AT +2 TO +8 °C',
-    ]);
+    expect(document.specialLoads[0]).toMatchObject({
+      handlingRemark: null,
+      temperature: { minC: 2, maxC: 8 },
+      temperatureSolution: chilled.solution,
+      holdCondition: null,
+    });
   });
 
-  it('prints the heaviest piece among the supplementary information', () => {
-    const document = composeNotoc(
+  it('reports the heaviest piece of a heavy load', () => {
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -474,16 +559,18 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
-    expect(document.specialLoads[0].supplementaryInformation).toContain(
-      'HEAVIEST PIECE 600 KG, 300x110x230 CM',
-    );
+    expect(document.specialLoads[0].heaviestPiece).toEqual({
+      kg: 600,
+      lengthCm: 300,
+      widthCm: 110,
+      heightCm: 230,
+    });
   });
 
   it('never reports a heaviest piece heavier than the shipment allows', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -494,7 +581,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.specialLoads[0].heaviestPiece).toEqual({
@@ -506,13 +592,13 @@ describe('composeNotoc', () => {
   });
 
   it('leaves ordinary freight out of the special loads section', () => {
-    const document = composeNotoc(manifest([unit([shipment()])]), 'JFK');
+    const document = compose(manifest([unit([shipment()])]));
 
     expect(document.specialLoads).toEqual([]);
   });
 
   it('reports the largest piece of an outsized load', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -522,7 +608,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.specialLoads[0].heaviestPiece).not.toBeNull();
@@ -530,7 +615,7 @@ describe('composeNotoc', () => {
   });
 
   it('carries the cold chain assessment and marks it advisory', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({
@@ -545,7 +630,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.coldChain).toEqual([
@@ -562,7 +646,7 @@ describe('composeNotoc', () => {
   });
 
   it('counts containers, pallets and loose lots separately', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([shipment()], { uldType: UldType.Ld3, positionDesignator: '11L' }),
         unit([shipment()], {
@@ -577,7 +661,6 @@ describe('composeNotoc', () => {
           tareKg: 0,
         }),
       ]),
-      'JFK',
     );
 
     expect(document.summary.containerCount).toBe(1);
@@ -586,7 +669,7 @@ describe('composeNotoc', () => {
   });
 
   it('leaves a unit emptied by offloading out of the unit counts', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([shipment()]),
         unit([], {
@@ -596,7 +679,6 @@ describe('composeNotoc', () => {
           uldCode: 'AKE48202AA',
         }),
       ]),
-      'JFK',
     );
 
     expect(document.summary.containerCount).toBe(1);
@@ -611,7 +693,7 @@ describe('composeNotoc', () => {
     ]);
     load.baggageKg = 2000;
 
-    const document = composeNotoc(load, 'JFK');
+    const document = compose(load);
 
     expect(document.summary.beyondCount).toBe(2);
     expect(document.summary.tightestConnectionMinutes).toBe(95);
@@ -619,7 +701,7 @@ describe('composeNotoc', () => {
   });
 
   it('describes only what is still loaded', () => {
-    const document = composeNotoc(
+    const document = compose(
       manifest([
         unit([
           shipment({ shc: [SpecialHandlingCode.LiveAnimals] }),
@@ -630,7 +712,6 @@ describe('composeNotoc', () => {
           }),
         ]),
       ]),
-      'JFK',
     );
 
     expect(document.specialLoads).toHaveLength(1);
@@ -650,7 +731,7 @@ describe('composeNotoc', () => {
       },
     ];
 
-    expect(composeNotoc(load, 'JFK').summary.compartments).toEqual([
+    expect(compose(load).summary.compartments).toEqual([
       { compartment: 1, deck: CargoDeck.Lower, weightKg: 1582, dryIceKg: 120 },
     ]);
   });

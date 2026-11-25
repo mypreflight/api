@@ -14,7 +14,7 @@ export type DepartureContext = {
   country: string;
   continent: Continent;
   month: number;
-  destinationContinent?: Continent;
+  destinationContinent: Continent;
 };
 
 export type OfferedCommodity = {
@@ -100,13 +100,9 @@ export function offeredCommodities(
 
 export function demandMultiplier(
   commodity: Commodity,
-  destination: Continent | undefined,
+  destination: Continent,
 ): number {
-  if (destination === undefined || commodity.demand.includes(destination)) {
-    return 1;
-  }
-
-  return OFF_DEMAND_MULTIPLIER;
+  return commodity.demand.includes(destination) ? 1 : OFF_DEMAND_MULTIPLIER;
 }
 
 export function selectCommodities(
