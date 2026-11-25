@@ -9,6 +9,7 @@ import {
 } from './cargo-manifest.model';
 import { CargoDeck, HoldVariant } from './hold-layout.model';
 import { DangerousGoodsProfile, SpecialHandlingCode } from './commodity.model';
+import { findCommodityById } from '../data/cargo-commodities';
 import { conflictingPairsWithin, dryIceKgOf } from './segregation.policy';
 import { ColdChainAssessment, ColdChainRisk } from './cold-chain';
 import { LoadUnitKind } from './cargo-packing';
@@ -209,7 +210,11 @@ function compartmentLoadOf(rows: CargoUnitRow[]): CompartmentLoad[] {
     const dryIceKg = row.shipments.reduce(
       (sum, shipment) =>
         sum +
-        dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg),
+        dryIceKgOf(shipment.shc as SpecialHandlingCode[], shipment.grossKg, {
+          pieces: shipment.pieces,
+          kgPerPiece: findCommodityById(shipment.commodityId)?.temperature
+            ?.dryIceKgPerPiece,
+        }),
       0,
     );
 

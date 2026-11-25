@@ -1734,6 +1734,18 @@ Feature: Update flight preliminary loadsheet
             "deadloadKg": 18000,
             "beyondCount": "@any",
             "tightestConnectionMinutes": "@any"
+          },
+          "header": {
+            "operatorName": "American Airlines, Inc.",
+            "flightNumber": "AA2010",
+            "flightDate": "2026-06-02",
+            "stationOfLoading": "JFK",
+            "stationOfLoadingCity": "New York",
+            "aircraftRegistration": "N78881",
+            "aircraftType": "B77W",
+            "preparedBy": "@any",
+            "loadingSupervisor": "@any",
+            "emergencyTelephone": "@any"
           }
         },
         "changes": null

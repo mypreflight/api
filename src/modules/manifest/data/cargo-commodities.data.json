@@ -203,7 +203,7 @@
     "id": "snow-crab",
     "name": "Snow crab",
     "descriptions": ["Frozen snow crab sections", "Snow crab clusters"],
-    "shc": ["PER", "PES", "FRO"],
+    "shc": ["PER", "PES", "FRO", "ICE"],
     "densityKgM3": 500,
     "piece": {
       "minKg": 20,
@@ -237,8 +237,9 @@
       "regime": "FRO",
       "minC": -22,
       "maxC": -18,
-      "solution": "passive",
-      "enduranceHours": 40
+      "solution": "dry_ice",
+      "enduranceHours": 40,
+      "dryIceKgPerPiece": 3
     }
   },
   {
@@ -872,7 +873,8 @@
       "maxC": 8,
       "solution": "passive",
       "enduranceHours": 8
-    }
+    },
+    "notocRemark": "TIME-CRITICAL, UNLOAD FIRST"
   },
   {
     "id": "biological-cat-b",
@@ -926,7 +928,8 @@
       "packingGroup": null,
       "netPerPackage": "1 L",
       "cargoAircraftOnly": false,
-      "ercCode": "11Y"
+      "ercCode": "11Y",
+      "notocExempt": true
     }
   },
   {
@@ -1067,7 +1070,8 @@
       "lengthCm": 300,
       "widthCm": 110,
       "heightCm": 230
-    }
+    },
+    "notocRemark": "HORSES IN AIR STALLS, GROOM ON BOARD"
   },
   {
     "id": "day-old-chicks",
@@ -1105,7 +1109,8 @@
     "compartment": {
       "requiresHeated": true,
       "requiresVentilated": true
-    }
+    },
+    "notocRemark": "DAY-OLD CHICKS IN VENTILATED BOXES"
   },
   {
     "id": "hatching-eggs",
@@ -1143,7 +1148,8 @@
     "compartment": {
       "requiresHeated": true,
       "requiresVentilated": true
-    }
+    },
+    "notocRemark": "HATCHING EGGS, FRAGILE"
   },
   {
     "id": "tropical-fish",
@@ -1188,7 +1194,8 @@
       "maxC": 26,
       "solution": "passive",
       "enduranceHours": 30
-    }
+    },
+    "notocRemark": "LIVE FISH IN OXYGENATED BAGS"
   },
   {
     "id": "breeding-cattle",
@@ -1232,7 +1239,8 @@
       "lengthCm": 280,
       "widthCm": 120,
       "heightCm": 200
-    }
+    },
+    "notocRemark": "CATTLE IN AIR STALLS, ATTENDANT ON BOARD"
   },
   {
     "id": "pets-in-hold",
@@ -1270,7 +1278,8 @@
     "compartment": {
       "requiresHeated": true,
       "requiresVentilated": true
-    }
+    },
+    "notocRemark": "PETS IN IATA KENNELS"
   },
   {
     "id": "zoo-transfer",
@@ -1314,7 +1323,8 @@
       "lengthCm": 320,
       "widthCm": 180,
       "heightCm": 200
-    }
+    },
+    "notocRemark": "ZOO ANIMAL IN TRANSPORT CRATE, KEEPER ON BOARD"
   },
   {
     "id": "honey-bees",
@@ -1349,7 +1359,8 @@
     "compartment": {
       "requiresHeated": false,
       "requiresVentilated": true
-    }
+    },
+    "notocRemark": "LIVE BEES IN VENTILATED PACKAGES"
   },
   {
     "id": "semiconductor-wafers",
@@ -1653,7 +1664,8 @@
       "packingGroup": null,
       "netPerPackage": "2 kg",
       "cargoAircraftOnly": false,
-      "ercCode": "9F"
+      "ercCode": "9F",
+      "notocExempt": true
     }
   },
   {
@@ -2555,7 +2567,8 @@
       "netPerPackage": "25 kg",
       "cargoAircraftOnly": false,
       "ercCode": "1L",
-      "sourceNote": "Division 1.4S; the drill chart offers no division-specific number, so drill 1 with no additional risk."
+      "sourceNote": "Division 1.4S; the drill chart offers no division-specific number, so drill 1 with no additional risk.",
+      "division": "1.4S"
     }
   },
   {
@@ -2738,7 +2751,8 @@
       "netPerPackage": "20 kg",
       "cargoAircraftOnly": false,
       "ercCode": "1L",
-      "sourceNote": "Division 1.4G; drill 1 with no additional risk, as the chart is not division-specific."
+      "sourceNote": "Division 1.4G; drill 1 with no additional risk, as the chart is not division-specific.",
+      "division": "1.4G"
     }
   },
   {
@@ -3070,7 +3084,8 @@
       "packingGroup": null,
       "netPerPackage": "1 kg",
       "cargoAircraftOnly": false,
-      "ercCode": "9F"
+      "ercCode": "9F",
+      "notocExempt": true
     }
   },
   {
@@ -3701,7 +3716,8 @@
       "lengthCm": 220,
       "widthCm": 70,
       "heightCm": 60
-    }
+    },
+    "notocRemark": "COFFIN, STOW APART FROM FOODSTUFFS"
   },
   {
     "id": "sporting-weapons",
@@ -3784,7 +3800,8 @@
       "netPerPackage": "30 kg",
       "cargoAircraftOnly": true,
       "ercCode": "1E",
-      "sourceNote": "Division 1.2E; drill 1 with the explosive additional-risk letter."
+      "sourceNote": "Division 1.2E; drill 1 with the explosive additional-risk letter.",
+      "division": "1.2E"
     }
   },
   {

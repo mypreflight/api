@@ -13,6 +13,7 @@ import { scheduledFlightHours } from '../../../../flights/model/timesheet.model'
 import { GenerateFlightManifestCommand } from '../../command/generate-flight-manifest.command';
 import { GenerateFlightCargoManifestCommand } from '../../command/generate-flight-cargo-manifest.command';
 import { IssueNotocCommand } from '../../command/issue-notoc.command';
+import { notocHeaderContextOf } from '../../../model/notoc-header';
 import { NotocStageName } from '../../../model/notoc.model';
 
 @Injectable()
@@ -90,6 +91,7 @@ export class GenerateManifestsListener {
       NotocStageName.Preliminary,
       arrival.iataCode,
       new Date(),
+      notocHeaderContextOf(flight),
     );
     await this.commandBus.execute(issueNotoc);
   }

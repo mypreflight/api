@@ -176,6 +176,7 @@ export type TemperatureProfile = {
   maxC: number;
   solution: TemperatureSolution;
   enduranceHours: number;
+  dryIceKgPerPiece?: number;
 };
 
 export type DangerousGoodsProfile = {
@@ -187,6 +188,8 @@ export type DangerousGoodsProfile = {
   netPerPackage: string;
   cargoAircraftOnly: boolean;
   ercCode: string;
+  division?: string;
+  notocExempt?: boolean;
   sourceNote?: string;
 };
 
@@ -220,4 +223,5 @@ export type Commodity = {
   peakMonths: number[];
   frequency: number;
   compartment: CompartmentRequirements;
+  notocRemark?: string;
 };

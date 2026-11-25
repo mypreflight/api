@@ -166,10 +166,15 @@ describe('composeNotoc', () => {
         properShippingName: 'Paint',
         unNumber: 'UN1263',
         hazardClass: HazardClass.FlammableLiquid,
+        classOrDivision: HazardClass.FlammableLiquid,
         subsidiaryRisk: null,
         packingGroup: PackingGroup.Medium,
         packages: 24,
         netPerPackage: '5 L',
+        quantityIsTotal: false,
+        radioactive: null,
+        impCode: SpecialHandlingCode.FlammableLiquid,
+        uldId: 'AKE48201AA',
         position: '11L',
         compartment: 1,
         unloadingAirport: 'JFK',
@@ -231,6 +236,229 @@ describe('composeNotoc', () => {
       compartment: 1,
       unloadingAirport: 'JFK',
     });
+  });
+
+  it('carries no header unless one is given', () => {
+    const document = composeNotoc(manifest([unit([shipment()])]), 'JFK');
+
+    expect(document.header).toBeNull();
+  });
+
+  it('prints an explosive by its division and compatibility group', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'ammunition-sporting',
+            shc: [SpecialHandlingCode.ExplosivesDivision14S],
+            dangerousGoods: {
+              ...paint,
+              unNumber: '0012',
+              hazardClass: HazardClass.Explosives,
+              ercCode: '1L',
+            },
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    expect(document.dangerousGoods[0]).toMatchObject({
+      classOrDivision: '1.4S',
+      impCode: SpecialHandlingCode.ExplosivesDivision14S,
+    });
+  });
+
+  it('leaves dangerous goods the notification does not require off it', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'biological-cat-b',
+            shc: [SpecialHandlingCode.InfectiousSubstance],
+            dangerousGoods: {
+              ...paint,
+              unNumber: '3373',
+              hazardClass: HazardClass.InfectiousSubstance,
+              ercCode: '11Y',
+            },
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    expect(document.dangerousGoods).toEqual([]);
+    expect(document.statement).toBe(NO_DANGEROUS_GOODS_STATEMENT);
+  });
+
+  it('reports a radioactive package by category and transport index', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'radiopharmaceuticals',
+            shc: [SpecialHandlingCode.RadioactiveYellow],
+            dangerousGoods: {
+              ...paint,
+              unNumber: '2915',
+              hazardClass: HazardClass.Radioactive,
+              ercCode: '7L',
+            },
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    const { radioactive } = document.dangerousGoods[0];
+    expect(radioactive).not.toBeNull();
+    expect(['II-YELLOW', 'III-YELLOW']).toContain(radioactive!.category);
+    expect(radioactive!.transportIndex).toBeGreaterThan(0);
+    expect(radioactive!.transportIndex).toBeLessThanOrEqual(3);
+  });
+
+  it('gives the same radioactive package the same transport index every time', () => {
+    const load = manifest([
+      unit([
+        shipment({
+          awb: '001-77777770',
+          commodity: 'radiopharmaceuticals',
+          shc: [SpecialHandlingCode.RadioactiveYellow],
+          dangerousGoods: { ...paint, hazardClass: HazardClass.Radioactive },
+        }),
+      ]),
+    ]);
+
+    expect(composeNotoc(load, 'JFK').dangerousGoods[0].radioactive).toEqual(
+      composeNotoc(load, 'JFK').dangerousGoods[0].radioactive,
+    );
+  });
+
+  it('totals dry ice per compartment on one line without a waybill', () => {
+    const dryIce = {
+      ...paint,
+      unNumber: '1845',
+      hazardClass: HazardClass.Miscellaneous,
+      ercCode: '9A',
+    };
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            awb: '001-10000001',
+            commodity: 'dry-ice',
+            pieces: 4,
+            grossKg: 80,
+            shc: [SpecialHandlingCode.DryIce],
+            dangerousGoods: dryIce,
+          }),
+          shipment({
+            awb: '001-10000002',
+            commodity: 'dry-ice',
+            pieces: 2,
+            grossKg: 40,
+            shc: [SpecialHandlingCode.DryIce],
+            dangerousGoods: dryIce,
+          }),
+        ]),
+        unit(
+          [
+            shipment({
+              awb: '001-10000003',
+              commodity: 'snow-crab',
+              pieces: 10,
+              grossKg: 250,
+              shc: [SpecialHandlingCode.Frozen, SpecialHandlingCode.DryIce],
+            }),
+          ],
+          { positionDesignator: '31L', compartment: 3 },
+        ),
+      ]),
+      'JFK',
+    );
+
+    expect(document.dangerousGoods).toEqual([
+      expect.objectContaining({
+        awb: null,
+        unNumber: '1845',
+        packages: 6,
+        netPerPackage: '120 kg',
+        quantityIsTotal: true,
+        impCode: SpecialHandlingCode.DryIce,
+        position: null,
+        compartment: 1,
+      }),
+      expect.objectContaining({
+        awb: null,
+        packages: 10,
+        netPerPackage: '30 kg',
+        compartment: 3,
+      }),
+    ]);
+  });
+
+  it('reports what the form asks of a special load', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'pets-in-hold',
+            description: 'Family pet, hold carriage',
+            pieces: 2,
+            grossKg: 60,
+            shc: [SpecialHandlingCode.LiveAnimalsHold],
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    expect(document.specialLoads[0]).toMatchObject({
+      pieces: 2,
+      uldId: 'AKE48201AA',
+      supplementaryInformation: [
+        'PETS IN IATA KENNELS',
+        'HEATED AND VENTILATED HOLD',
+      ],
+    });
+  });
+
+  it('states the temperature a perishable load must be kept at', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'flowers-roses',
+            shc: [SpecialHandlingCode.Perishable],
+            coldChain: chilled,
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    expect(document.specialLoads[0].supplementaryInformation).toEqual([
+      'KEEP AT +2 TO +8 °C',
+    ]);
+  });
+
+  it('prints the heaviest piece among the supplementary information', () => {
+    const document = composeNotoc(
+      manifest([
+        unit([
+          shipment({
+            commodity: 'horses',
+            shc: [SpecialHandlingCode.LiveAnimals, SpecialHandlingCode.Heavy],
+          }),
+        ]),
+      ]),
+      'JFK',
+    );
+
+    expect(document.specialLoads[0].supplementaryInformation).toContain(
+      'HEAVIEST PIECE 620 KG, 300x110x230 CM',
+    );
   });
 
   it('leaves ordinary freight out of the special loads section', () => {

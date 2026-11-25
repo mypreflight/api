@@ -22,10 +22,15 @@ function dangerousGoods(
     properShippingName: 'Paint',
     unNumber: 'UN1263',
     hazardClass: HazardClass.FlammableLiquid,
+    classOrDivision: '3',
     subsidiaryRisk: null,
     packingGroup: PackingGroup.Medium,
     packages: 24,
     netPerPackage: '5 L',
+    quantityIsTotal: false,
+    radioactive: null,
+    impCode: SpecialHandlingCode.FlammableLiquid,
+    uldId: 'AKE 12345 BA',
     position,
     compartment: 1,
     unloadingAirport: 'JFK',
@@ -44,8 +49,11 @@ function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
   return {
     awb,
     description: 'Live tropical fish, boxed',
+    pieces: 40,
     shc: [SpecialHandlingCode.LiveAnimals],
     grossKg: 640,
+    supplementaryInformation: [],
+    uldId: null,
     position,
     compartment: 3,
     unloadingAirport: 'JFK',
@@ -59,6 +67,7 @@ function document(
   baggageKg = 2000,
 ): NotocDocument {
   return {
+    header: null,
     statement:
       (overrides.dangerousGoods ?? []).length === 0
         ? NO_DANGEROUS_GOODS_STATEMENT
@@ -194,5 +203,16 @@ describe('notocChanges', () => {
       '001-2',
       '001-9',
     ]);
+  });
+
+  it('leaves dry ice totals, which carry no waybill, out of the report', () => {
+    const dryIce = { ...dangerousGoods('', null), awb: null };
+    const before = document({ dangerousGoods: [] });
+    const after = document({ dangerousGoods: [dryIce] });
+
+    const changes = notocChanges(before, after);
+
+    expect(changes.dangerousGoodsAdded).toEqual([]);
+    expect(changes.repositioned).toEqual([]);
   });
 });

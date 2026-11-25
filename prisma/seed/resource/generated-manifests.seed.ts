@@ -37,6 +37,7 @@ import { resolvePassengerLocale } from '../../../src/modules/manifest/model/pass
 import { resolveHoldVariant } from '../../../src/modules/manifest/model/hold-variant-resolution';
 import { composeFlightCargoManifest } from '../../../src/modules/manifest/model/cargo-manifest.read';
 import { composeNotoc } from '../../../src/modules/manifest/model/notoc';
+import { notocHeaderFor } from '../../../src/modules/manifest/model/notoc-header';
 
 const DELIBERATELY_UNPLACEABLE = ['KL2016', 'AF2019'];
 const BUILD_UP_HOURS = 3;
@@ -84,7 +85,7 @@ export async function loadGeneratedManifests(
         include: {
           aircraft: true,
           operator: true,
-          airports: { include: { airport: true } },
+          airports: { include: { airport: { include: { city: true } } } },
           loadsheets: true,
         },
       }),
@@ -189,14 +190,40 @@ export async function loadGeneratedManifests(
       flight.aircraft.holdVariant,
     );
 
+    const departure = flight.airports.find(
+      (entry) => entry.airportType === AirportType.Departure,
+    )?.airport;
+    const issuedAt = departureAtOf(flight);
+    const header = departure
+      ? notocHeaderFor(
+          {
+            flightId: flight.id,
+            flightNumber: flight.flightNumber,
+            scheduledOffBlock: flight.scheduledOffBlockTime,
+            operatorName: flight.operator.fullName,
+            operatorIataCode: flight.operator.iataCode,
+            departure: {
+              iataCode: departure.iataCode,
+              city: departure.city.name,
+              country: departure.country,
+              continent: departure.continent as unknown as Continent,
+            },
+            aircraftRegistration: flight.aircraft.registration,
+            aircraftType: flight.aircraft.type,
+          },
+          issuedAt,
+        )
+      : null;
+
     await tx.flightNotoc.create({
       data: {
         flightId: flight.id,
         stage: NotocStage.preliminary,
-        issuedAt: departureAtOf(flight),
+        issuedAt,
         document: composeNotoc(
           composeFlightCargoManifest(flight.id, rows, variant),
           arrival.iataCode,
+          header,
         ) as unknown as Prisma.InputJsonValue,
       },
     });

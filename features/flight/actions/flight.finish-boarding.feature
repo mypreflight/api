@@ -1469,7 +1469,10 @@ Feature: Finish flight boarding
               "compartment": 1,
               "description": "Sterile medical devices",
               "heaviestPiece": null,
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "pieces": 56,
+              "supplementaryInformation": [],
+              "uldId": "AKE48203AA"
             },
             {
               "awb": "001-48203746",
@@ -1484,10 +1487,14 @@ Feature: Finish flight boarding
                 "heightCm": 95,
                 "lengthCm": 240
               },
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "pieces": 4,
+              "supplementaryInformation": ["HEAVIEST PIECE 900 KG, 240x110x95 CM"],
+              "uldId": "AKE48204AA"
             }
           ],
-          "dangerousGoods": []
+          "dangerousGoods": [],
+          "header": "@any"
         },
         "changes": {
           "changed": true,
@@ -1562,7 +1569,10 @@ Feature: Finish flight boarding
               "compartment": 1,
               "description": "Sterile medical devices",
               "heaviestPiece": null,
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "pieces": 56,
+              "supplementaryInformation": [],
+              "uldId": "AKE48203AA"
             },
             {
               "awb": "001-48203746",
@@ -1577,10 +1587,14 @@ Feature: Finish flight boarding
                 "heightCm": 95,
                 "lengthCm": 240
               },
-              "unloadingAirport": "JFK"
+              "unloadingAirport": "JFK",
+              "pieces": 4,
+              "supplementaryInformation": ["HEAVIEST PIECE 900 KG, 240x110x95 CM"],
+              "uldId": "AKE48204AA"
             }
           ],
-          "dangerousGoods": []
+          "dangerousGoods": [],
+          "header": "@any"
         },
         "changes": {
           "changed": false,

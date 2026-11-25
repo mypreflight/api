@@ -1,5 +1,6 @@
 import {
   Commodity,
+  SpecialHandlingCode,
   TemperatureProfile,
   TemperatureRegime,
   TemperatureSolution,
@@ -166,6 +167,7 @@ export function withSuitableSolution(
 
   return {
     ...commodity,
+    shc: commodity.shc.filter((code) => code !== SpecialHandlingCode.DryIce),
     temperature: {
       ...commodity.temperature,
       solution: TemperatureSolution.Active,

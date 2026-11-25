@@ -5,7 +5,13 @@ import {
   FlightCargoManifest,
 } from './cargo-manifest.model';
 import { LoadUnitKind } from './cargo-packing';
-import { SpecialHandlingCode } from './commodity.model';
+import {
+  Commodity,
+  DangerousGoodsProfile,
+  HazardClass,
+  SpecialHandlingCode,
+  TemperatureSolution,
+} from './commodity.model';
 import { ULD_SPECS, UldType } from './uld';
 import { UldBaseCode } from './uld-code.model';
 import { findCommodityById } from '../data/cargo-commodities';
@@ -13,13 +19,20 @@ import { ColdChainRisk } from './cold-chain';
 import { drillFor } from './emergency-drill';
 import {
   DANGEROUS_GOODS_STATEMENT,
+  HoldCondition,
   NO_DANGEROUS_GOODS_STATEMENT,
   NotocColdChain,
   NotocDangerousGoods,
   NotocDocument,
+  NotocHeader,
   NotocLoadSummary,
+  NotocRadioactive,
   NotocSpecialLoad,
+  RadioactiveCategory,
+  SpecialLoadRemark,
 } from './notoc.model';
+import { dryIceKgOf } from './segregation.policy';
+import { stableUnit } from './stable-random';
 
 export const NOTIFIABLE_HANDLING_CODES: SpecialHandlingCode[] = [
   SpecialHandlingCode.LiveAnimals,
@@ -36,7 +49,46 @@ export const NOTIFIABLE_HANDLING_CODES: SpecialHandlingCode[] = [
   SpecialHandlingCode.DiplomaticMail,
   SpecialHandlingCode.Wet,
   SpecialHandlingCode.Obnoxious,
+  SpecialHandlingCode.Perishable,
+  SpecialHandlingCode.PerishableMeat,
+  SpecialHandlingCode.PerishableSeafood,
+  SpecialHandlingCode.PerishableFlowers,
+  SpecialHandlingCode.PerishableProduce,
+  SpecialHandlingCode.Cool,
+  SpecialHandlingCode.Frozen,
+  SpecialHandlingCode.ControlledRoomTemperature,
+  SpecialHandlingCode.ActiveTemperatureControl,
 ];
+
+export const DANGEROUS_GOODS_IMP_CODES: SpecialHandlingCode[] = [
+  SpecialHandlingCode.ExplosivesDivision14S,
+  SpecialHandlingCode.ExplosivesDivision14G,
+  SpecialHandlingCode.FlammableGas,
+  SpecialHandlingCode.NonFlammableGas,
+  SpecialHandlingCode.ToxicGas,
+  SpecialHandlingCode.FlammableLiquid,
+  SpecialHandlingCode.FlammableSolid,
+  SpecialHandlingCode.SpontaneouslyCombustible,
+  SpecialHandlingCode.DangerousWhenWet,
+  SpecialHandlingCode.Oxidizer,
+  SpecialHandlingCode.OrganicPeroxide,
+  SpecialHandlingCode.Toxic,
+  SpecialHandlingCode.InfectiousSubstance,
+  SpecialHandlingCode.RadioactiveWhite,
+  SpecialHandlingCode.RadioactiveYellow,
+  SpecialHandlingCode.Corrosive,
+  SpecialHandlingCode.MiscellaneousDangerousGoods,
+  SpecialHandlingCode.LithiumIon,
+  SpecialHandlingCode.LithiumMetal,
+  SpecialHandlingCode.LithiumIonInEquipment,
+  SpecialHandlingCode.LithiumMetalInEquipment,
+  SpecialHandlingCode.DryIce,
+  SpecialHandlingCode.Magnetised,
+];
+
+const DRY_ICE_UN_NUMBER = '1845';
+const DRY_ICE_ERC_CODE = '9A';
+const YELLOW_II_SHARE = 0.6;
 
 const SIZED_HANDLING_CODES: SpecialHandlingCode[] = [
   SpecialHandlingCode.Heavy,
@@ -89,16 +141,21 @@ function worstRiskOf(risks: ColdChainRisk[]): ColdChainRisk | null {
 export function composeNotoc(
   manifest: FlightCargoManifest,
   unloadingAirport: string,
+  header: NotocHeader | null = null,
 ): NotocDocument {
   const placed = loadedShipmentsOf(manifest);
-  const dangerousGoods = placed
-    .filter(({ shipment }) => shipment.dangerousGoods !== null)
-    .map(({ shipment, unit }) =>
-      dangerousGoodsEntry(shipment, unit, unloadingAirport),
-    )
-    .filter((entry): entry is NotocDangerousGoods => entry !== null);
+  const dangerousGoods = [
+    ...placed
+      .filter(({ shipment }) => isListedDangerousGoods(shipment))
+      .map(({ shipment, unit }) =>
+        dangerousGoodsEntry(shipment, unit, unloadingAirport),
+      )
+      .filter((entry): entry is NotocDangerousGoods => entry !== null),
+    ...dryIceEntries(placed, unloadingAirport),
+  ];
 
   return {
+    header,
     statement:
       dangerousGoods.length === 0
         ? NO_DANGEROUS_GOODS_STATEMENT
@@ -125,6 +182,26 @@ function loadedShipmentsOf(manifest: FlightCargoManifest): PlacedShipment[] {
   );
 }
 
+function isListedDangerousGoods(shipment: CargoShipmentEntry): boolean {
+  const profile = shipment.dangerousGoods;
+
+  if (!profile || profile.unNumber === DRY_ICE_UN_NUMBER) {
+    return false;
+  }
+
+  return !(
+    profile.notocExempt ??
+    catalogueProfileOf(shipment)?.notocExempt ??
+    false
+  );
+}
+
+function catalogueProfileOf(
+  shipment: CargoShipmentEntry,
+): DangerousGoodsProfile | undefined {
+  return findCommodityById(shipment.commodity)?.dangerousGoods;
+}
+
 function dangerousGoodsEntry(
   shipment: CargoShipmentEntry,
   unit: CargoUnitEntry,
@@ -142,16 +219,135 @@ function dangerousGoodsEntry(
     properShippingName: profile.properShippingName,
     unNumber: profile.unNumber,
     hazardClass: profile.hazardClass,
+    classOrDivision:
+      profile.division ??
+      catalogueProfileOf(shipment)?.division ??
+      profile.hazardClass,
     subsidiaryRisk: profile.subsidiaryRisk,
     packingGroup: profile.packingGroup,
     packages: shipment.pieces,
     netPerPackage: profile.netPerPackage,
+    quantityIsTotal: false,
+    radioactive: radioactiveOf(shipment, profile),
+    impCode: impCodeOf(shipment.shc),
+    uldId: unit.uldCode,
     position: unit.positionDesignator,
     compartment: unit.compartment,
     unloadingAirport,
     cargoAircraftOnly: profile.cargoAircraftOnly,
     drill,
   };
+}
+
+function impCodeOf(codes: string[]): SpecialHandlingCode | null {
+  return (
+    (codes.find((code) =>
+      DANGEROUS_GOODS_IMP_CODES.includes(code as SpecialHandlingCode),
+    ) as SpecialHandlingCode | undefined) ?? null
+  );
+}
+
+function radioactiveOf(
+  shipment: CargoShipmentEntry,
+  profile: DangerousGoodsProfile,
+): NotocRadioactive | null {
+  if (profile.hazardClass !== HazardClass.Radioactive) {
+    return null;
+  }
+
+  if (shipment.shc.includes(SpecialHandlingCode.RadioactiveWhite)) {
+    return { category: RadioactiveCategory.IWhite, transportIndex: null };
+  }
+
+  const roll = stableUnit(shipment.awb);
+
+  if (roll < YELLOW_II_SHARE) {
+    return {
+      category: RadioactiveCategory.IIYellow,
+      transportIndex: round1(0.1 + (roll / YELLOW_II_SHARE) * 0.9),
+    };
+  }
+
+  return {
+    category: RadioactiveCategory.IIIYellow,
+    transportIndex: round1(
+      1.1 + ((roll - YELLOW_II_SHARE) / (1 - YELLOW_II_SHARE)) * 1.9,
+    ),
+  };
+}
+
+function round1(value: number): number {
+  return Math.round(value * 10) / 10;
+}
+
+type DryIceLoad = {
+  compartment: number | null;
+  packages: number;
+  kg: number;
+};
+
+function dryIceEntries(
+  placed: PlacedShipment[],
+  unloadingAirport: string,
+): NotocDangerousGoods[] {
+  const drill = drillFor(DRY_ICE_ERC_CODE);
+  const byCompartment = new Map<number | null, DryIceLoad>();
+
+  for (const { shipment, unit } of placed) {
+    const kg = dryIceKgOf(
+      shipment.shc as SpecialHandlingCode[],
+      shipment.grossKg,
+      {
+        pieces: shipment.pieces,
+        kgPerPiece: findCommodityById(shipment.commodity)?.temperature
+          ?.dryIceKgPerPiece,
+      },
+    );
+
+    if (kg === 0) {
+      continue;
+    }
+
+    const load = byCompartment.get(unit.compartment) ?? {
+      compartment: unit.compartment,
+      packages: 0,
+      kg: 0,
+    };
+    load.packages += shipment.pieces;
+    load.kg += kg;
+    byCompartment.set(unit.compartment, load);
+  }
+
+  if (!drill) {
+    return [];
+  }
+
+  return [...byCompartment.values()]
+    .sort(
+      (one, other) =>
+        (one.compartment ?? Number.MAX_SAFE_INTEGER) -
+        (other.compartment ?? Number.MAX_SAFE_INTEGER),
+    )
+    .map((load) => ({
+      awb: null,
+      properShippingName: 'Dry ice',
+      unNumber: DRY_ICE_UN_NUMBER,
+      hazardClass: HazardClass.Miscellaneous,
+      classOrDivision: HazardClass.Miscellaneous,
+      subsidiaryRisk: null,
+      packingGroup: null,
+      packages: load.packages,
+      netPerPackage: `${Math.round(load.kg)} kg`,
+      quantityIsTotal: true,
+      radioactive: null,
+      impCode: SpecialHandlingCode.DryIce,
+      uldId: null,
+      position: null,
+      compartment: load.compartment,
+      unloadingAirport,
+      cargoAircraftOnly: false,
+      drill,
+    }));
 }
 
 function specialLoadEntry(
@@ -171,18 +367,87 @@ function specialLoadEntry(
     SIZED_HANDLING_CODES.includes(code as SpecialHandlingCode),
   );
 
+  const commodity = findCommodityById(shipment.commodity);
+  const heaviestPiece = sized ? (commodity?.heaviestPiece ?? null) : null;
+
   return {
     awb: shipment.awb,
     description: shipment.description,
+    pieces: shipment.pieces,
     shc: notifiable,
     grossKg: shipment.grossKg,
+    supplementaryInformation: supplementaryInformationOf(
+      shipment,
+      commodity,
+      heaviestPiece,
+    ),
+    uldId: unit.uldCode,
     position: unit.positionDesignator,
     compartment: unit.compartment,
     unloadingAirport,
-    heaviestPiece: sized
-      ? (findCommodityById(shipment.commodity)?.heaviestPiece ?? null)
-      : null,
+    heaviestPiece,
   };
+}
+
+function supplementaryInformationOf(
+  shipment: CargoShipmentEntry,
+  commodity: Commodity | undefined,
+  heaviestPiece: NotocSpecialLoad['heaviestPiece'],
+): string[] {
+  const lines: string[] = [];
+
+  if (commodity?.notocRemark) {
+    lines.push(commodity.notocRemark);
+  } else if (shipment.shc.includes(SpecialHandlingCode.Valuable)) {
+    lines.push(SpecialLoadRemark.SecuredStowage);
+  }
+
+  if (commodity?.temperature) {
+    const { minC, maxC } = commodity.temperature;
+    lines.push(`KEEP AT ${signed(minC)} TO ${signed(maxC)} °C`);
+  }
+
+  if (shipment.coldChain?.solution === TemperatureSolution.Active) {
+    lines.push(SpecialLoadRemark.ActiveContainer);
+  } else if (shipment.coldChain?.solution === TemperatureSolution.DryIce) {
+    lines.push(SpecialLoadRemark.PackedInDryIce);
+  }
+
+  const hold = holdConditionOf(commodity);
+
+  if (hold) {
+    lines.push(hold);
+  }
+
+  if (heaviestPiece) {
+    const { kg, lengthCm, widthCm, heightCm } = heaviestPiece;
+    lines.push(
+      `HEAVIEST PIECE ${kg} KG, ${lengthCm}x${widthCm}x${heightCm} CM`,
+    );
+  }
+
+  return lines;
+}
+
+function holdConditionOf(
+  commodity: Commodity | undefined,
+): HoldCondition | null {
+  const heated = commodity?.compartment.requiresHeated ?? false;
+  const ventilated = commodity?.compartment.requiresVentilated ?? false;
+
+  if (heated && ventilated) {
+    return HoldCondition.HeatedAndVentilated;
+  }
+
+  if (heated) {
+    return HoldCondition.Heated;
+  }
+
+  return ventilated ? HoldCondition.Ventilated : null;
+}
+
+function signed(celsius: number): string {
+  return celsius > 0 ? `+${celsius}` : `${celsius}`;
 }
 
 function coldChainEntry(shipment: CargoShipmentEntry): NotocColdChain | null {
