@@ -3,7 +3,9 @@ import {
   ambientFromMetar,
   assessColdChain,
   ColdChainExposure,
+  ColdChainReasonKind,
   ColdChainRisk,
+  explanationOf,
   exposureHoursOf,
   needsBetterSolution,
   setPointOf,
@@ -86,7 +88,10 @@ describe('cold chain', () => {
 
     expect(assessment.risk).toBe(ColdChainRisk.Low);
     expect(assessment.marginHours).toBe(88);
-    expect(assessment.explanation).toBe(
+    expect(assessment.reason).toEqual({
+      kind: ColdChainReasonKind.WithinMargin,
+    });
+    expect(explanationOf(assessment)).toBe(
       'An active container with 88 h margin on a 100 h endurance.',
     );
   });
@@ -96,7 +101,10 @@ describe('cold chain', () => {
 
     expect(assessment.risk).toBe(ColdChainRisk.Low);
     expect(assessment.marginHours).toBe(18);
-    expect(assessment.explanation).toBe(
+    expect(assessment.reason).toEqual({
+      kind: ColdChainReasonKind.WithinMargin,
+    });
+    expect(explanationOf(assessment)).toBe(
       'A passive shipper with 18 h margin on a 30 h endurance.',
     );
   });
@@ -109,7 +117,8 @@ describe('cold chain', () => {
 
     expect(assessment.risk).toBe(ColdChainRisk.Elevated);
     expect(assessment.marginHours).toBe(14);
-    expect(assessment.explanation).toBe(
+    expect(assessment.reason).toEqual({ kind: ColdChainReasonKind.ThinMargin });
+    expect(explanationOf(assessment)).toBe(
       'A passive shipper with 14 h margin on a 30 h endurance; no cooling available in flight.',
     );
   });
@@ -122,7 +131,10 @@ describe('cold chain', () => {
 
     expect(assessment.risk).toBe(ColdChainRisk.High);
     expect(assessment.marginHours).toBeLessThanOrEqual(0);
-    expect(assessment.explanation).toBe(
+    expect(assessment.reason).toEqual({
+      kind: ColdChainReasonKind.EnduranceExceeded,
+    });
+    expect(explanationOf(assessment)).toBe(
       'Exposure of 34 h exceeds the 30 h endurance of a passive shipper.',
     );
   });
@@ -134,7 +146,11 @@ describe('cold chain', () => {
     );
 
     expect(assessment.risk).toBe(ColdChainRisk.High);
-    expect(assessment.explanation).toBe(
+    expect(assessment.reason).toEqual({
+      kind: ColdChainReasonKind.HotTransfer,
+      ambientC: 31,
+    });
+    expect(explanationOf(assessment)).toBe(
       '31 °C at the transfer point exceeds what a passive shipper is validated for.',
     );
   });
@@ -155,17 +171,23 @@ describe('cold chain', () => {
     );
 
     expect(assessment.risk).toBe(ColdChainRisk.High);
-    expect(assessment.explanation).toBe(
+    expect(assessment.reason).toEqual({
+      kind: ColdChainReasonKind.LongConnection,
+      connectionHours: 9,
+    });
+    expect(explanationOf(assessment)).toBe(
       'A 9 h connection leaves the shipment on a passive shipper longer than it should be.',
     );
   });
 
   it('reads the article of the connection length correctly', () => {
     const at = (connectionHours: number): string =>
-      assessColdChain(
-        { ...passiveTuna, enduranceHours: 200 },
-        exposure({ flightHours: 2, connectionHours }),
-      ).explanation;
+      explanationOf(
+        assessColdChain(
+          { ...passiveTuna, enduranceHours: 200 },
+          exposure({ flightHours: 2, connectionHours }),
+        ),
+      );
 
     expect(at(8.8)).toContain('An 8.8 h connection');
     expect(at(11)).toContain('An 11 h connection');
@@ -174,14 +196,18 @@ describe('cold chain', () => {
     expect(at(12)).toContain('A 12 h connection');
   });
 
-  it('leaves the assessment advisory whatever the risk', () => {
-    const risks = [
+  it('derives the risk from the reason', () => {
+    const assessments = [
       assessColdChain(activeVaccines, exposure()),
-      assessColdChain(passiveTuna, exposure()),
+      assessColdChain(passiveTuna, exposure({ flightHours: 13 })),
       assessColdChain(passiveTuna, exposure({ connectionHours: 40 })),
     ];
 
-    expect(risks.every((assessment) => assessment.advisory)).toBe(true);
+    expect(assessments.map((assessment) => assessment.risk)).toEqual([
+      ColdChainRisk.Low,
+      ColdChainRisk.Elevated,
+      ColdChainRisk.High,
+    ]);
   });
 
   it('produces the same assessment for the same inputs', () => {

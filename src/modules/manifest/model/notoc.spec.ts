@@ -1,12 +1,6 @@
 import { composeNotoc } from './notoc';
 import { PassengerSpecialService, PassengerStatus } from './manifest.model';
-import {
-  DANGEROUS_GOODS_STATEMENT,
-  HoldCondition,
-  NO_DANGEROUS_GOODS_STATEMENT,
-  NotocDocument,
-  NotocHeader,
-} from './notoc.model';
+import { HoldCondition, NotocDocumentRecord, NotocHeader } from './notoc.model';
 import { NotifiablePassenger } from './notoc-passengers';
 import {
   CargoContentClassName,
@@ -19,13 +13,18 @@ import { LoadUnitKind } from './cargo-packing';
 import { CargoDeck } from './hold-layout.model';
 import { UldType } from './uld';
 import { TransferRole } from './shipment-journey';
-import { ColdChainRisk, ColdChainAssessment } from './cold-chain';
+import {
+  ColdChainAssessment,
+  ColdChainReasonKind,
+  ColdChainRisk,
+} from './cold-chain';
 import {
   DangerousGoodsProfile,
   ExplosiveDivision,
   HandlingRemark,
   HazardClass,
   PackingGroup,
+  QuantityUnit,
   SpecialHandlingCode,
   TemperatureRegime,
   TemperatureSolution,
@@ -47,7 +46,7 @@ const HEADER: NotocHeader = {
 function compose(
   load: FlightCargoManifest,
   passengers: NotifiablePassenger[] = [],
-): NotocDocument {
+): NotocDocumentRecord {
   return composeNotoc(load, 'JFK', HEADER, passengers);
 }
 
@@ -142,7 +141,7 @@ const paint: DangerousGoodsProfile = {
   hazardClass: HazardClass.FlammableLiquid,
   subsidiaryRisk: null,
   packingGroup: PackingGroup.Medium,
-  netPerPackage: '5 L',
+  netQuantity: { amount: 5, unit: QuantityUnit.Litres },
   cargoAircraftOnly: false,
   ercCode: '3L',
 };
@@ -157,16 +156,15 @@ const chilled: ColdChainAssessment = {
   exposureHours: 14.1,
   marginHours: 33.9,
   risk: ColdChainRisk.Low,
-  explanation: 'A passive shipper with 33.9 h margin on a 48 h endurance.',
-  advisory: true,
+  reason: { kind: ColdChainReasonKind.WithinMargin },
 };
 
 describe('composeNotoc', () => {
-  it('states in as many words that nothing hazardous is aboard', () => {
+  it('lists nothing hazardous when nothing hazardous is aboard', () => {
     const document = compose(manifest([unit([shipment()])]));
 
-    expect(document.statement).toBe(NO_DANGEROUS_GOODS_STATEMENT);
     expect(document.dangerousGoods).toEqual([]);
+    expect(document.dryIce).toEqual([]);
   });
 
   it('reports a dangerous goods shipment in full, with its drill', () => {
@@ -185,7 +183,6 @@ describe('composeNotoc', () => {
       ]),
     );
 
-    expect(document.statement).toBe(DANGEROUS_GOODS_STATEMENT);
     expect(document.dangerousGoods).toEqual([
       {
         awb: '001-11111118',
@@ -196,7 +193,7 @@ describe('composeNotoc', () => {
         subsidiaryRisk: null,
         packingGroup: PackingGroup.Medium,
         packages: 24,
-        netPerPackage: '5 L',
+        netQuantity: { amount: 5, unit: QuantityUnit.Litres },
         radioactive: null,
         impCode: SpecialHandlingCode.FlammableLiquid,
         uldId: 'AKE48201AA',
@@ -370,7 +367,6 @@ describe('composeNotoc', () => {
     );
 
     expect(document.dangerousGoods).toEqual([]);
-    expect(document.statement).toBe(NO_DANGEROUS_GOODS_STATEMENT);
   });
 
   it('reports a radioactive package by category and transport index', () => {
@@ -482,7 +478,6 @@ describe('composeNotoc', () => {
     );
 
     expect(document.dangerousGoods).toEqual([]);
-    expect(document.statement).toBe(DANGEROUS_GOODS_STATEMENT);
     expect(document.dryIce).toEqual([
       {
         compartment: 1,
@@ -521,7 +516,6 @@ describe('composeNotoc', () => {
       uldId: 'AKE48201AA',
       handlingRemark: HandlingRemark.PetsInKennels,
       temperature: null,
-      temperatureSolution: null,
       holdCondition: HoldCondition.HeatedAndVentilated,
     });
   });
@@ -542,7 +536,6 @@ describe('composeNotoc', () => {
     expect(document.specialLoads[0]).toMatchObject({
       handlingRemark: null,
       temperature: { minC: 2, maxC: 8 },
-      temperatureSolution: chilled.solution,
       holdCondition: null,
     });
   });
@@ -614,7 +607,7 @@ describe('composeNotoc', () => {
     expect(document.specialLoads[0].heaviestPiece!.kg).toBeGreaterThan(0);
   });
 
-  it('carries the cold chain assessment and marks it advisory', () => {
+  it('carries the cold chain assessment', () => {
     const document = compose(
       manifest([
         unit([
@@ -638,9 +631,11 @@ describe('composeNotoc', () => {
         description: 'Insulin, insulated shipper',
         regime: TemperatureRegime.Cool,
         risk: ColdChainRisk.Low,
+        solution: TemperatureSolution.Passive,
+        enduranceHours: 48,
+        exposureHours: 14.1,
         marginHours: 33.9,
-        explanation: chilled.explanation,
-        advisory: true,
+        reason: { kind: ColdChainReasonKind.WithinMargin },
       },
     ]);
   });

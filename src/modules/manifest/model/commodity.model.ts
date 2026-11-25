@@ -79,6 +79,19 @@ export enum HandlingRemark {
   ZooAnimalWithKeeper = 'zoo_animal_with_keeper',
 }
 
+export enum QuantityUnit {
+  Kilograms = 'kg',
+  Litres = 'L',
+  Millilitres = 'mL',
+  Terabecquerels = 'TBq',
+  Units = 'unit',
+}
+
+export type NetQuantity = {
+  amount: number;
+  unit: QuantityUnit;
+};
+
 export enum TemperatureRegime {
   ControlledRoomTemperature = 'CRT',
   Cool = 'COL',
@@ -206,7 +219,7 @@ export type DangerousGoodsProfile = {
   hazardClass: HazardClass;
   subsidiaryRisk: HazardClass | null;
   packingGroup: PackingGroup | null;
-  netPerPackage: string;
+  netQuantity: NetQuantity;
   cargoAircraftOnly: boolean;
   ercCode: string;
   division?: ExplosiveDivision;

@@ -926,7 +926,7 @@
       "hazardClass": "6.2",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "1 L",
+      "netQuantity": { "amount": 1, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "11Y",
       "notocExempt": true
@@ -975,7 +975,7 @@
       "hazardClass": "6.2",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "50 mL",
+      "netQuantity": { "amount": 50, "unit": "mL" },
       "cargoAircraftOnly": false,
       "ercCode": "11Y"
     }
@@ -1023,7 +1023,7 @@
       "hazardClass": "7",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "1 TBq",
+      "netQuantity": { "amount": 1, "unit": "TBq" },
       "cargoAircraftOnly": false,
       "ercCode": "7L"
     }
@@ -1662,7 +1662,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "2 kg",
+      "netQuantity": { "amount": 2, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "9F",
       "notocExempt": true
@@ -1711,7 +1711,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": "II",
-      "netPerPackage": "10 kg",
+      "netQuantity": { "amount": 10, "unit": "kg" },
       "cargoAircraftOnly": true,
       "ercCode": "9F"
     }
@@ -1759,7 +1759,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "5 kg",
+      "netQuantity": { "amount": 5, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "9F"
     }
@@ -1807,7 +1807,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": "II",
-      "netPerPackage": "2.5 kg",
+      "netQuantity": { "amount": 2.5, "unit": "kg" },
       "cargoAircraftOnly": true,
       "ercCode": "9F"
     }
@@ -1855,7 +1855,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "22 kg",
+      "netQuantity": { "amount": 22, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "9A",
       "sourceNote": "An asphyxiant rather than an anaesthetic; A is the nearest additional-risk letter the drill chart defines."
@@ -1904,7 +1904,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "60 kg",
+      "netQuantity": { "amount": 60, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "9M"
     }
@@ -1952,7 +1952,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": "III",
-      "netPerPackage": "25 L",
+      "netQuantity": { "amount": 25, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "9L"
     }
@@ -1997,7 +1997,7 @@
       "hazardClass": "3",
       "subsidiaryRisk": null,
       "packingGroup": "II",
-      "netPerPackage": "5 L",
+      "netQuantity": { "amount": 5, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "3L"
     }
@@ -2042,7 +2042,7 @@
       "hazardClass": "2.1",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "1 L",
+      "netQuantity": { "amount": 1, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "10L"
     }
@@ -2090,7 +2090,7 @@
       "hazardClass": "2.2",
       "subsidiaryRisk": "5.1",
       "packingGroup": null,
-      "netPerPackage": "50 L",
+      "netQuantity": { "amount": 50, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "2X"
     }
@@ -2138,7 +2138,7 @@
       "hazardClass": "2.2",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "50 L",
+      "netQuantity": { "amount": 50, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "2L"
     }
@@ -2186,7 +2186,7 @@
       "hazardClass": "2.2",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "25 kg",
+      "netQuantity": { "amount": 25, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "2L"
     }
@@ -2234,7 +2234,7 @@
       "hazardClass": "3",
       "subsidiaryRisk": null,
       "packingGroup": "II",
-      "netPerPackage": "20 L",
+      "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "3L"
     }
@@ -2282,7 +2282,7 @@
       "hazardClass": "3",
       "subsidiaryRisk": null,
       "packingGroup": "III",
-      "netPerPackage": "5 L",
+      "netQuantity": { "amount": 5, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "3L"
     }
@@ -2327,7 +2327,7 @@
       "hazardClass": "4.1",
       "subsidiaryRisk": null,
       "packingGroup": "III",
-      "netPerPackage": "15 kg",
+      "netQuantity": { "amount": 15, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "3L"
     }
@@ -2375,7 +2375,7 @@
       "hazardClass": "4.3",
       "subsidiaryRisk": null,
       "packingGroup": "II",
-      "netPerPackage": "25 kg",
+      "netQuantity": { "amount": 25, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "4W"
     }
@@ -2423,7 +2423,7 @@
       "hazardClass": "5.1",
       "subsidiaryRisk": "8",
       "packingGroup": "II",
-      "netPerPackage": "20 L",
+      "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "5C"
     }
@@ -2468,7 +2468,7 @@
       "hazardClass": "8",
       "subsidiaryRisk": null,
       "packingGroup": "III",
-      "netPerPackage": "20 L",
+      "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "8L"
     }
@@ -2516,7 +2516,7 @@
       "hazardClass": "8",
       "subsidiaryRisk": null,
       "packingGroup": "II",
-      "netPerPackage": "20 L",
+      "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "8L"
     }
@@ -2564,7 +2564,7 @@
       "hazardClass": "1",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "25 kg",
+      "netQuantity": { "amount": 25, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "1L",
       "sourceNote": "Division 1.4S; the drill chart offers no division-specific number, so drill 1 with no additional risk.",
@@ -2611,7 +2611,7 @@
       "hazardClass": "6.1",
       "subsidiaryRisk": null,
       "packingGroup": "III",
-      "netPerPackage": "20 L",
+      "netQuantity": { "amount": 20, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "6L"
     }
@@ -2703,7 +2703,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "1 unit",
+      "netQuantity": { "amount": 1, "unit": "unit" },
       "cargoAircraftOnly": false,
       "ercCode": "9F"
     }
@@ -2748,7 +2748,7 @@
       "hazardClass": "1",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "20 kg",
+      "netQuantity": { "amount": 20, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "1L",
       "sourceNote": "Division 1.4G; drill 1 with no additional risk, as the chart is not division-specific.",
@@ -3082,7 +3082,7 @@
       "hazardClass": "9",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "1 kg",
+      "netQuantity": { "amount": 1, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "9F",
       "notocExempt": true
@@ -3166,7 +3166,7 @@
       "hazardClass": "5.1",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "10 kg",
+      "netQuantity": { "amount": 10, "unit": "kg" },
       "cargoAircraftOnly": false,
       "ercCode": "5L"
     }
@@ -3797,7 +3797,7 @@
       "hazardClass": "1",
       "subsidiaryRisk": null,
       "packingGroup": null,
-      "netPerPackage": "30 kg",
+      "netQuantity": { "amount": 30, "unit": "kg" },
       "cargoAircraftOnly": true,
       "ercCode": "1E",
       "sourceNote": "Division 1.2E; drill 1 with the explosive additional-risk letter.",
@@ -4067,7 +4067,7 @@
       "hazardClass": "3",
       "subsidiaryRisk": null,
       "packingGroup": "III",
-      "netPerPackage": "5 L",
+      "netQuantity": { "amount": 5, "unit": "L" },
       "cargoAircraftOnly": false,
       "ercCode": "3L"
     }

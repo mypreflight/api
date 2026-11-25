@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 import { NotocChanges } from './notoc-delta';
 import { CargoDeck } from './hold-layout.model';
 import {
@@ -12,7 +12,14 @@ import {
   TemperatureRegime,
   TemperatureSolution,
 } from './commodity.model';
-import { ColdChainRisk } from './cold-chain';
+import { ColdChainReason, ColdChainRisk } from './cold-chain';
+import {
+  COLD_CHAIN_REASON_SCHEMA,
+  ColdChainHotTransferReason,
+  ColdChainLongConnectionReason,
+  ColdChainPlainReason,
+  NetQuantityPerPackage,
+} from './cargo-manifest.model';
 import { PassengerSpecialService } from './manifest.model';
 
 export enum NotocStageName {
@@ -20,10 +27,7 @@ export enum NotocStageName {
   Final = 'final',
 }
 
-export const NOTOC_FORM_VERSION = 2;
-export const NO_DANGEROUS_GOODS_STATEMENT = 'No dangerous goods loaded.';
-export const DANGEROUS_GOODS_STATEMENT =
-  'Dangerous goods loaded as listed below.';
+export const NOTOC_FORM_VERSION = 3;
 
 export class NotocDrill {
   @ApiProperty({
@@ -158,7 +162,17 @@ export class NotocDangerousGoods {
   @ApiProperty({ description: 'Packages declared', example: 24 })
   packages!: number;
 
-  @ApiProperty({ example: '5 L' })
+  @ApiProperty({
+    description: 'Net quantity per package',
+    type: NetQuantityPerPackage,
+  })
+  netQuantity!: NetQuantityPerPackage;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'Net quantity as text; read netQuantity instead',
+    example: '5 L',
+  })
   netPerPackage!: string;
 
   @ApiProperty({
@@ -369,15 +383,6 @@ export class NotocSpecialLoad {
   temperature!: NotocTemperatureRange | null;
 
   @ApiProperty({
-    description:
-      'What keeps the load at its temperature, where it needs keeping',
-    enum: TemperatureSolution,
-    example: TemperatureSolution.Active,
-    nullable: true,
-  })
-  temperatureSolution!: TemperatureSolution | null;
-
-  @ApiProperty({
     description: 'Hold the load needs, where it needs heating or ventilation',
     enum: HoldCondition,
     example: HoldCondition.HeatedAndVentilated,
@@ -428,6 +433,11 @@ export class NotocSpecialLoad {
   heaviestPiece!: HeaviestPiece | null;
 }
 
+@ApiExtraModels(
+  ColdChainPlainReason,
+  ColdChainHotTransferReason,
+  ColdChainLongConnectionReason,
+)
 export class NotocColdChain {
   @ApiProperty({ example: '020-53729071' })
   awb!: string;
@@ -441,15 +451,37 @@ export class NotocColdChain {
   @ApiProperty({ enum: ColdChainRisk })
   risk!: ColdChainRisk;
 
+  @ApiProperty({ enum: TemperatureSolution })
+  solution!: TemperatureSolution;
+
+  @ApiProperty({
+    description: 'Hours the solution can hold the regime for',
+    example: 100,
+  })
+  enduranceHours!: number;
+
+  @ApiProperty({
+    description:
+      'Hours the load is exposed across build-up, flight and any onward leg',
+    example: 14.1,
+  })
+  exposureHours!: number;
+
   @ApiProperty({ example: 85.9 })
   marginHours!: number;
 
+  @ApiProperty(COLD_CHAIN_REASON_SCHEMA)
+  reason!: ColdChainReason;
+
   @ApiProperty({
+    deprecated: true,
+    description: 'The reason as a sentence; read reason instead',
     example: 'An active container with 85.9 h margin on a 100 h endurance.',
   })
   explanation!: string;
 
   @ApiProperty({
+    deprecated: true,
     description:
       'Always true: the assessment informs the captain and gates nothing',
     example: true,
@@ -558,9 +590,10 @@ export class NotocDocument {
   specialPassengers!: NotocSpecialPassenger[];
 
   @ApiProperty({
+    deprecated: true,
     description:
-      'Says in as many words whether dangerous goods are aboard, so a clean flight carries a statement rather than an empty document',
-    example: NO_DANGEROUS_GOODS_STATEMENT,
+      'Whether dangerous goods are aboard, as a sentence; read the dangerous goods and dry ice lists instead',
+    example: 'No dangerous goods loaded.',
   })
   statement!: string;
 
@@ -620,3 +653,21 @@ export class FlightNotoc {
   })
   changes!: NotocChanges | null;
 }
+
+export type NotocDangerousGoodsRecord = Omit<
+  NotocDangerousGoods,
+  'netPerPackage'
+>;
+
+export type NotocColdChainRecord = Omit<
+  NotocColdChain,
+  'explanation' | 'advisory'
+>;
+
+export type NotocDocumentRecord = Omit<
+  NotocDocument,
+  'statement' | 'dangerousGoods' | 'coldChain'
+> & {
+  dangerousGoods: NotocDangerousGoodsRecord[];
+  coldChain: NotocColdChainRecord[];
+};

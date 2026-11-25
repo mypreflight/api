@@ -1,14 +1,13 @@
 import { notocChanges } from './notoc-delta';
 import {
-  DANGEROUS_GOODS_STATEMENT,
-  NO_DANGEROUS_GOODS_STATEMENT,
-  NotocDangerousGoods,
-  NotocDocument,
+  NotocDangerousGoodsRecord,
+  NotocDocumentRecord,
   NotocSpecialLoad,
 } from './notoc.model';
 import {
   HazardClass,
   PackingGroup,
+  QuantityUnit,
   SpecialHandlingCode,
 } from './commodity.model';
 import { CargoDeck } from './hold-layout.model';
@@ -16,7 +15,7 @@ import { CargoDeck } from './hold-layout.model';
 function dangerousGoods(
   awb: string,
   position: string | null,
-): NotocDangerousGoods {
+): NotocDangerousGoodsRecord {
   return {
     awb,
     properShippingName: 'Paint',
@@ -26,7 +25,7 @@ function dangerousGoods(
     subsidiaryRisk: null,
     packingGroup: PackingGroup.Medium,
     packages: 24,
-    netPerPackage: '5 L',
+    netQuantity: { amount: 5, unit: QuantityUnit.Litres },
     radioactive: null,
     impCode: SpecialHandlingCode.FlammableLiquid,
     uldId: 'AKE 12345 BA',
@@ -53,7 +52,6 @@ function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
     grossKg: 640,
     handlingRemark: null,
     temperature: null,
-    temperatureSolution: null,
     holdCondition: null,
     uldId: null,
     position,
@@ -64,10 +62,10 @@ function specialLoad(awb: string, position: string | null): NotocSpecialLoad {
 }
 
 function document(
-  overrides: Partial<NotocDocument> = {},
+  overrides: Partial<NotocDocumentRecord> = {},
   cargoKg = 6000,
   baggageKg = 2000,
-): NotocDocument {
+): NotocDocumentRecord {
   return {
     header: {
       operatorName: 'American Airlines, Inc.',
@@ -82,10 +80,6 @@ function document(
       emergencyTelephone: '+44 20 7946 0639',
     },
     specialPassengers: [],
-    statement:
-      (overrides.dangerousGoods ?? []).length === 0
-        ? NO_DANGEROUS_GOODS_STATEMENT
-        : DANGEROUS_GOODS_STATEMENT,
     dangerousGoods: [],
     dryIce: [],
     specialLoads: [],

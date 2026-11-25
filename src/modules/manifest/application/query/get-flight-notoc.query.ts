@@ -5,10 +5,11 @@ import {
 } from '../../infra/database/repository/notoc.repository';
 import {
   FlightNotoc,
-  NotocDocument,
+  NotocDocumentRecord,
   NotocStageName,
 } from '../../model/notoc.model';
 import { notocChanges } from '../../model/notoc-delta';
+import { withTransitionalFields } from '../../model/transitional-fields';
 import {
   NotocNotIssuedError,
   NotocReadableByCaptainOnlyError,
@@ -69,7 +70,9 @@ export class GetFlightNotocHandler implements IQueryHandler<GetFlightNotocQuery>
       issuedAt: row.issuedAt,
       acknowledgedById: row.acknowledgedById,
       acknowledgedAt: row.acknowledgedAt,
-      document: row.document as unknown as NotocDocument,
+      document: withTransitionalFields(
+        row.document as unknown as NotocDocumentRecord,
+      ),
       changes: await this.changesOn(flightId, row),
     };
   }
@@ -89,8 +92,8 @@ export class GetFlightNotocHandler implements IQueryHandler<GetFlightNotocQuery>
     }
 
     return notocChanges(
-      preliminary.document as unknown as NotocDocument,
-      row.document as unknown as NotocDocument,
+      preliminary.document as unknown as NotocDocumentRecord,
+      row.document as unknown as NotocDocumentRecord,
     );
   }
 }
