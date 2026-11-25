@@ -71,8 +71,8 @@
     "pax_count": "148"
   },
   "text": {
-    "tlr_section": "TAKEOFF AND LANDING REPORT DLH400",
-    "plan_html": "<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>"
+    "tlr_section": "EDDF RWY 07C  TORA 4000M  A320\nCONF     FLEX   V1   VR   V2   MARGIN\nCONF 1+F  52    145  148  153  420M\nCONF 2    49    141  144  149  510M\nCONF 3    46    137  140  145  590M",
+    "plan_html": "<div><pre>[ OFP ]\nDLH0400  EDDF-EPWA  16AUG26  A320 D-AIRC\nFLIGHT LH0400   CRZ FL360   AIR TIME 0140   TRIP FUEL 5.1T\n\nROUTE: EDDF DCT EPWA\n\nFIX          AWY      ALT    TRK  DIST  ELAP  USED   REM\nEDDF         DCT      364    -    0     0000  0.0    7.3\nEPWA         DCT      362    -    480   0140  5.1    2.1</pre></div>"
   },
   "files": {
     "directory": "https://www.simbrief.com/ofp/flightplans/",

@@ -2417,11 +2417,6 @@ export async function loadPlannedRoutes(
     })),
   });
 
-  await tx.flight.update({
-    where: { id: AAL4912 },
-    data: { ofpContent: '<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>' },
-  });
-
   await tx.flightRouteFix.createMany({
     data: AAL4912_FIXES.map(({ windLevels, ...fix }, ordinal) => ({
       flightId: AAL4912,

@@ -43,6 +43,25 @@ function tonnes(kilograms: number | null): string {
   return kilograms === null ? '-' : (kilograms / 1000).toFixed(1);
 }
 
+const LINE_WIDTH = 57;
+const ROUTE_LABEL = 'ROUTE:';
+
+function routeLines(route: string): string[] {
+  const lines = [ROUTE_LABEL];
+
+  for (const word of route.split(' ')) {
+    const last = lines[lines.length - 1];
+
+    if (last !== ROUTE_LABEL && last.length + 1 + word.length > LINE_WIDTH) {
+      lines.push(`${' '.repeat(ROUTE_LABEL.length)} ${word}`);
+    } else {
+      lines[lines.length - 1] = `${last} ${word}`;
+    }
+  }
+
+  return lines;
+}
+
 function escape(text: string): string {
   return text
     .replace(/&/g, '&amp;')
@@ -57,7 +76,7 @@ export function ofpContent(flight: OfpFlight, navlog: Navlog): string {
     `${pad(flight.callsign, 9)}${flight.departure}-${flight.destination}  ${icaoDate(flight.scheduledOffBlock)}  ${flight.aircraftType} ${flight.registration}`,
     `FLIGHT ${flight.flightNumber}   CRZ FL${String(navlog.cruiseLevel / 100).padStart(3, '0')}   AIR TIME ${clock(last.elapsedSeconds)}   TRIP FUEL ${tonnes(last.fuelUsed)}T`,
     '',
-    `ROUTE: ${flight.departure} ${navlog.route} ${flight.destination}`,
+    ...routeLines(`${flight.departure} ${navlog.route} ${flight.destination}`),
     '',
     `${pad('FIX', 13)}${pad('AWY', 9)}${pad('ALT', 7)}${pad('TRK', 5)}${pad('DIST', 6)}${pad('ELAP', 6)}${pad('USED', 7)}REM`,
   ];
@@ -80,6 +99,12 @@ export function ofpContent(flight: OfpFlight, navlog: Navlog): string {
   );
 
   return `<div><pre>${escape([...header, ...rows].join('\n'))}</pre></div>`;
+}
+
+export function ofpDocumentUrl(flight: OfpFlight): string {
+  const generated = Math.floor(flight.scheduledOffBlock.getTime() / 1000);
+
+  return `https://www.simbrief.com/ofp/flightplans/${flight.departure}${flight.destination}_PDF_${generated}.pdf`;
 }
 
 export function runwayAnalysis(

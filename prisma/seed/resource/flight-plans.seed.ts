@@ -10,7 +10,7 @@ import {
   Navlog,
   NEW_YORK_FRANKFURT,
 } from './flight-plan/navlog';
-import { ofpContent, runwayAnalysis } from './flight-plan/ofp';
+import { ofpContent, ofpDocumentUrl, runwayAnalysis } from './flight-plan/ofp';
 import {
   distanceNm,
   divertedPath,
@@ -267,28 +267,22 @@ async function fileNavlog(
     scheduledOffBlock: flight.scheduledOffBlockTime ?? flight.createdAt,
   };
 
-  const briefing =
-    flight.source === FlightSource.Simbrief
-      ? {}
-      : {
-          ofpContent: ofpContent(ofpFlight, navlog),
-          runwayAnalysis:
-            flight.departureRunway === null
-              ? null
-              : runwayAnalysis(
-                  ofpFlight,
-                  flight.departureRunway.designator,
-                  flight.departureRunway.length,
-                ),
-        };
-
   await tx.flight.update({
     where: { id: flight.id },
     data: {
       source: FlightSource.Simbrief,
       route: navlog.route,
       atcRoute: flight.atcRoute ?? navlog.atcRoute,
-      ...briefing,
+      ofpContent: ofpContent(ofpFlight, navlog),
+      ofpDocumentUrl: flight.ofpDocumentUrl ?? ofpDocumentUrl(ofpFlight),
+      runwayAnalysis:
+        flight.departureRunway === null
+          ? null
+          : runwayAnalysis(
+              ofpFlight,
+              flight.departureRunway.designator,
+              flight.departureRunway.length,
+            ),
     },
   });
 
