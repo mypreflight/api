@@ -1023,7 +1023,7 @@ Feature: Finish flight boarding
         ]
       }
       """
-    And the response body list "units" should have distinct "positionDesignator" values
+    And the response body list "units" should have distinct "loadingPosition" values
     And I set database to initial state
 
   Scenario: An unchanged final cargo tonnage leaves every shipment exactly as it was
