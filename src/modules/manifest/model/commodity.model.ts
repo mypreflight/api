@@ -154,7 +154,16 @@ export enum OffloadPriority {
   Never = 6,
 }
 
-const DRILL_NUMBER_BY_HAZARD_CLASS: Record<HazardClass, number> = {
+export const DRILL_NUMBERS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11] as const;
+
+export type DrillNumber = (typeof DRILL_NUMBERS)[number];
+
+export type ResponseCode = {
+  drillNumber: DrillNumber;
+  drillLetters: DrillLetter[];
+};
+
+const DRILL_NUMBER_BY_HAZARD_CLASS: Record<HazardClass, DrillNumber> = {
   [HazardClass.Explosives]: 1,
   [HazardClass.FlammableGas]: 10,
   [HazardClass.NonFlammableGas]: 2,
@@ -177,18 +186,12 @@ export const ERC_PATTERN = /^(?:[1-9]|1[01])[ACEFHILMNPSWXY]+$/;
 export const SPECIAL_HANDLING_CODES: string[] =
   Object.values(SpecialHandlingCode);
 
-export const DRILL_LETTERS: string[] = Object.values(DrillLetter);
+export const DRILL_LETTERS: DrillLetter[] = Object.values(DrillLetter);
 
-export function drillNumberForHazardClass(hazardClass: HazardClass): number {
+export function drillNumberForHazardClass(
+  hazardClass: HazardClass,
+): DrillNumber {
   return DRILL_NUMBER_BY_HAZARD_CLASS[hazardClass];
-}
-
-export function drillNumberOf(ercCode: string): number {
-  return Number(ercCode.match(/^\d+/)?.[0] ?? 0);
-}
-
-export function drillLettersOf(ercCode: string): string[] {
-  return ercCode.replace(/^\d+/, '').split('');
 }
 
 export type PieceProfile = {
@@ -221,7 +224,7 @@ export type DangerousGoodsProfile = {
   packingGroup: PackingGroup | null;
   netQuantity: NetQuantity;
   cargoAircraftOnly: boolean;
-  ercCode: string;
+  responseCode: ResponseCode;
   division?: ExplosiveDivision;
   notocExempt?: boolean;
   sourceNote?: string;

@@ -9,7 +9,10 @@ import {
   NotocStageName,
 } from '../../model/notoc.model';
 import { notocChanges } from '../../model/notoc-delta';
-import { withTransitionalFields } from '../../model/transitional-fields';
+import {
+  withTransitionalChanges,
+  withTransitionalFields,
+} from '../../model/transitional-fields';
 import {
   NotocNotIssuedError,
   NotocReadableByCaptainOnlyError,
@@ -91,9 +94,11 @@ export class GetFlightNotocHandler implements IQueryHandler<GetFlightNotocQuery>
       return null;
     }
 
-    return notocChanges(
-      preliminary.document as unknown as NotocDocumentRecord,
-      row.document as unknown as NotocDocumentRecord,
+    return withTransitionalChanges(
+      notocChanges(
+        preliminary.document as unknown as NotocDocumentRecord,
+        row.document as unknown as NotocDocumentRecord,
+      ),
     );
   }
 }

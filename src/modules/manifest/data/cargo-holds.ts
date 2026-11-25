@@ -14,7 +14,9 @@ function expandVariant(variant: SourceVariant): HoldVariant {
     isDefault: variant.isDefault,
     decks: variant.decks.map((deck) => ({
       deck: deck.deck,
-      compartments: deck.compartments.map(expandCompartment),
+      compartments: deck.compartments.map((compartment) =>
+        expandCompartment(compartment, deck.deck),
+      ),
     })),
   };
 }

@@ -32,13 +32,13 @@ export enum CargoDoorSide {
   None = 'none',
 }
 
-export class HoldPosition {
+export class LoadingPosition {
   @ApiProperty({
-    description:
-      'Position identifier, composed as compartment number, ordinal within the compartment and side. This is a convention of this system, not a published designation: no public source designates hold positions for a given airframe type. It is unique within a variant and stable across reads.',
-    example: '12R',
+    description: 'Deck the position is on',
+    enum: CargoDeck,
+    example: CargoDeck.Lower,
   })
-  designator!: string;
+  deck!: CargoDeck;
 
   @ApiProperty({
     description: 'Number of the compartment the position sits in',
@@ -47,11 +47,29 @@ export class HoldPosition {
   compartment!: number;
 
   @ApiProperty({
-    description: 'Side of the hold the position sits on',
+    description:
+      'Row within the compartment, counted from 1 at its forward end. A lower deck position is written as compartment, row and side, such as 12R; a main deck row as a letter from A, such as CL. This is a convention of this system, not a published designation: no public source designates hold positions for a given airframe type. Lower deck rows stay below 10 and main deck rows within the alphabet, so the written form is unambiguous and unique within a variant.',
+    example: 2,
+  })
+  row!: number;
+
+  @ApiProperty({
+    description:
+      'Side of the hold the position sits on; full for a position spanning the width, written P',
     enum: HoldPositionSide,
     example: HoldPositionSide.Right,
   })
   side!: HoldPositionSide;
+}
+
+export class HoldPosition extends LoadingPosition {
+  @ApiProperty({
+    deprecated: true,
+    description:
+      'The position as written, such as 12R; read deck, compartment, row and side instead',
+    example: '12R',
+  })
+  designator!: string;
 
   @ApiProperty({
     description:
@@ -198,6 +216,27 @@ export function defaultVariantOf(layout: AircraftHoldLayout): HoldVariant {
 
 export function compartmentsOf(variant: HoldVariant): HoldCompartment[] {
   return variant.decks.flatMap((deck) => deck.compartments);
+}
+
+export function samePosition(
+  one: LoadingPosition,
+  other: LoadingPosition,
+): boolean {
+  return (
+    one.deck === other.deck &&
+    one.compartment === other.compartment &&
+    one.row === other.row &&
+    one.side === other.side
+  );
+}
+
+export function loadingPositionOf({
+  deck,
+  compartment,
+  row,
+  side,
+}: LoadingPosition): LoadingPosition {
+  return { deck, compartment, row, side };
 }
 
 export function positionsOf(variant: HoldVariant): HoldPosition[] {

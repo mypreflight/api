@@ -54,13 +54,19 @@ its emergency response code.
 
 The system SHALL compose an emergency response code from a drill number describing the inherent
 risk of the shipment's hazard class and one or more letters describing its additional risks,
-following the published aircraft emergency response drill chart. The drill number SHALL agree
-with the shipment's hazard class, and every letter SHALL be one the chart defines.
+following the published aircraft emergency response drill chart, and SHALL report it as its drill
+number and its drill letters rather than as text. The drill number SHALL agree with the shipment's
+hazard class, and every letter SHALL be one the chart defines.
 
 #### Scenario: A code agrees with its hazard class
 
 - **WHEN** the commodity catalogue is loaded
 - **THEN** every dangerous goods entry's drill number is the one its hazard class maps to
+
+#### Scenario: A code is reported as its parts
+
+- **WHEN** a dangerous goods shipment is read
+- **THEN** its emergency response code reports a drill number from 1 to 11 and its drill letters in the order the code is written
 
 #### Scenario: A code uses only defined letters
 

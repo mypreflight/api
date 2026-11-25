@@ -1460,58 +1460,65 @@ enum CargoTransferRole {
   through_transfer
 }
 
+enum HoldPositionSide {
+  L
+  R
+  full
+}
+
 model FlightCargoUnit {
-  id                 String            @id @default(uuid()) @db.Uuid
-  flightId           String            @db.Uuid
-  kind               CargoUnitKind
-  deck               CargoDeck?
-  compartment        Int?
-  positionDesignator String?           @db.VarChar(8)
-  uldType            String?           @db.VarChar(3)
-  uldSerial          String?           @db.VarChar(5)
-  uldOwner           String?           @db.VarChar(2)
-  tareKg             Int
-  grossKg            Int
-  volumeM3           Decimal           @db.Decimal(8, 3)
-  contentClass       CargoContentClass @default(cargo)
-  beyondDestination  String?           @db.VarChar(3)
-  sealed             Boolean           @default(false)
-  bagCount           Int?
-  priority           Boolean           @default(false)
-  baggageSource      String?           @db.VarChar(16)
+  id                String            @id @default(uuid()) @db.Uuid
+  flightId          String            @db.Uuid
+  kind              CargoUnitKind
+  deck              CargoDeck?
+  compartment       Int?
+  positionRow       Int?
+  positionSide      HoldPositionSide?
+  uldType           String?           @db.VarChar(3)
+  uldSerial         String?           @db.VarChar(5)
+  uldOwner          String?           @db.VarChar(2)
+  tareKg            Int
+  grossKg           Int
+  volumeM3          Decimal           @db.Decimal(8, 3)
+  contentClass      CargoContentClass @default(cargo)
+  beyondDestination String?           @db.VarChar(3)
+  sealed            Boolean           @default(false)
+  bagCount          Int?
+  priority          Boolean           @default(false)
+  baggageSource     String?           @db.VarChar(16)
 
   flight    Flight                @relation(fields: [flightId], references: [id], onDelete: Cascade)
   shipments FlightCargoShipment[]
 
-  @@unique([flightId, positionDesignator])
+  @@unique([flightId, deck, compartment, positionRow, positionSide])
   @@index([flightId])
   @@map("flight_cargo_unit")
 }
 
 model FlightCargoShipment {
-  id                 String              @id @default(uuid()) @db.Uuid
-  flightId           String              @db.Uuid
-  unitId             String?             @db.Uuid
-  commodityId        String
-  description        String
-  awb                String              @db.VarChar(12)
-  pieces             Int
-  grossKg            Int
-  volumeM3           Decimal             @db.Decimal(8, 3)
-  shc                String[]
-  shipper            String
-  consignee          String
-  origin             String              @db.VarChar(3)
-  destination        String              @db.VarChar(3)
-  transferRole       CargoTransferRole
-  onwardCarrier      String?             @db.VarChar(2)
-  onwardFlightNumber String?             @db.VarChar(8)
-  connectionMinutes  Int?
-  dangerousGoods     Json?
-  temperatureControl Json?
-  status             CargoShipmentStatus @default(loaded)
-  offloadReason      CargoOffloadReason?
-  offloadedFrom      String?             @db.VarChar(8)
+  id                    String              @id @default(uuid()) @db.Uuid
+  flightId              String              @db.Uuid
+  unitId                String?             @db.Uuid
+  commodityId           String
+  description           String
+  awb                   String              @db.VarChar(12)
+  pieces                Int
+  grossKg               Int
+  volumeM3              Decimal             @db.Decimal(8, 3)
+  shc                   String[]
+  shipper               String
+  consignee             String
+  origin                String              @db.VarChar(3)
+  destination           String              @db.VarChar(3)
+  transferRole          CargoTransferRole
+  onwardCarrier         String?             @db.VarChar(2)
+  onwardFlightNumber    String?             @db.VarChar(8)
+  connectionMinutes     Int?
+  dangerousGoods        Json?
+  temperatureControl    Json?
+  status                CargoShipmentStatus @default(loaded)
+  offloadReason         CargoOffloadReason?
+  offloadedFromPosition Json?
 
   flight Flight           @relation(fields: [flightId], references: [id], onDelete: Cascade)
   unit   FlightCargoUnit? @relation(fields: [unitId], references: [id], onDelete: Cascade)

@@ -6,6 +6,7 @@ import {
   MAX_DANGEROUS_GOODS_PER_FLIGHT,
   mayJoinCompartmentRegime,
   LoadContentClass,
+  OccupiedPositions,
   occupiedPositionsOf,
   planBaggageUnits,
   LoadUnitKind,
@@ -33,7 +34,11 @@ import {
 import { offeredCommoditiesFor } from './cargo-aircraft-only.policy';
 import { BaggageSource } from './baggage';
 import { SourceTier } from './commodity-selection';
-import { defaultVariantOf, HoldVariant } from './hold-layout.model';
+import {
+  defaultVariantOf,
+  HoldVariant,
+  samePosition,
+} from './hold-layout.model';
 import { UldType } from './uld';
 import { HoldCannotPlaceLoadError } from './error/cargo.error';
 
@@ -162,7 +167,7 @@ describe('compartment volume', () => {
       bagMassKg: 15,
       priorityBagCount: 0,
     };
-    const occupied = new Set<string>();
+    const occupied = new OccupiedPositions();
     const compartmentLoad = new Map<number, CompartmentUsage>();
 
     const placed = (): PlannedUnit[] => {
@@ -390,7 +395,7 @@ describe('baggage keeps its room', () => {
 
   it('places every bag before the cargo takes the positions', () => {
     const variant = variantOf('A320', 'a320-cls');
-    const occupied = new Set<string>();
+    const occupied = new OccupiedPositions();
     const compartmentLoad = new Map<number, CompartmentUsage>();
 
     const baggage = planBaggageUnits({
@@ -431,7 +436,7 @@ describe('baggage keeps its room', () => {
         plan: { ...narrowbodyBags, bagCount: 900, weightKg: 13500 },
         slots: slotsOf(variant),
         looseSlots: looseSlotsOf(variant),
-        occupied: new Set<string>(),
+        occupied: new OccupiedPositions(),
         compartmentLoad: new Map<number, CompartmentUsage>(),
       }),
     ).toThrow(HoldCannotPlaceLoadError);
@@ -483,23 +488,30 @@ describe('cargo packing', () => {
   });
 
   it('gives every containerised unit a distinct position', () => {
-    const designators = plan('B77W', 22000)
+    const positions = plan('B77W', 22000)
       .filter((unit) => unit.kind === LoadUnitKind.Uld)
-      .map((unit) => unit.positionDesignator);
+      .map((unit) => unit.loadingPosition!);
+    const shared = positions.filter((position, index) =>
+      positions.some(
+        (other, otherIndex) =>
+          otherIndex !== index && samePosition(position, other),
+      ),
+    );
 
-    expect(new Set(designators).size).toBe(designators.length);
+    expect(positions.length).toBeGreaterThan(0);
+    expect(shared).toEqual([]);
   });
 
   it('places every unit in a position its device fits', () => {
     const variant = variantOf('B77W');
-    const positions = new Map(
-      slotsOf(variant).map((slot) => [slot.position.designator, slot.position]),
-    );
+    const positions = slotsOf(variant).map((slot) => slot.position);
 
     const wrong = plan('B77W', 22000)
       .filter((unit) => unit.kind === LoadUnitKind.Uld)
       .filter((unit) => {
-        const position = positions.get(unit.positionDesignator!)!;
+        const position = positions.find((candidate) =>
+          samePosition(candidate, unit.loadingPosition!),
+        )!;
 
         return unit.tareKg + unit.grossKg > position.maxWeightKg;
       });
@@ -532,7 +544,7 @@ describe('cargo packing', () => {
       true,
     );
     expect(units.every((unit) => unit.uldType === null)).toBe(true);
-    expect(units.every((unit) => unit.positionDesignator === null)).toBe(true);
+    expect(units.every((unit) => unit.loadingPosition === null)).toBe(true);
     expect(totalCargoKg(units)).toBe(2000);
   });
 
@@ -883,7 +895,7 @@ describe('cargo packing', () => {
     expect(
       baggage.every((unit) => unit.contentClass === LoadContentClass.Baggage),
     ).toBe(true);
-    expect(baggage.some((unit) => unit.positionDesignator !== null)).toBe(true);
+    expect(baggage.some((unit) => unit.loadingPosition !== null)).toBe(true);
   });
 
   it('never puts baggage in a position cargo already holds', () => {
@@ -901,13 +913,11 @@ describe('cargo packing', () => {
     const cargoPositions = occupiedPositionsOf(cargo);
     const clashes = baggage.filter(
       (unit) =>
-        unit.positionDesignator !== null &&
-        cargo.some(
-          (other) => other.positionDesignator === unit.positionDesignator,
-        ),
+        unit.loadingPosition !== null &&
+        cargoPositions.has(unit.loadingPosition),
     );
 
-    expect(cargoPositions.size).toBeGreaterThan(0);
+    expect(cargo.some((unit) => unit.loadingPosition !== null)).toBe(true);
     expect(clashes).toEqual([]);
   });
 
@@ -917,7 +927,7 @@ describe('cargo packing', () => {
       plan: samplePlan,
       slots: slotsOf(variant),
       looseSlots: looseSlotsOf(variant),
-      occupied: new Set<string>(),
+      occupied: new OccupiedPositions(),
       compartmentLoad: new Map<number, CompartmentUsage>(),
     });
 
@@ -933,7 +943,7 @@ describe('cargo packing', () => {
       plan: samplePlan,
       slots: slotsOf(variant),
       looseSlots: looseSlotsOf(variant),
-      occupied: new Set<string>(),
+      occupied: new OccupiedPositions(),
       compartmentLoad: new Map<number, CompartmentUsage>(),
     });
 
@@ -948,14 +958,14 @@ describe('cargo packing', () => {
       plan: samplePlan,
       slots: slotsOf(variant),
       looseSlots: looseSlotsOf(variant),
-      occupied: new Set<string>(),
+      occupied: new OccupiedPositions(),
       compartmentLoad: new Map<number, CompartmentUsage>(),
     });
     const withoutPremium = planBaggageUnits({
       plan: { ...samplePlan, priorityBagCount: 0 },
       slots: slotsOf(variant),
       looseSlots: looseSlotsOf(variant),
-      occupied: new Set<string>(),
+      occupied: new OccupiedPositions(),
       compartmentLoad: new Map<number, CompartmentUsage>(),
     });
 
@@ -971,7 +981,7 @@ describe('cargo packing', () => {
         plan: { ...samplePlan, bagCount: 0, priorityBagCount: 0, weightKg: 0 },
         slots: slotsOf(variant),
         looseSlots: looseSlotsOf(variant),
-        occupied: new Set<string>(),
+        occupied: new OccupiedPositions(),
         compartmentLoad: new Map<number, CompartmentUsage>(),
       }),
     ).toEqual([]);
@@ -1026,9 +1036,9 @@ describe('cargo packing', () => {
     });
 
     const collisions = added
-      .map((unit) => unit.positionDesignator)
-      .filter((designator) => designator !== null)
-      .filter((designator) => occupiedPositionsOf(aboard).has(designator!));
+      .map((unit) => unit.loadingPosition)
+      .filter((position) => position !== null)
+      .filter((position) => occupiedPositionsOf(aboard).has(position));
 
     expect(added.length).toBeGreaterThan(0);
     expect(collisions).toEqual([]);
