@@ -1320,7 +1320,7 @@
     },
     "heaviestPiece": {
       "kg": 900,
-      "lengthCm": 320,
+      "lengthCm": 300,
       "widthCm": 180,
       "heightCm": 200
     },
@@ -3034,7 +3034,7 @@
     },
     "heaviestPiece": {
       "kg": 1600,
-      "lengthCm": 340,
+      "lengthCm": 300,
       "widthCm": 130,
       "heightCm": 150
     }
@@ -4076,14 +4076,14 @@
     "id": "racing-car",
     "name": "Racing car",
     "descriptions": [
-      "Racing car on transport frame",
-      "Formula car, drained and framed"
+      "Racing car monocoque on transport frame",
+      "Formula car chassis, drained and framed"
     ],
     "shc": ["HEA", "BIG", "VUN"],
     "densityKgM3": 300,
     "piece": {
-      "minKg": 600,
-      "maxKg": 900,
+      "minKg": 450,
+      "maxKg": 650,
       "packaging": "steel transport frame"
     },
     "minPieces": 1,
@@ -4110,10 +4110,10 @@
       "requiresVentilated": false
     },
     "heaviestPiece": {
-      "kg": 900,
-      "lengthCm": 500,
-      "widthCm": 200,
-      "heightCm": 120
+      "kg": 650,
+      "lengthCm": 300,
+      "widthCm": 190,
+      "heightCm": 110
     }
   },
   {
@@ -4196,7 +4196,7 @@
     },
     "heaviestPiece": {
       "kg": 900,
-      "lengthCm": 380,
+      "lengthCm": 300,
       "widthCm": 220,
       "heightCm": 220
     }

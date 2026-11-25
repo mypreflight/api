@@ -66,7 +66,7 @@ Feature: Get flight notification to captain
               "compartment": 6,
               "description": "Live horses in air stalls",
               "heaviestPiece": {
-                "kg": 620,
+                "kg": 572,
                 "widthCm": 110,
                 "heightCm": 230,
                 "lengthCm": 300
@@ -75,7 +75,7 @@ Feature: Get flight notification to captain
               "supplementaryInformation": [
                 "HORSES IN AIR STALLS, GROOM ON BOARD",
                 "HEATED AND VENTILATED HOLD",
-                "HEAVIEST PIECE 620 KG, 300x110x230 CM"
+                "HEAVIEST PIECE 572 KG, 300x110x230 CM"
               ]
             },
             {
@@ -88,13 +88,13 @@ Feature: Get flight notification to captain
               "compartment": 6,
               "description": "Main landing gear leg, AOG",
               "heaviestPiece": {
-                "kg": 1600,
+                "kg": 1050,
                 "widthCm": 130,
                 "heightCm": 150,
-                "lengthCm": 340
+                "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["HEAVIEST PIECE 1600 KG, 340x130x150 CM"]
+              "supplementaryInformation": ["HEAVIEST PIECE 1050 KG, 300x130x150 CM"]
             },
             {
               "awb": "172-62001122",
@@ -106,13 +106,13 @@ Feature: Get flight notification to captain
               "compartment": 6,
               "description": "Human remains in coffin",
               "heaviestPiece": {
-                "kg": 260,
+                "kg": 179,
                 "widthCm": 70,
                 "heightCm": 60,
                 "lengthCm": 220
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 260 KG, 220x70x60 CM"]
+              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 179 KG, 220x70x60 CM"]
             },
             {
               "awb": "172-62001166",
@@ -280,7 +280,7 @@ Feature: Get flight notification to captain
               "compartment": 6,
               "description": "Live horses in air stalls",
               "heaviestPiece": {
-                "kg": 620,
+                "kg": 572,
                 "widthCm": 110,
                 "heightCm": 230,
                 "lengthCm": 300
@@ -289,7 +289,7 @@ Feature: Get flight notification to captain
               "supplementaryInformation": [
                 "HORSES IN AIR STALLS, GROOM ON BOARD",
                 "HEATED AND VENTILATED HOLD",
-                "HEAVIEST PIECE 620 KG, 300x110x230 CM"
+                "HEAVIEST PIECE 572 KG, 300x110x230 CM"
               ]
             },
             {
@@ -302,13 +302,13 @@ Feature: Get flight notification to captain
               "compartment": 6,
               "description": "Main landing gear leg, AOG",
               "heaviestPiece": {
-                "kg": 1600,
+                "kg": 1050,
                 "widthCm": 130,
                 "heightCm": 150,
-                "lengthCm": 340
+                "lengthCm": 300
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["HEAVIEST PIECE 1600 KG, 340x130x150 CM"]
+              "supplementaryInformation": ["HEAVIEST PIECE 1050 KG, 300x130x150 CM"]
             },
             {
               "awb": "172-62001122",
@@ -320,13 +320,13 @@ Feature: Get flight notification to captain
               "compartment": 6,
               "description": "Human remains in coffin",
               "heaviestPiece": {
-                "kg": 260,
+                "kg": 179,
                 "widthCm": 70,
                 "heightCm": 60,
                 "lengthCm": 220
               },
               "unloadingAirport": "JFK",
-              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 260 KG, 220x70x60 CM"]
+              "supplementaryInformation": ["COFFIN, STOW APART FROM FOODSTUFFS", "HEAVIEST PIECE 179 KG, 220x70x60 CM"]
             },
             {
               "awb": "172-62001166",
@@ -483,14 +483,14 @@ Feature: Get flight notification to captain
               "compartment": 1,
               "description": "Turbofan blade set, AOG",
               "heaviestPiece": {
-                "kg": 900,
+                "kg": 364,
                 "widthCm": 110,
                 "heightCm": 95,
                 "lengthCm": 240
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 900 KG, 240x110x95 CM"],
+              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
               "uldId": "AKE48204AA"
             }
           ],
@@ -573,14 +573,14 @@ Feature: Get flight notification to captain
               "compartment": 1,
               "description": "Turbofan blade set, AOG",
               "heaviestPiece": {
-                "kg": 900,
+                "kg": 364,
                 "widthCm": 110,
                 "heightCm": 95,
                 "lengthCm": 240
               },
               "unloadingAirport": "JFK",
               "pieces": 4,
-              "supplementaryInformation": ["HEAVIEST PIECE 900 KG, 240x110x95 CM"],
+              "supplementaryInformation": ["HEAVIEST PIECE 364 KG, 240x110x95 CM"],
               "uldId": "AKE48204AA"
             }
           ],

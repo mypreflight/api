@@ -286,6 +286,7 @@ async function plannedUnitsFor(
         country: departure.country,
         continent: departure.continent as Continent,
         month: departureAtOf(flight).getUTCMonth() + 1,
+        destinationContinent: arrival.continent as Continent,
       }),
       loadsheet.passengers,
     ),

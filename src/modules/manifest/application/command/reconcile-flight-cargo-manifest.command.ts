@@ -202,6 +202,7 @@ export class ReconcileFlightCargoManifestHandler implements ICommandHandler<Reco
           country: departure.country,
           continent: departure.continent,
           month: departureAt.getUTCMonth() + 1,
+          destinationContinent: arrival.continent,
         }),
         passengers,
       ),

@@ -368,7 +368,7 @@ function specialLoadEntry(
   );
 
   const commodity = findCommodityById(shipment.commodity);
-  const heaviestPiece = sized ? (commodity?.heaviestPiece ?? null) : null;
+  const heaviestPiece = sized ? heaviestPieceOf(shipment, commodity) : null;
 
   return {
     awb: shipment.awb,
@@ -387,6 +387,21 @@ function specialLoadEntry(
     unloadingAirport,
     heaviestPiece,
   };
+}
+
+function heaviestPieceOf(
+  shipment: CargoShipmentEntry,
+  commodity: Commodity | undefined,
+): NotocSpecialLoad['heaviestPiece'] {
+  const largest = commodity?.heaviestPiece;
+
+  if (!largest) {
+    return null;
+  }
+
+  const perPieceKg = Math.ceil(shipment.grossKg / Math.max(1, shipment.pieces));
+
+  return { ...largest, kg: Math.min(largest.kg, perPieceKg) };
 }
 
 function supplementaryInformationOf(
