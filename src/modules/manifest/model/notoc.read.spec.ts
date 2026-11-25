@@ -18,6 +18,7 @@ describe('readNotocDocument', () => {
     });
 
     expect(document.header).toBeNull();
+    expect(document.specialPassengers).toEqual([]);
     expect(document.dangerousGoods[0]).toMatchObject({
       classOrDivision: HazardClass.FlammableLiquid,
       quantityIsTotal: false,

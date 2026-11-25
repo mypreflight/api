@@ -371,7 +371,7 @@ Feature: Finish flight boarding
       """
     And the response body list "passengers" should have distinct "designator" values
     And between 1 and 90 entries of the response body list "passengers" should have a "ssr"
-    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,UMNR,BLND,DEAF,MAAS,PETC"
+    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,WCBD,WCBW,WCLB,STCR,MEDA,UMNR,BLND,DEAF,MAAS,PETC,DEPA,DEPU,INAD"
     And I set database to initial state
 
   Scenario: A higher final count seats new passengers in free seats
@@ -409,7 +409,7 @@ Feature: Finish flight boarding
     And every entry of the response body list "passengers" should have a "name"
     And every entry of the response body list "passengers" should have a "pnr"
     And between 1 and 90 entries of the response body list "passengers" should have a "ssr"
-    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,UMNR,BLND,DEAF,MAAS,PETC"
+    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,WCBD,WCBW,WCLB,STCR,MEDA,UMNR,BLND,DEAF,MAAS,PETC,DEPA,DEPU,INAD"
     When I send a "GET" request to "/api/v1/flight/92abe9b3-0986-4dc2-9d93-50eadaa73e70/manifest?status=no_show"
     Then the response status should be 200
     And the response body should contain:
@@ -1494,7 +1494,8 @@ Feature: Finish flight boarding
             }
           ],
           "dangerousGoods": [],
-          "header": "@any"
+          "header": "@any",
+          "specialPassengers": "@any"
         },
         "changes": {
           "changed": true,
@@ -1594,7 +1595,8 @@ Feature: Finish flight boarding
             }
           ],
           "dangerousGoods": [],
-          "header": "@any"
+          "header": "@any",
+          "specialPassengers": "@any"
         },
         "changes": {
           "changed": false,

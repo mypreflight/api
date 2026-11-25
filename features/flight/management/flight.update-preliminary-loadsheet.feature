@@ -1015,7 +1015,7 @@ Feature: Update flight preliminary loadsheet
       """
     And the response body list "passengers" should have distinct "designator" values
     And between 1 and 90 entries of the response body list "passengers" should have a "ssr"
-    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,UMNR,BLND,DEAF,MAAS,PETC"
+    And every "ssr" of the response body list "passengers" should be one of "INFT,WCHR,WCHS,WCHC,WCBD,WCBW,WCLB,STCR,MEDA,UMNR,BLND,DEAF,MAAS,PETC,DEPA,DEPU,INAD"
     And I set database to initial state
 
   Scenario: As operations I seat the cabin breakdown I planned
@@ -1746,7 +1746,8 @@ Feature: Update flight preliminary loadsheet
             "preparedBy": "@any",
             "loadingSupervisor": "@any",
             "emergencyTelephone": "@any"
-          }
+          },
+          "specialPassengers": "@any"
         },
         "changes": null
       }

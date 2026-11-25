@@ -5,6 +5,7 @@ import {
   assertBreakdownFitsCabins,
   assignSpecialServices,
   cabinSizesOf,
+  drawSpecialService,
   distributePassengers,
   generatePnr,
   planReconciliation,
@@ -384,6 +385,22 @@ describe('special service requests', () => {
     expect(invalid).toEqual([]);
   });
 
+  it('draws infants and wheelchairs far more often than deportees', () => {
+    const draws = Array.from({ length: 1000 }, (_, index) =>
+      drawSpecialService((index + 0.5) / 1000),
+    );
+    const count = (service: PassengerSpecialService): number =>
+      draws.filter((draw) => draw === service).length;
+
+    expect(count(PassengerSpecialService.Infant)).toBeGreaterThan(
+      count(PassengerSpecialService.Inadmissible) * 10,
+    );
+    expect(
+      count(PassengerSpecialService.WheelchairLithiumBattery),
+    ).toBeGreaterThan(0);
+    expect(count(PassengerSpecialService.Stretcher)).toBeGreaterThan(0);
+  });
+
   it('gives every passenger at most one code', () => {
     const codes = assignSpecialServices(200);
 
@@ -393,9 +410,11 @@ describe('special service requests', () => {
     ).toBe(true);
   });
 
-  it('spreads codes across the curated set', () => {
+  it('can draw every code in the curated set', () => {
     const used = new Set(
-      assignSpecialServices(5000).filter((code) => code !== null),
+      Array.from({ length: 10000 }, (_, index) =>
+        drawSpecialService((index + 0.5) / 10000),
+      ),
     );
 
     expect(used.size).toBe(CURATED.length);

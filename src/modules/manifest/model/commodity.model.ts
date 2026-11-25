@@ -54,6 +54,7 @@ export enum SpecialHandlingCode {
   LithiumMetal = 'RLM',
   LithiumIonInEquipment = 'ELI',
   LithiumMetalInEquipment = 'ELM',
+  ExplosivesOther = 'REX',
   ExplosivesDivision14S = 'RXS',
   ExplosivesDivision14G = 'RXG',
 }
