@@ -22,7 +22,7 @@ export class GetHoldLayoutAction {
   @ApiOperation({
     summary: 'Retrieve the hold configuration of one airframe type',
     description:
-      'Reports 404 for an airframe type this system carries no curated hold data for. Position designators are composed of the compartment number, the position ordinal within it and the side; that is a convention of this system, since no public source designates hold positions for a given type.',
+      'Reports 404 for an airframe type this system carries no curated hold data for. Positions are reported as deck, compartment, row and side; how they are written is a convention of this system, since no public source designates hold positions for a given type.',
   })
   @ApiBearerAuth('jwt')
   @ApiParam({

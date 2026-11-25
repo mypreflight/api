@@ -33,7 +33,8 @@ export class GetFlightCargoManifestAction {
     description:
       'The manifest is generated when the flight is released, and its shipment and tare ' +
       'weights together equal the cargo tonnage of the loadsheet it was generated from. ' +
-      'Position designators are a convention of this system, not a published designation. ' +
+      'Loading positions are reported as deck, compartment, row and side; how they are ' +
+      'written is a convention of this system, not a published designation. ' +
       'A null hold variant means the airframe type carries no curated hold data, in which ' +
       'case no unit reports a position or a compartment. Cabin crew may read the manifest ' +
       'only for a flight they captain.',

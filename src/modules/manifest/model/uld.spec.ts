@@ -108,7 +108,10 @@ describe('unit load devices', () => {
       findHoldLayoutByType(type)!.variants.flatMap((variant) =>
         positionsOf(variant)
           .filter((position) => uldSpecsFor(position).length === 0)
-          .map((position) => `${variant.id}/${position.designator}`),
+          .map(
+            (position) =>
+              `${variant.id}/${position.compartment}/${position.row}${position.side}`,
+          ),
       ),
     );
 
