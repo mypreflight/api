@@ -1,5 +1,5 @@
 import { ApiExtraModels, ApiProperty, getSchemaPath } from '@nestjs/swagger';
-import { CargoDeck } from './hold-layout.model';
+import { CargoDeck, LoadingPosition } from './hold-layout.model';
 import { LoadUnitKind } from './cargo-packing';
 import { UldType } from './uld';
 import { TransferRole } from './shipment-journey';
@@ -7,6 +7,9 @@ import { COMMODITY_IDS } from '../data/cargo-commodities';
 import { HOLD_VARIANT_IDS } from '../data/hold-identifiers';
 import {
   DangerousGoodsProfile,
+  DRILL_NUMBERS,
+  DrillLetter,
+  DrillNumber,
   ERC_PATTERN,
   HazardClass,
   PackingGroup,
@@ -40,6 +43,24 @@ export class NetQuantityPerPackage {
 
   @ApiProperty({ enum: QuantityUnit, example: QuantityUnit.Kilograms })
   unit!: QuantityUnit;
+}
+
+export class EmergencyResponseCode {
+  @ApiProperty({
+    description: 'Drill number on the emergency response drill chart',
+    enum: [...DRILL_NUMBERS],
+    example: 9,
+  })
+  drillNumber!: DrillNumber;
+
+  @ApiProperty({
+    description:
+      'Drill letters, one per additional risk, in the order the code is written',
+    enum: DrillLetter,
+    isArray: true,
+    example: [DrillLetter.Flammable],
+  })
+  drillLetters!: DrillLetter[];
 }
 
 export class ColdChainPlainReason {
@@ -120,7 +141,14 @@ export class DangerousGoods {
 
   @ApiProperty({
     description:
-      'Emergency response code: a drill number of 1 to 11 followed by one letter per additional risk',
+      'Emergency response code: a drill number and one letter per additional risk',
+    type: EmergencyResponseCode,
+  })
+  responseCode!: EmergencyResponseCode;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'The response code as written; read responseCode instead',
     pattern: ERC_PATTERN.source,
     example: '9F',
   })
@@ -309,6 +337,7 @@ export class CargoShipmentEntry {
       packingGroup: 'II',
       netQuantity: { amount: 10, unit: 'kg' },
       cargoAircraftOnly: true,
+      responseCode: { drillNumber: 9, drillLetters: ['F'] },
       ercCode: '9F',
     },
     type: DangerousGoods,
@@ -347,7 +376,16 @@ export class CargoShipmentEntry {
 
   @ApiProperty({
     description:
-      'Position the shipment had been loaded in before it was offloaded',
+      'Position the shipment had been loaded in before it was offloaded; null for a shipment still aboard or one offloaded from loose load',
+    nullable: true,
+    type: LoadingPosition,
+  })
+  offloadedFromPosition!: LoadingPosition | null;
+
+  @ApiProperty({
+    deprecated: true,
+    description:
+      'The position the shipment was offloaded from, as written; read offloadedFromPosition instead',
     example: '12R',
     nullable: true,
     type: String,
@@ -382,7 +420,15 @@ export class CargoUnitEntry {
 
   @ApiProperty({
     description:
-      'Hold position the device occupies, composed of compartment number, ordinal and side. This is a convention of this system, not a published designation. Null for loose load and for an aircraft whose type carries no curated hold data.',
+      'Hold position the device occupies. Null for loose load and for an aircraft whose type carries no curated hold data.',
+    nullable: true,
+    type: LoadingPosition,
+  })
+  loadingPosition!: LoadingPosition | null;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'The position as written; read loadingPosition instead',
     example: '12R',
     nullable: true,
     type: String,

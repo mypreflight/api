@@ -1,4 +1,5 @@
 import { OffloadPriority } from './commodity.model';
+import { LoadingPosition } from './hold-layout.model';
 
 export enum OffloadReason {
   PayloadRestriction = 'payload_restriction',
@@ -14,7 +15,7 @@ export type ReconcilableShipment = {
 export type ReconcilableUnit = {
   id: string;
   tareKg: number;
-  positionDesignator: string | null;
+  loadingPosition: LoadingPosition | null;
   shipments: ReconcilableShipment[];
 };
 
@@ -22,7 +23,7 @@ export type CargoOffload = {
   shipmentId: string;
   unitId: string;
   reason: OffloadReason;
-  offloadedFrom: string | null;
+  offloadedFromPosition: LoadingPosition | null;
 };
 
 export type CargoReconciliationPlan = {
@@ -110,7 +111,7 @@ export function planCargoReconciliation(
       shipmentId: candidate.shipment.id,
       unitId: unit.id,
       reason: OffloadReason.PayloadRestriction,
-      offloadedFrom: unit.positionDesignator,
+      offloadedFromPosition: unit.loadingPosition,
     });
     removed += candidate.shipment.grossKg;
 

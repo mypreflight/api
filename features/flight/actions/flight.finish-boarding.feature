@@ -759,6 +759,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48201AA",
             "uldType": "AKE",
+            "loadingPosition": null,
             "positionDesignator": null,
             "compartment": 1,
             "deck": "lower",
@@ -792,6 +793,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "offloaded",
                 "offloadReason": "payload_restriction",
+                "offloadedFromPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "L" },
                 "offloadedFrom": "11L"
               }
             ]
@@ -800,6 +802,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48202AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
             "positionDesignator": "11R",
             "compartment": 1,
             "deck": "lower",
@@ -833,6 +836,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -841,6 +845,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48203AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
             "positionDesignator": "12L",
             "compartment": 1,
             "deck": "lower",
@@ -874,6 +879,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -882,6 +888,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48204AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "R" },
             "positionDesignator": "12R",
             "compartment": 1,
             "deck": "lower",
@@ -915,6 +922,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -975,6 +983,7 @@ Feature: Finish flight boarding
         "kind": "uld",
         "uldCode": "AKE48203AA",
         "uldType": "AKE",
+        "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
         "positionDesignator": "12L",
         "compartment": 1,
         "deck": "lower",
@@ -1008,6 +1017,7 @@ Feature: Finish flight boarding
             "coldChain": null,
             "status": "loaded",
             "offloadReason": null,
+            "offloadedFromPosition": null,
             "offloadedFrom": null
           }
         ]
@@ -1068,6 +1078,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48201AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "L" },
             "positionDesignator": "11L",
             "compartment": 1,
             "deck": "lower",
@@ -1101,6 +1112,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -1109,6 +1121,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48202AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
             "positionDesignator": "11R",
             "compartment": 1,
             "deck": "lower",
@@ -1142,6 +1155,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -1150,6 +1164,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48203AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
             "positionDesignator": "12L",
             "compartment": 1,
             "deck": "lower",
@@ -1183,6 +1198,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -1191,6 +1207,7 @@ Feature: Finish flight boarding
             "kind": "uld",
             "uldCode": "AKE48204AA",
             "uldType": "AKE",
+            "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "R" },
             "positionDesignator": "12R",
             "compartment": 1,
             "deck": "lower",
@@ -1224,6 +1241,7 @@ Feature: Finish flight boarding
                 "coldChain": null,
                 "status": "loaded",
                 "offloadReason": null,
+                "offloadedFromPosition": null,
                 "offloadedFrom": null
               }
             ]
@@ -1465,6 +1483,7 @@ Feature: Finish flight boarding
               "awb": "001-48203735",
               "shc": ["PIL"],
               "grossKg": 900,
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
               "position": "12L",
               "compartment": 1,
               "description": "Sterile medical devices",
@@ -1480,6 +1499,7 @@ Feature: Finish flight boarding
               "awb": "001-48203746",
               "shc": ["HEA"],
               "grossKg": 1454,
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "R" },
               "position": "12R",
               "compartment": 1,
               "description": "Turbofan blade set, AOG",
@@ -1571,6 +1591,7 @@ Feature: Finish flight boarding
               "awb": "001-48203735",
               "shc": ["PIL"],
               "grossKg": 900,
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "L" },
               "position": "12L",
               "compartment": 1,
               "description": "Sterile medical devices",
@@ -1586,6 +1607,7 @@ Feature: Finish flight boarding
               "awb": "001-48203746",
               "shc": ["HEA"],
               "grossKg": 1454,
+              "loadingPosition": { "deck": "lower", "compartment": 1, "row": 2, "side": "R" },
               "position": "12R",
               "compartment": 1,
               "description": "Turbofan blade set, AOG",

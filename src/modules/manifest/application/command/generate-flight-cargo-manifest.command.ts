@@ -21,6 +21,7 @@ import {
   CompartmentUsage,
   looseSlotsOf,
   MAX_DANGEROUS_GOODS_PER_FLIGHT,
+  OccupiedPositions,
   planBaggageUnits,
   planCargoLoad,
   slotsOf,
@@ -177,7 +178,7 @@ export class GenerateFlightCargoManifestHandler implements ICommandHandler<Gener
       passengersByCabin,
     });
 
-    const occupied = new Set<string>();
+    const occupied = new OccupiedPositions();
     const compartmentLoad = new Map<number, CompartmentUsage>();
 
     const baggageUnits = variant

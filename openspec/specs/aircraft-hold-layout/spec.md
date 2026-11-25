@@ -88,7 +88,7 @@ the same aircraft always has the same compartments whatever its variant.
 ### Requirement: A bulk-loaded compartment declares no positions
 
 The system SHALL describe a compartment that is loaded loose as carrying no ULD positions, and
-SHALL NOT invent position designators for it. Every variant SHALL include at least one loose-loaded
+SHALL NOT invent positions for it. Every variant SHALL include at least one loose-loaded
 compartment, so that loose load is always possible.
 
 #### Scenario: A bulk-only type has no positions at all
@@ -129,22 +129,31 @@ can be placed correctly.
 - **WHEN** a compartment is read
 - **THEN** it reports its maximum weight, volume, and whether it is heated and ventilated
 
-### Requirement: Position designators follow a stated convention
+### Requirement: Positions are reported as deck, compartment, row and side
 
-The system SHALL designate a ULD position by its compartment number, its ordinal within that
-compartment and its side, and SHALL describe this as a convention of this system rather than as
-a published designation, because no public source designates hold positions for a given type. A
-designator SHALL be unique within a variant and SHALL remain stable across reads.
+The system SHALL report a ULD position as its deck, its compartment number, its row within that
+compartment counted from 1 at the forward end, and its side, rather than as text. The description
+SHALL state how a position is written: a lower deck position as compartment, row and side, such as
+12R, and a main deck row as a letter from A, such as CL, with P for a position spanning the width.
+It SHALL describe this as a convention of this system rather than as a published designation,
+because no public source designates hold positions for a given type. Lower deck rows SHALL stay
+below ten and main deck rows within the alphabet, so that the written form is unambiguous, and no
+two positions of a variant SHALL share a written form. Positions SHALL remain stable across reads.
 
-#### Scenario: Designators are unique within a variant
+#### Scenario: Positions are unique within a variant
 
 - **WHEN** the positions of a variant are read
-- **THEN** no designator appears twice
+- **THEN** no two positions share a written form
+
+#### Scenario: Rows fit the written form
+
+- **WHEN** the hold catalogue is loaded
+- **THEN** no lower deck compartment has ten rows or more and no main deck compartment more rows than the alphabet has letters
 
 #### Scenario: The convention is documented where positions are exposed
 
 - **WHEN** the hold configuration endpoint is described
-- **THEN** the description states that position designators are this system's convention
+- **THEN** the description of a position's row states how a position is written and that the convention is this system's
 
 ### Requirement: The hold catalogue is readable
 

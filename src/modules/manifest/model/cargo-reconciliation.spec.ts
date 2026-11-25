@@ -6,17 +6,31 @@ import {
   retainedCargoKg,
 } from './cargo-reconciliation';
 import { OffloadPriority } from './commodity.model';
+import {
+  CargoDeck,
+  HoldPositionSide,
+  LoadingPosition,
+} from './hold-layout.model';
+
+function forwardLeft(row: number): LoadingPosition {
+  return {
+    deck: CargoDeck.Lower,
+    compartment: 1,
+    row,
+    side: HoldPositionSide.Left,
+  };
+}
 
 function unit(
   id: string,
   tareKg: number,
-  positionDesignator: string | null,
+  row: number | null,
   shipments: [string, number, OffloadPriority][],
 ): ReconcilableUnit {
   return {
     id,
     tareKg,
-    positionDesignator,
+    loadingPosition: row === null ? null : forwardLeft(row),
     shipments: shipments.map(([shipmentId, grossKg, offloadPriority]) => ({
       id: shipmentId,
       grossKg,
@@ -28,7 +42,7 @@ function unit(
 describe('loadedCargoKg', () => {
   it('counts unit tare alongside shipment gross weight', () => {
     const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
+      unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]]),
       unit('u2', 0, null, [['s2', 500, OffloadPriority.Standard]]),
     ];
 
@@ -39,8 +53,8 @@ describe('loadedCargoKg', () => {
 describe('retainedCargoKg', () => {
   it('counts shipments that may not be offloaded and the tare carrying them', () => {
     const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
-      unit('u2', 120, '12L', [['s2', 800, OffloadPriority.Never]]),
+      unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]]),
+      unit('u2', 120, 2, [['s2', 800, OffloadPriority.Never]]),
     ];
 
     expect(retainedCargoKg(units)).toBe(920);
@@ -48,7 +62,7 @@ describe('retainedCargoKg', () => {
 
   it('counts the whole unit once when it mixes retained and offloadable freight', () => {
     const units = [
-      unit('u1', 100, '11L', [
+      unit('u1', 100, 1, [
         ['s1', 400, OffloadPriority.General],
         ['s2', 600, OffloadPriority.Never],
       ]),
@@ -58,9 +72,7 @@ describe('retainedCargoKg', () => {
   });
 
   it('is zero when nothing aboard is protected', () => {
-    const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
-    ];
+    const units = [unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]])];
 
     expect(retainedCargoKg(units)).toBe(0);
   });
@@ -68,9 +80,7 @@ describe('retainedCargoKg', () => {
 
 describe('planCargoReconciliation', () => {
   it('changes nothing when the tonnage is unchanged', () => {
-    const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
-    ];
+    const units = [unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]])];
 
     expect(planCargoReconciliation(units, 1000)).toEqual({
       offloads: [],
@@ -80,9 +90,7 @@ describe('planCargoReconciliation', () => {
   });
 
   it('asks for the shortfall when the tonnage rises', () => {
-    const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
-    ];
+    const units = [unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]])];
 
     const plan = planCargoReconciliation(units, 2500);
 
@@ -92,8 +100,8 @@ describe('planCargoReconciliation', () => {
 
   it('sheds ordinary freight before sensitive freight', () => {
     const units = [
-      unit('u1', 100, '11L', [['pharma', 500, OffloadPriority.Sensitive]]),
-      unit('u2', 100, '12L', [['general', 500, OffloadPriority.General]]),
+      unit('u1', 100, 1, [['pharma', 500, OffloadPriority.Sensitive]]),
+      unit('u2', 100, 2, [['general', 500, OffloadPriority.General]]),
     ];
 
     const plan = planCargoReconciliation(units, 800);
@@ -137,8 +145,8 @@ describe('planCargoReconciliation', () => {
 
   it('never offloads freight the commodity protects', () => {
     const units = [
-      unit('u1', 100, '11L', [['organs', 900, OffloadPriority.Never]]),
-      unit('u2', 100, '12L', [['general', 900, OffloadPriority.General]]),
+      unit('u1', 100, 1, [['organs', 900, OffloadPriority.Never]]),
+      unit('u2', 100, 2, [['general', 900, OffloadPriority.General]]),
     ];
 
     const plan = planCargoReconciliation(units, 1000);
@@ -151,8 +159,8 @@ describe('planCargoReconciliation', () => {
 
   it('leaves the protected load alone even when the whole rest is not enough', () => {
     const units = [
-      unit('u1', 100, '11L', [['organs', 900, OffloadPriority.Never]]),
-      unit('u2', 100, '12L', [['general', 900, OffloadPriority.General]]),
+      unit('u1', 100, 1, [['organs', 900, OffloadPriority.Never]]),
+      unit('u2', 100, 2, [['general', 900, OffloadPriority.General]]),
     ];
 
     const plan = planCargoReconciliation(units, 0);
@@ -164,9 +172,7 @@ describe('planCargoReconciliation', () => {
   });
 
   it('records the position an offloaded shipment had been assigned', () => {
-    const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
-    ];
+    const units = [unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]])];
 
     const plan = planCargoReconciliation(units, 0);
 
@@ -175,15 +181,15 @@ describe('planCargoReconciliation', () => {
         shipmentId: 's1',
         unitId: 'u1',
         reason: OffloadReason.PayloadRestriction,
-        offloadedFrom: '11L',
+        offloadedFromPosition: forwardLeft(1),
       },
     ]);
   });
 
   it('frees the tare of a unit emptied by offloading', () => {
     const units = [
-      unit('u1', 100, '11L', [['s1', 900, OffloadPriority.General]]),
-      unit('u2', 100, '12L', [['s2', 900, OffloadPriority.Standard]]),
+      unit('u1', 100, 1, [['s1', 900, OffloadPriority.General]]),
+      unit('u2', 100, 2, [['s2', 900, OffloadPriority.Standard]]),
     ];
 
     const plan = planCargoReconciliation(units, 1000);
@@ -194,7 +200,7 @@ describe('planCargoReconciliation', () => {
 
   it('keeps a unit that still carries something loaded', () => {
     const units = [
-      unit('u1', 100, '11L', [
+      unit('u1', 100, 1, [
         ['general', 400, OffloadPriority.General],
         ['pharma', 500, OffloadPriority.Never],
       ]),
@@ -232,8 +238,8 @@ describe('planCargoReconciliation', () => {
 describe('an unresolvable commodity', () => {
   it('is treated as freight that may not be offloaded, so the shortfall is refused rather than shed', () => {
     const units = [
-      unit('u1', 100, '11L', [['unknown', 900, OffloadPriority.Never]]),
-      unit('u2', 100, '12L', [['general', 900, OffloadPriority.General]]),
+      unit('u1', 100, 1, [['unknown', 900, OffloadPriority.Never]]),
+      unit('u2', 100, 2, [['general', 900, OffloadPriority.General]]),
     ];
 
     const plan = planCargoReconciliation(units, 1000);

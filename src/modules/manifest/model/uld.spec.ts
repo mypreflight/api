@@ -9,15 +9,17 @@ import {
   uldSpecsFor,
   UldType,
 } from './uld';
-import { HoldPosition, HoldPositionSide } from './hold-layout.model';
+import { CargoDeck, HoldPosition, HoldPositionSide } from './hold-layout.model';
 import { UldBaseCode, UldContourCode } from './uld-code.model';
 import { findHoldLayoutByType } from '../data/cargo-holds';
 import { positionsOf } from './hold-layout.model';
 
 const ld3Position: HoldPosition = {
-  designator: '11L',
+  deck: CargoDeck.Lower,
   compartment: 1,
+  row: 1,
   side: HoldPositionSide.Left,
+  designator: '11L',
   acceptedBases: [UldBaseCode.Ld3],
   acceptedContours: [
     UldContourCode.Ld3FullHeight,

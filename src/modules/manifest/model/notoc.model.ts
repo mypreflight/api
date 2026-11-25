@@ -1,6 +1,5 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
-import { NotocChanges } from './notoc-delta';
-import { CargoDeck } from './hold-layout.model';
+import { CargoDeck, LoadingPosition } from './hold-layout.model';
 import {
   ERC_PATTERN,
   ExplosiveDivision,
@@ -18,6 +17,7 @@ import {
   ColdChainHotTransferReason,
   ColdChainLongConnectionReason,
   ColdChainPlainReason,
+  EmergencyResponseCode,
   NetQuantityPerPackage,
 } from './cargo-manifest.model';
 import { PassengerSpecialService } from './manifest.model';
@@ -27,12 +27,19 @@ export enum NotocStageName {
   Final = 'final',
 }
 
-export const NOTOC_FORM_VERSION = 3;
+export const NOTOC_FORM_VERSION = 4;
 
 export class NotocDrill {
   @ApiProperty({
     description:
-      'Emergency response code: a drill number of 1 to 11 followed by one letter per additional risk. Constructed from the published drill chart rather than drawn from a fixed list.',
+      'Emergency response code: a drill number and one letter per additional risk, constructed from the published drill chart',
+    type: EmergencyResponseCode,
+  })
+  responseCode!: EmergencyResponseCode;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'The response code as written; read responseCode instead',
     pattern: ERC_PATTERN.source,
     example: '3L',
   })
@@ -201,7 +208,15 @@ export class NotocDangerousGoods {
 
   @ApiProperty({
     description:
-      'Hold position the load occupies, composed of compartment number, ordinal and side. This is a convention of this system, not a published designation. Null for loose load and for an aircraft whose type carries no curated hold data.',
+      'Hold position the load occupies. Null for loose load and for an aircraft whose type carries no curated hold data.',
+    nullable: true,
+    type: LoadingPosition,
+  })
+  loadingPosition!: LoadingPosition | null;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'The position as written; read loadingPosition instead',
     example: '12R',
     nullable: true,
     type: String,
@@ -246,7 +261,23 @@ export class NotocReposition {
   awb!: string;
 
   @ApiProperty({
-    description: 'Position it held on the preliminary document',
+    description:
+      'Position it held on the preliminary document; null when it was loose',
+    nullable: true,
+    type: LoadingPosition,
+  })
+  fromPosition!: LoadingPosition | null;
+
+  @ApiProperty({
+    description: 'Position it holds now; null once its unit lost its position',
+    nullable: true,
+    type: LoadingPosition,
+  })
+  toPosition!: LoadingPosition | null;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'fromPosition as written; read fromPosition instead',
     example: '11L',
     nullable: true,
     type: String,
@@ -254,7 +285,8 @@ export class NotocReposition {
   from!: string | null;
 
   @ApiProperty({
-    description: 'Position it holds now; null once its unit lost its position',
+    deprecated: true,
+    description: 'toPosition as written; read toPosition instead',
     example: '21R',
     nullable: true,
     type: String,
@@ -411,7 +443,15 @@ export class NotocSpecialLoad {
 
   @ApiProperty({
     description:
-      'Hold position the load occupies, composed of compartment number, ordinal and side. This is a convention of this system, not a published designation. Null for loose load and for an aircraft whose type carries no curated hold data.',
+      'Hold position the load occupies. Null for loose load and for an aircraft whose type carries no curated hold data.',
+    nullable: true,
+    type: LoadingPosition,
+  })
+  loadingPosition!: LoadingPosition | null;
+
+  @ApiProperty({
+    deprecated: true,
+    description: 'The position as written; read loadingPosition instead',
     example: '31L',
     nullable: true,
     type: String,
@@ -651,13 +691,21 @@ export class FlightNotoc {
     nullable: true,
     type: NotocChangeSet,
   })
-  changes!: NotocChanges | null;
+  changes!: NotocChangeSet | null;
 }
+
+export type NotocDrillRecord = Omit<NotocDrill, 'ercCode'>;
 
 export type NotocDangerousGoodsRecord = Omit<
   NotocDangerousGoods,
-  'netPerPackage'
->;
+  'netPerPackage' | 'position' | 'drill'
+> & { drill: NotocDrillRecord };
+
+export type NotocDryIceRecord = Omit<NotocDryIce, 'drill'> & {
+  drill: NotocDrillRecord;
+};
+
+export type NotocSpecialLoadRecord = Omit<NotocSpecialLoad, 'position'>;
 
 export type NotocColdChainRecord = Omit<
   NotocColdChain,
@@ -666,8 +714,10 @@ export type NotocColdChainRecord = Omit<
 
 export type NotocDocumentRecord = Omit<
   NotocDocument,
-  'statement' | 'dangerousGoods' | 'coldChain'
+  'statement' | 'dangerousGoods' | 'dryIce' | 'specialLoads' | 'coldChain'
 > & {
   dangerousGoods: NotocDangerousGoodsRecord[];
+  dryIce: NotocDryIceRecord[];
+  specialLoads: NotocSpecialLoadRecord[];
   coldChain: NotocColdChainRecord[];
 };

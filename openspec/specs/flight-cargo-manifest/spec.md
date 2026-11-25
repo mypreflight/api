@@ -134,7 +134,7 @@ compartment SHALL exceed that compartment's maximum.
 ### Requirement: Bulk-loaded aircraft carry loose lots rather than containers
 
 The system SHALL load an aircraft whose resolved hold variant offers no ULD positions as loose
-bulk lots assigned to a compartment and carrying no position designator, ULD type, serial or
+bulk lots assigned to a compartment and carrying no loading position, ULD type, serial or
 tare. Cargo too small for a container on a container-capable aircraft SHALL also be loaded loose.
 
 #### Scenario: A bulk-only narrowbody carries no containers

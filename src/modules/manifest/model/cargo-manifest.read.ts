@@ -1,4 +1,5 @@
 import { CargoUnitRow } from '../infra/database/repository/cargo.repository';
+import { loadingPositionOfRow } from './cargo-unit-position';
 import {
   CargoContentClassName,
   CargoShipmentStatusName,
@@ -7,7 +8,7 @@ import {
   FlightCargoManifest,
   SegregationAdvisory,
 } from './cargo-manifest.model';
-import { CargoDeck, HoldVariant } from './hold-layout.model';
+import { CargoDeck, HoldVariant, LoadingPosition } from './hold-layout.model';
 import { DangerousGoodsProfile, SpecialHandlingCode } from './commodity.model';
 import { findCommodityById } from '../data/cargo-commodities';
 import { conflictingPairsWithin, dryIceKgOf } from './segregation.policy';
@@ -18,7 +19,11 @@ import { CargoContentClass, CargoShipmentStatus } from 'prisma/client/client';
 import { BaggageSource } from './baggage';
 import { isTightConnection, TransferRole } from './shipment-journey';
 import { OffloadReason } from './cargo-reconciliation';
-import { withExplanation, withNetPerPackage } from './transitional-fields';
+import {
+  withExplanation,
+  withTransitionalDangerousGoods,
+  writtenPosition,
+} from './transitional-fields';
 
 export function composeFlightCargoManifest(
   flightId: string,
@@ -67,6 +72,8 @@ export function composeFlightCargoManifest(
 }
 
 function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
+  const loadingPosition = loadingPositionOfRow(row);
+
   return {
     kind: row.kind as unknown as LoadUnitKind,
     uldCode:
@@ -74,7 +81,8 @@ function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
         ? formatUldCode(row.uldType as UldType, row.uldSerial, row.uldOwner)
         : null,
     uldType: (row.uldType as UldType) ?? null,
-    positionDesignator: row.positionDesignator,
+    loadingPosition,
+    positionDesignator: writtenPosition(loadingPosition),
     compartment: row.compartment,
     deck: (row.deck as unknown as CargoDeck) ?? null,
     tareKg: row.tareKg,
@@ -103,7 +111,9 @@ function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
       connectionMinutes: shipment.connectionMinutes,
       connectionAtRisk: isTightConnection(shipment.connectionMinutes),
       dangerousGoods: shipment.dangerousGoods
-        ? withNetPerPackage(shipment.dangerousGoods as DangerousGoodsProfile)
+        ? withTransitionalDangerousGoods(
+            shipment.dangerousGoods as DangerousGoodsProfile,
+          )
         : null,
       coldChain: shipment.temperatureControl
         ? withExplanation(shipment.temperatureControl as ColdChainAssessment)
@@ -111,9 +121,19 @@ function toUnitEntry(row: CargoUnitRow): CargoUnitEntry {
       status: shipment.status as unknown as CargoShipmentStatusName,
       offloadReason:
         (shipment.offloadReason as unknown as OffloadReason) ?? null,
-      offloadedFrom: shipment.offloadedFrom,
+      offloadedFromPosition: offloadedFromPositionOf(shipment),
+      offloadedFrom: writtenPosition(offloadedFromPositionOf(shipment)),
     })),
   };
+}
+
+function offloadedFromPositionOf(
+  shipment: CargoUnitRow['shipments'][number],
+): LoadingPosition | null {
+  return (
+    (shipment.offloadedFromPosition as unknown as LoadingPosition | null) ??
+    null
+  );
 }
 
 function baggageSourceOf(rows: CargoUnitRow[]): BaggageSource | null {

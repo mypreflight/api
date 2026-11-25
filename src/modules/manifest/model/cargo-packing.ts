@@ -4,6 +4,9 @@ import {
   HoldCompartment,
   HoldPosition,
   HoldVariant,
+  LoadingPosition,
+  loadingPositionOf,
+  samePosition,
 } from './hold-layout.model';
 import {
   Commodity,
@@ -82,7 +85,7 @@ export type ColdChainContext = {
 export type PlannedUnit = {
   kind: LoadUnitKind;
   uldType: UldType | null;
-  positionDesignator: string | null;
+  loadingPosition: LoadingPosition | null;
   compartment: number | null;
   deck: CargoDeck | null;
   tareKg: number;
@@ -108,6 +111,22 @@ export type LooseSlot = {
   compartment: HoldCompartment;
 };
 
+export class OccupiedPositions {
+  private readonly taken: LoadingPosition[];
+
+  constructor(positions: LoadingPosition[] = []) {
+    this.taken = positions.map(loadingPositionOf);
+  }
+
+  has(position: LoadingPosition): boolean {
+    return this.taken.some((taken) => samePosition(taken, position));
+  }
+
+  add(position: LoadingPosition): void {
+    this.taken.push(loadingPositionOf(position));
+  }
+}
+
 export type CompartmentUsage = {
   weightKg: number;
   volumeM3: number;
@@ -127,7 +146,7 @@ export type CargoLoadRequest = {
   journey: JourneyContext;
   coldChain: ColdChainContext;
   random: () => number;
-  occupied?: Set<string>;
+  occupied?: OccupiedPositions;
   compartmentLoad?: Map<number, CompartmentUsage>;
   compartmentShc?: Map<number, SpecialHandlingCode[]>;
   compartmentRegimes?: Map<number, TemperatureRegime[]>;
@@ -410,7 +429,7 @@ export function planCargoLoad(request: CargoLoadRequest): PlannedUnit[] {
   }
 
   const units: PlannedUnit[] = [];
-  const occupied = request.occupied ?? new Set<string>();
+  const occupied = request.occupied ?? new OccupiedPositions();
   const compartmentLoad =
     request.compartmentLoad ?? new Map<number, CompartmentUsage>();
   const compartmentShc =
@@ -431,7 +450,7 @@ export function planCargoLoad(request: CargoLoadRequest): PlannedUnit[] {
       break;
     }
 
-    if (occupied.has(slot.position.designator)) {
+    if (occupied.has(slot.position)) {
       continue;
     }
 
@@ -497,7 +516,7 @@ export function planCargoLoad(request: CargoLoadRequest): PlannedUnit[] {
     );
 
     budget -= spec.tareKg + grossKg;
-    occupied.add(slot.position.designator);
+    occupied.add(slot.position);
     addUsage(
       compartmentLoad,
       slot.compartment.number,
@@ -521,7 +540,7 @@ export function planCargoLoad(request: CargoLoadRequest): PlannedUnit[] {
     units.push({
       kind: LoadUnitKind.Uld,
       uldType: spec.type,
-      positionDesignator: slot.position.designator,
+      loadingPosition: loadingPositionOf(slot.position),
       compartment: slot.compartment.number,
       deck: slot.deck,
       tareKg: spec.tareKg,
@@ -770,7 +789,7 @@ function looseUnit(
   return {
     kind: LoadUnitKind.BulkLot,
     uldType: null,
-    positionDesignator: null,
+    loadingPosition: null,
     compartment: slot?.compartment.number ?? null,
     deck: slot?.deck ?? null,
     tareKg: 0,
@@ -790,7 +809,7 @@ export type BaggagePlacementRequest = {
   plan: BaggagePlan;
   slots: PlacementSlot[];
   looseSlots: LooseSlot[];
-  occupied: Set<string>;
+  occupied: OccupiedPositions;
   compartmentLoad: Map<number, CompartmentUsage>;
 };
 
@@ -831,11 +850,11 @@ export function compartmentLoadOfUnits(
   return load;
 }
 
-export function occupiedPositionsOf(units: PlannedUnit[]): Set<string> {
-  return new Set(
-    units
-      .map((unit) => unit.positionDesignator)
-      .filter((designator): designator is string => designator !== null),
+export function occupiedPositionsOf(units: PlannedUnit[]): OccupiedPositions {
+  return new OccupiedPositions(
+    units.flatMap((unit) =>
+      unit.loadingPosition === null ? [] : [unit.loadingPosition],
+    ),
   );
 }
 
@@ -857,7 +876,7 @@ export function planBaggageUnits(
       break;
     }
 
-    if (occupied.has(slot.position.designator)) {
+    if (occupied.has(slot.position)) {
       continue;
     }
 
@@ -913,12 +932,12 @@ export function planBaggageUnits(
       spec.tareKg + grossKg,
       volumeM3,
     );
-    occupied.add(slot.position.designator);
+    occupied.add(slot.position);
 
     units.push({
       kind: LoadUnitKind.Uld,
       uldType: spec.type,
-      positionDesignator: slot.position.designator,
+      loadingPosition: loadingPositionOf(slot.position),
       compartment: slot.compartment.number,
       deck: slot.deck,
       tareKg: spec.tareKg,
@@ -1001,7 +1020,7 @@ function baggageLot(
   return {
     kind: LoadUnitKind.BulkLot,
     uldType: null,
-    positionDesignator: null,
+    loadingPosition: null,
     compartment: slot?.compartment.number ?? null,
     deck: slot?.deck ?? null,
     tareKg: 0,

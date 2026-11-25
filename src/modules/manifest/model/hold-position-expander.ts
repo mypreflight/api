@@ -8,23 +8,9 @@ import {
   HoldPositionSide,
 } from './hold-layout.model';
 import { UldBaseCode, UldContourCode } from './uld-code.model';
-
-export enum PositionOrdinals {
-  Numeric = 'numeric',
-  Alpha = 'alpha',
-}
-
-export const MAX_NUMERIC_ROWS = 9;
-export const ALPHA_ORDINALS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-
-const SIDE_SUFFIX: Record<HoldPositionSide, string> = {
-  [HoldPositionSide.Left]: 'L',
-  [HoldPositionSide.Right]: 'R',
-  [HoldPositionSide.Full]: 'P',
-};
+import { designatorOf } from './position-designator';
 
 export type HoldPositionTemplate = {
-  ordinals: PositionOrdinals;
   rows: number;
   sides: HoldPositionSide[];
   acceptedBases: UldBaseCode[];
@@ -33,7 +19,8 @@ export type HoldPositionTemplate = {
 };
 
 export type HoldPositionOverride = {
-  designator: string;
+  row: number;
+  side: HoldPositionSide;
   acceptedBases?: UldBaseCode[];
   acceptedContours?: UldContourCode[];
   maxWeightKg?: number;
@@ -68,18 +55,9 @@ export type SourceHoldLayout = {
   variants: SourceVariant[];
 };
 
-export function ordinalToken(
-  ordinals: PositionOrdinals,
-  compartment: number,
-  row: number,
-): string {
-  return ordinals === PositionOrdinals.Alpha
-    ? ALPHA_ORDINALS[row - 1]
-    : `${compartment}${row}`;
-}
-
 export function expandPositions(
   compartment: SourceCompartment,
+  deck: CargoDeck,
 ): HoldPosition[] {
   const template = compartment.positionTemplate;
 
@@ -87,25 +65,19 @@ export function expandPositions(
     return [];
   }
 
-  const overrides = new Map(
-    (compartment.positionOverrides ?? []).map((override) => [
-      override.designator,
-      override,
-    ]),
-  );
-
+  const overrides = compartment.positionOverrides ?? [];
   const positions: HoldPosition[] = [];
 
   for (let row = 1; row <= template.rows; row++) {
     for (const side of template.sides) {
-      const token = ordinalToken(template.ordinals, compartment.number, row);
-      const designator = `${token}${SIDE_SUFFIX[side]}`;
-      const override = overrides.get(designator);
+      const override = overrides.find(
+        (candidate) => candidate.row === row && candidate.side === side,
+      );
+      const position = { deck, compartment: compartment.number, row, side };
 
       positions.push({
-        designator,
-        compartment: compartment.number,
-        side,
+        ...position,
+        designator: designatorOf(position),
         acceptedBases: override?.acceptedBases ?? template.acceptedBases,
         acceptedContours:
           override?.acceptedContours ?? template.acceptedContours,
@@ -119,6 +91,7 @@ export function expandPositions(
 
 export function expandCompartment(
   compartment: SourceCompartment,
+  deck: CargoDeck,
 ): HoldCompartment {
   return {
     number: compartment.number,
@@ -129,6 +102,6 @@ export function expandCompartment(
     heated: compartment.heated,
     ventilated: compartment.ventilated,
     doorSide: compartment.doorSide,
-    positions: expandPositions(compartment),
+    positions: expandPositions(compartment, deck),
   };
 }

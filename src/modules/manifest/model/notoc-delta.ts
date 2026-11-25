@@ -1,9 +1,10 @@
+import { LoadingPosition, samePosition } from './hold-layout.model';
 import { NotocDocumentRecord } from './notoc.model';
 
 export type NotocReposition = {
   awb: string;
-  from: string | null;
-  to: string | null;
+  fromPosition: LoadingPosition | null;
+  toPosition: LoadingPosition | null;
 };
 
 export type NotocChanges = {
@@ -81,18 +82,34 @@ function repositionsBetween(
   const after = positionsOf(final);
 
   return [...after.entries()]
-    .filter(([awb, to]) => before.has(awb) && before.get(awb) !== to)
-    .map(([awb, to]) => ({ awb, from: before.get(awb) ?? null, to }))
+    .filter(
+      ([awb, toPosition]) =>
+        before.has(awb) && !samePlacement(before.get(awb)!, toPosition),
+    )
+    .map(([awb, toPosition]) => ({
+      awb,
+      fromPosition: before.get(awb)!,
+      toPosition,
+    }))
     .sort((one, other) => one.awb.localeCompare(other.awb));
+}
+
+function samePlacement(
+  one: LoadingPosition | null,
+  other: LoadingPosition | null,
+): boolean {
+  return one === null || other === null
+    ? one === other
+    : samePosition(one, other);
 }
 
 function positionsOf(
   document: NotocDocumentRecord,
-): Map<string, string | null> {
+): Map<string, LoadingPosition | null> {
   return new Map(
     [...document.dangerousGoods, ...document.specialLoads].map((entry) => [
       entry.awb,
-      entry.position,
+      entry.loadingPosition,
     ]),
   );
 }
