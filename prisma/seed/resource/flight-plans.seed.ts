@@ -10,7 +10,15 @@ import {
   Navlog,
   NEW_YORK_FRANKFURT,
 } from './flight-plan/navlog';
-import { ofpContent, runwayAnalysis } from './flight-plan/ofp';
+import {
+  notamSectionOf,
+  OfpAirportInput,
+  OfpInput,
+  ofpDocumentUrl,
+  ofpTexts,
+  WeatherReport,
+} from './flight-plan/ofp';
+import { hashOf } from './flight-plan/ofp/text';
 import {
   distanceNm,
   divertedPath,
@@ -252,35 +260,147 @@ export function trackOf(flight: FlightWithContext, navlog: Navlog | null) {
   });
 }
 
+const ofpContext = {
+  airports: {
+    include: {
+      airport: { include: { runways: true, weather: true, notams: true } },
+    },
+  },
+  aircraft: true,
+  departureRunway: true,
+  arrivalRunway: true,
+  loadsheets: true,
+} satisfies Prisma.FlightInclude;
+
+type FlightWithOfpContext = Prisma.FlightGetPayload<{
+  include: typeof ofpContext;
+}>;
+
+type AirportWithOfpContext =
+  FlightWithOfpContext['airports'][number]['airport'];
+
+const REQUEST_ID_BASE = 100_000_000;
+const REQUEST_ID_RANGE = 90_000_000;
+
+function weatherReport(
+  airport: AirportWithOfpContext,
+  type: 'metar' | 'taf',
+): WeatherReport | null {
+  const reports = airport.weather.filter(
+    (report) => report.informationType === type,
+  );
+  const report =
+    reports.find((entry) => entry.source === 'aviation_weather_gov') ??
+    reports[0];
+
+  return report === undefined
+    ? null
+    : {
+        issued: report.publishedAt ?? report.lastFetched,
+        text: report.content,
+      };
+}
+
+function ofpAirport(airport: AirportWithOfpContext): OfpAirportInput {
+  const location = airport.location as Location;
+
+  return {
+    icao: airport.icaoCode,
+    iata: airport.iataCode,
+    name: airport.name,
+    timezone: airport.timezone,
+    latitude: location.latitude,
+    longitude: location.longitude,
+    runways: airport.runways.map((runway) => ({
+      designator: runway.designator,
+      length: runway.length,
+      trueHeading: runway.trueHeading,
+      magneticHeading: runway.magneticHeading,
+    })),
+    metar: weatherReport(airport, 'metar'),
+    taf: weatherReport(airport, 'taf'),
+    notams: airport.notams.map((notam) => ({
+      id: notam.notamId,
+      section: notamSectionOf(notam.qcode),
+      html: notam.html,
+    })),
+  };
+}
+
+function airportsOf(
+  flight: FlightWithOfpContext,
+  type: AirportType,
+): AirportWithOfpContext[] {
+  return flight.airports
+    .filter(({ airportType }) => airportType === type)
+    .map(({ airport }) => airport)
+    .sort((a, b) => a.icaoCode.localeCompare(b.icaoCode));
+}
+
+function ofpInput(flight: FlightWithOfpContext, navlog: Navlog): OfpInput {
+  const [departure] = airportsOf(flight, AirportType.Departure);
+  const [destination] = airportsOf(flight, AirportType.Destination);
+  const offBlock = flight.scheduledOffBlockTime ?? flight.createdAt;
+  const enroute = navlog.fixes[navlog.fixes.length - 1].elapsedSeconds;
+  const takeoff =
+    flight.scheduledTakeoffTime ?? new Date(offBlock.getTime() + 20 * 60_000);
+  const arrival =
+    flight.scheduledArrivalTime ?? new Date(takeoff.getTime() + enroute * 1000);
+  const loadsheet = flight.loadsheets
+    .filter((entry) => entry.kind === 'preliminary')
+    .sort((a, b) => b.revision - a.revision)[0];
+
+  return {
+    requestId: String(
+      flight.simbriefRequestId ??
+        REQUEST_ID_BASE + (hashOf(flight.id) % REQUEST_ID_RANGE),
+    ),
+    callsign: flight.callsign,
+    atcCallsign: flight.atcCallsign ?? flight.callsign,
+    registration: flight.aircraft.registration,
+    aircraftType: flight.aircraft.type,
+    selcal: flight.aircraft.selcal,
+    departure: ofpAirport(departure),
+    destination: ofpAirport(destination),
+    alternates: airportsOf(flight, AirportType.DestinationAlternate).map(
+      ofpAirport,
+    ),
+    departureRunway: flight.departureRunway?.designator ?? null,
+    arrivalRunway: flight.arrivalRunway?.designator ?? null,
+    schedule: {
+      out: offBlock,
+      off: takeoff,
+      on: arrival,
+      in:
+        flight.scheduledOnBlockTime ??
+        new Date(arrival.getTime() + 10 * 60_000),
+    },
+    estimate: null,
+    generated: null,
+    route: navlog.route,
+    atcRoute: flight.atcRoute ?? navlog.atcRoute,
+    fixes: navlog.fixes,
+    load:
+      loadsheet === undefined
+        ? null
+        : {
+            passengers: loadsheet.passengers,
+            cargo: Math.round(Number(loadsheet.cargo) * 1000),
+          },
+    fuel: null,
+  };
+}
+
 async function fileNavlog(
   tx: Prisma.TransactionClient,
   flight: FlightWithContext,
   navlog: Navlog,
 ): Promise<void> {
-  const ofpFlight = {
-    callsign: flight.callsign,
-    flightNumber: flight.flightNumber,
-    departure: icaoOf(flight, AirportType.Departure),
-    destination: icaoOf(flight, AirportType.Destination),
-    registration: flight.aircraft.registration,
-    aircraftType: flight.aircraft.type,
-    scheduledOffBlock: flight.scheduledOffBlockTime ?? flight.createdAt,
-  };
-
-  const briefing =
-    flight.source === FlightSource.Simbrief
-      ? {}
-      : {
-          ofpContent: ofpContent(ofpFlight, navlog),
-          runwayAnalysis:
-            flight.departureRunway === null
-              ? null
-              : runwayAnalysis(
-                  ofpFlight,
-                  flight.departureRunway.designator,
-                  flight.departureRunway.length,
-                ),
-        };
+  const context = await tx.flight.findUniqueOrThrow({
+    where: { id: flight.id },
+    include: ofpContext,
+  });
+  const texts = ofpTexts(ofpInput(context, navlog));
 
   await tx.flight.update({
     where: { id: flight.id },
@@ -288,7 +408,15 @@ async function fileNavlog(
       source: FlightSource.Simbrief,
       route: navlog.route,
       atcRoute: flight.atcRoute ?? navlog.atcRoute,
-      ...briefing,
+      ofpContent: texts.ofpContent,
+      ofpDocumentUrl:
+        flight.ofpDocumentUrl ??
+        ofpDocumentUrl({
+          departure: icaoOf(flight, AirportType.Departure),
+          destination: icaoOf(flight, AirportType.Destination),
+          scheduledOffBlock: flight.scheduledOffBlockTime ?? flight.createdAt,
+        }),
+      runwayAnalysis: texts.runwayAnalysis,
     },
   });
 

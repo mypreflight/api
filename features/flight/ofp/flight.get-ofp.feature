@@ -7,9 +7,9 @@ Feature: Get OFP for flight
     And the response body should contain:
       """json
       {
-        "ofpContent": "<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>",
+        "ofpContent": "@any",
         "ofpDocumentUrl": "https://www.simbrief.com/ofp/flightplans/EDDFKJFK_PDF_1769431274.pdf",
-        "runwayAnalysis": "TAKEOFF AND LANDING REPORT DLH81"
+        "runwayAnalysis": "@any"
       }
       """
 
@@ -20,9 +20,9 @@ Feature: Get OFP for flight
     And the response body should contain:
       """json
       {
-        "ofpContent": "<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>",
+        "ofpContent": "@any",
         "ofpDocumentUrl": "https://www.simbrief.com/ofp/flightplans/EDDFKJFK_PDF_1769431274.pdf",
-        "runwayAnalysis": "TAKEOFF AND LANDING REPORT DLH81"
+        "runwayAnalysis": "@any"
       }
       """
 
@@ -33,15 +33,28 @@ Feature: Get OFP for flight
     And the response body should contain:
       """json
       {
-        "ofpContent": "<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>",
+        "ofpContent": "@any",
         "ofpDocumentUrl": "https://www.simbrief.com/ofp/flightplans/EDDFKJFK_PDF_1769431274.pdf",
-        "runwayAnalysis": "TAKEOFF AND LANDING REPORT DLH81"
+        "runwayAnalysis": "@any"
+      }
+      """
+
+  Scenario: As operations I can get OFP for a short haul flight
+    Given I am signed in as "operations"
+    When I send a "GET" request to "/api/v1/flight/b3899775-278e-4496-add1-21385a13d93e/ofp"
+    Then the response status should be 200
+    And the response body should contain:
+      """json
+      {
+        "ofpContent": "@any",
+        "ofpDocumentUrl": "https://www.simbrief.com/ofp/flightplans/KBOSKPHL_PDF_1767272400.pdf",
+        "runwayAnalysis": "@any"
       }
       """
 
   Scenario: As a cabin crew I cannot get OFP for flight that was not created via Simbrief
     Given I am signed in as "cabin crew"
-    When I send a "GET" request to "/api/v1/flight/3c8ba7a7-1085-423c-8cc3-d51f5ab0cd05/ofp"
+    When I send a "GET" request to "/api/v1/flight/23da8bc9-a21b-4678-b2e9-1151d3bd15ab/ofp"
     Then the response status should be 404
     And the response body should contain:
       """json
@@ -84,8 +97,8 @@ Feature: Get OFP for flight
     And the response body should contain:
       """json
       {
-        "ofpContent": "<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>",
+        "ofpContent": "@any",
         "ofpDocumentUrl": "https://www.simbrief.com/ofp/flightplans/EDDFKJFK_PDF_1769431274.pdf",
-        "runwayAnalysis": "TAKEOFF AND LANDING REPORT DLH81"
+        "runwayAnalysis": "@any"
       }
       """

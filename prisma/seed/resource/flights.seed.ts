@@ -5180,10 +5180,8 @@ async function loadDLH81(tx: Prisma.TransactionClient): Promise<void> {
     simbriefRequestId: 162595443,
     simbriefSequenceId: '816599746ea5',
     route: 'EDDF DCT KOBRA DCT NAPOL DCT PELLA DCT BAKUR DCT KJFK',
-    ofpContent: '<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>',
     ofpDocumentUrl:
       'https://www.simbrief.com/ofp/flightplans/EDDFKJFK_PDF_1769431274.pdf',
-    runwayAnalysis: 'TAKEOFF AND LANDING REPORT DLH81',
   };
 
   const departureAirport = await tx.airport.findFirstOrThrow({
@@ -5302,10 +5300,8 @@ async function loadDLH82(tx: Prisma.TransactionClient): Promise<void> {
     simbriefRequestId: 162595444,
     simbriefSequenceId: '816599746ea6',
     route: 'EDDF DCT KOBRA DCT NAPOL DCT PELLA DCT BAKUR DCT KJFK',
-    ofpContent: '<div><h2>Simbrief OFP</h2><p>Mock OFP</p></div>',
     ofpDocumentUrl:
       'https://www.simbrief.com/ofp/flightplans/EDDFKJFK_PDF_1769431275.pdf',
-    runwayAnalysis: 'TAKEOFF AND LANDING REPORT DLH82',
     etopsRuleMinutes: 180,
     etopsRuleDistanceNm: 1311,
     etopsThresholdMinutes: 60,
