@@ -19,7 +19,6 @@ const ld3Position: HoldPosition = {
   compartment: 1,
   row: 1,
   side: HoldPositionSide.Left,
-  designator: '11L',
   acceptedBases: [UldBaseCode.Ld3],
   acceptedContours: [
     UldContourCode.Ld3FullHeight,
@@ -31,7 +30,6 @@ const ld3Position: HoldPosition = {
 
 const reducedPosition: HoldPosition = {
   ...ld3Position,
-  designator: '11P',
   side: HoldPositionSide.Full,
   acceptedContours: [UldContourCode.Ld3ReducedHeight],
   maxWeightKg: 1134,

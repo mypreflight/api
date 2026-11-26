@@ -10,7 +10,6 @@ import {
   DRILL_NUMBERS,
   DrillLetter,
   DrillNumber,
-  ERC_PATTERN,
   HazardClass,
   PackingGroup,
   QuantityUnit,
@@ -127,13 +126,6 @@ export class DangerousGoods {
   netQuantity!: NetQuantityPerPackage;
 
   @ApiProperty({
-    deprecated: true,
-    description: 'Net quantity as text; read netQuantity instead',
-    example: '10 kg',
-  })
-  netPerPackage!: string;
-
-  @ApiProperty({
     description: 'Whether the load may travel only on a cargo aircraft',
     example: true,
   })
@@ -145,14 +137,6 @@ export class DangerousGoods {
     type: EmergencyResponseCode,
   })
   responseCode!: EmergencyResponseCode;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The response code as written; read responseCode instead',
-    pattern: ERC_PATTERN.source,
-    example: '9F',
-  })
-  ercCode!: string;
 
   @ApiProperty({
     description:
@@ -209,20 +193,6 @@ export class ColdChain {
 
   @ApiProperty(COLD_CHAIN_REASON_SCHEMA)
   reason!: ColdChainAssessment['reason'];
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The reason as a sentence; read reason instead',
-    example: 'An active container with 85.9 h margin on a 100 h endurance.',
-  })
-  explanation!: string;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'Always true: the assessment informs and gates nothing',
-    example: true,
-  })
-  advisory!: boolean;
 }
 
 export class CargoShipmentEntry {
@@ -338,7 +308,6 @@ export class CargoShipmentEntry {
       netQuantity: { amount: 10, unit: 'kg' },
       cargoAircraftOnly: true,
       responseCode: { drillNumber: 9, drillLetters: ['F'] },
-      ercCode: '9F',
     },
     type: DangerousGoods,
   })
@@ -381,16 +350,6 @@ export class CargoShipmentEntry {
     type: LoadingPosition,
   })
   offloadedFromPosition!: LoadingPosition | null;
-
-  @ApiProperty({
-    deprecated: true,
-    description:
-      'The position the shipment was offloaded from, as written; read offloadedFromPosition instead',
-    example: '12R',
-    nullable: true,
-    type: String,
-  })
-  offloadedFrom!: string | null;
 }
 
 export class CargoUnitEntry {
@@ -425,15 +384,6 @@ export class CargoUnitEntry {
     type: LoadingPosition,
   })
   loadingPosition!: LoadingPosition | null;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The position as written; read loadingPosition instead',
-    example: '12R',
-    nullable: true,
-    type: String,
-  })
-  positionDesignator!: string | null;
 
   @ApiProperty({
     description:

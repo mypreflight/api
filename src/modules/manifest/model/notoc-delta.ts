@@ -1,5 +1,5 @@
 import { LoadingPosition, samePosition } from './hold-layout.model';
-import { NotocDocumentRecord } from './notoc.model';
+import { NotocDocument } from './notoc.model';
 
 export type NotocReposition = {
   awb: string;
@@ -19,8 +19,8 @@ export type NotocChanges = {
 };
 
 export function notocChanges(
-  preliminary: NotocDocumentRecord,
-  final: NotocDocumentRecord,
+  preliminary: NotocDocument,
+  final: NotocDocument,
 ): NotocChanges {
   const dangerousGoodsAdded = missingFrom(
     final.dangerousGoods,
@@ -75,8 +75,8 @@ function missingFrom(
 }
 
 function repositionsBetween(
-  preliminary: NotocDocumentRecord,
-  final: NotocDocumentRecord,
+  preliminary: NotocDocument,
+  final: NotocDocument,
 ): NotocReposition[] {
   const before = positionsOf(preliminary);
   const after = positionsOf(final);
@@ -104,7 +104,7 @@ function samePlacement(
 }
 
 function positionsOf(
-  document: NotocDocumentRecord,
+  document: NotocDocument,
 ): Map<string, LoadingPosition | null> {
   return new Map(
     [...document.dangerousGoods, ...document.specialLoads].map((entry) => [

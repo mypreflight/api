@@ -1,7 +1,6 @@
 import { ApiExtraModels, ApiProperty } from '@nestjs/swagger';
 import { CargoDeck, LoadingPosition } from './hold-layout.model';
 import {
-  ERC_PATTERN,
   ExplosiveDivision,
   HandlingRemark,
   HazardClass,
@@ -36,14 +35,6 @@ export class NotocDrill {
     type: EmergencyResponseCode,
   })
   responseCode!: EmergencyResponseCode;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The response code as written; read responseCode instead',
-    pattern: ERC_PATTERN.source,
-    example: '3L',
-  })
-  ercCode!: string;
 
   @ApiProperty({
     example:
@@ -176,13 +167,6 @@ export class NotocDangerousGoods {
   netQuantity!: NetQuantityPerPackage;
 
   @ApiProperty({
-    deprecated: true,
-    description: 'Net quantity as text; read netQuantity instead',
-    example: '5 L',
-  })
-  netPerPackage!: string;
-
-  @ApiProperty({
     description: 'Radioactive package category and transport index',
     nullable: true,
     type: NotocRadioactive,
@@ -213,15 +197,6 @@ export class NotocDangerousGoods {
     type: LoadingPosition,
   })
   loadingPosition!: LoadingPosition | null;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The position as written; read loadingPosition instead',
-    example: '12R',
-    nullable: true,
-    type: String,
-  })
-  position!: string | null;
 
   @ApiProperty({ example: 1, nullable: true, type: Number })
   compartment!: number | null;
@@ -274,24 +249,6 @@ export class NotocReposition {
     type: LoadingPosition,
   })
   toPosition!: LoadingPosition | null;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'fromPosition as written; read fromPosition instead',
-    example: '11L',
-    nullable: true,
-    type: String,
-  })
-  from!: string | null;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'toPosition as written; read toPosition instead',
-    example: '21R',
-    nullable: true,
-    type: String,
-  })
-  to!: string | null;
 }
 
 export class NotocChangeSet {
@@ -449,15 +406,6 @@ export class NotocSpecialLoad {
   })
   loadingPosition!: LoadingPosition | null;
 
-  @ApiProperty({
-    deprecated: true,
-    description: 'The position as written; read loadingPosition instead',
-    example: '31L',
-    nullable: true,
-    type: String,
-  })
-  position!: string | null;
-
   @ApiProperty({ example: 3, nullable: true, type: Number })
   compartment!: number | null;
 
@@ -512,21 +460,6 @@ export class NotocColdChain {
 
   @ApiProperty(COLD_CHAIN_REASON_SCHEMA)
   reason!: ColdChainReason;
-
-  @ApiProperty({
-    deprecated: true,
-    description: 'The reason as a sentence; read reason instead',
-    example: 'An active container with 85.9 h margin on a 100 h endurance.',
-  })
-  explanation!: string;
-
-  @ApiProperty({
-    deprecated: true,
-    description:
-      'Always true: the assessment informs the captain and gates nothing',
-    example: true,
-  })
-  advisory!: boolean;
 }
 
 export class NotocCompartmentLoad {
@@ -629,14 +562,6 @@ export class NotocDocument {
   })
   specialPassengers!: NotocSpecialPassenger[];
 
-  @ApiProperty({
-    deprecated: true,
-    description:
-      'Whether dangerous goods are aboard, as a sentence; read the dangerous goods and dry ice lists instead',
-    example: 'No dangerous goods loaded.',
-  })
-  statement!: string;
-
   @ApiProperty({ type: NotocDangerousGoods, isArray: true })
   dangerousGoods!: NotocDangerousGoods[];
 
@@ -693,31 +618,3 @@ export class FlightNotoc {
   })
   changes!: NotocChangeSet | null;
 }
-
-export type NotocDrillRecord = Omit<NotocDrill, 'ercCode'>;
-
-export type NotocDangerousGoodsRecord = Omit<
-  NotocDangerousGoods,
-  'netPerPackage' | 'position' | 'drill'
-> & { drill: NotocDrillRecord };
-
-export type NotocDryIceRecord = Omit<NotocDryIce, 'drill'> & {
-  drill: NotocDrillRecord;
-};
-
-export type NotocSpecialLoadRecord = Omit<NotocSpecialLoad, 'position'>;
-
-export type NotocColdChainRecord = Omit<
-  NotocColdChain,
-  'explanation' | 'advisory'
->;
-
-export type NotocDocumentRecord = Omit<
-  NotocDocument,
-  'statement' | 'dangerousGoods' | 'dryIce' | 'specialLoads' | 'coldChain'
-> & {
-  dangerousGoods: NotocDangerousGoodsRecord[];
-  dryIce: NotocDryIceRecord[];
-  specialLoads: NotocSpecialLoadRecord[];
-  coldChain: NotocColdChainRecord[];
-};

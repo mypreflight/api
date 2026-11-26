@@ -22,15 +22,14 @@ import { ColdChainRisk } from './cold-chain';
 import { drillFor, EmergencyDrill } from './emergency-drill';
 import {
   HoldCondition,
-  NotocColdChainRecord,
-  NotocDangerousGoodsRecord,
-  NotocDocumentRecord,
-  NotocDryIceRecord,
+  NotocColdChain,
+  NotocDangerousGoods,
+  NotocDocument,
+  NotocDryIce,
   NotocHeader,
   NotocLoadSummary,
   NotocRadioactive,
   NotocSpecialLoad,
-  NotocSpecialLoadRecord,
   RadioactiveCategory,
 } from './notoc.model';
 import { dryIceKgOf } from './segregation.policy';
@@ -151,7 +150,7 @@ type NotifiableLoads = {
   dangerousGoods: ListedDangerousGoods[];
   dryIce: DryIceLoad[];
   specialLoads: NotifiableSpecialLoad[];
-  coldChain: NotocColdChainRecord[];
+  coldChain: NotocColdChain[];
 };
 
 export type NotifiableLoadSummary = {
@@ -195,7 +194,7 @@ export function composeNotoc(
   unloadingAirport: string,
   header: NotocHeader,
   passengers: NotifiablePassenger[],
-): NotocDocumentRecord {
+): NotocDocument {
   const placed = loadedShipmentsOf(manifest);
   const loads = notifiableLoadsOf(placed);
   const dangerousGoods = loads.dangerousGoods.map((entry) =>
@@ -231,7 +230,7 @@ function notifiableLoadsOf(placed: PlacedShipment[]): NotifiableLoads {
     }),
     coldChain: placed
       .map(({ shipment }) => coldChainEntry(shipment))
-      .filter((entry): entry is NotocColdChainRecord => entry !== null),
+      .filter((entry): entry is NotocColdChain => entry !== null),
   };
 }
 
@@ -292,7 +291,7 @@ function catalogueProfileOf(
 function dangerousGoodsEntry(
   { shipment, unit, profile, drill }: ListedDangerousGoods,
   unloadingAirport: string,
-): NotocDangerousGoodsRecord {
+): NotocDangerousGoods {
   const classOrDivision = classOrDivisionOf(shipment, profile);
 
   return {
@@ -410,7 +409,7 @@ function dryIceLoadsOf(placed: PlacedShipment[]): DryIceLoad[] {
 function dryIceEntries(
   loads: DryIceLoad[],
   unloadingAirport: string,
-): NotocDryIceRecord[] {
+): NotocDryIce[] {
   const drill = drillFor(DRY_ICE_RESPONSE_CODE);
 
   return loads.map((load) => ({
@@ -425,7 +424,7 @@ function dryIceEntries(
 function specialLoadEntry(
   { shipment, unit, codes }: NotifiableSpecialLoad,
   unloadingAirport: string,
-): NotocSpecialLoadRecord {
+): NotocSpecialLoad {
   const commodity = findCommodityById(shipment.commodity);
   const sized = codes.some((code) => SIZED_HANDLING_CODES.includes(code));
   const temperature = commodity?.temperature;
@@ -494,9 +493,7 @@ function holdConditionOf(
   return ventilated ? HoldCondition.Ventilated : null;
 }
 
-function coldChainEntry(
-  shipment: CargoShipmentEntry,
-): NotocColdChainRecord | null {
+function coldChainEntry(shipment: CargoShipmentEntry): NotocColdChain | null {
   const assessment = shipment.coldChain;
 
   if (!assessment) {

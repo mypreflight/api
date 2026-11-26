@@ -35,7 +35,6 @@ import {
   LoadingPosition,
 } from '../../../src/modules/manifest/model/hold-layout.model';
 import { loadingPositionOfRow } from '../../../src/modules/manifest/model/cargo-unit-position';
-import { writtenPosition } from '../../../src/modules/manifest/model/transitional-fields';
 import { composeNotoc } from '../../../src/modules/manifest/model/notoc';
 import { NOTOC_FORM_VERSION } from '../../../src/modules/manifest/model/notoc.model';
 import { AirportType } from '../../../src/modules/airports/model/airport.model';
@@ -1066,7 +1065,6 @@ function toUnitEntry(unit: UnitFixture): CargoUnitEntry {
         : null,
     uldType: (unit.uldType as UldType) ?? null,
     loadingPosition: loadingPositionOfRow(unit),
-    positionDesignator: writtenPosition(loadingPositionOfRow(unit)),
     compartment: unit.compartment,
     deck: (unit.deck as unknown as CargoDeckName) ?? null,
     tareKg: unit.tareKg,
@@ -1099,7 +1097,6 @@ function toUnitEntry(unit: UnitFixture): CargoUnitEntry {
       status: CargoShipmentStatusName.Loaded,
       offloadReason: null,
       offloadedFromPosition: null,
-      offloadedFrom: null,
     })),
   };
 }

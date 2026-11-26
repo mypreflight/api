@@ -5,7 +5,6 @@ import {
   ColdChainExposure,
   ColdChainReasonKind,
   ColdChainRisk,
-  explanationOf,
   exposureHoursOf,
   needsBetterSolution,
   setPointOf,
@@ -91,9 +90,6 @@ describe('cold chain', () => {
     expect(assessment.reason).toEqual({
       kind: ColdChainReasonKind.WithinMargin,
     });
-    expect(explanationOf(assessment)).toBe(
-      'An active container with 88 h margin on a 100 h endurance.',
-    );
   });
 
   it('reads a comfortable passive margin as low risk', () => {
@@ -104,9 +100,6 @@ describe('cold chain', () => {
     expect(assessment.reason).toEqual({
       kind: ColdChainReasonKind.WithinMargin,
     });
-    expect(explanationOf(assessment)).toBe(
-      'A passive shipper with 18 h margin on a 30 h endurance.',
-    );
   });
 
   it('reads a passive margin below half its endurance as elevated risk', () => {
@@ -118,9 +111,6 @@ describe('cold chain', () => {
     expect(assessment.risk).toBe(ColdChainRisk.Elevated);
     expect(assessment.marginHours).toBe(14);
     expect(assessment.reason).toEqual({ kind: ColdChainReasonKind.ThinMargin });
-    expect(explanationOf(assessment)).toBe(
-      'A passive shipper with 14 h margin on a 30 h endurance; no cooling available in flight.',
-    );
   });
 
   it('reads an exhausted endurance as high risk', () => {
@@ -134,9 +124,6 @@ describe('cold chain', () => {
     expect(assessment.reason).toEqual({
       kind: ColdChainReasonKind.EnduranceExceeded,
     });
-    expect(explanationOf(assessment)).toBe(
-      'Exposure of 34 h exceeds the 30 h endurance of a passive shipper.',
-    );
   });
 
   it('reads a hot transfer point as high risk', () => {
@@ -150,9 +137,6 @@ describe('cold chain', () => {
       kind: ColdChainReasonKind.HotTransfer,
       ambientC: 31,
     });
-    expect(explanationOf(assessment)).toBe(
-      '31 °C at the transfer point exceeds what a passive shipper is validated for.',
-    );
   });
 
   it('ignores a hot transfer point for an active container', () => {
@@ -175,25 +159,6 @@ describe('cold chain', () => {
       kind: ColdChainReasonKind.LongConnection,
       connectionHours: 9,
     });
-    expect(explanationOf(assessment)).toBe(
-      'A 9 h connection leaves the shipment on a passive shipper longer than it should be.',
-    );
-  });
-
-  it('reads the article of the connection length correctly', () => {
-    const at = (connectionHours: number): string =>
-      explanationOf(
-        assessColdChain(
-          { ...passiveTuna, enduranceHours: 200 },
-          exposure({ flightHours: 2, connectionHours }),
-        ),
-      );
-
-    expect(at(8.8)).toContain('An 8.8 h connection');
-    expect(at(11)).toContain('An 11 h connection');
-    expect(at(18)).toContain('An 18 h connection');
-    expect(at(9)).toContain('A 9 h connection');
-    expect(at(12)).toContain('A 12 h connection');
   });
 
   it('derives the risk from the reason', () => {

@@ -1221,7 +1221,6 @@ Feature: Update flight preliminary loadsheet
             "uldCode": null,
             "uldType": null,
             "loadingPosition": null,
-            "positionDesignator": null,
             "compartment": "@any",
             "deck": "lower",
             "tareKg": 0,
@@ -1372,7 +1371,6 @@ Feature: Update flight preliminary loadsheet
             "uldCode": null,
             "uldType": null,
             "loadingPosition": null,
-            "positionDesignator": null,
             "compartment": null,
             "deck": null,
             "tareKg": 0,
@@ -1722,7 +1720,6 @@ Feature: Update flight preliminary loadsheet
         "acknowledgedById": null,
         "acknowledgedAt": null,
         "document": {
-          "statement": "@any",
           "dangerousGoods": "@any",
           "specialLoads": "@any",
           "coldChain": "@any",

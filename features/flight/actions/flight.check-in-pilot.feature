@@ -919,9 +919,7 @@ Feature: Check in pilot for flight
               "awb": "172-62001166",
               "risk": "low",
               "regime": "COL",
-              "advisory": true,
               "description": "Vaccine doses, 2-8C",
-              "explanation": "An active container with 88.5 h margin on a 100 h endurance.",
               "marginHours": 88.5,
               "reason": {
                 "kind": "within_margin"
@@ -931,7 +929,6 @@ Feature: Check in pilot for flight
               "exposureHours": 11.5
             }
           ],
-          "statement": "Dangerous goods loaded as listed below.",
           "specialLoads": [
             {
               "awb": "172-62001100",
@@ -940,7 +937,6 @@ Feature: Check in pilot for flight
               "pieces": 7,
               "grossKg": 4000,
               "loadingPosition": { "deck": "main", "compartment": 6, "row": 1, "side": "L" },
-              "position": "AL",
               "compartment": 6,
               "description": "Live horses in air stalls",
               "heaviestPiece": {
@@ -961,7 +957,6 @@ Feature: Check in pilot for flight
               "pieces": 4,
               "grossKg": 4200,
               "loadingPosition": { "deck": "main", "compartment": 6, "row": 2, "side": "L" },
-              "position": "BL",
               "compartment": 6,
               "description": "Main landing gear leg, AOG",
               "heaviestPiece": {
@@ -982,7 +977,6 @@ Feature: Check in pilot for flight
               "pieces": 6,
               "grossKg": 1072,
               "loadingPosition": { "deck": "main", "compartment": 6, "row": 3, "side": "L" },
-              "position": "CL",
               "compartment": 6,
               "description": "Human remains in coffin",
               "heaviestPiece": {
@@ -1003,7 +997,6 @@ Feature: Check in pilot for flight
               "pieces": 50,
               "grossKg": 700,
               "loadingPosition": { "deck": "lower", "compartment": 3, "row": 1, "side": "L" },
-              "position": "31L",
               "compartment": 3,
               "description": "Vaccine doses, 2-8C",
               "heaviestPiece": null,
@@ -1021,7 +1014,6 @@ Feature: Check in pilot for flight
               "awb": "172-62001133",
               "drill": {
                 "responseCode": { "drillNumber": 3, "drillLetters": ["L"] },
-                "ercCode": "3L",
                 "inherentRisk": "Flammable liquid or solid; vapours may form an explosive mixture.",
                 "additionalRisks": ["No significant risk beyond the drill itself."],
                 "spillAndFireProcedure": "Contain the spill and keep every ignition source away. Fight the fire with water spray, foam, dry chemical or carbon dioxide.",
@@ -1031,13 +1023,11 @@ Feature: Check in pilot for flight
               "impCode": "RFL",
               "packages": 78,
               "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "L" },
-              "position": "11L",
               "unNumber": "1263",
               "compartment": 1,
               "hazardClass": "3",
               "radioactive": null,
               "packingGroup": "II",
-              "netPerPackage": "5 L",
               "subsidiaryRisk": null,
               "classOrDivision": "3",
               "unloadingAirport": "JFK",
@@ -1052,7 +1042,6 @@ Feature: Check in pilot for flight
               "awb": "172-62001144",
               "drill": {
                 "responseCode": { "drillNumber": 9, "drillLetters": ["F"] },
-                "ercCode": "9F",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
                 "additionalRisks": ["Flammable."],
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",
@@ -1062,13 +1051,11 @@ Feature: Check in pilot for flight
               "impCode": "RLI",
               "packages": 140,
               "loadingPosition": { "deck": "lower", "compartment": 1, "row": 1, "side": "R" },
-              "position": "11R",
               "unNumber": "3480",
               "compartment": 1,
               "hazardClass": "9",
               "radioactive": null,
               "packingGroup": "II",
-              "netPerPackage": "10 kg",
               "subsidiaryRisk": null,
               "classOrDivision": "9",
               "unloadingAirport": "JFK",
@@ -1098,7 +1085,6 @@ Feature: Check in pilot for flight
               "kg": 900,
               "drill": {
                 "responseCode": { "drillNumber": 9, "drillLetters": ["A"] },
-                "ercCode": "9A",
                 "inherentRisk": "A hazard that no other class covers, such as heat, an anaesthetic vapour, a magnetic field or harm to the environment.",
                 "additionalRisks": ["Anaesthetic or narcotic vapour."],
                 "spillAndFireProcedure": "Ventilate and keep clear of the spill. Fight the fire with the agent suited to the surrounding material.",

@@ -181,8 +181,6 @@ const DRILL_NUMBER_BY_HAZARD_CLASS: Record<HazardClass, DrillNumber> = {
   [HazardClass.Miscellaneous]: 9,
 };
 
-export const ERC_PATTERN = /^(?:[1-9]|1[01])[ACEFHILMNPSWXY]+$/;
-
 export const SPECIAL_HANDLING_CODES: string[] =
   Object.values(SpecialHandlingCode);
 

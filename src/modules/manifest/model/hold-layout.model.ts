@@ -64,14 +64,6 @@ export class LoadingPosition {
 
 export class HoldPosition extends LoadingPosition {
   @ApiProperty({
-    deprecated: true,
-    description:
-      'The position as written, such as 12R; read deck, compartment, row and side instead',
-    example: '12R',
-  })
-  designator!: string;
-
-  @ApiProperty({
     description:
       'ULD base sizes the position accepts, as the second letter of an IATA ULD type code',
     enum: UldBaseCode,

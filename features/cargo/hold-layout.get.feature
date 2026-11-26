@@ -112,7 +112,6 @@ Feature: Get aircraft hold layout by type
                     "positions": [
                       {
                         "deck": "lower",
-                        "designator": "11P",
                         "compartment": 1,
                         "row": 1,
                         "side": "full",
@@ -122,7 +121,6 @@ Feature: Get aircraft hold layout by type
                       },
                       {
                         "deck": "lower",
-                        "designator": "12P",
                         "compartment": 1,
                         "row": 2,
                         "side": "full",
@@ -132,7 +130,6 @@ Feature: Get aircraft hold layout by type
                       },
                       {
                         "deck": "lower",
-                        "designator": "13P",
                         "compartment": 1,
                         "row": 3,
                         "side": "full",

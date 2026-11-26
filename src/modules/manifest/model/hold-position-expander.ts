@@ -8,7 +8,6 @@ import {
   HoldPositionSide,
 } from './hold-layout.model';
 import { UldBaseCode, UldContourCode } from './uld-code.model';
-import { designatorOf } from './position-designator';
 
 export type HoldPositionTemplate = {
   rows: number;
@@ -77,7 +76,6 @@ export function expandPositions(
 
       positions.push({
         ...position,
-        designator: designatorOf(position),
         acceptedBases: override?.acceptedBases ?? template.acceptedBases,
         acceptedContours:
           override?.acceptedContours ?? template.acceptedContours,

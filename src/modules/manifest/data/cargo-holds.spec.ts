@@ -7,9 +7,10 @@ import {
   CargoDeck,
   CompartmentLoading,
   compartmentsOf,
+  HoldPositionSide,
+  LoadingPosition,
   positionsOf,
 } from '../model/hold-layout.model';
-import { designatorOf } from '../model/position-designator';
 import { ULD_BASE_CODES, ULD_CONTOUR_CODES } from '../model/uld-code.model';
 import { findAirframeByType } from '../../airframes/data/airframes';
 import { AirframeServiceType } from '../../airframes/model/airframe.model';
@@ -27,6 +28,21 @@ const FREIGHTERS = [
   'MD1F',
   'SH33',
 ];
+
+const LETTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+
+const SIDE_SUFFIX: Record<HoldPositionSide, string> = {
+  [HoldPositionSide.Left]: 'L',
+  [HoldPositionSide.Right]: 'R',
+  [HoldPositionSide.Full]: 'P',
+};
+
+function writtenOf({ deck, compartment, row, side }: LoadingPosition): string {
+  const ordinal =
+    deck === CargoDeck.Main ? LETTERS[row - 1] : `${compartment}${row}`;
+
+  return `${ordinal}${SIDE_SUFFIX[side]}`;
+}
 
 describe('cargo holds dataset', () => {
   it('covers the seeded fleet', () => {
@@ -110,7 +126,7 @@ describe('cargo holds dataset', () => {
     const wrong = AIRCRAFT_HOLD_LAYOUTS.flatMap((layout) =>
       layout.variants
         .filter((variant) => {
-          const designators = positionsOf(variant).map(designatorOf);
+          const designators = positionsOf(variant).map(writtenOf);
 
           return new Set(designators).size !== designators.length;
         })
@@ -167,7 +183,7 @@ describe('cargo holds dataset', () => {
                 (contour) => !ULD_CONTOUR_CODES.includes(contour),
               ),
           )
-          .map((position) => `${variant.id}/${designatorOf(position)}`),
+          .map((position) => `${variant.id}/${writtenOf(position)}`),
       ),
     );
 

@@ -1,6 +1,6 @@
 import { composeNotoc } from './notoc';
 import { PassengerSpecialService, PassengerStatus } from './manifest.model';
-import { HoldCondition, NotocDocumentRecord, NotocHeader } from './notoc.model';
+import { HoldCondition, NotocDocument, NotocHeader } from './notoc.model';
 import { NotifiablePassenger } from './notoc-passengers';
 import {
   CargoContentClassName,
@@ -59,7 +59,7 @@ function lower(
 function compose(
   load: FlightCargoManifest,
   passengers: NotifiablePassenger[] = [],
-): NotocDocumentRecord {
+): NotocDocument {
   return composeNotoc(load, 'JFK', HEADER, passengers);
 }
 
@@ -88,7 +88,6 @@ function shipment(
     status: CargoShipmentStatusName.Loaded,
     offloadReason: null,
     offloadedFromPosition: null,
-    offloadedFrom: null,
     ...overrides,
   };
 }
@@ -102,7 +101,6 @@ function unit(
     uldCode: 'AKE48201AA',
     uldType: UldType.Ld3,
     loadingPosition: lower(1, 1, HoldPositionSide.Left),
-    positionDesignator: '11L',
     compartment: 1,
     deck: CargoDeck.Lower,
     tareKg: 82,
@@ -513,7 +511,6 @@ describe('composeNotoc', () => {
           ],
           {
             loadingPosition: lower(3, 1, HoldPositionSide.Left),
-            positionDesignator: '31L',
             compartment: 3,
           },
         ),
@@ -700,14 +697,12 @@ describe('composeNotoc', () => {
         unit([shipment()], {
           uldType: UldType.Pallet96,
           loadingPosition: lower(2, 1, HoldPositionSide.Full),
-          positionDesignator: '21P',
         }),
         unit([shipment()], {
           kind: LoadUnitKind.BulkLot,
           uldType: null,
           uldCode: null,
           loadingPosition: null,
-          positionDesignator: null,
           tareKg: 0,
         }),
       ]),
@@ -724,7 +719,6 @@ describe('composeNotoc', () => {
         unit([shipment()]),
         unit([], {
           loadingPosition: null,
-          positionDesignator: null,
           tareKg: 0,
           grossKg: 0,
           uldCode: 'AKE48202AA',
